@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shubham Gupta</title>
+<meta name="description" content="Shubham Gupta. I build the AI that runs businesses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Manrope:wght@400..700&display=swap">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+:root{--basalt:#08090B;--quartz:#2B2F36;--amber:#E0A04A;--oxide:#C2401F;--bone:#F0E9DC;--pad:clamp(20px,5vw,72px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--basalt);color:var(--bone)}
+body{background:var(--basalt);color:var(--bone);font-family:Manrope,"Segoe UI",Arial,sans-serif;font-size:18px;line-height:1.6;overflow-x:clip}
+a{color:inherit}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+.no-gl #gl{display:none}
+.top{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:20px var(--pad);background:rgba(8,9,11,.82);font:600 15px/1.2 Manrope,sans-serif;letter-spacing:.02em}
+.top a{text-decoration:none;border-bottom:1px solid var(--amber);padding-bottom:3px}
+.scene{position:relative;z-index:2;height:220vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:14vh var(--pad) 9vh;overflow:clip}
+.stage>*{position:relative}
+.display{font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:300;font-style:italic;font-size:clamp(48px,6.2vw,96px);line-height:1.08;letter-spacing:-.02em;max-width:17ch;text-shadow:0 0 24px rgba(8,9,11,.85)}
+.lede{font-size:clamp(18px,1.5vw,22px);line-height:1.6;max-width:36ch;background:rgba(8,9,11,.72);padding:8px 12px}
+.pin{position:fixed;left:0;top:0;z-index:4;pointer-events:none;white-space:nowrap;font:600 15px/1 Manrope,sans-serif;letter-spacing:.02em;padding:7px 10px 7px 12px;background:rgba(8,9,11,.76);border-left:2px solid var(--amber)}
+.pin.flow{position:static;display:inline-block;margin:6px 12px 0 0}
+.btn{display:inline-block;background:var(--oxide);color:var(--bone);font:700 20px/1 Manrope,sans-serif;padding:20px 44px;text-decoration:none}
+.btn:hover{background:#D4502C}
+.btn:focus-visible,.top a:focus-visible{outline:2px solid var(--amber);outline-offset:4px}
+.foot{background:var(--basalt);font-size:18px;line-height:1.6;max-width:72ch;padding:20px 24px}
+.foot p+p{margin-top:8px}
+.name-cv,.line-cv{display:block;width:100%;height:auto}
+@media (max-width:600px){.scene{height:170vh}.display{font-size:clamp(30px,9vw,42px);max-width:none}.lede{font-size:18px;max-width:none}.foot{font-size:16px}}
+.tiny{font-size:18px;background:rgba(8,9,11,.72);padding:6px 10px;display:inline-block}
+.s0-name{margin:auto 0}
+.s0-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.big-wrap{width:100%}
+.s1 .lede,.s3 .lede{margin-top:auto}
+.s4-foot{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.caps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;max-width:1100px}
+.caps .lede{max-width:30ch}
+.s7-mid{display:flex;flex-direction:column;align-items:center;gap:18px;margin:auto 0;text-align:center}
+.s7-mid .lede{max-width:none}
+.foot{margin-top:0}
+@media (max-width:600px){.caps{grid-template-columns:1fr;gap:14px}.s0-foot{flex-direction:column;align-items:flex-start}.btn{padding:18px 34px;font-size:18px}}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<header class="top"><span>Shubham Gupta</span><a href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a></header>
+<main>
+<section class="scene" data-s="0"><div class="stage s0">
+<div class="s0-name"><canvas class="name-cv" role="img" aria-label="SHUBHAM GUPTA" data-r="0,0.1"></canvas></div>
+<div class="s0-foot"><p class="lede" data-r="0,0.1">I build the AI that runs businesses.</p><p class="tiny" data-r="0,0.1">Delhi.</p></div>
+</div></section>
+<section class="scene" data-s="1"><div class="stage s1">
+<p class="lede" data-r="0.12,0.25">I learned how a company sells before I built the machine that runs one.</p>
+</div></section>
+<section class="scene" data-s="2"><div class="stage s2">
+<p class="lede" data-r="0.08,0.22">None of them remembered the others.</p>
+<div class="big-wrap"><canvas class="line-cv" role="img" aria-label="Orchestration is the bottleneck." data-r="0.1,0.25"></canvas></div>
+</div></section>
+<section class="scene" data-s="3"><div class="stage s3">
+<h2 class="display" data-r="0.06,0.2">So I build the layer that removes the glue.</h2>
+<p class="lede" data-r="0.14,0.25">A person approves anything that moves money, mail or a calendar.</p>
+</div></section>
+<section class="scene" data-s="4"><div class="stage s4">
+<h2 class="display" data-r="0.06,0.2">Verslay is where I proved it.</h2>
+<div class="s4-foot"><p class="lede" data-r="0.14,0.25">Verslay's only technical founder. My co-founder runs sales.</p><p class="tiny" data-r="0.18,0.25">40+ Indian businesses booked a Verslay demo.</p></div>
+</div></section>
+<section class="scene" data-s="5"><div class="stage s5">
+<h2 class="display" data-r="0.04,0.16">Name the constraint. Then build the system around it.</h2>
+<div class="caps"><p class="lede" data-r="0.1,0.2">Store dues by hand. Now a payment engine.</p><p class="lede" data-r="0.14,0.23">Orders one message at a time. Now an agent that sells.</p><p class="lede" data-r="0.18,0.25">A voice note. Now tasks and a calendar.</p></div>
+</div></section>
+<section class="scene" data-s="6"><div class="stage s6">
+<p class="lede" data-r="0.05,0.2">The operator should run the business. The system should carry the work.</p>
+</div></section>
+<section class="scene" data-s="7"><div class="stage s7">
+<h2 class="display" data-r="0.05,0.2" data-x>Bring the operation.</h2>
+<div class="s7-mid"><a class="btn" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener" data-r="0.12,0.25" data-x>Book a call</a><p class="lede" data-r="0.14,0.25" data-x>The appointment sits on LinkedIn.</p></div>
+<footer class="foot"><p>Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p><p>Shubham Gupta. Delhi.</p></footer>
+</div></section>
+</main>
+<div class="pin" data-pin="p-mkt" data-s="1" data-r="0.04,0.12">marketing</div>
+<div class="pin" data-pin="p-fun" data-s="1" data-r="0.08,0.16">funnels</div>
+<div class="pin" data-pin="p-gro" data-s="1" data-r="0.12,0.2">growth</div>
+<div class="pin" data-pin="p-cli" data-s="1" data-r="0.16,0.24">clients</div>
+<div class="pin" data-pin="p-sto" data-s="2" data-r="0.03,0.1">store</div>
+<div class="pin" data-pin="p-led" data-s="2" data-r="0.065,0.135">ledger</div>
+<div class="pin" data-pin="p-inb" data-s="2" data-r="0.1,0.17">inbox</div>
+<div class="pin" data-pin="p-she" data-s="2" data-r="0.135,0.205">sheet</div>
+<div class="pin" data-pin="p-cal" data-s="2" data-r="0.17,0.24">calendar</div>
+<div class="pin" data-pin="p-mem" data-s="3" data-r="0.1,0.22">one memory</div>
+<div class="pin" data-pin="p-g0" data-s="6" data-r="0.03,0.09">D2C fashion</div>
+<div class="pin" data-pin="p-g1" data-s="6" data-r="0.048,0.108">gifting</div>
+<div class="pin" data-pin="p-g2" data-s="6" data-r="0.066,0.126">jewellery</div>
+<div class="pin" data-pin="p-g3" data-s="6" data-r="0.084,0.144">beauty</div>
+<div class="pin" data-pin="p-g4" data-s="6" data-r="0.102,0.162">home decor</div>
+<div class="pin" data-pin="p-g5" data-s="6" data-r="0.12,0.18">fitness</div>
+<div class="pin" data-pin="p-g6" data-s="6" data-r="0.138,0.198">Textiles and B2B</div>
+<div class="pin" data-pin="p-g7" data-s="6" data-r="0.156,0.216">agencies</div>
+<div class="pin" data-pin="p-g8" data-s="6" data-r="0.174,0.234">creators</div>
+<script type="module">
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const P = [0, 0, 0, 0, 0, 0, 0, 0], REVEALS = [], TEXTS = [], PINS = [], ADD = {};
+let THREE = null, renderer = null, scene = null, camera = null, composer = null, BLOOM = null, GRAIN = null;
+let glOK = false, TT = 0, V = null, Q = null, S = null, M4 = null, UP = null, RAY = null, PLANE_Z = null;
+let CRYSTAL = null, CRYSTAL_MAT = null, AMBER = null, WARM = null, DUST = null, SHARDS = null, SHARD_BASE = [];
+let FOOT = [], CURVE_P = null, CURVE_L = null, GEODE = null, SHELL_TOP = null, SHELL_BOT = null, CORE = null;
+let CL1 = [], LAT = [], RING = null, PLINTHS = [], GARDEN = [], GARDEN_GROUND = null, FIN = null;
+let BEAM_IN = null, BEAM_L = null, BEAM_R = null, BEAM_MAT = null;
+
+const clamp01 = x => Math.min(1, Math.max(0, x));
+const ss = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+const lerp = (a, b, k) => a + (b - a) * k;
+const isNarrow = () => innerWidth < 600;
+function rng(seed) { let s = seed >>> 0; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; }
+
+function setupReveals() {
+  document.querySelectorAll('[data-r]').forEach(el => {
+    el._s = +el.closest('[data-s]').dataset.s;
+    el._r = el.dataset.r.split(',').map(Number);
+    el._x = el.hasAttribute('data-x');
+    el._pin = el.classList.contains('pin');
+    REVEALS.push(el);
+  });
+}
+function updateText() {
+  for (const el of REVEALS) {
+    const p = P[el._s], r = el._r;
+    const inK = r[0] <= 0 ? 1 : ss(r[0], r[1], p);
+    const k = reduced ? 1 : inK * (el._x ? 1 : 1 - ss(0.86, 0.98, p));
+    el.style.opacity = k.toFixed(3);
+    if (!el._pin) el.style.transform = `translate3d(0,${((1 - k) * 18).toFixed(1)}px,0)`;
+  }
+}
+function frame(now) {
+  requestAnimationFrame(frame);
+  TT = P[0] + P[1] + P[2] + P[3] + P[4] + P[5] + P[6] + P[7];
+  const time = reduced ? 0 : now * 0.001;
+  updateText();
+  updateTexts(time);
+  if (!glOK) return;
+  updateWorld(TT, time);
+  scene.updateMatrixWorld();
+  updatePins();
+  composer.render();
+}
+function resize() {
+  const w = innerWidth, h = innerHeight;
+  if (glOK) {
+    const dpr = Math.min(devicePixelRatio || 1, w < 600 ? 1.25 : 1.75);
+    renderer.setPixelRatio(dpr);
+    renderer.setSize(w, h, false);
+    composer.setPixelRatio(dpr);
+    composer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    onResize(w, h);
+  }
+  layoutTexts();
+}
+addEventListener('resize', resize);
+function wireScroll() {
+  gsap.registerPlugin(ScrollTrigger);
+  if (!reduced && window.Lenis) {
+    const lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+  document.querySelectorAll('.scene').forEach((sec, i) => {
+    const st = ScrollTrigger.create({ trigger: sec, start: 'top top', end: 'bottom bottom', scrub: reduced ? true : 0.8,
+      onUpdate: self => { P[i] = self.progress; } });
+    P[i] = st.progress;
+  });
+}
+function makeFlowPins() {
+  document.querySelectorAll('.pin').forEach(el => {
+    const stage = document.querySelector(`.scene[data-s="${el.dataset.s}"] .stage`);
+    if (stage) stage.appendChild(el);
+    el.classList.add('flow');
+  });
+}
+function pinTo(key, obj, x = 0, y = 0, z = 0) {
+  const el = document.querySelector(`[data-pin="${key}"]`);
+  if (el) PINS.push({ el, obj, off: new THREE.Vector3(x, y, z) });
+}
+async function boot() {
+  setupReveals();
+  try { wireScroll(); } catch (e) { /* scroll wiring is optional for the words */ }
+  try { await document.fonts.load('500 100px Fraunces'); await document.fonts.load('italic 300 100px Fraunces'); } catch (e) { /* fallback serif */ }
+  setupTexts();
+  try {
+    THREE = await import('three');
+    const [ec, rp, ub, sp, op, re, rb] = await Promise.all([
+      import('three/addons/postprocessing/EffectComposer.js'),
+      import('three/addons/postprocessing/RenderPass.js'),
+      import('three/addons/postprocessing/UnrealBloomPass.js'),
+      import('three/addons/postprocessing/ShaderPass.js'),
+      import('three/addons/postprocessing/OutputPass.js'),
+      import('three/addons/environments/RoomEnvironment.js'),
+      import('three/addons/geometries/RoundedBoxGeometry.js')
+    ]);
+    Object.assign(ADD, { EffectComposer: ec.EffectComposer, RenderPass: rp.RenderPass, UnrealBloomPass: ub.UnrealBloomPass,
+      ShaderPass: sp.ShaderPass, OutputPass: op.OutputPass, RoomEnvironment: re.RoomEnvironment, RoundedBoxGeometry: rb.RoundedBoxGeometry });
+    setupWorld();
+    glOK = true;
+  } catch (e) {
+    glOK = false;
+    document.documentElement.classList.add('no-gl');
+    makeFlowPins();
+  }
+  resize();
+  requestAnimationFrame(frame);
+}
+/* ---------- geometry and cluster helpers ---------- */
+function hash3(x, y, z) { const n = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453; return n - Math.floor(n); }
+function vnoise3(x, y, z) {
+  const ix = Math.floor(x), iy = Math.floor(y), iz = Math.floor(z);
+  const fx = x - ix, fy = y - iy, fz = z - iz;
+  const u = fx * fx * (3 - 2 * fx), v = fy * fy * (3 - 2 * fy), w = fz * fz * (3 - 2 * fz);
+  const x00 = lerp(hash3(ix, iy, iz), hash3(ix + 1, iy, iz), u);
+  const x10 = lerp(hash3(ix, iy + 1, iz), hash3(ix + 1, iy + 1, iz), u);
+  const x01 = lerp(hash3(ix, iy, iz + 1), hash3(ix + 1, iy, iz + 1), u);
+  const x11 = lerp(hash3(ix, iy + 1, iz + 1), hash3(ix + 1, iy + 1, iz + 1), u);
+  return lerp(lerp(x00, x10, v), lerp(x01, x11, v), w);
+}
+function fbm3(x, y, z) {
+  return vnoise3(x, y, z) * 0.55 + vnoise3(x * 2.1 + 5.2, y * 2.1, z * 2.1) * 0.3 + vnoise3(x * 4.3, y * 4.3 + 1.7, z * 4.3) * 0.15;
+}
+// One half of the rough geode shell: displaced icosahedron, split by height, flat shaded
+function shellHalf(top) {
+  const p = new THREE.IcosahedronGeometry(1, 4).toNonIndexed().attributes.position.array;
+  for (let i = 0; i < p.length; i += 3) {
+    const x = p[i], y = p[i + 1], z = p[i + 2];
+    const s = 1 + (fbm3(x * 1.6 + 3.1, y * 1.6, z * 1.6) - 0.5) * 0.46;
+    p[i] = x * s; p[i + 1] = y * s * 0.9; p[i + 2] = z * s;
+  }
+  const keep = [];
+  for (let i = 0; i < p.length; i += 9) {
+    const cy = (p[i + 1] + p[i + 4] + p[i + 7]) / 3;
+    if (top ? cy >= -0.015 : cy < -0.015) keep.push(p[i], p[i + 1], p[i + 2], p[i + 3], p[i + 4], p[i + 5], p[i + 6], p[i + 7], p[i + 8]);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(keep, 3));
+  g.computeVertexNormals();
+  return g;
+}
+function mergeGeos(list) {
+  const parts = list.map(g => g.toNonIndexed());
+  const total = parts.reduce((n, g) => n + g.attributes.position.count, 0);
+  const pos = new Float32Array(total * 3), nrm = new Float32Array(total * 3);
+  let o = 0;
+  for (const g of parts) {
+    pos.set(g.attributes.position.array, o * 3);
+    nrm.set(g.attributes.normal.array, o * 3);
+    o += g.attributes.position.count;
+  }
+  const out = new THREE.BufferGeometry();
+  out.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  out.setAttribute('normal', new THREE.BufferAttribute(nrm, 3));
+  return out;
+}
+// Hexagonal prism with a pointed tip, base at y = 0, height 1.42
+function crystalGeometry() {
+  const body = new THREE.CylinderGeometry(0.16, 0.16, 1, 6, 1, false).translate(0, 0.5, 0);
+  const tip = new THREE.ConeGeometry(0.16, 0.42, 6, 1).translate(0, 1.21, 0);
+  return mergeGeos([body, tip]);
+}
+function makeCluster(seed, n, size, spread, mat) {
+  const r = rng(seed);
+  const group = new THREE.Group();
+  const items = [];
+  for (let i = 0; i < n; i++) {
+    const a = r() * Math.PI * 2, d = Math.sqrt(r()) * spread;
+    items.push({
+      pos: new THREE.Vector3(Math.cos(a) * d, r() * spread * 0.25, Math.sin(a) * d),
+      dir: new THREE.Vector3((r() - 0.5) * 1.3, 1, (r() - 0.5) * 1.3).normalize(),
+      sc: size * (0.6 + r() * 0.7),
+      delay: r() * 0.25
+    });
+  }
+  const mesh = new THREE.InstancedMesh(CRYSTAL, mat, n);
+  mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  mesh.frustumCulled = false;
+  group.add(mesh);
+  scene.add(group);
+  return { group, mesh, mat, items, g: new Float32Array(n).fill(1), align: 0, stretch: 1, E: null, L: null, cold: null };
+}
+// Per-crystal growth: each crystal rises on its own delay; oa/ob optionally fade the whole cluster out
+function growCluster(cl, tt, a, b, oa, ob) {
+  const f = oa === undefined ? 1 : 1 - ss(oa, ob, tt);
+  cl.items.forEach((it, i) => { cl.g[i] = ss(a + it.delay * 0.4, b + it.delay * 0.4, tt) * f; });
+}
+// align blends each crystal's random direction toward up; stretch scales it along up
+function poseCluster(cl, align, stretch) {
+  cl.items.forEach((it, i) => {
+    const g = Math.max(0.0001, cl.g[i]);
+    V.copy(it.dir).lerp(UP, align).normalize();
+    Q.setFromUnitVectors(UP, V);
+    S.set(it.sc * g, it.sc * g * stretch, it.sc * g);
+    cl.mesh.setMatrixAt(i, M4.compose(it.pos, Q, S));
+  });
+  cl.mesh.instanceMatrix.needsUpdate = true;
+}
+function setBeam(m, a, b, w) {
+  const d = new THREE.Vector3().subVectors(b, a);
+  const len = Math.max(0.001, d.length());
+  m.position.copy(a).addScaledVector(d, 0.5);
+  m.quaternion.setFromUnitVectors(UP, d.normalize());
+  m.scale.set(w, len, w);
+}
+/* ---------- world: camera path, post chain, lights, depth layers, footage ---------- */
+const CAM_P = [[0, 0.3, 7.2], [0, 0.7, 4.9], [-0.5, 1.4, 6.4], [0, 2.6, 7.4], [0, 0.4, 4.4], [0, 1.1, 7.6], [0, 5.8, 15.5], [0, 0.9, 5.2], [0, 0.9, 5.2]];
+const CAM_L = [[0, 0, 0], [0, 0.2, 0], [0, 0.2, 0], [0, 0.6, 0], [0, 3.0, 0], [0, 1.0, 0], [0, -0.8, 0], [0, 0.3, 0.7], [0, 0.3, 0.7]];
+const GRAIN_SHADER = {
+  uniforms: { tDiffuse: { value: null }, uTime: { value: 0 } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+  fragmentShader: `uniform sampler2D tDiffuse; uniform float uTime; varying vec2 vUv;
+    float rnd(vec2 co){ return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453); }
+    void main(){
+      vec2 c = vUv - 0.5; float r = length(c);
+      float ca = 0.0012 + 0.0032 * smoothstep(0.3, 0.75, r);
+      vec3 col = vec3(texture2D(tDiffuse, vUv + c * ca).r, texture2D(tDiffuse, vUv).g, texture2D(tDiffuse, vUv - c * ca).b);
+      col += (rnd(vUv * 1000.0 + uTime) - 0.5) * 0.05;
+      col *= mix(0.55, 1.0, 1.0 - smoothstep(0.22, 0.82, r));
+      gl_FragColor = vec4(col, 1.0);
+    }`
+};
+const FOOT_VERT = 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }';
+const FOOT_FRAG = `precision highp float; varying vec2 vUv;
+  uniform float uTime, uAlpha, uMode; uniform vec2 uAspect;
+  float h21(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+  vec2 h22(vec2 p){ return vec2(h21(p), h21(p + 17.3)); }
+  float vn(vec2 p){ vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(mix(h21(i), h21(i + vec2(1.0, 0.0)), u.x), mix(h21(i + vec2(0.0, 1.0)), h21(i + vec2(1.0, 1.0)), u.x), u.y); }
+  float fbm(vec2 p){ float v = 0.0, a = 0.5; for (int i = 0; i < 4; i++){ v += a * vn(p); p = p * 2.03 + vec2(1.7, 9.2); a *= 0.5; } return v; }
+  float cracks(vec2 p, float t){ vec2 n = floor(p), f = fract(p); float d1 = 8.0, d2 = 8.0;
+    for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++){
+      vec2 g = vec2(float(i), float(j)); vec2 o = h22(n + g); o = 0.5 + 0.5 * sin(t + 6.2831 * o);
+      vec2 r = g + o - f; float d = dot(r, r);
+      if (d < d1){ d2 = d1; d1 = d; } else if (d < d2){ d2 = d; } }
+    return sqrt(d2) - sqrt(d1); }
+  void main(){
+    vec2 uv = (vUv - 0.5) * uAspect;
+    float t = uTime * 0.12;
+    vec3 base = vec3(0.035, 0.037, 0.043), amber = vec3(0.878, 0.627, 0.29), cold = vec3(0.36, 0.45, 0.56);
+    vec3 col;
+    if (uMode < 0.5){
+      float e = cracks(uv * 3.2, t);
+      col = base + amber * (1.0 - smoothstep(0.0, 0.07, e)) * 0.9 + cold * exp(-e * 9.0) * 0.22;
+    } else {
+      float f1 = fbm(uv * 2.4 + vec2(t, -t * 0.7));
+      float f2 = fbm(uv * 3.1 + f1 * 2.2 - vec2(t * 0.6, 0.0));
+      col = base + amber * smoothstep(0.42, 0.9, f2) * 0.55 + cold * f1 * 0.12;
+    }
+    gl_FragColor = vec4(col, uAlpha);
+  }`;
+
+function setupWorld() {
+  V = new THREE.Vector3(); Q = new THREE.Quaternion(); S = new THREE.Vector3(); M4 = new THREE.Matrix4();
+  UP = new THREE.Vector3(0, 1, 0); RAY = new THREE.Raycaster(); PLANE_Z = new THREE.Plane(new THREE.Vector3(0, 0, 1), -0.7);
+  CRYSTAL = crystalGeometry();
+  CRYSTAL_MAT = new THREE.MeshPhysicalMaterial({ color: 0xC9C4BA, roughness: 0.08, metalness: 0, transmission: 0.9, thickness: 1.5, ior: 1.55,
+    attenuationColor: new THREE.Color(0xE0A04A), attenuationDistance: 0.8, iridescence: 0.3, iridescenceIOR: 1.3, envMapIntensity: 1.1 });
+  renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('gl'), antialias: true, powerPreference: 'high-performance' });
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x08090B);
+  scene.fog = new THREE.FogExp2(0x08090B, 0.03);
+  camera = new THREE.PerspectiveCamera(34, innerWidth / innerHeight, 0.05, 220);
+  scene.add(camera);
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new ADD.RoomEnvironment(), 0.04).texture;
+
+  composer = new ADD.EffectComposer(renderer);
+  composer.addPass(new ADD.RenderPass(scene, camera));
+  BLOOM = new ADD.UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.36, 0.5, 0.82);
+  composer.addPass(BLOOM);
+  composer.addPass(new ADD.OutputPass());
+  GRAIN = new ADD.ShaderPass(GRAIN_SHADER);
+  GRAIN.renderToScreen = true;
+  composer.addPass(GRAIN);
+
+  const hemi = new THREE.HemisphereLight(0x3A4654, 0x08090B, 0.45);
+  const key = new THREE.DirectionalLight(0x9DB2CC, 1.5);
+  key.position.set(-4, 7, 5);
+  key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024);
+  Object.assign(key.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: 1, far: 30 });
+  key.shadow.camera.updateProjectionMatrix();
+  key.shadow.bias = -0.0006;
+  key.shadow.normalBias = 0.02;
+  const rim = new THREE.DirectionalLight(0x7F93AD, 1.1);
+  rim.position.set(5, 3, -6);
+  AMBER = new THREE.PointLight(0xE0A04A, 0, 9, 1.4);
+  WARM = new THREE.PointLight(0xE0A04A, 0, 8, 1.6);
+  scene.add(hemi, key, rim, AMBER, WARM);
+
+  CURVE_P = new THREE.CatmullRomCurve3(CAM_P.map(p => new THREE.Vector3(...p)), false, 'centripetal');
+  CURVE_L = new THREE.CatmullRomCurve3(CAM_L.map(p => new THREE.Vector3(...p)), false, 'centripetal');
+
+  // far layer: slow mineral dust, fogged with depth
+  const dn = 900, dp = new Float32Array(dn * 3), rd = rng(7);
+  for (let i = 0; i < dn; i++) {
+    const th = rd() * Math.PI * 2, ph = Math.acos(2 * rd() - 1), rr = 4 + rd() * 14;
+    dp[i * 3] = rr * Math.sin(ph) * Math.cos(th);
+    dp[i * 3 + 1] = rr * Math.sin(ph) * Math.sin(th) * 0.8;
+    dp[i * 3 + 2] = rr * Math.cos(ph) - 4;
+  }
+  const dg = new THREE.BufferGeometry();
+  dg.setAttribute('position', new THREE.BufferAttribute(dp, 3));
+  DUST = new THREE.Points(dg, new THREE.PointsMaterial({ color: 0xF0E9DC, size: 0.035, transparent: true, opacity: 0.5, depthWrite: false }));
+  scene.add(DUST);
+
+  // near layer: small refracting shards that drift past the lens
+  SHARDS = new THREE.InstancedMesh(new THREE.TetrahedronGeometry(0.075),
+    new THREE.MeshPhysicalMaterial({ color: 0xF0E9DC, transmission: 1, thickness: 0.3, ior: 1.5, roughness: 0.05 }), 14);
+  SHARDS.frustumCulled = false;
+  const rs = rng(21);
+  for (let i = 0; i < 14; i++) SHARD_BASE.push(new THREE.Vector3((rs() - 0.5) * 5.6, (rs() - 0.5) * 3.2, 0.6 + rs() * 3.2));
+  scene.add(SHARDS);
+
+  // two full-bleed shader footage planes, parented to the camera at a fixed depth
+  FOOT = [0, 1].map(mode => {
+    const m = new THREE.ShaderMaterial({
+      uniforms: { uTime: { value: 0 }, uAlpha: { value: 0 }, uMode: { value: mode }, uAspect: { value: new THREE.Vector2(1, 1) } },
+      vertexShader: FOOT_VERT, fragmentShader: FOOT_FRAG, transparent: true, depthWrite: false
+    });
+    const pl = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), m);
+    pl.position.set(0, 0, -40);
+    pl.visible = false;
+    camera.add(pl);
+    return pl;
+  });
+
+  setupGeode();
+  setupLattice();
+  setupPlinths();
+  setupGarden();
+  setupFinale();
+}
+/* ---------- scenes 0 and 1: the geode and its inner crystals ---------- */
+function setupGeode() {
+  GEODE = new THREE.Group();
+  scene.add(GEODE);
+  const shellMat = new THREE.MeshStandardMaterial({ color: 0x17191D, roughness: 0.93, metalness: 0.04, flatShading: true, side: THREE.DoubleSide, envMapIntensity: 0.5 });
+  SHELL_TOP = new THREE.Mesh(shellHalf(true), shellMat);
+  SHELL_BOT = new THREE.Mesh(shellHalf(false), shellMat);
+  SHELL_TOP.castShadow = true; SHELL_BOT.castShadow = true;
+  SHELL_TOP.receiveShadow = true; SHELL_BOT.receiveShadow = true;
+  // smooth amber core: a high-detail icosahedron, lower detail on phones
+  CORE = new THREE.Mesh(new THREE.IcosahedronGeometry(0.34, isNarrow() ? 24 : 48), new THREE.MeshBasicMaterial({ color: 0xE0A04A }));
+  GEODE.add(SHELL_TOP, SHELL_BOT, CORE);
+  CL1 = [[-0.36, -0.05, 0.22], [0.34, 0.16, -0.2], [-0.1, -0.4, -0.3], [0.22, -0.3, 0.36]].map((p, i) => {
+    const cl = makeCluster(100 + i, 6, 0.36, 0.22, CRYSTAL_MAT.clone());
+    cl.group.position.set(p[0], p[1], p[2]);
+    return cl;
+  });
+  pinTo('p-mkt', CL1[0].group, 0, 0.9, 0);
+  pinTo('p-fun', CL1[1].group, 0, 0.9, 0);
+  pinTo('p-gro', CL1[2].group, 0, 0.9, 0);
+  pinTo('p-cli', CL1[3].group, 0, 0.9, 0);
+}
+/* ---------- scenes 2 to 4: disorder, alignment, spire ---------- */
+function setupLattice() {
+  const E = [[-1.9, 1.1, -0.7], [1.8, 0.9, 0.3], [-0.9, -1.2, 1.0], [1.2, -1.0, -1.1], [0.2, 1.9, -1.4]];   // erupt positions
+  const L = [[0, 0], [1.35, 0], [0.675, 1.17], [-0.675, 1.17], [-1.35, 0]];                                 // lattice cells (x, z)
+  const COLD = [0x5E7388, 0x6A6B4A, 0x5B3E3E, 0x4F6A66, 0x6B6F7C];                                           // cold, murky
+  LAT = E.map((e, i) => {
+    const mat = CRYSTAL_MAT.clone();
+    mat.color.set(COLD[i]);
+    const cl = makeCluster(300 + i, 9, 0.62, 0.42, mat);
+    cl.E = e; cl.L = L[i]; cl.cold = new THREE.Color(COLD[i]);
+    return cl;
+  });
+  const keys = ['p-sto', 'p-led', 'p-inb', 'p-she', 'p-cal'];
+  LAT.forEach((cl, i) => pinTo(keys[i], cl.group, 0, 1.5, 0));
+  RING = new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.018, 12, 160), new THREE.MeshBasicMaterial({ color: new THREE.Color(2.4, 1.4, 0.6) }));
+  RING.position.set(0, 1.05, 0);
+  scene.add(RING);
+  const ringAnchor = new THREE.Object3D();
+  ringAnchor.position.set(0, 1.98, 0);
+  scene.add(ringAnchor);
+  pinTo('p-mem', ringAnchor);
+}
+/* ---------- scene 5: cracked crystals on plinths ---------- */
+function setupPlinths() {
+  const stone = new THREE.MeshStandardMaterial({ color: 0x1B1D21, roughness: 0.86, metalness: 0 });
+  const plinthGeo = new ADD.RoundedBoxGeometry(1.25, 0.75, 1.25, 4, 0.05);
+  PLINTHS = [-2.5, 0, 2.5].map((x, i) => {
+    const plinth = new THREE.Mesh(plinthGeo, stone);
+    plinth.position.set(x, 0.375, 0);
+    plinth.castShadow = true; plinth.receiveShadow = true;
+    scene.add(plinth);
+    const mat = CRYSTAL_MAT.clone();
+    mat.color.set(0x4A4D52);
+    mat.roughness = 0.5;
+    mat.transmission = 0.35;
+    const cl = makeCluster(500 + i, 1, 1.25, 0, mat);
+    cl.group.position.set(x, 0.75, 0);
+    cl.items[0].pos.set(0, 0, 0);
+    cl.items[0].dir.set(0, 1, 0);
+    cl.items[0].sc = 1.25;
+    cl.align = 1;
+    // glowing crack on the crystal face; it shrinks away as the crystal seals
+    const crack = new THREE.Mesh(new THREE.BoxGeometry(0.03, 1, 0.012), new THREE.MeshBasicMaterial({ color: new THREE.Color(2.6, 1.4, 0.6) }));
+    crack.position.set(x + 0.2, 1.45, 0.04);
+    crack.rotation.z = 0.12;
+    scene.add(crack);
+    return { plinth, cl, mat, crack, x };
+  });
+}
+
+/* ---------- scene 6: the garden of nine crystal clusters ---------- */
+function setupGarden() {
+  GARDEN_GROUND = new THREE.Mesh(new THREE.PlaneGeometry(90, 90), new THREE.MeshStandardMaterial({ color: 0x0E0F12, roughness: 0.97 }));
+  GARDEN_GROUND.rotation.x = -Math.PI / 2;
+  GARDEN_GROUND.position.y = -0.25;
+  GARDEN_GROUND.receiveShadow = true;
+  GARDEN_GROUND.visible = false;
+  scene.add(GARDEN_GROUND);
+  const forms = [
+    { n: 6, size: 0.6, spread: 0.35, align: 1.0, stretch: 1.5, key: 'p-g0' },
+    { n: 4, size: 0.7, spread: 0.5, align: 0.35, stretch: 1.0, key: 'p-g1' },
+    { n: 10, size: 0.4, spread: 0.3, align: 1.0, stretch: 1.2, key: 'p-g2' },
+    { n: 7, size: 0.5, spread: 0.7, align: 0.6, stretch: 0.9, key: 'p-g3' },
+    { n: 5, size: 0.62, spread: 0.25, align: 0.0, stretch: 1.0, key: 'p-g4' },
+    { n: 8, size: 0.55, spread: 0.45, align: 1.0, stretch: 0.8, key: 'p-g5' },
+    { n: 9, size: 0.5, spread: 0.6, align: 0.2, stretch: 1.3, key: 'p-g6' },
+    { n: 4, size: 0.8, spread: 0.15, align: 1.0, stretch: 1.7, key: 'p-g7' },
+    { n: 7, size: 0.45, spread: 0.9, align: 0.5, stretch: 1.0, key: 'p-g8' }
+  ];
+  const tints = [0xC9C4BA, 0xD9C2A0, 0xB9BEC8];
+  GARDEN = forms.map((f, i) => {
+    const mat = CRYSTAL_MAT.clone();
+    mat.color.set(tints[i % 3]);
+    const cl = makeCluster(700 + i, f.n, f.size, f.spread, mat);
+    cl.group.position.set((i % 3 - 1) * 3.0, -0.25, (Math.floor(i / 3) - 1) * 3.0 - 0.5);
+    cl.align = f.align;
+    cl.stretch = f.stretch;
+    pinTo(f.key, cl.group, 0, 1.55, 0);
+    return cl;
+  });
+}
+/* ---------- scene 7: one clear crystal and the beam that lands on the button ---------- */
+function setupFinale() {
+  const mat = CRYSTAL_MAT.clone();
+  mat.color.set(0xFFFFFF);
+  mat.roughness = 0.02;
+  mat.transmission = 0.96;
+  mat.attenuationColor.set(0xF7E3C0);
+  mat.attenuationDistance = 2.5;
+  FIN = makeCluster(900, 1, 1.1, 0, mat);
+  FIN.group.position.set(0, -0.35, 0.7);
+  FIN.items[0].pos.set(0, 0, 0);
+  FIN.items[0].dir.set(0, 1, 0);
+  FIN.items[0].sc = 1.1;
+  FIN.align = 1;
+  BEAM_MAT = new THREE.MeshBasicMaterial({ color: new THREE.Color(2.2, 1.3, 0.6), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+  const beamGeo = new THREE.CylinderGeometry(1, 1, 1, 12, 1, true);
+  BEAM_IN = new THREE.Mesh(beamGeo, BEAM_MAT);
+  BEAM_L = new THREE.Mesh(beamGeo, BEAM_MAT);
+  BEAM_R = new THREE.Mesh(beamGeo, BEAM_MAT);
+  scene.add(BEAM_IN, BEAM_L, BEAM_R);
+}
+
+// Where a screen point lands on the crystal's depth plane (z = 0.7)
+function landOn(px, py) {
+  RAY.setFromCamera(new THREE.Vector2((px / innerWidth) * 2 - 1, -(py / innerHeight) * 2 + 1), camera);
+  const hit = new THREE.Vector3();
+  return RAY.ray.intersectPlane(PLANE_Z, hit) ? hit : new THREE.Vector3(0, -1.5, 0.7);
+}
+
+function onResize(w, h) {
+  const aspect = w / h;
+  const fh = 2 * 40 * Math.tan(camera.fov * Math.PI / 360) * 1.03;
+  FOOT.forEach(pl => {
+    pl.scale.set(fh * aspect, fh, 1);
+    pl.material.uniforms.uAspect.value.set(aspect, 1);
+  });
+}
+
+// Labels follow their 3D anchor; they hide when the anchor is hidden or behind the lens
+function updatePins() {
+  const W = innerWidth, H = innerHeight;
+  for (const p of PINS) {
+    const el = p.el;
+    if (!p.obj.visible) { el.style.visibility = 'hidden'; continue; }
+    V.copy(p.off);
+    p.obj.localToWorld(V);
+    V.project(camera);
+    if (V.z > 1) { el.style.visibility = 'hidden'; continue; }
+    el.style.visibility = 'visible';
+    const x = Math.min(W - 24, Math.max(24, (V.x * 0.5 + 0.5) * W));
+    const y = Math.min(H - 24, Math.max(48, (-V.y * 0.5 + 0.5) * H));
+    el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) translate(-50%,-100%)`;
+  }
+}
+/* ---------- the story value t drives every transform, light and colour ---------- */
+let COL_A = null, COL_B = null, COL_W = null, AX_SHARD = null;
+function updateWorld(tt, time) {
+  if (!COL_A) {
+    COL_A = new THREE.Color(0x4A4D52); COL_B = new THREE.Color(0xD9D4CB); COL_W = new THREE.Color(0xE0A04A);
+    AX_SHARD = new THREE.Vector3(0.3, 1, 0.5).normalize();
+  }
+  // camera travels the spline; narrow screens pull back to keep the composition
+  const u = clamp01(tt / 8);
+  const pos = CURVE_P.getPoint(u), look = CURVE_L.getPoint(u);
+  const m = Math.min(1.6, Math.max(1, 0.85 / camera.aspect));
+  pos.sub(look).multiplyScalar(m).add(look);
+  pos.x += Math.sin(time * 0.21) * 0.04;
+  pos.y += Math.sin(time * 0.17) * 0.03;
+  camera.position.copy(pos);
+  camera.lookAt(look);
+
+  // scenes 0 to 2: the geode opens, then breaks apart into the disorder
+  const openK = ss(1.0, 1.55, tt), shrink = 1 - ss(1.95, 2.45, tt);
+  GEODE.visible = tt < 2.6;
+  GEODE.scale.setScalar(Math.max(0.0001, shrink));
+  GEODE.rotation.y = 0.35 + tt * 0.22 + time * 0.035;
+  const gap = 0.025 + openK * 0.5;
+  SHELL_TOP.position.y = gap;
+  SHELL_TOP.rotation.x = -openK * 0.26;
+  SHELL_BOT.position.y = -gap;
+  SHELL_BOT.rotation.x = openK * 0.26;
+  CORE.scale.setScalar(0.5 + 0.5 * openK + 0.03 * Math.sin(time * 1.3));
+  CORE.material.color.setRGB(1.4 + openK, 0.8 + 0.5 * openK, 0.35 + 0.2 * openK);
+  AMBER.intensity = (4 + 9 * openK) * (1 - ss(2.0, 2.4, tt));
+
+  // scene 1: four crystals grow from the inner wall, one after another
+  CL1.forEach((cl, i) => {
+    cl.group.visible = tt > 0.9 && tt < 2.45;
+    if (!cl.group.visible) return;
+    growCluster(cl, tt, 1.02 + i * 0.04, 1.18 + i * 0.04, 2.0, 2.3);
+    poseCluster(cl, 0, 1);
+  });
+
+  // scenes 2 to 4: five clusters erupt, align into a lattice, then rise into a spire
+  const k3 = ss(2.9, 3.6, tt), k4 = ss(3.55, 4.55, tt);
+  const comp = lerp(1, 0.5, k4), stretch = lerp(1, 4.2, k4);
+  const latVis = tt > 1.85 && tt < 5.0;
+  LAT.forEach((cl, i) => {
+    cl.group.visible = latVis;
+    if (!latVis) return;
+    growCluster(cl, tt, 2.0 + i * 0.03, 2.22 + i * 0.03);
+    cl.group.position.set(lerp(cl.E[0], cl.L[0], k3) * comp, lerp(cl.E[1], 0, k3), lerp(cl.E[2], cl.L[1], k3) * comp);
+    cl.mat.color.lerpColors(cl.cold, COL_W, k3);
+    poseCluster(cl, k3, stretch);
+  });
+  RING.visible = tt > 2.55 && tt < 4.4;
+  const ringK = ss(2.7, 3.2, tt) * (1 - ss(4.0, 4.4, tt));
+  RING.scale.setScalar(Math.max(0.0001, ringK));
+  RING.rotation.z = tt * 0.25;
+  // warm light sits at the ring in scene 3 and at the clear crystal in scene 7
+  const finK = ss(6.9, 7.4, tt);
+  if (tt > 5.5) WARM.position.set(0, 0.3, 1.3); else WARM.position.set(0, 1.05, 0.2);
+  WARM.intensity = 6 * ringK + 5 * finK;
+
+  // scenes 2 and 4: full-bleed shader footage behind everything
+  const fA = ss(1.95, 2.35, tt) * (1 - ss(3.0, 3.35, tt));
+  const fB = ss(3.5, 3.9, tt) * (1 - ss(4.75, 5.1, tt));
+  [fA, fB].forEach((a, i) => {
+    const pl = FOOT[i];
+    pl.visible = a > 0.005;
+    pl.material.uniforms.uAlpha.value = a;
+    pl.material.uniforms.uTime.value = time;
+  });
+
+  // scene 5: three cracks glow, then seal until each crystal is clear
+  const plVis = tt > 4.6 && tt < 6.4;
+  PLINTHS.forEach((o, i) => {
+    o.plinth.visible = plVis;
+    o.cl.group.visible = plVis;
+    o.crack.visible = plVis;
+    if (!plVis) return;
+    const seal = ss(5.15 + i * 0.22, 5.7 + i * 0.22, tt);
+    o.mat.transmission = lerp(0.35, 0.92, seal);
+    o.mat.roughness = lerp(0.5, 0.05, seal);
+    o.mat.color.lerpColors(COL_A, COL_B, seal);
+    o.crack.scale.y = Math.max(0.0001, 1 - seal);
+    const glow = 0.4 + 0.6 * ss(5.0, 5.2, tt);
+    o.crack.material.color.setRGB(2.6 * glow, 1.4 * glow, 0.6 * glow);
+    poseCluster(o.cl, 1, 1);
+  });
+
+  // scene 6: the garden blooms across the plain
+  const gv = tt > 5.6 && tt < 7.8;
+  GARDEN_GROUND.visible = gv;
+  GARDEN.forEach((cl, i) => {
+    cl.group.visible = gv;
+    if (!gv) return;
+    growCluster(cl, tt, 6.0 + i * 0.015, 6.12 + i * 0.015);
+    poseCluster(cl, cl.align, cl.stretch);
+  });
+
+  // scene 7: the clear crystal, and a beam that splits onto the button
+  const fv = tt > 6.7;
+  FIN.group.visible = fv;
+  BEAM_IN.visible = fv;
+  BEAM_L.visible = fv;
+  BEAM_R.visible = fv;
+  if (fv) {
+    growCluster(FIN, tt, 6.8, 7.3);
+    poseCluster(FIN, 1, 1);
+    BEAM_MAT.opacity = 0.75 * ss(7.0, 7.5, tt);
+    const c = new THREE.Vector3(0, 0.25, 0.7);
+    setBeam(BEAM_IN, new THREE.Vector3(-3.6, 3.0, -0.8), c, 0.018);
+    const r = document.querySelector('.s7 .btn').getBoundingClientRect();
+    setBeam(BEAM_L, c, landOn(r.left + 8, r.top + 2), 0.012);
+    setBeam(BEAM_R, c, landOn(r.right - 8, r.top + 2), 0.012);
+  }
+
+  // far dust drifts slowly; near shards turn and sway faster
+  DUST.rotation.y = time * 0.012 + tt * 0.03;
+  DUST.rotation.x = 0.08;
+  for (let i = 0; i < SHARD_BASE.length; i++) {
+    const b = SHARD_BASE[i];
+    V.set(b.x + Math.sin(time * 0.23 + i) * 0.12, b.y + Math.cos(time * 0.19 + i * 1.7) * 0.1, b.z);
+    Q.setFromAxisAngle(AX_SHARD, time * 0.6 + i);
+    S.setScalar(1);
+    SHARDS.setMatrixAt(i, M4.compose(V, Q, S));
+  }
+  SHARDS.instanceMatrix.needsUpdate = true;
+  GRAIN.uniforms.uTime.value = time;
+}
+/* ---------- video in letters: procedural light painted only inside the glyphs ---------- */
+const SERIF_UP = s => `500 ${s}px Fraunces, Georgia, "Times New Roman", serif`;
+const SERIF_IT = s => `italic 300 ${s}px Fraunces, Georgia, "Times New Roman", serif`;
+function setupTexts() {
+  const name = document.querySelector('.name-cv');
+  if (name) TEXTS.push({ cv: name, ctx: name.getContext('2d'), mode: 'caustic', font: SERIF_UP, align: 'center',
+    maxSize: () => Math.min(innerWidth * 0.2, 240), getLines: () => ['SHUBHAM', 'GUPTA'] });
+  const line = document.querySelector('.line-cv');
+  if (line) TEXTS.push({ cv: line, ctx: line.getContext('2d'), mode: 'cracks', font: SERIF_IT, align: 'left',
+    maxSize: () => (isNarrow() ? 42 : 96),
+    getLines: () => (isNarrow() ? ['Orchestration', 'is the bottleneck.'] : ['Orchestration is the bottleneck.']) });
+}
+function layoutTexts() {
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  for (const t of TEXTS) {
+    const W = Math.max(120, t.cv.parentElement.clientWidth);
+    const lines = t.getLines();
+    t.ctx.font = t.font(100);
+    let wmax = 1;
+    for (const l of lines) wmax = Math.max(wmax, t.ctx.measureText(l).width);
+    const size = Math.min(t.maxSize(), (W * 0.96 * 100) / wmax);
+    const H = Math.ceil(size * (0.86 + (lines.length - 1) + 0.22));
+    Object.assign(t, { W, H, size, lines, dpr });
+    t.cv.width = Math.round(W * dpr);
+    t.cv.height = Math.round(H * dpr);
+    t.cv.style.height = H + 'px';
+  }
+}
+// The light is painted into a quarter-size buffer and scaled up once per frame
+function paintCaustic(t, c, W, H, time) {
+  const ow = Math.max(24, Math.round(W / 4)), oh = Math.max(12, Math.round(H / 4));
+  if (!t.off) t.off = document.createElement('canvas');
+  if (t.off.width !== ow || t.off.height !== oh) { t.off.width = ow; t.off.height = oh; }
+  const o = t.off.getContext('2d');
+  o.fillStyle = '#1C140E';
+  o.fillRect(0, 0, ow, oh);
+  o.globalCompositeOperation = 'lighter';
+  const R = Math.max(ow, oh);
+  for (let i = 0; i < 12; i++) {
+    const a = time * 0.23 + i * 1.91;
+    const x = ow * (0.5 + 0.44 * Math.sin(a * 0.9 + i));
+    const y = oh * (0.5 + 0.42 * Math.cos(a * 0.7 - i * 0.6));
+    const r = R * (0.12 + 0.07 * Math.sin(a + i));
+    const g = o.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, 'rgba(224,160,74,0.75)');
+    g.addColorStop(0.45, 'rgba(150,92,38,0.22)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    o.fillStyle = g;
+    o.fillRect(0, 0, ow, oh);
+  }
+  o.globalCompositeOperation = 'source-over';
+  c.drawImage(t.off, 0, 0, W, H);
+}
+function makePaths(t) {
+  const r = rng(77);
+  t.paths = [];
+  for (let k = 0; k < 26; k++) {
+    const pts = [];
+    let x = r(), y = r();
+    const ang = r() * Math.PI * 2;
+    for (let j = 0; j < 9; j++) {
+      pts.push([x, y]);
+      x += Math.cos(ang + (r() - 0.5) * 1.6) * 0.14;
+      y += Math.sin(ang + (r() - 0.5) * 1.6) * 0.22;
+    }
+    t.paths.push(pts);
+  }
+}
+function paintCracks(t, c, time) {
+  if (!t.paths) makePaths(t);
+  c.fillStyle = '#0B0C0F';
+  c.fillRect(0, 0, t.W, t.H);
+  c.globalCompositeOperation = 'lighter';
+  c.lineCap = 'round';
+  c.lineJoin = 'round';
+  t.paths.forEach((pts, k) => {
+    c.beginPath();
+    pts.forEach((p, j) => {
+      const x = p[0] * t.W, y = p[1] * t.H + Math.sin(time * 0.7 + k * 1.3 + j * 2.1) * t.H * 0.07;
+      if (j === 0) c.moveTo(x, y); else c.lineTo(x, y);
+    });
+    c.strokeStyle = k % 3 === 0 ? 'rgba(120,150,190,0.55)' : 'rgba(224,160,74,0.8)';
+    c.lineWidth = 1.4 + (k % 4) * 0.5;
+    c.stroke();
+  });
+  c.globalCompositeOperation = 'source-over';
+}
+// Paint the moving light, then keep only the pixels inside the letters
+function updateTexts(time) {
+  for (const t of TEXTS) {
+    if (!t.lines) continue;
+    const c = t.ctx;
+    c.setTransform(t.dpr, 0, 0, t.dpr, 0, 0);
+    c.globalCompositeOperation = 'source-over';
+    c.clearRect(0, 0, t.W, t.H);
+    if (t.mode === 'caustic') paintCaustic(t, c, t.W, t.H, time); else paintCracks(t, c, time);
+    c.globalCompositeOperation = 'destination-in';
+    c.fillStyle = '#000';
+    c.font = t.font(t.size);
+    c.textAlign = t.align;
+    const x = t.align === 'center' ? t.W / 2 : t.W * 0.01;
+    t.lines.forEach((l, i) => c.fillText(l, x, t.size * (0.86 + i)));
+    c.globalCompositeOperation = 'source-over';
+  }
+}
+boot();
+</script>
+</body>
+</html>
