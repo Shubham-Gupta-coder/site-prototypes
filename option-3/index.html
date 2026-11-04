@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shubham Gupta. Co-Founder and CTO, Verslay</title>
+<meta name="description" content="I build the AI that runs businesses. Verslay’s only technical founder.">
+<meta name="color-scheme" content="dark">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion');}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=DM+Mono:wght@300;400&family=Newsreader:ital,opsz,wght@1,6..72,300..500&display=swap">
+<style>
+/* OD-LAYOUT-PRIMITIVES v1 - structure only: display, flex/grid, overflow, wrapping, ratio, geometry.
+   Put this @layer first; product CSS outside the layer wins ordinary layout rules.
+   Native hidden and closed-dialog states take precedence over component display rules. */
+@layer od-layout {
+  [hidden]:not([hidden="until-found" i]) { display: none !important; }
+  dialog:not([open]) { display: none !important; }
+
+  :where(.od-stack,.od-row,.od-row-top,.od-cluster,.od-grid,.od-field,.od-stat,.od-cell,.od-tile) > :where(*) { min-width: 0; }
+
+  /* containers */
+  .od-stack   { display: flex; flex-direction: column; gap: var(--od-gap, 8px); }
+  .od-row     { display: flex; align-items: center; gap: var(--od-gap, 8px); }
+  .od-row-top { display: flex; align-items: flex-start; gap: var(--od-gap, 8px); }
+  .od-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--od-gap, 8px); }
+  .od-fill    { flex: 1 1 0; min-width: 0; }
+  .od-fixed   { flex: none; }
+  .od-grid    { display: grid; gap: var(--od-gap, 12px); grid-template-columns: repeat(var(--od-cols, 3), minmax(0, 1fr)); }
+
+  /* stacked information: each piece is its own line - never sibling inline spans */
+  .od-stat, .od-field, .od-cell { display: grid; gap: var(--od-gap, 2px); }
+  :where(.od-stat,.od-field,.od-cell) > :where(*) { display: block; }
+  .od-tile { display: grid; grid-template-rows: auto 1fr; }
+  :where(.od-tile) > :where(*) { display: block; }
+
+  /* media keeps its intrinsic ratio by default; never a distorted or cropped
+     cover by accident. height:auto lets the ratio win over an <img height="…">
+     attribute. Cropping to a uniform box is an explicit opt-in: set --od-ratio
+     AND add .od-media-cover together (per the core rule, only where a crop is
+     deliberate - tile thumbs, decorative fills - never on full-frame content). */
+  .od-media { display: block; width: 100%; height: auto; aspect-ratio: var(--od-ratio, auto); }
+  .od-media-cover { object-fit: cover; }
+
+  /* functional inline SVG icons opt into bounded geometry; content SVGs keep their own */
+  .od-icon { display: inline-block; inline-size: var(--od-icon-size, 1em); block-size: var(--od-icon-size, 1em); flex: none; }
+
+  /* data text only - authored copy is rewritten to its budget instead */
+  .od-truncate { display: block; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .od-clamp-2, .od-clamp-3 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+  .od-clamp-2 { -webkit-line-clamp: 2; }
+  .od-clamp-3 { -webkit-line-clamp: 3; }
+  .od-lines-2 { min-height: calc(2 * 1.4em); }   /* block-level reservation for a shared baseline */
+  .od-nowrap  { white-space: nowrap; }           /* number+unit, price+currency, date+weekday */
+  .od-keep    { word-break: keep-all; overflow-wrap: anywhere; } /* CJK labels break at spaces / <wbr> first */
+
+  /* screen skeleton (optional): bars take their own space, the middle scrolls - no padding guessed for chrome */
+  .od-screen { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; height: 100%; }
+  .od-scroll { overflow-y: auto; overscroll-behavior: contain; min-height: 0; }
+
+  /* horizontal rail: the next item peeks at the edge; trailing room survives overflow */
+  .od-rail { display: flex; gap: var(--od-gap, 8px); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+             padding-inline: var(--od-rail-pad, 16px); scroll-padding-inline: var(--od-rail-pad, 16px); }
+  .od-rail::-webkit-scrollbar { display: none; }
+  :where(.od-rail) > :where(*) { flex: none; scroll-snap-align: start; }
+  :where(.od-rail) > :where(:last-child) { margin-inline-end: var(--od-rail-pad, 16px); }
+
+  .od-spacer { flex: none; visibility: hidden; pointer-events: none; }
+  .od-touch  { min-width: 44px; min-height: 44px; }
+}
+:root [hidden]:where(:not([hidden="until-found" i])) { display: none; }
+/* /OD-LAYOUT-PRIMITIVES v1 */
+
+:root{--graphite:#0E1012;--chalk:#E9E6DF;--chalk-2:rgba(233,230,223,.62);--ochre:#C98B2B;--hair:#2A2D31;--gutter:56px;--font-display:"Archivo",sans-serif;--font-serif:"Newsreader","Iowan Old Style",Georgia,serif;--font-mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;--t-xxl:clamp(72px,13.5vw,220px);--t-xl:clamp(48px,8.4vw,136px);--t-l:clamp(40px,5.6vw,96px);--t-m:clamp(26px,2.6vw,40px);--t-body:clamp(18px,1.5vw,22px);--t-small:16px;--t-label:13px;--t-marq:clamp(44px,8vw,128px);--ease-out:cubic-bezier(.2,.7,.2,1)}
+@media (max-width:767px){:root{--gutter:20px}}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--graphite);color:var(--chalk);color-scheme:dark;scroll-padding-top:96px}
+body{margin:0;overflow-x:clip;background:var(--graphite);color:var(--chalk);font-family:var(--font-display);font-weight:300;font-size:var(--t-body);line-height:1.6}
+h1,h2,h3,p{margin:0;font:inherit}
+h2,h3{scroll-margin-top:96px}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--chalk);color:var(--graphite)}
+:focus-visible{outline:2px solid var(--ochre);outline-offset:4px}
+.label{font-family:var(--font-mono);font-size:var(--t-label);letter-spacing:.02em;color:var(--chalk-2)}
+.serif{font-family:var(--font-serif);font-style:italic;font-weight:300;line-height:1.3}
+.xl,.l,.m{font-weight:800;font-stretch:62%;letter-spacing:-.02em;line-height:.92;overflow-wrap:anywhere}
+.xl{font-size:var(--t-xl)}
+.l{font-size:var(--t-l);line-height:.95}
+.m{font-size:var(--t-m);font-stretch:70%;letter-spacing:-.01em;line-height:1.05}
+.nowrap{white-space:nowrap}
+
+/* top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:8px var(--gutter);background:var(--graphite)}
+.clock{display:flex;align-items:center;gap:.6ch;min-height:44px;font-family:var(--font-mono);font-size:var(--t-label);letter-spacing:.02em}
+.nav-cta{position:relative;display:inline-flex;align-items:center;min-height:44px;font-family:var(--font-mono);font-size:16px;color:var(--ochre)}
+.nav-cta::after{content:"";position:absolute;left:0;right:0;bottom:10px;height:1px;background:var(--ochre);transform:scaleX(0);transform-origin:0 50%;transition:transform .24s var(--ease-out)}
+.nav-cta:hover::after,.nav-cta:focus-visible::after{transform:scaleX(1)}
+
+/* hero */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:104px var(--gutter) 40px;background-image:linear-gradient(to right,var(--hair) 1px,transparent 1px),linear-gradient(to bottom,var(--hair) 1px,transparent 1px);background-size:calc(100% / 12) 100%,100% 12vh}
+.hero-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:32px}
+.hero-copy{display:grid;gap:20px;max-width:46rem}
+.hero-headline{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:var(--t-m);line-height:1.25}
+.hero-sub{max-width:44ch}
+.hero-name{margin-top:40px;font-weight:800;font-stretch:62%;font-size:var(--t-xxl);line-height:.84;letter-spacing:-.02em;text-transform:uppercase;white-space:nowrap}
+
+/* order card: the hero actor. One fixed element; it rides its lane, then flies into the button */
+.card-slot{flex:none;width:200px;height:120px}
+.card-static{position:relative;width:200px;height:120px;background:var(--ochre);color:var(--graphite)}
+.card-inner{position:relative;width:200px;height:120px;color:var(--graphite)}
+.card-fill{position:absolute;inset:0;background:var(--ochre)}
+.card-frame{position:absolute;inset:0;border:2px solid var(--ochre);opacity:0}
+.card-label{position:absolute;left:16px;top:14px;font-family:var(--font-mono);font-size:var(--t-label);letter-spacing:.08em;color:var(--graphite)}
+.card-rule{position:absolute;left:16px;right:16px;height:1px;background:var(--graphite);opacity:.55}
+.card-rule.r1{top:48px}
+.card-rule.r2{top:62px;right:72px}
+.order-card{position:fixed;left:0;top:0;z-index:12;display:none;width:200px;height:120px;transform-origin:0 0;pointer-events:none}
+
+/* tracking shot and pull-back: static fallback (stacked stations) */
+.stage{position:relative}
+.stage-pin{position:relative}
+.window{position:relative}
+.track{position:relative}
+.memory{margin:0 0 40px;padding-top:12px;border-top:1px solid var(--chalk-2)}
+.memory-label{font-family:var(--font-mono);font-size:var(--t-label);letter-spacing:.02em;color:var(--chalk-2)}
+.rail,.s-link{display:none}
+.station{display:grid;gap:14px;padding:40px 0 56px;border-top:1px solid var(--hair)}
+.station .station-time{font-family:var(--font-mono);font-size:var(--t-label);letter-spacing:.02em;color:var(--chalk-2)}
+.station h2{font-weight:800;font-stretch:70%;font-size:var(--t-l);line-height:.95;letter-spacing:-.01em}
+.s-line{font-size:var(--t-body);max-width:28ch}
+.caption{margin-top:32px;font-family:var(--font-mono);font-size:12px;letter-spacing:.02em;color:var(--chalk-2)}
+.map{display:none}
+.figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 32px;margin-top:64px}
+.fig-n{font-weight:800;font-stretch:62%;font-size:var(--t-xl);line-height:.9;letter-spacing:-.02em;white-space:nowrap}
+.fig-c{margin-top:8px;font-size:var(--t-small);color:var(--chalk-2)}
+/* motion layer: only when scripts run and reduced motion is not requested */
+.motion .order-card{display:block;will-change:transform,opacity}
+.motion .order-card .card-inner{animation:card-drop .4s var(--ease-out) both}
+@keyframes card-drop{from{transform:translateY(-70vh)}to{transform:none}}
+.motion .card-static{visibility:hidden}
+.motion .stage{height:1000vh}
+.motion .stage-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;overflow:clip}
+.motion .window{position:absolute;inset:0;overflow:hidden;overflow:clip}
+.motion .track{position:absolute;left:0;top:0;width:264vw;height:100%;transform-origin:0 0;will-change:transform}
+.motion .memory{position:absolute;left:0;top:16%;width:100%;height:1px;margin:0;padding:0;border:0;background:var(--chalk-2)}
+.motion .memory-label{position:absolute;left:3vw;bottom:10px}
+.motion .rail{display:block;position:absolute;left:0;top:36%;width:264vw;height:1px;background:var(--chalk-2)}
+.motion .station{position:absolute;top:0;left:calc(var(--i) * 44vw);width:44vw;height:100%;padding:0;border:0;display:block}
+.motion .s-link{display:block;position:absolute;left:3vw;top:16%;width:1px;height:20%;background:var(--chalk-2)}
+.motion .station .station-time{position:absolute;left:calc(3vw + 14px);top:calc(16% + 14px)}
+.motion .station h2{position:absolute;left:3vw;top:62%;white-space:nowrap}
+.motion .s-line{position:absolute;left:3vw;top:78%}
+.motion .caption{position:absolute;left:var(--gutter);bottom:28px;margin:0}
+.motion .map{display:grid;position:absolute;left:6vw;right:6vw;top:82vh;bottom:3vh;grid-template-columns:repeat(8,minmax(0,1fr));opacity:0}
+.map-col{position:relative;padding:0 12px;border-left:1px solid var(--hair);transform-origin:50% 100%;transform:scaleY(0)}
+.map-apps{display:grid;gap:8px;padding-top:12px}
+.map-app{display:block;height:24px;border:1px solid var(--chalk-2)}
+.map-dots{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;opacity:0}
+.map-dot{display:block;width:4px;height:4px;border-radius:50%;background:var(--chalk)}
+.motion .figures{position:absolute;left:6vw;right:6vw;top:46vh;margin:0;grid-template-columns:repeat(4,minmax(0,1fr));gap:3vh 3vw}
+.motion .fig{opacity:0}
+.motion [data-reveal],.motion [data-band]{opacity:0}
+.motion .marquee{overflow:clip}
+.motion .marquee-track{width:max-content;flex-wrap:nowrap}
+.motion .m-sep{display:block}
+.motion .cta{opacity:0}
+.motion .who{min-height:180vh}
+@media (max-width:767px){
+  .motion .window{bottom:14vh}
+  .motion .track{width:100vw;height:156vh}
+  .motion .memory{left:12px;top:0;width:1px;height:156vh}
+  .motion .memory-label{left:12px;top:-24px;bottom:auto}
+  .motion .rail{left:75px;top:0;width:1px;height:156vh}
+  .motion .station{left:0;top:calc(var(--i) * 26vh);width:100vw;height:26vh}
+  .motion .s-link{left:12px;top:6vh;width:63px;height:1px}
+  .motion .station .station-time{left:150px;top:2vh}
+  .motion .station h2{left:150px;right:20px;top:6vh;font-size:clamp(30px,9vw,44px);white-space:normal}
+  .motion .s-line{left:150px;right:20px;top:13vh;font-size:16px;max-width:none}
+  .motion .caption{left:var(--gutter);right:var(--gutter);bottom:2vh}
+  .motion .map{display:none}
+  .motion .figures{left:var(--gutter);right:var(--gutter);top:56vh;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5vh 4vw}
+  .fig-n{font-size:clamp(40px,11vw,64px)}
+  .motion .who{min-height:160vh}
+}
+/* verslay: asymmetric two-column statements */
+.sec{padding:160px var(--gutter)}
+.verslay{padding:160px var(--gutter)}
+.v-head{font-size:clamp(64px,13vw,220px);font-weight:800;font-stretch:62%;letter-spacing:-.02em;line-height:.86;overflow-wrap:anywhere}
+.v-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;row-gap:88px;margin-top:88px}
+.v-left{grid-column:1 / span 7;display:grid;gap:56px;align-content:start}
+.v-right{grid-column:9 / span 4;display:grid;gap:40px;align-content:start;padding-top:12px}
+.v-commit{grid-column:4 / span 9;display:grid;gap:20px}
+.v-demo{grid-column:1 / -1}
+.v-lead{font-size:clamp(24px,2.5vw,40px);font-weight:300;line-height:1.25;max-width:30ch}
+.v-big{font-size:clamp(44px,6.2vw,112px);font-weight:800;font-stretch:62%;letter-spacing:-.02em;line-height:.94;overflow-wrap:anywhere}
+.v-body{font-size:clamp(20px,1.7vw,26px);line-height:1.4;max-width:34ch}
+.v-security{list-style:none;margin:0;padding:0;font-size:clamp(20px,1.8vw,28px);line-height:1.3}
+.v-security li{padding:20px 0;border-top:1px solid var(--hair)}
+.v-security li:last-child{border-bottom:1px solid var(--hair)}
+
+/* builder: five wide chapter bands with big Archivo titles */
+.serif-line{font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:var(--t-m);line-height:1.3;max-width:30ch;margin-top:72px}
+.chapters{display:grid;margin-top:72px}
+.chapter{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;row-gap:18px;align-items:baseline;padding:56px 0;border-top:1px solid var(--hair)}
+.chapter > .label{grid-column:1 / span 2}
+.c-title{grid-column:3 / -1;font-size:clamp(40px,6.4vw,112px);font-weight:800;font-stretch:62%;letter-spacing:-.02em;line-height:.95;overflow-wrap:anywhere}
+.c-detail{grid-column:6 / span 6;font-size:clamp(20px,1.8vw,28px);line-height:1.35;max-width:40ch}
+
+/* nights: full-width case bands, large mono clock label, condensed title */
+.cases{display:grid;margin-top:72px}
+.case{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;row-gap:22px;padding:60px 0;border-top:1px solid var(--hair)}
+.case-clock{grid-column:1 / -1;font-family:var(--font-mono);font-size:clamp(24px,2.8vw,44px);letter-spacing:.01em;line-height:1.1;color:var(--chalk-2)}
+.case-title{grid-column:1 / -1;font-size:clamp(44px,7.8vw,128px);font-weight:800;font-stretch:62%;letter-spacing:-.02em;line-height:.9;overflow-wrap:anywhere}
+.case-copy{grid-column:6 / span 7;font-size:clamp(20px,1.8vw,28px);line-height:1.35;max-width:46ch}
+
+/* shift */
+.spec{display:grid;grid-template-columns:1fr 1fr;gap:24px 6vw;margin-top:72px}
+.spec-list{list-style:none;margin:0;padding:0;font-family:var(--font-mono);font-size:var(--t-small);line-height:1.5}
+.spec-list li{padding:14px 0;border-top:1px solid var(--hair)}
+.record-label{margin-top:112px}
+.record{margin-top:16px}
+
+/* belief: clamp-sized, kept clear of the fixed top bar */
+.belief{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:clamp(150px,20vh,220px) var(--gutter) 120px}
+.belief-title{font-size:clamp(44px,8.6vw,132px);font-weight:800;font-stretch:62%;letter-spacing:-.02em;line-height:1.04;overflow-wrap:anywhere}
+.belief-lines{display:grid;gap:20px;margin-top:56px;max-width:44rem}
+.belief-lines .serif-line{margin-top:0;font-size:var(--t-m)}
+
+/* who: two industry rows moving in opposite directions */
+.who{display:flex;flex-direction:column;justify-content:center;padding:160px 0 140px}
+.who-lead{padding:0 var(--gutter);font-size:var(--t-m);line-height:1.25;max-width:34ch}
+.who-label{margin-top:88px;padding:0 var(--gutter)}
+.marquee{margin-top:20px;padding:22px 0;border-top:1px solid var(--hair)}
+.marquee--b{border-bottom:1px solid var(--hair)}
+.marquee-track{display:flex;flex-wrap:wrap;row-gap:12px;align-items:center;padding-left:var(--gutter)}
+.m-item{font-size:var(--t-marq);font-weight:800;font-stretch:62%;letter-spacing:-.015em;line-height:1;white-space:nowrap}
+.m-sep{display:none;flex:none;width:2px;height:.7em;margin:0 .6em;background:var(--chalk-2)}
+.who-q{margin:88px var(--gutter) 0}
+
+/* close */
+.close{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:40px;padding:160px var(--gutter) 120px}
+.close-lead{font-size:var(--t-m);line-height:1.3;max-width:36ch}
+.cta{display:flex;align-items:center;justify-content:center;width:min(440px,80vw);aspect-ratio:5/3;border:2px solid var(--ochre);background:transparent;color:var(--ochre);font-size:clamp(40px,5vw,64px);font-weight:800;font-stretch:62%;letter-spacing:-.01em;line-height:1;text-align:center}
+.cta:hover,.cta:focus-visible{background:var(--ochre);color:var(--graphite)}
+.clause{font-family:var(--font-mono);font-size:var(--t-small);line-height:1.6;color:var(--chalk-2);max-width:60ch}
+.foot{padding:32px var(--gutter) 48px;border-top:1px solid var(--hair);font-family:var(--font-mono);font-size:var(--t-label);color:var(--chalk-2)}
+
+@media (max-width:767px){
+  .hero-name{font-size:clamp(64px,26vw,130px)}
+  .hero-name span{display:block}
+  .spec{grid-template-columns:1fr}
+  .sec,.verslay{padding-top:112px;padding-bottom:112px}
+  .v-left,.v-right,.v-commit{grid-column:1 / -1}
+  .v-grid{row-gap:64px}
+  .chapter > .label,.c-title,.c-detail{grid-column:1 / -1}
+  .case-copy{grid-column:1 / -1}
+}
+@media (prefers-reduced-motion:reduce){
+  .nav-cta::after{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+<p class="clock"><span>Delhi</span> <time id="clock-time">23:47</time></p>
+<a class="nav-cta" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+</header>
+
+<section class="hero" id="hero">
+<div class="hero-top">
+<div class="hero-copy">
+<p class="hero-headline">I build the AI that runs businesses.</p>
+<p class="hero-sub">Verslay’s only technical founder. I built the entire platform. My co-founder runs sales.</p>
+</div>
+<div class="card-slot" id="card-slot">
+<div class="card-static" aria-hidden="true"><span class="card-label">ORDER</span><span class="card-rule r1"></span><span class="card-rule r2"></span></div>
+</div>
+</div>
+<h1 class="hero-name"><span>Shubham</span> <span>Gupta</span></h1>
+</section>
+
+<section class="stage" id="stage">
+<div class="stage-pin" id="stage-pin">
+<div class="window">
+<div class="track" id="track">
+<div class="memory"><span class="memory-label">one memory</span></div>
+<div class="rail" aria-hidden="true"></div>
+<article class="station" style="--i:0"><span class="s-link" aria-hidden="true"></span><p class="station-time">23:47</p><h2>Conversation</h2><p class="s-line">A question arrives on WhatsApp.</p></article>
+<article class="station" style="--i:1"><span class="s-link" aria-hidden="true"></span><p class="station-time">23:48</p><h2>Catalogue</h2><p class="s-line">The catalogue answers.</p></article>
+<article class="station" style="--i:2"><span class="s-link" aria-hidden="true"></span><p class="station-time">23:52</p><h2>Payment</h2><p class="s-line">Payment clears through Razorpay.</p></article>
+<article class="station" style="--i:3"><span class="s-link" aria-hidden="true"></span><p class="station-time">00:10</p><h2>Inventory</h2><p class="s-line">Inventory moves across marketplaces.</p></article>
+<article class="station" style="--i:4"><span class="s-link" aria-hidden="true"></span><p class="station-time">02:00</p><h2>Ledger</h2><p class="s-line">Reconciliation runs. Refunds and dunning are handled.</p></article>
+<article class="station" style="--i:5"><span class="s-link" aria-hidden="true"></span><p class="station-time">07:00</p><h2>Approval</h2><p class="s-line">A human approves before money or email leaves the building.</p></article>
+</div>
+</div>
+<p class="caption">Illustrative. Built from the commerce and back-office work in the record.</p>
+<div class="map" id="map" aria-hidden="true"></div>
+<div class="figures">
+<div class="fig"><p class="fig-n">12</p><p class="fig-c">apps</p></div>
+<div class="fig"><p class="fig-n">132</p><p class="fig-c">agents</p></div>
+<div class="fig"><p class="fig-n">291</p><p class="fig-c">use-cases</p></div>
+<div class="fig"><p class="fig-n">8</p><p class="fig-c">departments</p></div>
+<div class="fig"><p class="fig-n">359</p><p class="fig-c">tools, loaded on demand</p></div>
+<div class="fig"><p class="fig-n">40+</p><p class="fig-c">native integrations</p></div>
+<div class="fig"><p class="fig-n">14</p><p class="fig-c">section business memory that learns from every run</p></div>
+<div class="fig"><p class="fig-n">143</p><p class="fig-c">SQL migrations</p></div>
+</div>
+</div>
+</section>
+
+<section class="verslay" id="verslay">
+<h2 class="v-head">Verslay</h2>
+<div class="v-grid">
+<div class="v-left">
+<p class="v-lead" data-reveal>Ready-made AI use-cases that run on a business’s own tools, inside the model the operator already uses, with one shared memory.</p>
+<p class="v-big" data-reveal>No model runs on Verslay’s servers.</p>
+</div>
+<div class="v-right">
+<p class="v-body" data-reveal>Commerce: Shopify, Razorpay, Cashfree, Stripe, WooCommerce. Refunds, reconciliation, dunning, cart recovery.</p>
+<ul class="v-security" data-reveal>
+<li>Logins sit in a vault encrypted at rest with AES-256-GCM.</li>
+<li>Each customer is isolated at the row.</li>
+<li>Verslay does not train on customer data.</li>
+</ul>
+</div>
+<div class="v-commit">
+<p class="v-big" data-reveal>989 commits from March to October 2026.</p>
+<p class="v-lead" data-reveal>296 of the last 300 are mine.</p>
+</div>
+<p class="v-big v-demo" data-reveal>40+ Indian businesses booked a Verslay demo.</p>
+</div>
+</section>
+
+<section class="sec builder" id="builder">
+<h2 class="xl">The business came first.</h2>
+<div class="chapters">
+<article class="chapter" data-band>
+<p class="label">Marketing</p>
+<h3 class="c-title">A marketing venture.</h3>
+<p class="c-detail">Funnels, growth, clients.</p>
+</article>
+<article class="chapter" data-band>
+<p class="label">Trading</p>
+<h3 class="c-title">Growth and strategy at a trading venture.</h3>
+<p class="c-detail">Sales, marketing automation, the commercial side of software.</p>
+</article>
+<article class="chapter" data-band>
+<p class="label">Mental-wellness</p>
+<h3 class="c-title">Sheruta, a mental-wellness product.</h3>
+<p class="c-detail">Co-founded. School-data sync. 102 API routes.</p>
+</article>
+<article class="chapter" data-band>
+<p class="label">Operators</p>
+<h3 class="c-title">Systems for operators:</h3>
+<p class="c-detail">outreach, voice, commerce, the back office.</p>
+</article>
+<article class="chapter" data-band>
+<p class="label">Verslay</p>
+<h3 class="c-title">Verslay.</h3>
+<p class="c-detail">I own the product and the engineering.</p>
+</article>
+</div>
+<p class="serif-line" data-reveal>I learned how a company sells before I built the machine that runs one.</p>
+</section>
+
+<section class="sec nights" id="nights">
+<div class="cases">
+<article class="case" data-band>
+<p class="case-clock">Month end.</p>
+<h3 class="case-title">15-STORE APPAREL</h3>
+<p class="case-copy">Monthly dues were computed by hand. A GST-correct payment engine. Email leaves only after a human approves. An inbox watcher checks DKIM and SPF before a message is trusted.</p>
+</article>
+<article class="case" data-band>
+<p class="case-clock">Orders</p>
+<h3 class="case-title">CUSTOM PRODUCTS</h3>
+<p class="case-copy">A WhatsApp operating system for orders. Spec v4, after 8 reviews.</p>
+</article>
+<article class="case" data-band>
+<p class="case-clock">Nightly</p>
+<h3 class="case-title">VOICE EXECUTIVE ASSISTANT</h3>
+<p class="case-copy">24 workflows, about 540 nodes. Re-planned nightly. A human approves anything that moves a calendar.</p>
+</article>
+<article class="case" data-band>
+<p class="case-clock">Outreach</p>
+<h3 class="case-title">CREATOR OUTREACH</h3>
+<p class="case-copy">20+ hours a week, given back, for that system alone.</p>
+</article>
+</div>
+</section>
+
+<section class="sec shift" id="shift">
+<h2 class="m">The system I run my own company on</h2>
+<div class="spec">
+<ul class="spec-list" data-reveal>
+<li>13 agent seats</li>
+<li>8 plugins I wrote</li>
+<li>21 background services</li>
+<li>23 scheduled jobs</li>
+<li>Graph memory: 7,942 nodes, 237,317 links</li>
+<li>6 documented releases</li>
+<li>117 gated releases</li>
+</ul>
+<ul class="spec-list" data-reveal>
+<li>Phone command deck: drop a task by voice, get a result card.</li>
+<li>109 API routes</li>
+<li>53 tables</li>
+<li>16 screens</li>
+<li>464 test files</li>
+<li>8 CI workflows</li>
+<li>711 commits in about 16 days.</li>
+</ul>
+</div>
+<p class="label record-label">The record:</p>
+<p class="xl record" data-reveal><span class="nowrap">142 repos.</span> <span class="nowrap">4,205 commits.</span> <span class="nowrap">55,020 files.</span></p>
+</section>
+
+<section class="belief" id="belief">
+<h2 class="belief-title">Orchestration is the bottleneck.</h2>
+<div class="belief-lines">
+<p class="serif-line" data-reveal>A company collects tools. None of them remember the others. The operator becomes the glue.</p>
+<p class="serif-line" data-reveal>I build the layer that removes the glue: one memory, tools that load when the work needs them, and a record of what ran.</p>
+</div>
+</section>
+
+<section class="who" id="who">
+<p class="who-lead" data-reveal>Operators who already run a company, whose work is split across tools that do not share a memory.</p>
+<p class="label who-label">Industries</p>
+<div class="marquee">
+<div class="marquee-track" id="marquee-a"><span class="m-item">D2C fashion and ethnic wear</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">gifting</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">jewellery</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">beauty</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">home decor</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">fitness</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">textiles and B2B</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">refurbished electronics</span></div>
+</div>
+<div class="marquee marquee--b">
+<div class="marquee-track" id="marquee-b"><span class="m-item">agencies</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">mental wellness</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">education</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">trading</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">hospitality content</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">music</span><span class="m-sep" aria-hidden="true"></span><span class="m-item">creators</span></div>
+</div>
+<p class="serif-line who-q" data-reveal>If you are shopping for a landing page or a one-week chatbot, this is the wrong call.</p>
+</section>
+
+<section class="close" id="close">
+<p class="close-lead" data-reveal>Bring the operation. I will tell you whether it should run on Verslay, or be built around the tools you already have.</p>
+<a class="cta" id="cta" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+<p class="label" data-reveal>The appointment sits on LinkedIn.</p>
+<p class="clause" data-reveal>Some of the work on this site was built through Verslay, for Verslay’s clients. Those businesses are Verslay’s clients, not my personal clients, so they are described by industry rather than by name.</p>
+</section>
+<footer class="foot">Shubham Gupta. Delhi.</footer>
+
+<div class="order-card" id="order-card" aria-hidden="true"><div class="card-inner"><span class="card-fill"></span><span class="card-frame"></span><span class="card-label">ORDER</span><span class="card-rule r1"></span><span class="card-rule r2"></span></div></div>
+
+<script>
+(() => {
+  'use strict';
+  if (!document.documentElement.classList.contains('motion')) return;
+
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const easeIO = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const smooth = (a, b, v) => { const x = clamp((v - a) / (b - a)); return x * x * (3 - 2 * x); };
+  const pad = n => String(n).padStart(2, '0');
+
+  const card = $('#order-card');
+  const cardFill = $('.card-fill', card);
+  const cardFrame = $('.card-frame', card);
+  const cardLabel = $('.card-label', card);
+  const slot = $('#card-slot');
+  const stage = $('#stage');
+  const pin = $('#stage-pin');
+  const track = $('#track');
+  const caption = $('.caption', pin);
+  const mapEl = $('#map', pin);
+  const figs = $$('.fig', pin);
+  const clockEl = $('#clock-time');
+  const cta = $('#cta');
+  const who = $('#who');
+  const rowA = $('#marquee-a');
+  const rowB = $('#marquee-b');
+  const bands = $$('[data-band]');
+  const reveals = $$('[data-reveal]');
+  const mobileMQ = matchMedia('(max-width: 767px)');
+  const hourFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', hour12: false });
+
+  // Pull-back map: 8 department columns, 12 app blocks, 132 agent dots. No labels.
+  const APPS = [2, 2, 2, 1, 2, 1, 1, 1];
+  const DOTS = [17, 17, 17, 17, 16, 16, 16, 16];
+  const frag = document.createDocumentFragment();
+  APPS.forEach((apps, c) => {
+    const col = document.createElement('div');
+    col.className = 'map-col';
+    const blocks = document.createElement('div');
+    blocks.className = 'map-apps';
+    for (let a = 0; a < apps; a++) blocks.appendChild(Object.assign(document.createElement('span'), { className: 'map-app' }));
+    const dots = document.createElement('div');
+    dots.className = 'map-dots';
+    for (let d = 0; d < DOTS[c]; d++) dots.appendChild(Object.assign(document.createElement('span'), { className: 'map-dot' }));
+    col.append(blocks, dots);
+    frag.appendChild(col);
+  });
+  mapEl.appendChild(frag);
+  const mapCols = $$('.map-col', mapEl);
+  const mapDots = $$('.map-dots', mapEl);
+
+  const TRACK_SHARE = 6 / 9;                 // tracking shot share of the sticky range; the rest is the pull-back
+  const ST_W = 44;                           // station pitch in vw (desktop)
+  const ST_H = 26;                           // station pitch in vh (phones)
+  const LANE_Y = 0.36;                       // desktop: the order's lane, as a share of stage height
+  const LANE_X_PHONE = 75;                   // phones: the rail the order rides, in px from the left
+  const CARD_PHONE = 0.55;                   // phones: card scale
+  const OFFSETS = [0, 1, 5, 23, 133, 433];   // minutes after 23:47 for the six stations
+  const BASE = 23 * 60 + 47;
+  let vw = 1, vh = 1, mobile = false, stageTop = 0, range = 1, rangeA = 0, rangeB = 0;
+
+  function measure() {
+    vw = innerWidth / 100;
+    vh = innerHeight / 100;
+    mobile = mobileMQ.matches;
+    stageTop = stage.getBoundingClientRect().top + scrollY;
+    range = Math.max(1, stage.offsetHeight - pin.offsetHeight);
+    rangeA = Math.max(0, rowA.offsetWidth - innerWidth);
+    rangeB = Math.max(0, rowB.offsetWidth - innerWidth);
+  }
+
+  // Station connector (where the order sits on the rail) in track coordinates
+  function anchor(s) {
+    const i = Math.min(Math.floor(s), 4);
+    const p = i + easeIO(Math.min(s - i, 1));
+    return mobile ? [LANE_X_PHONE, (p * ST_H + 6) * vh] : [(p * ST_W + 3) * vw, LANE_Y * innerHeight];
+  }
+
+  function journeyClock(s) {
+    const i = Math.min(Math.floor(s), 4);
+    const off = OFFSETS[i] + (OFFSETS[i + 1] - OFFSETS[i]) * easeIO(Math.min(s - i, 1));
+    const m = Math.round(BASE + off) % 1440;
+    return pad(Math.floor(m / 60)) + ':' + pad(m % 60);
+  }
+
+  const S = { tx: 0, ty: 0, k: 1, cx: 0, cy: 0, cs: 1, cr: 0, co: 0, ma: 0, mb: 0 };
+  let first = true;
+  let branch = '';
+  let shown = '';
+
+  function frame() {
+    const H = innerHeight;
+    const sy = scrollY;
+    const tp = clamp((sy - stageTop) / range);
+    const t = clamp(tp / TRACK_SHARE);
+    const q = clamp((tp - TRACK_SHARE) / (1 - TRACK_SHARE));
+    const s = 5 * t;
+    const e = easeIO(q);
+    const [px, py] = anchor(s);
+
+    // The order rides its own lane: across the desktop lane, or down the phone rail
+    const ax = mobile ? LANE_X_PHONE : lerp(156, innerWidth * 0.72, t);
+    const ay = mobile ? lerp(22 * vh, 70 * vh, t) : LANE_Y * H;
+    let tx = ax - px, ty = ay - py, k = 1;
+    if (q > 0) {                              // pull-back: the track shrinks into the map
+      tx = lerp(tx, 6 * vw, e);
+      ty = lerp(ty, (mobile ? 8 : 10) * vh, e);
+      k = lerp(1, 0.3, e);
+    }
+
+    const here = sy < stageTop ? 'hero' : (sy <= stageTop + range ? 'stage' : 'close');
+    const snap = first || here !== branch;    // hand-offs snap, so the card never glides across text
+    branch = here;
+
+    let L, T, sc, rot = 0, op = 1, fillO = 1, frameO = 0, labelO = 1, btnO = 0, f = 0;
+    if (here === 'hero') {
+      const r = slot.getBoundingClientRect();
+      L = r.left; T = r.top; sc = 1;
+      op = 1 - smooth(stageTop - 0.6 * H, stageTop, sy);   // the card leaves with the hero
+    } else if (here === 'stage') {
+      const cs = (mobile ? CARD_PHONE : 1) * k;
+      const vx = tx + k * px, vy = ty + k * py;
+      sc = cs;
+      L = vx - 100 * sc; T = vy - 60 * sc;
+      rot = q > 0 ? 0 : 2.5 * Math.sin(Math.PI * easeIO(s - Math.floor(s)));
+      op = smooth(0, 0.03, tp) * (1 - smooth(0.92, 1, q));
+    } else {
+      // Close: the card flies in along the button's row, then lands as the button's outline
+      const b = cta.getBoundingClientRect();
+      f = clamp((H - b.top) / (H * 0.75));
+      const ef = easeOut(f);
+      L = lerp(innerWidth + 24, b.left, ef);
+      T = b.top;
+      sc = lerp(1, b.width / 200, ef);
+      rot = -5 * (1 - ef);
+      op = 1 - smooth(0.985, 1, f);
+      fillO = 1 - smooth(0.7, 0.95, f);
+      frameO = smooth(0.7, 0.95, f);
+      labelO = 1 - smooth(0.4, 0.7, f);
+      btnO = smooth(0.85, 1, f);
+    }
+
+    const k1 = first ? 1 : 0.14;              // track and rows ease toward their targets
+    const kc = snap ? 1 : 0.2;                // the card eases, but snaps at every hand-off
+    S.tx = lerp(S.tx, tx, k1); S.ty = lerp(S.ty, ty, k1); S.k = lerp(S.k, k, k1);
+    S.cx = lerp(S.cx, L, kc); S.cy = lerp(S.cy, T, kc); S.cs = lerp(S.cs, sc, kc);
+    S.cr = lerp(S.cr, rot, kc); S.co = lerp(S.co, op, kc);
+
+    track.style.transform = `translate3d(${S.tx}px, ${S.ty}px, 0) scale(${S.k})`;
+    card.style.transform = `translate3d(${S.cx}px, ${S.cy}px, 0) rotate(${S.cr}deg) scale(${S.cs})`;
+    card.style.opacity = S.co;
+    cardFill.style.opacity = fillO;
+    cardFrame.style.opacity = frameO;
+    cardLabel.style.opacity = labelO;
+    cta.style.opacity = btnO;
+    caption.style.opacity = 1 - smooth(0.25, 0.55, q);
+
+    // Map assembles during the pull-back; figures arrive one by one
+    mapEl.style.opacity = smooth(0.04, 0.3, q);
+    mapCols.forEach((col, i) => {
+      col.style.transform = `scaleY(${easeOut(clamp((q - 0.06 - i * 0.03) / 0.3))})`;
+      mapDots[i].style.opacity = clamp((q - 0.28 - i * 0.04) / 0.2);
+    });
+    figs.forEach((el, j) => {
+      const p = easeOut(clamp((q - 0.36 - j * 0.06) / 0.14));
+      el.style.opacity = p;
+      el.style.transform = `translate3d(0, ${(1 - p) * 16}px, 0)`;
+    });
+
+    // Clock: journey time while the order travels; the real Delhi hour at the close
+    const text = f > 0.02 ? hourFmt.format(new Date()) + ':00' : journeyClock(s);
+    if (text !== shown) { clockEl.textContent = text; shown = text; }
+
+    // Two industry rows move with scroll, in opposite directions (no autoplay)
+    const wr = who.getBoundingClientRect();
+    const wp = clamp((H - wr.top) / (wr.height + H));
+    S.ma = lerp(S.ma, -wp * rangeA, k1);
+    S.mb = lerp(S.mb, -(1 - wp) * rangeB, k1);
+    rowA.style.transform = `translate3d(${S.ma}px, 0, 0)`;
+    rowB.style.transform = `translate3d(${S.mb}px, 0, 0)`;
+
+    // Wide bands slide in from the left; text blocks rise in
+    bands.forEach(el => {
+      const p = easeOut(clamp((H * 0.92 - el.getBoundingClientRect().top) / (H * 0.5)));
+      el.style.opacity = p;
+      el.style.transform = `translate3d(${(p - 1) * 18}vw, 0, 0)`;
+    });
+    reveals.forEach(el => {
+      const p = easeOut(clamp((H * 0.94 - el.getBoundingClientRect().top) / (H * 0.4)));
+      el.style.opacity = p;
+      el.style.transform = `translate3d(0, ${(1 - p) * 24}px, 0)`;
+    });
+
+    first = false;
+    requestAnimationFrame(frame);
+  }
+
+  measure();
+  addEventListener('resize', measure, { passive: true });
+  addEventListener('load', measure);
+  if (document.fonts) document.fonts.ready.then(measure);
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

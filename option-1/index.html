@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shubham Gupta. Co-Founder and CTO, Verslay</title>
+<meta name="description" content="I build the AI that runs businesses.">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Instrument+Serif:ital@1&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (reduce.matches === false) { document.documentElement.className = 'motion'; }
+})();
+</script>
+<style>
+:root {
+  --black: #0A0A0A;
+  --bone: #ECE4D4;
+  --bone-soft: rgba(236, 228, 212, 0.72);
+  --bone-line: rgba(236, 228, 212, 0.22);
+  --tung: #D9482B;
+  --f-display: "Anton", "Impact", "Haettenschweiler", sans-serif;
+  --f-serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --m: clamp(20px, 4.4vw, 72px);
+  --t-hero: 18vw;
+  --t-cta: clamp(56px, 13vw, 220px);
+  --t-display: clamp(48px, 8.4vw, 150px);
+  --t-title: clamp(40px, 6.4vw, 104px);
+  --t-num: clamp(120px, 24vw, 420px);
+  --t-quote: clamp(26px, 3.2vw, 52px);
+  --t-sub: clamp(22px, 2.2vw, 34px);
+  --t-body: 16px;
+  --t-label: 14px;
+  --sp-h: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='18' viewBox='0 0 36 18'%3E%3Crect x='10' y='4' width='16' height='10' rx='3' fill='none' stroke='%23ECE4D4' stroke-opacity='.55' stroke-width='1.2'/%3E%3C/svg%3E");
+  --sp-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='36' viewBox='0 0 18 36'%3E%3Crect x='4' y='10' width='10' height='16' rx='3' fill='none' stroke='%23ECE4D4' stroke-opacity='.55' stroke-width='1.2'/%3E%3C/svg%3E");
+}
+@media (max-width: 600px) { :root { --t-hero: 22vw; } }
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--black); color: var(--bone); overflow-x: clip; }
+body { margin: 0; background: var(--black); font: 400 var(--t-body)/1.6 var(--f-mono); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul, li { margin: 0; padding: 0; }
+ul { list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--bone); outline-offset: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; padding: 0; }
+html:not(.motion) .sr { position: static; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; }
+
+/* Frame: screen, scenes, grain, flash, nav, timecode */
+.screen { position: relative; background: var(--black); }
+.scene { position: relative; padding: clamp(72px, 12vh, 140px) var(--m); border-bottom: 1px solid rgba(236, 228, 212, 0.12); }
+.track { display: none; }
+html.motion .track { display: block; }
+html.motion .screen { position: fixed; inset: 0; overflow: hidden; z-index: 1; }
+html.motion .scene { position: absolute; inset: 0; padding: 0; border: 0; opacity: 0; overflow: hidden; }
+html.motion .scene.on { opacity: 1; }
+.grain { display: none; position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.04; pointer-events: none; z-index: 4; }
+html.motion .grain { display: block; }
+.bar { display: none; position: absolute; left: 0; right: 0; height: 50%; background: #000; z-index: 5; }
+.bar-top { top: 0; }
+.bar-bottom { bottom: 0; }
+html.motion .bar { display: block; }
+html:not(.motion) .bar-top { display: block; position: relative; height: auto; padding: 20px var(--m); background: #000; text-align: right; }
+html:not(.motion) .bar-bottom { display: none; }
+.flash { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 30; }
+.flash.on { opacity: 1; }
+.nav { position: absolute; right: var(--m); bottom: 18px; z-index: 6; font-size: var(--t-label); letter-spacing: 0.02em; line-height: 1; }
+html:not(.motion) .nav { position: static; }
+.nav a { position: relative; text-decoration: none; }
+.nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--tung); }
+.tc { position: fixed; right: var(--m); bottom: clamp(20px, 3vw, 40px); z-index: 40; margin: 0; display: flex; align-items: center; gap: 10px; font-size: var(--t-label); font-weight: 500; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
+.tc .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--tung); }
+html:not(.motion) .tc { display: none; }
+
+/* Scene 1: cold open */
+.typed { margin: 0 0 24px; font-size: 22px; letter-spacing: 0.04em; }
+.type { display: inline; }
+html:not(.motion) .type { display: none; }
+.cover { position: relative; }
+.name { font-family: var(--f-display); font-weight: 400; font-size: var(--t-hero); line-height: 0.84; letter-spacing: -0.02em; text-transform: uppercase; transform-origin: 0 50%; white-space: nowrap; }
+.name .l { display: block; }
+.headline { font-family: var(--f-serif); font-style: italic; font-size: var(--t-quote); line-height: 1.1; max-width: 22ch; margin-top: calc(2.4vw + 24px); }
+.subline { margin-top: 20px; max-width: 58ch; color: var(--bone-soft); }
+html.motion #s1 .cover { position: absolute; left: var(--m); right: var(--m); top: 50%; transform: translateY(-50%); }
+html.motion #s1 .typed { position: absolute; left: var(--m); top: 34%; }
+html.motion #s1 .name, html.motion #s1 .headline, html.motion #s1 .subline { opacity: 0; }
+
+/* Slates for scenes 2 to 6 */
+.slate-wrap { display: flex; justify-content: center; align-items: center; padding: 4vh 0 8vh; }
+.slate { position: relative; width: min(560px, 82vw); }
+.clapper { height: clamp(36px, 5.4vh, 52px); background: var(--bone); position: relative; transform-origin: 0 100%; }
+.clapper::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--tung); }
+.slate-body { border: 1px solid var(--bone); border-top: 0; padding: clamp(20px, 3.4vh, 36px) 24px; }
+.slate-title { font-family: var(--f-mono); font-weight: 500; font-size: clamp(16px, 1.9vw, 24px); line-height: 1.3; letter-spacing: 0.08em; text-transform: uppercase; }
+html.motion .slate-wrap { position: absolute; inset: 0; padding: 0; }
+
+/* Scene 2: filmstrip */
+.strip { --fw: min(70vw, 1000px); --fh: 56vh; --gap: 24px; position: relative; display: flex; flex-direction: column; gap: var(--gap); }
+html.motion #s2 .strip { position: absolute; left: 0; top: 50%; margin-top: calc(var(--fh) * -0.5); flex-direction: row; width: max-content; }
+.frame { flex: 0 0 auto; width: var(--fw); height: var(--fh); background: var(--black); border: 1px solid var(--bone); padding: clamp(24px, 3.6vw, 56px); display: flex; flex-direction: column; justify-content: flex-end; gap: 20px; }
+html:not(.motion) .frame { height: auto; min-height: 40vh; }
+.frame-title { font-family: var(--f-display); font-weight: 400; font-size: var(--t-title); line-height: 0.94; letter-spacing: -0.01em; text-transform: uppercase; }
+.frame-sub { color: var(--bone-soft); max-width: 44ch; }
+.sp { display: none; }
+html.motion #s2 .sp { display: block; position: absolute; left: 0; right: 0; height: 18px; background-image: var(--sp-h); background-repeat: repeat-x; background-size: 36px 18px; }
+html.motion #s2 .sp-top { top: -30px; }
+html.motion #s2 .sp-bot { bottom: -30px; }
+html.motion #s2 .sp-l, html.motion #s2 .sp-r { display: none; }
+.end-line { font-family: var(--f-serif); font-style: italic; font-size: var(--t-quote); line-height: 1.15; max-width: 24ch; margin-top: 32px; }
+html.motion #s2 .end-line { position: absolute; left: var(--m); bottom: 14vh; margin: 0; opacity: 0; }
+@media (max-width: 600px) {
+  .strip { --fw: 84vw; --fh: 62vh; --gap: 16px; }
+  html.motion #s2 .strip { top: 0; margin-top: 0; left: 8vw; flex-direction: column; width: var(--fw); }
+  html.motion #s2 .sp-top, html.motion #s2 .sp-bot { display: none; }
+  html.motion #s2 .sp-l, html.motion #s2 .sp-r { display: block; position: absolute; top: 0; bottom: 0; width: 18px; height: auto; left: -30px; right: auto; background-image: var(--sp-v); background-repeat: repeat-y; background-size: 18px 36px; }
+  html.motion #s2 .sp-r { left: auto; right: -30px; }
+}
+
+/* Scene 3: the glue */
+.belief-stage { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 28px; padding: 24px 0; }
+.wires { display: none; }
+.lbl { font-family: var(--f-mono); font-size: clamp(16px, 1.6vw, 22px); letter-spacing: 0.04em; white-space: nowrap; background: var(--black); padding: 4px 8px; }
+.lbl.node { font-family: var(--f-display); font-size: clamp(32px, 3.6vw, 56px); letter-spacing: -0.005em; text-transform: uppercase; line-height: 1; }
+.belief { margin-top: 32px; max-width: 46ch; }
+.line { font-family: var(--f-serif); font-style: italic; font-size: var(--t-sub); line-height: 1.2; margin-top: 12px; }
+#s3 .line { font-size: clamp(20px, 1.9vw, 28px); }
+html.motion #s3 .belief-stage { position: absolute; inset: 0; display: block; padding: 0; }
+html.motion #s3 .wires { display: block; position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+html.motion #s3 .wires path { fill: none; stroke: var(--bone); stroke-width: 1.5px; stroke-opacity: 0.7; }
+html.motion #s3 .lbl { position: absolute; left: 0; top: 0; will-change: transform; }
+html.motion #s3 .lbl.op, html.motion #s3 .lbl.node { opacity: 0; }
+html.motion #s3 .belief { position: absolute; left: var(--m); bottom: 9vh; margin: 0; max-width: min(46ch, 88vw); }
+html.motion #s3 .line { opacity: 0; }
+
+/* Scene 4: Verslay */
+.beats { margin: 0; padding: 0; }
+html:not(.motion) .beats { display: none; }
+.beat { text-align: center; }
+html:not(.motion) .beat { margin: 0 0 56px; }
+.num { display: block; font-family: var(--f-display); font-size: var(--t-num); line-height: 0.86; letter-spacing: -0.02em; white-space: nowrap; }
+.lab { display: block; margin-top: 18px; font-size: clamp(16px, 1.5vw, 22px); letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone-soft); }
+html.motion #s4 .beats { position: absolute; inset: 0; }
+html.motion #s4 .beat { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); opacity: 0; }
+html.motion #s4 .beat.on { opacity: 1; }
+.subs { margin-top: 40px; }
+.sub { font-family: var(--f-serif); font-style: italic; font-size: var(--t-sub); line-height: 1.2; max-width: 48ch; margin: 0 auto 16px; text-align: center; }
+html.motion #s4 .subs { position: absolute; left: var(--m); right: var(--m); bottom: 12vh; height: 22vh; margin: 0; }
+html.motion #s4 .sub { position: absolute; left: 0; right: 0; bottom: 0; margin: 0 auto; opacity: 0; }
+html.motion #s4 .sub.on { opacity: 1; }
+.closing { margin-top: 56px; }
+.closing p { font-family: var(--f-serif); font-style: italic; font-size: var(--t-quote); line-height: 1.15; }
+.closing .closing-b { font-family: var(--f-mono); font-style: normal; font-size: var(--t-body); color: var(--bone-soft); margin-top: 24px; }
+html.motion #s4 .closing { position: absolute; left: var(--m); right: var(--m); bottom: 12vh; height: 22vh; margin: 0; display: flex; flex-direction: column; justify-content: flex-end; }
+html.motion #s4 .closing p { opacity: 0; }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3vh 24px; align-items: end; }
+.grid .cell { min-width: 0; }
+.grid .cell .num { font-size: clamp(56px, 7.5vw, 128px); }
+.grid .cell .lab { margin-top: 10px; font-size: 14px; }
+.grid .cell:nth-child(1) { grid-column: 1 / span 4; grid-row: 1; }
+.grid .cell:nth-child(2) { grid-column: 6 / span 4; grid-row: 1; margin-top: 8vh; }
+.grid .cell:nth-child(3) { grid-column: 1 / span 5; grid-row: 2; }
+.grid .cell:nth-child(4) { grid-column: 7 / span 2; grid-row: 2; }
+.grid .cell:nth-child(5) { grid-column: 9 / span 4; grid-row: 2; }
+.grid .cell:nth-child(6) { grid-column: 3 / span 3; grid-row: 3; }
+.grid .cell:nth-child(7) { grid-column: 8 / span 5; grid-row: 3; }
+html.motion #s4 .grid { position: absolute; left: var(--m); right: var(--m); top: 12vh; margin: 0; opacity: 0; }
+
+/* Scene 5: on location */
+.loc { position: relative; }
+html:not(.motion) .loc { margin-bottom: 64px; }
+.slug { display: inline-block; font-size: var(--t-label); letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--bone); padding: 10px 14px; background: var(--black); }
+.loc-subs { margin-top: 40px; }
+.sub2 { font-family: var(--f-serif); font-style: italic; font-size: var(--t-sub); line-height: 1.2; max-width: 40ch; margin-bottom: 14px; }
+html.motion #s5 .loc { position: absolute; inset: 0; opacity: 0; }
+html.motion #s5 .loc.on { opacity: 1; }
+html.motion #s5 .slug { position: absolute; left: var(--m); top: clamp(96px, 16vh, 150px); margin: 0; }
+html.motion #s5 .loc-subs { position: absolute; left: var(--m); right: var(--m); bottom: 12vh; height: 26vh; margin: 0; }
+html.motion #s5 .sub2 { position: absolute; left: 0; right: 0; bottom: 0; margin: 0 auto; text-align: center; opacity: 0; }
+html.motion #s5 .sub2.on { opacity: 1; }
+.loc-title { font-family: var(--f-display); font-weight: 400; font-size: clamp(48px, 8vw, 150px); line-height: 0.92; letter-spacing: -0.01em; text-transform: uppercase; max-width: 14ch; margin-top: 32px; }
+html.motion #s5 .loc-title { position: absolute; left: var(--m); top: 28vh; margin: 0; }
+
+/* Scene 6: behind the camera */
+.sheet { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); max-width: 1200px; }
+.col-h { font-size: var(--t-label); letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone-soft); margin-bottom: 16px; }
+.row { font-size: clamp(16px, 1.4vw, 20px); line-height: 1.5; padding: 12px 0; border-bottom: 1px solid var(--bone-line); }
+.row .v { font-weight: 500; }
+.big { font-family: var(--f-display); font-size: var(--t-display); line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase; margin-top: 64px; }
+html.motion #s6 .sheet { position: absolute; left: var(--m); right: var(--m); top: 12vh; margin: 0; }
+html.motion #s6 .row { opacity: 0; }
+html.motion #s6 .big { position: absolute; left: var(--m); right: var(--m); bottom: 12vh; margin: 0; opacity: 0; }
+
+/* Scene 7: end credits */
+.credits { text-align: center; max-width: 640px; margin: 0 auto; }
+.cr { font-size: var(--t-body); letter-spacing: 0.06em; line-height: 1.9; }
+.cr-gap { margin-top: 40px; }
+.cr-list li { font-size: var(--t-body); letter-spacing: 0.06em; line-height: 1.9; color: var(--bone-soft); }
+.cr-qual { font-family: var(--f-serif); font-style: italic; font-size: var(--t-quote); line-height: 1.2; max-width: 24ch; margin: 64px auto 0; }
+.cr-legal { font-size: var(--t-label); line-height: 1.7; color: var(--bone-soft); max-width: 62ch; margin: 64px auto 0; }
+html.motion #s7 .credits { position: absolute; left: 0; right: 0; top: 0; max-width: none; padding: 0 var(--m); }
+
+/* Scene 8: post-credits close */
+.close { position: relative; }
+.close-copy { font-family: var(--f-serif); font-style: italic; font-size: var(--t-quote); line-height: 1.15; max-width: 26ch; }
+.cta-wrap { margin-top: 56px; }
+.cta { display: inline-block; position: relative; font-family: var(--f-display); font-size: var(--t-cta); line-height: 0.96; letter-spacing: -0.01em; color: transparent; -webkit-text-stroke: 2px var(--bone); text-decoration: none; padding-bottom: 0.14em; }
+@supports not (-webkit-text-stroke: 1px red) { .cta { color: var(--bone); } }
+.cta::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: clamp(3px, 0.4vw, 6px); background: var(--tung); }
+.cta:hover { color: var(--bone); }
+.cta:focus-visible { outline: 2px solid var(--bone); outline-offset: 10px; }
+.appt { margin-top: 24px; color: var(--bone-soft); }
+.foot { font-size: var(--t-label); color: var(--bone-soft); letter-spacing: 0.04em; }
+html.motion #s8 .close { position: absolute; inset: 0; opacity: 0; }
+html.motion #s8 .close-copy { position: absolute; left: var(--m); top: 18vh; }
+html.motion #s8 .cta-wrap { position: absolute; left: var(--m); top: 44vh; margin: 0; }
+html.motion #s8 .foot { position: absolute; left: var(--m); bottom: clamp(20px, 3vw, 40px); margin: 0; }
+
+@media (max-width: 600px) {
+  .sheet { gap: 0 16px; }
+  .row { padding: 6px 0; font-size: 14px; line-height: 1.4; }
+  .grid { grid-template-columns: 1fr 1fr; gap: 24px 16px; }
+  .grid .cell:nth-child(n) { grid-column: auto; grid-row: auto; margin-top: 0; }
+  .grid .cell:nth-child(even) { margin-top: 24px; }
+  .grid .cell:nth-child(5) { grid-column: 1 / span 2; }
+  .grid .cell .num { font-size: clamp(44px, 12vw, 64px); }
+}
+</style>
+</head>
+<body>
+<div class="track" id="track" aria-hidden="true"></div>
+<main class="screen" id="screen">
+  <canvas class="grain" id="grain" aria-hidden="true"></canvas>
+
+  <section class="scene" id="s1" data-vh="300" aria-label="Cold open">
+    <div class="bar bar-top">
+      <nav class="nav" aria-label="Main"><a href="https://www.linkedin.com/in/expert-shubham-gupta/">Book a call</a></nav>
+    </div>
+    <div class="bar bar-bottom" aria-hidden="true"></div>
+    <p class="typed"><span class="sr">Delhi.</span><span class="type" aria-hidden="true"></span></p>
+    <div class="cover">
+      <h1 class="name"><span class="l">Shubham</span> <span class="l">Gupta</span></h1>
+      <p class="headline">I build the AI that runs businesses.</p>
+      <p class="subline">Verslay's only technical founder. I built the entire platform. My co-founder runs sales.</p>
+    </div>
+  </section>
+
+  <section class="scene" id="s2" data-vh="360" aria-label="The business came first">
+    <div class="slate-wrap">
+      <div class="slate">
+        <div class="clapper" aria-hidden="true"></div>
+        <div class="slate-body"><h2 class="slate-title">The business came first</h2></div>
+      </div>
+    </div>
+    <div class="strip">
+      <span class="sp sp-top" aria-hidden="true"></span>
+      <span class="sp sp-bot" aria-hidden="true"></span>
+      <span class="sp sp-l" aria-hidden="true"></span>
+      <span class="sp sp-r" aria-hidden="true"></span>
+      <article class="frame">
+        <h3 class="frame-title">A marketing venture.</h3>
+        <p class="frame-sub">Funnels, growth, clients.</p>
+      </article>
+      <article class="frame">
+        <h3 class="frame-title">Growth and strategy at a trading venture.</h3>
+        <p class="frame-sub">Sales, marketing automation, the commercial side of software.</p>
+      </article>
+      <article class="frame">
+        <h3 class="frame-title">Sheruta, a mental-wellness product.</h3>
+        <p class="frame-sub">Co-founded. School-data sync. 102 API routes.</p>
+      </article>
+      <article class="frame">
+        <h3 class="frame-title">Systems for operators:</h3>
+        <p class="frame-sub">outreach, voice, commerce, the back office.</p>
+      </article>
+      <article class="frame">
+        <h3 class="frame-title">Verslay.</h3>
+        <p class="frame-sub">I own the product and the engineering.</p>
+      </article>
+    </div>
+    <p class="end-line">I learned how a company sells before I built the machine that runs one.</p>
+  </section>
+
+  <section class="scene" id="s3" data-vh="320" aria-label="The glue">
+    <div class="slate-wrap">
+      <div class="slate">
+        <div class="clapper" aria-hidden="true"></div>
+        <div class="slate-body"><h2 class="slate-title">The glue</h2></div>
+      </div>
+    </div>
+    <div class="belief-stage">
+      <svg class="wires" aria-hidden="true"></svg>
+      <span class="lbl" data-k="0">Sheets</span>
+      <span class="lbl" data-k="1">Inbox</span>
+      <span class="lbl" data-k="2">Store</span>
+      <span class="lbl" data-k="3">Ledger</span>
+      <span class="lbl" data-k="4">Ads</span>
+      <span class="lbl" data-k="5">Calendar</span>
+      <span class="lbl" data-k="6">Catalogue</span>
+      <span class="lbl" data-k="7">Dues</span>
+      <span class="lbl op">the operator</span>
+      <span class="lbl node">one memory</span>
+    </div>
+    <div class="belief">
+      <p class="line">Orchestration is the bottleneck.</p>
+      <p class="line">A company collects tools. None of them remember the others.</p>
+      <p class="line">The operator becomes the glue.</p>
+      <p class="line">I build the layer that removes the glue: one memory, tools that load when the work needs them, and a record of what ran.</p>
+    </div>
+  </section>
+
+  <section class="scene" id="s4" data-vh="480" aria-label="Verslay">
+    <div class="slate-wrap">
+      <div class="slate">
+        <div class="clapper" aria-hidden="true"></div>
+        <div class="slate-body"><h2 class="slate-title">Verslay</h2></div>
+      </div>
+    </div>
+    <ul class="beats" aria-hidden="true">
+      <li class="beat"><span class="num">12</span><span class="lab">apps</span></li>
+      <li class="beat"><span class="num">132</span><span class="lab">agents</span></li>
+      <li class="beat"><span class="num">291</span><span class="lab">use-cases</span></li>
+      <li class="beat"><span class="num">8</span><span class="lab">departments</span></li>
+      <li class="beat"><span class="num">359</span><span class="lab">tools, loaded on demand</span></li>
+      <li class="beat"><span class="num">40+</span><span class="lab">native integrations</span></li>
+      <li class="beat"><span class="num">143</span><span class="lab">SQL migrations</span></li>
+    </ul>
+    <div class="grid">
+      <div class="cell"><span class="num">12</span><span class="lab">apps</span></div>
+      <div class="cell"><span class="num">132</span><span class="lab">agents</span></div>
+      <div class="cell"><span class="num">291</span><span class="lab">use-cases</span></div>
+      <div class="cell"><span class="num">8</span><span class="lab">departments</span></div>
+      <div class="cell"><span class="num">359</span><span class="lab">tools, loaded on demand</span></div>
+      <div class="cell"><span class="num">40+</span><span class="lab">native integrations</span></div>
+      <div class="cell"><span class="num">143</span><span class="lab">SQL migrations</span></div>
+    </div>
+    <div class="subs">
+      <p class="sub">Ready-made AI use-cases that run on a business's own tools, inside the model the operator already uses, with one shared memory.</p>
+      <p class="sub">No model runs on Verslay's servers.</p>
+      <p class="sub">A 14-section business memory that learns from every run.</p>
+      <p class="sub">Commerce: Shopify, Razorpay, Cashfree, Stripe, WooCommerce.</p>
+      <p class="sub">Refunds, reconciliation, dunning, cart recovery.</p>
+      <p class="sub">Logins sit in a vault encrypted at rest with AES-256-GCM.</p>
+      <p class="sub">Each customer is isolated at the row.</p>
+      <p class="sub">Verslay does not train on customer data.</p>
+    </div>
+    <div class="closing">
+      <p class="closing-a">989 commits from March to October 2026. 296 of the last 300 are mine.</p>
+      <p class="closing-b">40+ Indian businesses booked a Verslay demo.</p>
+    </div>
+  </section>
+
+  <section class="scene" id="s5" data-vh="360" aria-label="On location">
+    <div class="slate-wrap">
+      <div class="slate">
+        <div class="clapper" aria-hidden="true"></div>
+        <div class="slate-body"><h2 class="slate-title">On location</h2></div>
+      </div>
+    </div>
+    <article class="loc">
+      <p class="slug">INT. 15-STORE APPAREL. MONTH END.</p>
+      <h3 class="loc-title">15-store apparel</h3>
+      <div class="loc-subs">
+        <p class="sub2">Monthly dues were computed by hand.</p>
+        <p class="sub2">A GST-correct payment engine.</p>
+        <p class="sub2">Email leaves only after a human approves.</p>
+        <p class="sub2">An inbox watcher checks DKIM and SPF before a message is trusted.</p>
+      </div>
+    </article>
+    <article class="loc">
+      <p class="slug">INT. CUSTOM PRODUCTS. ORDERS.</p>
+      <h3 class="loc-title">Custom products</h3>
+      <div class="loc-subs">
+        <p class="sub2">A WhatsApp operating system for orders.</p>
+        <p class="sub2">Spec v4, after 8 reviews.</p>
+      </div>
+    </article>
+    <article class="loc">
+      <p class="slug">INT. VOICE EXECUTIVE ASSISTANT. NIGHTLY.</p>
+      <h3 class="loc-title">Voice executive assistant</h3>
+      <div class="loc-subs">
+        <p class="sub2">24 workflows, about 540 nodes.</p>
+        <p class="sub2">Re-planned nightly.</p>
+        <p class="sub2">A human approves anything that moves a calendar.</p>
+      </div>
+    </article>
+    <article class="loc">
+      <p class="slug">INT. CREATOR OUTREACH. 20+ HOURS A WEEK.</p>
+      <h3 class="loc-title">Creator outreach</h3>
+      <div class="loc-subs">
+        <p class="sub2">20+ hours a week, given back, for that system alone.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="scene" id="s6" data-vh="260" aria-label="Behind the camera">
+    <div class="slate-wrap">
+      <div class="slate">
+        <div class="clapper" aria-hidden="true"></div>
+        <div class="slate-body"><h2 class="slate-title">Behind the camera</h2></div>
+      </div>
+    </div>
+    <div class="sheet">
+      <div class="col">
+        <h3 class="col-h">The system I run my own company on</h3>
+        <p class="row"><span class="v">13</span> agent seats</p>
+        <p class="row"><span class="v">8</span> plugins I wrote</p>
+        <p class="row"><span class="v">21</span> background services</p>
+        <p class="row"><span class="v">23</span> scheduled jobs</p>
+        <p class="row">Graph memory: <span class="v">7,942</span> nodes, <span class="v">237,317</span> links</p>
+        <p class="row"><span class="v">6</span> documented releases</p>
+        <p class="row"><span class="v">117</span> gated releases</p>
+      </div>
+      <div class="col">
+        <p class="row">Phone command deck: drop a task by voice, get a result card.</p>
+        <p class="row"><span class="v">109</span> API routes</p>
+        <p class="row"><span class="v">53</span> tables</p>
+        <p class="row"><span class="v">16</span> screens</p>
+        <p class="row"><span class="v">464</span> test files</p>
+        <p class="row"><span class="v">8</span> CI workflows</p>
+        <p class="row"><span class="v">711</span> commits in about 16 days.</p>
+      </div>
+    </div>
+    <p class="big">142 repos. 4,205 commits. 55,020 files.</p>
+  </section>
+
+  <section class="scene" id="s7" data-vh="340" aria-label="End credits">
+    <div class="credits">
+      <p class="cr">Written, designed and built by Shubham Gupta</p>
+      <p class="cr">Cast: 132 agents</p>
+      <p class="cr">Crew: 8 departments</p>
+      <p class="cr cr-gap">Featuring operators in</p>
+      <ul class="cr-list">
+        <li>D2C fashion and ethnic wear</li>
+        <li>gifting</li>
+        <li>jewellery</li>
+        <li>beauty</li>
+        <li>home decor</li>
+        <li>fitness</li>
+        <li>textiles and B2B</li>
+        <li>refurbished electronics</li>
+        <li>agencies</li>
+        <li>mental wellness</li>
+        <li>education</li>
+        <li>trading</li>
+        <li>hospitality content</li>
+        <li>music</li>
+        <li>creators</li>
+      </ul>
+      <p class="cr-qual">If you are shopping for a landing page or a one-week chatbot, this is the wrong call.</p>
+      <p class="cr-legal">Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+    </div>
+  </section>
+
+  <section class="scene" id="s8" data-vh="180" aria-label="Post-credits">
+    <div class="close">
+      <p class="close-copy">Bring the operation. I will tell you whether it should run on Verslay, or be built around the tools you already have.</p>
+      <div class="cta-wrap">
+        <a class="cta" href="https://www.linkedin.com/in/expert-shubham-gupta/">Book a call</a>
+        <p class="appt">The appointment sits on LinkedIn.</p>
+      </div>
+    </div>
+    <p class="foot">Shubham Gupta. Delhi.</p>
+  </section>
+</main>
+
+<p class="tc" aria-hidden="true"><span class="dot"></span><span id="tc">00:00:00:00</span></p>
+<div class="flash" id="flash" aria-hidden="true"></div>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var track = document.querySelector('#track');
+  var screen = document.querySelector('#screen');
+  var flash = document.querySelector('#flash');
+  var tcEl = document.querySelector('#tc');
+  var grain = document.querySelector('#grain');
+  var scenes = document.querySelectorAll('.scene');
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var FILM_FRAMES = 13824; // 00:09:36:00 at 24 fps
+  var GW = 384;
+  var GH = 384;
+
+  var starts = [];
+  var lens = [];
+  var total = 0;
+  var W = 0;
+  var H = 0;
+  var lastIndex = -1;
+  var lastCode = '';
+  var flashTimer = 0;
+  var pending = false;
+  var grainOn = true;
+  var grainStarted = false;
+  var frameTick = 0;
+  var gctx = null;
+  var gImg = null;
+  var introStart = 0;
+  var introSec = 0;
+  var introDone = false;
+  var introStarted = false;
+
+  // Belief scene geometry (filled in layout)
+  var TANG = [[0.18, 0.24], [0.42, 0.17], [0.74, 0.25], [0.86, 0.47], [0.62, 0.52], [0.3, 0.56], [0.12, 0.44], [0.52, 0.34]];
+  var tx = [];
+  var ty = [];
+  var rx = [];
+  var ry = [];
+  var lw = [];
+  var lh = [];
+  var cx = 0;
+  var cy = 0;
+  var opx = 0;
+  var opy = 0;
+  var opw = 0;
+  var oph = 0;
+  var nw = 0;
+  var nh = 0;
+  var EDGES = [];
+  var k;
+  for (k = 0; k < 8; k += 1) {
+    EDGES.push({ a: (k + 3) % 8, b: k, morph: true, sign: k % 2 === 0 ? -1 : 1 });
+  }
+  var EXTRA = [[0, 2], [1, 3], [4, 7], [5, 2], [6, 0], [3, 5]];
+  for (k = 0; k < EXTRA.length; k += 1) {
+    EDGES.push({ a: EXTRA[k][0], b: EXTRA[k][1], morph: false, sign: k % 2 === 0 ? 1 : -1 });
+  }
+
+  var TARGETS = [12, 132, 291, 8, 359, 40, 143];
+  var S = {};
+
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+  function seg(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
+  function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeIn(t) { return t * t * t; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function strobe(u) {
+    if (u <= 0) { return 0; }
+    if (u >= 1) { return 1; }
+    return Math.floor(u * 6) % 2 === 0 ? 1 : 0.06;
+  }
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function timecode(f) {
+    var s = Math.floor(f / 24);
+    return pad(Math.floor(s / 3600)) + ':' + pad(Math.floor(s / 60) % 60) + ':' + pad(s % 60) + ':' + pad(f % 24);
+  }
+  function barThickness(open) {
+    var t0 = Math.max(0, (H - W / 2.39) / 2);
+    if (W <= 600) { t0 = Math.min(t0, H * 0.12); }
+    return t0 * (1 - open);
+  }
+
+  function refs() {
+    S.bars = [document.querySelector('#s1 .bar-top'), document.querySelector('#s1 .bar-bottom')];
+    S.typed = document.querySelector('#s1 .typed');
+    S.type = document.querySelector('#s1 .type');
+    S.name = document.querySelector('#s1 .name');
+    S.headline = document.querySelector('#s1 .headline');
+    S.subline = document.querySelector('#s1 .subline');
+    S.clap = [];
+    S.wrap = [];
+    for (k = 2; k <= 6; k += 1) {
+      S.clap[k] = document.querySelector('#s' + k + ' .clapper');
+      S.wrap[k] = document.querySelector('#s' + k + ' .slate-wrap');
+    }
+    S.strip = document.querySelector('#s2 .strip');
+    S.frames = document.querySelectorAll('#s2 .frame');
+    S.endLine = document.querySelector('#s2 .end-line');
+    S.wires = document.querySelector('#s3 .wires');
+    S.paths = [];
+    S.labels = document.querySelectorAll('#s3 .lbl[data-k]');
+    S.op = document.querySelector('#s3 .op');
+    S.node = document.querySelector('#s3 .node');
+    S.lines = document.querySelectorAll('#s3 .line');
+    S.beats = document.querySelectorAll('#s4 .beat');
+    S.nums = [];
+    for (k = 0; k < S.beats.length; k += 1) {
+      S.nums.push(S.beats[k].querySelector('.num'));
+    }
+    S.subs4 = document.querySelectorAll('#s4 .sub');
+    S.closeA = document.querySelector('#s4 .closing-a');
+    S.closeB = document.querySelector('#s4 .closing-b');
+    S.grid = document.querySelector('#s4 .grid');
+    S.locs = document.querySelectorAll('#s5 .loc');
+    S.locSubs = [];
+    for (k = 0; k < S.locs.length; k += 1) {
+      S.locSubs.push(S.locs[k].querySelectorAll('.sub2'));
+    }
+    S.rows = document.querySelectorAll('#s6 .row');
+    S.sheet = document.querySelector('#s6 .sheet');
+    S.big = document.querySelector('#s6 .big');
+    S.credits = document.querySelector('#s7 .credits');
+    S.close = document.querySelector('#s8 .close');
+  }
+
+  function buildWires() {
+    if (!S.wires) { return; }
+    for (var i = 0; i < EDGES.length; i += 1) {
+      var path = document.createElementNS(SVGNS, 'path');
+      S.wires.appendChild(path);
+      S.paths.push(path);
+    }
+  }
+
+  function layout() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    var vh = H / 100;
+    var i;
+    starts = [];
+    lens = [];
+    total = 0;
+    for (i = 0; i < scenes.length; i += 1) {
+      var len = parseFloat(scenes[i].getAttribute('data-vh')) * vh;
+      starts.push(total);
+      lens.push(len);
+      total += len;
+    }
+    if (track) { track.style.height = (total + H) + 'px'; }
+
+    cx = W / 2;
+    cy = H * 0.36;
+    var R = Math.min(W * 0.34, H * 0.24);
+    for (i = 0; i < 8; i += 1) {
+      var el = S.labels[i];
+      lw[i] = el ? el.offsetWidth : 0;
+      lh[i] = el ? el.offsetHeight : 0;
+      tx[i] = TANG[i][0] * W;
+      ty[i] = TANG[i][1] * H;
+      var th = -Math.PI / 2 + i * Math.PI / 4;
+      rx[i] = cx + R * Math.cos(th);
+      ry[i] = cy + R * Math.sin(th);
+    }
+    opx = W / 2;
+    opy = H / 2;
+    if (S.op) { opw = S.op.offsetWidth; oph = S.op.offsetHeight; }
+    if (S.node) { nw = S.node.offsetWidth; nh = S.node.offsetHeight; }
+    if (S.wires) { S.wires.setAttribute('viewBox', '0 0 ' + W + ' ' + H); }
+
+    if (S.frames.length > 0) {
+      S.fw = S.frames[0].offsetWidth;
+      S.fh = S.frames[0].offsetHeight;
+      S.gap = parseFloat(window.getComputedStyle(S.strip).gap) || 24;
+    }
+    S.credH = S.credits ? S.credits.offsetHeight : 0;
+  }
+
+  function cut() {
+    if (!flash) { return; }
+    flash.classList.add('on');
+    window.clearTimeout(flashTimer);
+    flashTimer = window.setTimeout(function () { flash.classList.remove('on'); }, 84);
+  }
+
+  function locate(y) {
+    var i = 0;
+    for (var n = 0; n < starts.length; n += 1) {
+      if (y >= starts[n]) { i = n; }
+    }
+    return { i: i, p: clamp((y - starts[i]) / lens[i], 0, 1) };
+  }
+
+  function setActive(i) {
+    for (var n = 0; n < scenes.length; n += 1) {
+      scenes[n].classList.toggle('on', n === i);
+    }
+  }
+
+  function paintGrain() {
+    var d = gImg.data;
+    for (var i = 0; i < d.length; i += 4) {
+      var v = (Math.random() * 255) | 0;
+      d[i] = v;
+      d[i + 1] = v;
+      d[i + 2] = v;
+      d[i + 3] = 255;
+    }
+    gctx.putImageData(gImg, 0, 0);
+  }
+
+  function weave() {
+    var dx = Math.random() < 0.3 ? (Math.random() < 0.5 ? -1 : 1) : 0;
+    var dy = Math.random() < 0.3 ? (Math.random() < 0.5 ? -1 : 1) : 0;
+    screen.style.transform = (dx === 0 && dy === 0) ? '' : 'translate3d(' + dx + 'px,' + dy + 'px,0)';
+  }
+
+  function grainLoop() {
+    if (root.classList.contains('motion') === false) {
+      grainStarted = false;
+      return;
+    }
+    frameTick += 1;
+    if (grainOn && gImg && frameTick % 4 === 0) {
+      paintGrain();
+      weave();
+    }
+    window.requestAnimationFrame(grainLoop);
+  }
+
+  function startGrain() {
+    if (grainStarted || gImg === null) { return; }
+    grainStarted = true;
+    window.requestAnimationFrame(grainLoop);
+  }
+
+  function schedule() {
+    if (pending === false) {
+      pending = true;
+      window.requestAnimationFrame(render);
+    }
+  }
+
+  function render() {
+    pending = false;
+    if (root.classList.contains('motion') === false || total <= 0) { return; }
+    var y = clamp(window.pageYOffset || root.scrollTop || 0, 0, total);
+    var loc = locate(y);
+    if (loc.i !== lastIndex) {
+      if (lastIndex !== -1) { cut(); }
+      lastIndex = loc.i;
+      setActive(loc.i);
+    }
+    var fn = UPDATERS[loc.i];
+    if (fn) { fn(loc.p); }
+    var code = timecode(Math.floor(clamp(y / total, 0, 1) * FILM_FRAMES));
+    if (code !== lastCode && tcEl) {
+      tcEl.textContent = code;
+      lastCode = code;
+    }
+  }
+
+  function clearInline() {
+    var nodes = document.querySelectorAll('[style]');
+    for (var n = 0; n < nodes.length; n += 1) {
+      nodes[n].removeAttribute('style');
+    }
+  }
+
+  function setMode() {
+    var motion = reduce.matches === false;
+    if (motion === root.classList.contains('motion')) { return; }
+    clearInline();
+    root.classList.toggle('motion', motion);
+    lastIndex = -1;
+    lastCode = '';
+    layout();
+    schedule();
+    if (motion) { startGrain(); startIntro(); }
+  }
+
+
+  function slateFx(k, p, snapEnd, fadeA, fadeB) {
+    var c = seg(p, 0, snapEnd);
+    if (S.clap[k]) { S.clap[k].style.transform = 'rotate(' + (-24 * (1 - easeIn(c))).toFixed(2) + 'deg)'; }
+    if (S.wrap[k]) { S.wrap[k].style.opacity = String(1 - seg(p, fadeA, fadeB)); }
+  }
+
+  // Scene 1: cold open. It plays once on load (about 2.5 s), then scroll takes over.
+  function introLoop() {
+    if (introDone) { return; }
+    introSec = (window.performance.now() - introStart) / 1000;
+    if (introSec >= 2.5) {
+      introSec = 2.5;
+      introDone = true;
+    }
+    render();
+    if (introDone === false) { window.requestAnimationFrame(introLoop); }
+  }
+
+  function startIntro() {
+    if (introStarted || root.classList.contains('motion') === false) { return; }
+    introStarted = true;
+    introStart = window.performance.now();
+    introLoop();
+  }
+
+  function updCold(p) {
+    var t = introDone ? 99 : introSec;
+    S.type.textContent = 'Delhi.'.slice(0, Math.floor(seg(t, 0.25, 0.95) * 6));
+    S.typed.style.opacity = String(1 - seg(t, 1.05, 1.2));
+    var fl = t < 1.1 ? 0 : strobe(seg(t, 1.1, 1.5));
+    var open = easeInOut(seg(t, 1.45, 2.5));
+    var push = introDone ? 1 + 0.04 * seg(p, 0, 1) : 1;
+    S.name.style.opacity = String(fl);
+    S.name.style.transform = 'scale(' + ((1.15 - 0.15 * open) * push).toFixed(4) + ')';
+    var th = barThickness(open);
+    S.bars[0].style.transform = 'translate3d(0,' + (th - H / 2).toFixed(1) + 'px,0)';
+    S.bars[1].style.transform = 'translate3d(0,' + (H / 2 - th).toFixed(1) + 'px,0)';
+    S.headline.style.opacity = String(seg(t, 1.9, 2.3));
+    S.subline.style.opacity = String(seg(t, 2.1, 2.5));
+  }
+
+  // Scene 2: slate and filmstrip
+  function updBusiness(p) {
+    slateFx(2, p, 0.22, 0.22, 0.28);
+    var vertical = W <= 600;
+    var n = S.frames.length;
+    var fw = S.fw || 0;
+    var fh = S.fh || 0;
+    var gap = S.gap || 24;
+    var e = easeInOut(seg(p, 0.28, 0.84));
+    var slide = (n - 1) * ((vertical ? fh : fw) + gap);
+    var x = vertical ? 0 : (W - fw) / 2 - e * slide;
+    var y = vertical ? (H - fh) / 2 - e * slide : 0;
+    S.strip.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+    S.strip.style.opacity = String(Math.min(seg(p, 0.24, 0.3), 1 - seg(p, 0.84, 0.9)));
+    S.endLine.style.opacity = String(seg(p, 0.86, 0.94));
+  }
+
+  // Scene 3: the glue
+  function updGlue(p) {
+    slateFx(3, p, 0.08, 0.08, 0.14);
+    var e = easeInOut(seg(p, 0.18, 0.66));
+    var fade = seg(p, 0.12, 0.18);
+    var i;
+    for (i = 0; i < 8; i += 1) {
+      var x = lerp(tx[i], rx[i], e);
+      var y = lerp(ty[i], ry[i], e);
+      S.labels[i].style.opacity = String(fade);
+      S.labels[i].style.transform = 'translate3d(' + (x - lw[i] / 2).toFixed(1) + 'px,' + (y - lh[i] / 2).toFixed(1) + 'px,0)';
+    }
+    S.op.style.opacity = String(fade * (1 - seg(p, 0.2, 0.46)));
+    S.op.style.transform = 'translate3d(' + (opx - opw / 2).toFixed(1) + 'px,' + (opy - oph / 2).toFixed(1) + 'px,0)';
+    S.node.style.opacity = String(seg(p, 0.4, 0.62));
+    S.node.style.transform = 'translate3d(' + (cx - nw / 2).toFixed(1) + 'px,' + (cy - nh / 2).toFixed(1) + 'px,0)';
+    for (i = 0; i < S.lines.length; i += 1) {
+      S.lines[i].style.opacity = String(seg(p, 0.34 + i * 0.1, 0.42 + i * 0.1));
+    }
+    for (i = 0; i < EDGES.length; i += 1) {
+      var ed = EDGES[i];
+      var ax = lerp(tx[ed.a], rx[ed.a], e);
+      var ay = lerp(ty[ed.a], ry[ed.a], e);
+      if (ed.morph) {
+        ax = lerp(ax, cx, e);
+        ay = lerp(ay, cy, e);
+      }
+      var bx = lerp(tx[ed.b], rx[ed.b], e);
+      var by = lerp(ty[ed.b], ry[ed.b], e);
+      var mx = (ax + bx) / 2;
+      var my = (ay + by) / 2;
+      var dx = bx - ax;
+      var dy = by - ay;
+      var len = Math.sqrt(dx * dx + dy * dy) || 1;
+      var bend = Math.min(len * 0.28, 110) * (1 - e) * ed.sign;
+      var qx = mx - dy / len * bend;
+      var qy = my + dx / len * bend;
+      S.paths[i].setAttribute('d', 'M' + ax.toFixed(1) + ',' + ay.toFixed(1) + ' Q' + qx.toFixed(1) + ',' + qy.toFixed(1) + ' ' + bx.toFixed(1) + ',' + by.toFixed(1));
+      S.paths[i].style.opacity = String(ed.morph ? fade : fade * (1 - seg(e, 0.15, 0.6)));
+    }
+  }
+
+  // Scene 4: trailer beats, then the settled figures grid, subtitles, closing lines
+  function updVerslay(p) {
+    slateFx(4, p, 0.05, 0.05, 0.08);
+    var on = p >= 0.08 && p < 0.42;
+    var x = clamp((p - 0.08) / 0.34, 0, 0.999999) * 7;
+    var idx = Math.floor(x);
+    var local = x - idx;
+    var e = easeOut(clamp(local / 0.6, 0, 1));
+    var i;
+    for (i = 0; i < S.beats.length; i += 1) {
+      S.beats[i].classList.toggle('on', on && i === idx);
+    }
+    if (on && S.nums[idx]) {
+      S.nums[idx].textContent = Math.round(TARGETS[idx] * e) + (idx === 5 ? '+' : '');
+    }
+    S.grid.style.opacity = String(seg(p, 0.4, 0.46));
+    var sIdx = -1;
+    if (p >= 0.5 && p < 0.84) { sIdx = Math.min(7, Math.floor((p - 0.5) / 0.34 * 8)); }
+    for (i = 0; i < S.subs4.length; i += 1) {
+      S.subs4[i].classList.toggle('on', i === sIdx);
+    }
+    S.closeA.style.opacity = String(seg(p, 0.84, 0.88));
+    S.closeB.style.opacity = String(seg(p, 0.9, 0.94));
+  }
+
+  // Scene 5: four location cards, hard cuts between cards
+  function updLocation(p) {
+    slateFx(5, p, 0.08, 0.08, 0.12);
+    var show = p >= 0.12;
+    var x = clamp((p - 0.12) / 0.82, 0, 0.999999) * 4;
+    var idx = Math.floor(x);
+    var local = x - idx;
+    var i;
+    for (i = 0; i < S.locs.length; i += 1) {
+      S.locs[i].classList.toggle('on', show && i === idx);
+    }
+    var subs = S.locSubs[idx];
+    if (subs && subs.length > 0) {
+      var j = Math.min(subs.length - 1, Math.floor(local * subs.length));
+      for (i = 0; i < subs.length; i += 1) {
+        subs[i].classList.toggle('on', show && i === j);
+      }
+    }
+  }
+
+  // Scene 6: crew sheet stays up; the closing line arrives beneath it
+  function updCamera(p) {
+    slateFx(6, p, 0.1, 0.08, 0.14);
+    for (var i = 0; i < S.rows.length; i += 1) {
+      S.rows[i].style.opacity = String(seg(p, 0.1 + i * 0.02, 0.16 + i * 0.02));
+    }
+    S.big.style.opacity = String(seg(p, 0.56, 0.64));
+  }
+
+  // Scene 7: credits roll upward across the whole section, so the frame is never empty
+  function updCredits(p) {
+    var e = seg(p, 0, 1);
+    var from = H * 0.95;
+    var to = H * 0.25 - (S.credH || 0);
+    S.credits.style.transform = 'translate3d(0,' + (from + (to - from) * e).toFixed(1) + 'px,0)';
+  }
+
+  // Scene 8: a short black beat (the footer is already showing), then the frame flickers back
+  function updClose(p) {
+    S.close.style.opacity = String(p < 0.06 ? 0 : strobe(seg(p, 0.06, 0.14)));
+  }
+
+  var UPDATERS = [updCold, updBusiness, updGlue, updVerslay, updLocation, updCamera, updCredits, updClose];
+
+  function init() {
+    if (grain && grain.getContext) {
+      gctx = grain.getContext('2d');
+      grain.width = GW;
+      grain.height = GH;
+      gImg = gctx.createImageData(GW, GH);
+    }
+    refs();
+    buildWires();
+    root.classList.toggle('motion', reduce.matches === false);
+    layout();
+    schedule();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', function () { layout(); schedule(); });
+    if (reduce.addEventListener) {
+      reduce.addEventListener('change', setMode);
+    } else if (reduce.addListener) {
+      reduce.addListener(setMode);
+    }
+    if ('IntersectionObserver' in window && track) {
+      var io = new IntersectionObserver(function (entries) {
+        grainOn = entries[0].isIntersecting;
+      }, { threshold: 0 });
+      io.observe(track);
+    }
+    if (root.classList.contains('motion')) {
+      startGrain();
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () { layout(); schedule(); startIntro(); });
+      }
+      window.setTimeout(startIntro, 800);
+    }
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
