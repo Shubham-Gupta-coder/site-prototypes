@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="en">
-<head><meta name="robots" content="noindex,nofollow">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:,">
 <title>Shubham Gupta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,11 +121,13 @@ a:focus-visible, .btn:focus-visible {
   top: 0;
   z-index: 3;
   pointer-events: none;
-  font-size: var(--step-label);
+  font-size: 16px;
+  color: var(--bone);
   line-height: 1.2;
   white-space: nowrap;
-  padding: 4px 8px;
-  background: rgba(7, 7, 8, .72);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(10, 10, 12, 0.78);
   opacity: 0;
   will-change: transform, opacity;
 }
@@ -196,11 +200,20 @@ a:focus-visible, .btn:focus-visible {
   column-gap: 4vw;
 }
 .captions .cap { position: relative; max-width: none; }
-.cta { opacity: 0; }
+.cta { opacity: 0; top: 44vh; }
 @media (max-width: 600px) {
   .captions { grid-template-columns: 1fr; row-gap: 14px; bottom: 9vh; }
   .s0-line { bottom: 15vh; }
   .s0-city { left: var(--pad-x); right: auto; bottom: 8vh; }
+  .cta { top: 34vh; }
+  .btn { background: var(--bone); color: var(--ink); }
+  .btn:hover { background: #FFFFFF; color: var(--ink); }
+  .footer-block { bottom: 3vh; padding: 16px 18px; max-width: none; }
+}
+
+/* desktop: the mercury body sits to the right of the hero name, never behind it */
+@media (min-width: 900px) {
+  .s0-name { right: auto; width: 60vw; }
 }
 
 /* breakpoints */
@@ -245,8 +258,8 @@ a:focus-visible, .btn:focus-visible {
   <!-- SCENE 2 -->
   <section class="scene" data-scene="2" aria-label="The glue">
     <div class="stage">
-      <p class="line" data-s="2" data-a="0.3" data-b="0.45" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;">None of them remembered the others.</p>
-      <div class="letters" data-s="2" data-a="0.3" data-b="0.45" data-o="0.85" data-e="0.97" data-letters="orch" role="img" aria-label="Orchestration is the bottleneck." style="bottom:12vh;"></div>
+      <p class="line" data-s="2" data-a="0" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;">None of them remembered the others.</p>
+      <div class="letters" data-s="2" data-a="0" data-b="0.25" data-o="0.85" data-e="0.97" data-letters="orch" role="img" aria-label="Orchestration is the bottleneck." style="bottom:12vh;"></div>
     </div>
   </section>
 
@@ -254,7 +267,7 @@ a:focus-visible, .btn:focus-visible {
   <section class="scene" data-scene="3" aria-label="The layer">
     <div class="stage">
       <p class="large" data-s="3" data-a="0.08" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;max-width:14ch;">So I build the layer that removes the glue.</p>
-      <p class="line" data-s="3" data-a="0.3" data-b="0.45" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:12vh;">A person approves anything that moves money, mail or a calendar.</p>
+      <p class="line" data-s="3" data-a="0" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:12vh;">A person approves anything that moves money, mail or a calendar.</p>
     </div>
   </section>
 
@@ -262,8 +275,8 @@ a:focus-visible, .btn:focus-visible {
   <section class="scene" data-scene="4" aria-label="Verslay">
     <div class="stage">
       <p class="large" data-s="4" data-a="0.08" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;max-width:12ch;">Verslay is where I proved it.</p>
-      <p class="line" data-s="4" data-a="0.3" data-b="0.45" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:20vh;">Verslay's only technical founder. My co-founder runs sales.</p>
-      <p class="line" data-s="4" data-a="0.5" data-b="0.65" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:12vh;font-size:16px;">40+ Indian businesses booked a Verslay demo.</p>
+      <p class="line" data-s="4" data-a="0" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:20vh;">Verslay's only technical founder. My co-founder runs sales.</p>
+      <p class="line" data-s="4" data-a="0" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:12vh;font-size:18px;color:var(--bone);">40+ Indian businesses booked a Verslay demo.</p>
     </div>
   </section>
 
@@ -271,11 +284,11 @@ a:focus-visible, .btn:focus-visible {
   <section class="scene" data-scene="5" aria-label="The approach">
     <div class="stage">
       <div class="captions" data-s="5">
-        <p class="line cap" data-s="5" data-a="0.12" data-b="0.3" data-o="0.85" data-e="0.97">Store dues by hand. Now a payment engine.</p>
-        <p class="line cap" data-s="5" data-a="0.2" data-b="0.38" data-o="0.85" data-e="0.97">Orders one message at a time. Now an agent that sells.</p>
-        <p class="line cap" data-s="5" data-a="0.28" data-b="0.46" data-o="0.85" data-e="0.97">A voice note. Now tasks and a calendar.</p>
+        <p class="line cap" data-s="5" data-a="0" data-b="0.14" data-o="0.85" data-e="0.97">Store dues by hand. Now a payment engine.</p>
+        <p class="line cap" data-s="5" data-a="0.04" data-b="0.18" data-o="0.85" data-e="0.97">Orders one message at a time. Now an agent that sells.</p>
+        <p class="line cap" data-s="5" data-a="0.08" data-b="0.22" data-o="0.85" data-e="0.97">A voice note. Now tasks and a calendar.</p>
       </div>
-      <p class="large" data-s="5" data-a="0.45" data-b="0.62" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;max-width:14ch;">Name the constraint. Then build the system around it.</p>
+      <p class="large" data-s="5" data-a="0" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;max-width:14ch;">Name the constraint. Then build the system around it.</p>
     </div>
   </section>
 
@@ -289,12 +302,12 @@ a:focus-visible, .btn:focus-visible {
   <!-- SCENE 7 -->
   <section class="scene" data-scene="7" aria-label="Close">
     <div class="stage">
-      <p class="large" data-s="7" data-a="0.1" data-b="0.3" data-o="2" data-e="3" style="left:var(--pad-x);top:14vh;">Bring the operation.</p>
-      <div class="cta" data-s="7" data-a="0.3" data-b="0.5" data-o="2" data-e="3" style="left:var(--pad-x);top:44vh;">
+      <p class="large" data-s="7" data-a="0" data-b="0.25" data-o="2" data-e="3" style="left:var(--pad-x);top:14vh;">Bring the operation.</p>
+      <div class="cta" data-s="7" data-a="0" data-b="0.25" data-o="2" data-e="3" style="left:var(--pad-x);">
         <a class="btn" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
         <p class="line" style="margin-top:18px;font-size:16px;">The appointment sits on LinkedIn.</p>
       </div>
-      <div class="footer-block" data-s="7" data-a="0.55" data-b="0.7" data-o="2" data-e="3">
+      <div class="footer-block" data-s="7" data-a="0" data-b="0.25" data-o="2" data-e="3">
         <p>Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
         <p>Shubham Gupta. Delhi.</p>
       </div>
@@ -708,7 +721,7 @@ const BUD_DIR = [[-0.8, 0.6, 0.25], [0.75, 0.7, 0.2], [0.8, -0.45, 0.3], [-0.8, 
 const ROW_X = MOB ? [-0.8, 0, 0.8] : [-2.6, 0, 2.6];
 const FALL_X = MOB ? [-0.7, 0, 0.7, -0.7, 0, 0.7, -0.7, 0, 0.7] : [-2.2, 0, 2.2, -2.2, 0, 2.2, -2.2, 0, 2.2];
 const FALL_Z = MOB ? [-4, -4, -4, -2.2, -2.2, -2.2, -0.4, -0.4, -0.4] : [-6, -6, -6, -3.4, -3.4, -3.4, -0.8, -0.8, -0.8];
-const FALL_T = FALL_X.map((_, k) => 6.0 + 0.085 * k);
+const FALL_T = FALL_X.map((_, k) => 6.02 + 0.02 * k);
 FALL_X.forEach((x, k) => RIP[k].set(x, FALL_Z[k], FALL_T[k], 1.0));
 const ctr = new THREE.Vector3(), vA = new THREE.Vector3(), vB = new THREE.Vector3();
 const SP = drops.shard.map(() => new THREE.Vector3());
@@ -718,29 +731,32 @@ function rigBodies(T, TIME) {
   // hero body: radius, height, morph and noise are all keyed on T
   const R = kf(T, [[0, 1.0], [1.95, 1.0], [2.25, 0.0001], [3.25, 0.0001], [3.85, 1.35], [4.95, 1.35], [5.3, 0.0001], [6.85, 0.0001], [7.5, 1.0], [8, 1.0]]);
   const Y = kf(T, [[0, 1.4], [3.9, 1.4], [4.7, 2.14], [6.8, 2.14], [7.2, 1.45], [8, 1.45]]);
-  ctr.set(0, Y, 0);
+  // on desktop the body rests to the right of the name; it glides back to centre by scene 1
+  const hx = window.innerWidth >= 900 ? 2.2 : 0;
+  const BX = kf(T, [[0, hx], [0.85, hx], [1.15, 0], [8, 0]]);
+  ctr.set(BX, Y, 0);
   body.position.copy(ctr);
   body.scale.setScalar(Math.max(R, 0.0001) * (1 + 0.012 * Math.sin(TIME * 1.2)));
   body.visible = R > 0.01;
   body.rotation.y = TIME * 0.05 + T * 0.25;
   const U = body.material.userData.U;
   U.uTower.value = kf(T, [[0, 0], [3.9, 0], [4.7, 1], [6.8, 1], [6.9, 0], [8, 0]]);
-  U.uStretch.value = kf(T, [[0, 1], [0.9, 1], [1.9, 1.36], [2.1, 1], [8, 1]]);
+  U.uStretch.value = kf(T, [[0, 1], [0.95, 1], [1.3, 1.36], [2.0, 1.36], [2.1, 1], [8, 1]]);
   U.uAmp.value = kf(T, [[0, 0.03], [1, 0.05], [1.9, 0.13], [2.25, 0.3], [3.9, 0.3], [4.3, 0.04], [8, 0.04]]);
   U.uFreq.value = 1.1 + 0.6 * ss(1.9, 2.25, T);
 
   // scene 1: four droplets bud out of the surface in turn
   drops.bud.forEach((m, k) => {
-    const tb = 1.05 + 0.2 * k;
-    const go = ss(tb, tb + 0.22, T);
-    const s = 0.3 * ss(tb, tb + 0.14, T) * (1 - ss(1.95, 2.1, T));
+    const tb = 1.0 + 0.05 * k;
+    const go = ss(tb, tb + 0.12, T);
+    const s = 0.3 * ss(tb, tb + 0.1, T) * (1 - ss(1.95, 2.1, T));
     m.visible = s > 0.002;
     m.scale.setScalar(Math.max(s, 0.0001));
     m.position.copy(ctr).addScaledVector(BUD_DIR[k], 1.0 + 1.15 * go);
   });
 
   // scene 2: the body shatters into five droplets; scene 3: they roll back and fuse
-  const out = ss(2.05, 2.75, T);
+  const out = ss(2.0, 2.2, T);
   const back = ss(3.0, 3.7, T);
   const neckR = 0.16 * Math.sin(Math.PI * clamp01(back)) * (1 - ss(3.6, 3.9, T));
   drops.shard.forEach((m, k) => {
@@ -771,7 +787,7 @@ function rigBodies(T, TIME) {
   });
 
   // scene 3: the oxide ring circles the fused body; scene 4 lets it go
-  const ro = ss(3.3, 3.7, T) * (1 - ss(4.1, 4.5, T));
+  const ro = ss(3.05, 3.2, T) * (1 - ss(4.1, 4.5, T));
   ringGroup.visible = ro > 0.002;
   ringGroup.position.copy(ctr);
   ringMat.opacity = 0.9 * ro;
@@ -779,7 +795,7 @@ function rigBodies(T, TIME) {
 
   // scene 5: three droplets start jagged and calm into perfect spheres
   drops.row.forEach((m, k) => {
-    const grow = ss(4.95 + 0.1 * k, 5.2 + 0.1 * k, T) * (1 - ss(5.95, 6.2, T));
+    const grow = ss(4.95 + 0.1 * k, 5.2 + 0.1 * k, T) * (1 - ss(5.7, 5.85, T));
     const calm = ss(5.05 + 0.2 * k, 5.75 + 0.2 * k, T);
     const U2 = m.material.userData.U;
     U2.uAmp.value = 0.26 * (1 - calm);
@@ -794,10 +810,10 @@ function rigBodies(T, TIME) {
   // scene 6: nine drops fall onto a still pool; each impact seeds a ripple in the floor shader
   drops.fall.forEach((m, k) => {
     const tf = FALL_T[k];
-    const f = clamp01((T - (tf - 0.5)) / 0.5);
+    const f = clamp01((T - (tf - 0.2)) / 0.2);
     const sink = ss(tf + 0.1, tf + 0.5, T);
     const sq = T >= tf && T < tf + 0.3 ? Math.sin((Math.PI * (T - tf)) / 0.3) : 0;
-    m.visible = T > tf - 0.5 && T < tf + 0.55;
+    m.visible = T > tf - 0.2 && T < tf + 0.55;
     m.position.set(FALL_X[k], 5.0 + (0.26 - 5.0) * f * f - sink * 0.3, FALL_Z[k]);
     m.scale.set(0.3 * (1 + 0.25 * sq), 0.3 * (1 - 0.35 * sq), 0.3 * (1 + 0.25 * sq));
     m.material.userData.U.uAmp.value = 0.02 + 0.06 * sq;
@@ -872,14 +888,15 @@ function reveal(T) {
 function step(time) {
   const TIME = REDUCED ? 0 : time;
   let T = sumP();
-  if (REDUCED) T = Math.min(Math.floor(T), SCENE_COUNT - 1) + 0.8;
+  let TX = sumRaw();
+  if (REDUCED) { T = Math.min(Math.floor(T), SCENE_COUNT - 1) + 0.8; TX = T; }
   UT.value = TIME;
   rigBodies(T, TIME);
   rigCamera(T, TIME);
   rigWorld(T, TIME);
   if (renderer) {
-    reveal(T);
-    updateLabels(T);
+    reveal(TX);
+    updateLabels(TX);
     if (filmPass) filmPass.uniforms.uTime.value = TIME;
   }
   LW.forEach((w) => updateLetters(w, TIME));
@@ -897,32 +914,54 @@ function addLabel(text, pos, vis) {
 }
 function updateLabels(T) {
   const W = window.innerWidth, H = window.innerHeight;
+  const live = [];
   for (const L of LABELS) {
     const op = L.vis(T);
     if (op < 0.01) { L.el.style.opacity = '0'; continue; }
     const p = L.pos(tmpP).project(camera);
-    const x = (p.x * 0.5 + 0.5) * W + 16;
-    const y = (-p.y * 0.5 + 0.5) * H - 12;
-    L.el.style.opacity = String(op);
-    L.el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+    if (p.z > 1) { L.el.style.opacity = '0'; continue; }
+    if (!L.w) { L.w = L.el.offsetWidth; L.h = L.el.offsetHeight; }
+    L.op = op;
+    L.x = (p.x * 0.5 + 0.5) * W + 16;
+    L.y = (-p.y * 0.5 + 0.5) * H - 12;
+    live.push(L);
+  }
+  // keep every visible pill inside the viewport, then push overlapping pills apart
+  live.sort((a, b) => a.y - b.y);
+  const placed = [];
+  for (const L of live) {
+    L.x = Math.min(Math.max(L.x, 8), W - L.w - 8);
+    L.y = Math.min(Math.max(L.y, 68), H - L.h - 8);
+    for (let pass = 0; pass < 8; pass++) {
+      const hit = placed.find((P) => L.x < P.x + P.w + 8 && L.x + L.w + 8 > P.x && L.y < P.y + P.h + 6 && L.y + L.h + 6 > P.y);
+      if (!hit) break;
+      const below = hit.y + hit.h + 6;
+      L.y = below + L.h <= H - 8 ? below : Math.max(hit.y - L.h - 6, 68);
+    }
+    placed.push(L);
+  }
+  for (const L of live) {
+    L.el.style.opacity = String(L.op);
+    L.el.style.transform = `translate3d(${L.x.toFixed(1)}px, ${L.y.toFixed(1)}px, 0)`;
   }
 }
 ['marketing', 'funnels', 'growth', 'clients'].forEach((txt, k) => {
-  const tb = 1.05 + 0.2 * k;
-  addLabel(txt, (v) => v.copy(drops.bud[k].position), (T) => ss(tb + 0.14, tb + 0.3, T) * (1 - ss(1.9, 2.0, T)));
+  const tb = 1.0 + 0.05 * k;
+  addLabel(txt, (v) => v.copy(drops.bud[k].position), (T) => ss(tb + 0.02, tb + 0.1, T) * (1 - ss(1.85, 1.95, T)));
 });
 ['store', 'ledger', 'inbox', 'sheet', 'calendar'].forEach((txt, k) => {
-  addLabel(txt, (v) => v.copy(drops.shard[k].position), (T) => ss(2.45, 2.8, T) * (1 - ss(3.1, 3.3, T)));
+  addLabel(txt, (v) => v.copy(drops.shard[k].position), (T) => ss(2.12, 2.24, T) * (1 - ss(2.85, 2.95, T)));
 });
-addLabel('one memory', (v) => ringAnchor.getWorldPosition(v), (T) => ss(3.5, 3.8, T) * (1 - ss(4.1, 4.3, T)));
+addLabel('one memory', (v) => ringAnchor.getWorldPosition(v), (T) => ss(3.12, 3.24, T) * (1 - ss(3.85, 3.95, T)));
 ['D2C fashion', 'gifting', 'jewellery', 'beauty', 'home decor', 'fitness', 'Textiles and B2B', 'agencies', 'creators'].forEach((txt, k) => {
-  const tf = 6.0 + 0.085 * k;
-  addLabel(txt, (v) => v.set(FALL_X[k], 0.02, FALL_Z[k]), (T) => ss(tf + 0.12, tf + 0.3, T) * (1 - ss(7.0, 7.2, T)));
+  const tf = FALL_T[k];
+  addLabel(txt, (v) => v.set(FALL_X[k], 0.02, FALL_Z[k]), (T) => ss(tf, tf + 0.06, T) * (1 - ss(6.85, 6.95, T)));
 });
 // <!--INSERT:labels-->
 // ---------- video in letters: a procedural loop, visible only through the glyphs ----------
-const MOLTEN = [[0, [7, 7, 8]], [0.35, [44, 45, 50]], [0.62, [150, 146, 138]], [0.85, [238, 231, 218]], [1, [255, 250, 240]]];
-const CAUSTIC = [[0, [7, 8, 9]], [0.4, [30, 36, 42]], [0.75, [118, 132, 140]], [1, [238, 231, 218]]];
+// bright fill floor: every letter colour keeps HSL lightness of at least 0.8 (bone and above)
+const MOLTEN = [[0, [222, 215, 204]], [0.45, [234, 228, 216]], [0.8, [245, 240, 230]], [1, [255, 253, 247]]];
+const CAUSTIC = [[0, [200, 210, 218]], [0.5, [216, 224, 230]], [0.85, [238, 242, 246]], [1, [255, 255, 255]]];
 function lutFrom(stops) {
   const out = new Uint8ClampedArray(256 * 3);
   for (let i = 0; i < 256; i++) {
@@ -1047,15 +1086,19 @@ if (document.fonts) document.fonts.ready.then(layoutAll);
 // ---------- scroll: one scrubbed ScrollTrigger per section, its progress kept as p ----------
 gsap.registerPlugin(ScrollTrigger);
 const scrollP = sections.map(() => ({ p: 0 }));
+const rawST = [];
 sections.forEach((sec, i) => {
-  gsap.fromTo(scrollP[i], { p: 0 }, {
+  const tw = gsap.fromTo(scrollP[i], { p: 0 }, {
     p: 1,
     ease: 'none',
     scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: 0.8 }
   });
+  rawST.push(tw.scrollTrigger);
 });
-// the global story value: finished sections contribute 1, the active one its fraction
+// the global story value for the 3D: finished sections contribute 1, the active one its fraction
 const sumP = () => scrollP.reduce((a, o) => a + o.p, 0);
+// the same value from raw section progress: words and labels read this, so their fades track the scroll exactly
+const sumRaw = () => rawST.reduce((a, st, i) => a + (st ? st.progress : scrollP[i].p), 0);
 if (!REDUCED && window.Lenis) {
   const lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
   lenis.on('scroll', ScrollTrigger.update);
