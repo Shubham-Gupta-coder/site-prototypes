@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shubham Gupta. Delhi.</title>
+<meta name="description" content="I build the AI that runs businesses. Verslay's only technical founder.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=DM+Mono:wght@300;400;500&display=swap">
+<style>
+:root{--graphite:#0E1012;--chalk:#E9E6DF;--chalk-2:#A9A7A1;--ochre:#C98B2B;--slate:#2A3036;--slate-2:#353C44;--slate-3:#1C2024;--rule:#2C3238;--bar:56px;--gutter:clamp(20px,4.4vw,72px);--f-title:"Archivo","Arial Narrow",Arial,sans-serif;--f-serif:"Newsreader",Georgia,"Times New Roman",serif;--f-mono:"DM Mono",ui-monospace,Menlo,Consolas,monospace;--dawn:0;--lane:104px;--ease:cubic-bezier(.2,.7,.2,1)}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--graphite);color:var(--chalk)}
+body{margin:0;font-family:var(--f-serif);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
+h1,h2,p,figure{margin:0;font-weight:inherit}
+a{color:inherit}
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;height:var(--bar);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 var(--gutter);background:var(--graphite);border-bottom:1px solid var(--rule)}
+.bar-name{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--chalk-2);white-space:nowrap}
+.bar-right{display:flex;align-items:center;gap:20px}
+.clock{font:400 13px/1 var(--f-mono);letter-spacing:.06em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid var(--chalk);background:transparent;color:var(--chalk);font:500 13px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
+.btn:hover{background:var(--chalk);color:var(--graphite)}
+.btn:focus-visible{outline:2px solid var(--ochre);outline-offset:3px}
+.scene{position:relative;height:220vh}
+.scene-close{height:160vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);padding-top:var(--bar);overflow:clip}
+.text{grid-column:1;grid-row:1;min-width:0;display:grid;align-content:center;gap:20px;padding:24px 32px 24px var(--gutter)}
+.beats{display:flex;flex-direction:column;gap:22px;min-width:0}
+.beat{display:grid;align-content:start;gap:22px;min-width:0}
+.beat>*{min-width:0}
+.art{grid-column:2;grid-row:1;position:relative;min-width:0;min-height:0;overflow:clip}
+.art>svg,.art>canvas{position:absolute;top:var(--lane);left:0;width:100%;height:calc(100% - var(--lane));display:block}
+.flow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:calc(var(--lane) + 16px) 32px 24px}
+.eyebrow,.label{font:400 12px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--chalk-2)}
+.name{font-family:var(--f-title);font-stretch:75%;font-weight:800;font-size:clamp(52px,8vw,136px);line-height:.92;letter-spacing:-.01em;text-transform:uppercase}
+.large{font-family:var(--f-title);font-stretch:75%;font-weight:800;font-size:clamp(40px,5.2vw,88px);line-height:1.02;letter-spacing:-.02em;text-wrap:balance}
+.headline{font-family:var(--f-serif);font-weight:400;font-size:clamp(30px,3vw,46px);line-height:1.15;letter-spacing:-.01em;text-wrap:balance}
+.narr{font-family:var(--f-serif);font-style:italic;font-size:clamp(19px,1.5vw,21px);line-height:1.55;max-width:34em;color:rgba(233,230,223,.88)}
+.note{font-family:var(--f-serif);font-style:italic;font-size:19px;line-height:1.5;color:rgba(233,230,223,.88);max-width:34em}
+.hero-canvas{opacity:0}
+.is-off{display:none!important}
+.solid :is(polygon,path,polyline,rect,circle,line){stroke:var(--chalk);stroke-width:1.2;stroke-linejoin:round}
+.solid .ochre,.solid .loop{stroke:var(--ochre)}
+.solid .loop{fill:none;stroke-width:1.6;stroke-dasharray:3 5}
+.solid .draw{fill:none;stroke:var(--ochre);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1 1}
+.solid .track,.line .track{fill:none;stroke:none}
+.line .draw{fill:none;stroke:var(--chalk);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1}
+.solid text,.line text{fill:var(--chalk);font:400 13px var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+.vig{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 16px;width:100%;align-items:start}
+.vcell{display:grid;gap:14px;min-width:0;margin:0}
+.vcell>svg{width:100%;height:auto;display:block;overflow:visible}
+.cap{font-family:var(--f-serif);font-style:italic;font-size:19px;line-height:1.5;color:rgba(233,230,223,.88);text-align:center;opacity:0}
+.street{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:6px;width:100%;align-items:end}
+.shop{display:grid;justify-items:center;gap:8px;min-width:0}
+.shop>svg{width:100%;height:auto;display:block;overflow:visible}
+.shop figcaption{font:400 11px/1.35 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-2);text-align:center}
+.dawn{background:linear-gradient(to top,rgba(201,139,43,calc(var(--dawn)*.32)) 0%,rgba(201,139,43,0) 48%),var(--graphite)}
+.cta{min-height:52px;padding:0 28px;font-size:14px;opacity:0;visibility:hidden}
+.foot{display:grid;gap:14px;padding:56px var(--gutter) 72px;border-top:1px solid var(--rule)}
+.foot p{font-size:16px;line-height:1.6;color:var(--chalk-2);max-width:64ch}
+.card{position:fixed;left:0;top:0;z-index:15;width:64px;height:84px;padding:14px 10px;display:grid;align-content:start;gap:7px;background:var(--ochre);pointer-events:none;opacity:0;will-change:transform}
+.card i{display:block;height:2px;background:var(--graphite);opacity:calc(.55 * (1 - var(--m,0)))}
+.card i:nth-child(2){width:62%}
+.card i:nth-child(3){width:42%}
+@media (max-width:760px){
+  :root{--lane:70px}
+  .beats{gap:12px}
+  body{font-size:17px}
+  .stage{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,55%) minmax(0,1fr)}
+  .art{grid-column:1;grid-row:1}
+  .text{grid-column:1;grid-row:2;gap:14px;padding:12px 20px 20px}
+  .beat{gap:14px}
+  .name{font-size:clamp(44px,13vw,64px)}
+  .large{font-size:clamp(34px,9.4vw,52px)}
+  .headline{font-size:clamp(26px,7vw,34px)}
+  .narr{font-size:17px;line-height:1.5}
+  .flow{padding:calc(var(--lane) + 8px) 20px 8px}
+  .street{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:12px;justify-items:center}
+  .shop>svg{max-width:72px}
+  .vig{grid-template-columns:minmax(0,1fr);gap:14px}
+  .vcell{grid-template-columns:112px minmax(0,1fr);align-items:center;gap:14px}
+  .cap{font-size:17px;text-align:left}
+  .card{width:44px;height:58px;padding:10px 7px;gap:5px}
+}
+@media (prefers-reduced-motion:reduce){
+  .scene,.scene-close{height:auto}
+  .stage{position:relative;height:auto;min-height:100vh;grid-template-rows:auto}
+  .art{min-height:min(70vh,640px)}
+  .beats{display:flex;flex-direction:column;gap:40px}
+  .beat{grid-area:auto;opacity:1}
+  [data-u]{opacity:1!important}
+  .cap{opacity:1!important}
+  .hero-canvas{opacity:1}
+  .card{display:none}
+  .cta{opacity:1!important;visibility:visible}
+  .text{padding-top:48px;padding-bottom:48px}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="bar-name">Shubham Gupta</span>
+  <span class="bar-right">
+    <span class="clock" id="clock" aria-hidden="true">23:47</span>
+    <a class="btn" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+  </span>
+</header>
+<main id="main">
+<section class="scene" data-scene="0" aria-label="Introduction">
+  <div class="stage">
+    <div class="text">
+      <p class="label">Delhi.</p>
+      <h1 class="name">Shubham Gupta</h1>
+      <div class="beats">
+        <div class="beat">
+          <p class="headline"><span data-u>I build the AI that runs businesses.</span></p>
+          <p class="narr"><span data-u>Verslay's only technical founder. I built the entire platform. My co-founder runs sales.</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="art" role="img" aria-label="Isometric miniature of a small shop at night: shelves, a counter, a packing table and a delivery van on a slab, with an ochre order card in the lane above the art.">
+      <canvas class="hero-canvas" id="hero-canvas"></canvas>
+      <svg class="solid is-off" id="hero-fallback" viewBox="0 0 800 800" aria-hidden="true"></svg>
+    </div>
+  </div>
+</section>
+<section class="scene" data-scene="1" aria-labelledby="s1-h">
+  <div class="stage">
+    <div class="text">
+      <div class="beats">
+        <div class="beat">
+          <p class="eyebrow"><span data-u>The business came first.</span></p>
+          <p class="narr"><span data-u>I started on the selling side. Marketing, funnels, growth, clients.</span> <span data-u>Then strategy at a trading venture, where I learned the commercial side of software.</span></p>
+        </div>
+        <div class="beat">
+          <h2 class="large" id="s1-h"><span data-u>I learned how a company sells before I built the machine that runs one.</span></h2>
+        </div>
+      </div>
+    </div>
+    <div class="art">
+      <svg class="line" data-art="1" viewBox="0 0 800 800" role="img" aria-label="Isometric line drawing of a shop counter by day, with a till, a stack of flyers, a funnel sign and a chart pinned on the wall."></svg>
+    </div>
+  </div>
+</section>
+<section class="scene" data-scene="2" aria-labelledby="s2-h">
+  <div class="stage">
+    <div class="text">
+      <div class="beats">
+        <div class="beat">
+          <p class="eyebrow"><span data-u>The glue.</span></p>
+          <p class="narr"><span data-u>Every company I worked with collected tools.</span> <span data-u>A store.</span> <span data-u>A ledger.</span> <span data-u>An inbox.</span> <span data-u>A sheet.</span> <span data-u>A calendar.</span></p>
+        </div>
+        <div class="beat">
+          <p class="narr"><span data-u>None of them remembered the others.</span> <span data-u>So a person became the glue, carrying the business from one tab to the next by hand.</span></p>
+        </div>
+        <div class="beat">
+          <h2 class="large" id="s2-h"><span data-u>Orchestration is the bottleneck.</span></h2>
+        </div>
+      </div>
+    </div>
+    <div class="art">
+      <svg class="solid" data-art="2" viewBox="0 0 800 800" role="img" aria-label="Five small isometric rooms in a row: a store, a ledger, an inbox, a sheet and a calendar. A dashed path joins them."></svg>
+    </div>
+  </div>
+</section>
+<section class="scene" data-scene="3" aria-labelledby="s3-h">
+  <div class="stage">
+    <div class="text">
+      <div class="beats">
+        <div class="beat">
+          <p class="eyebrow"><span data-u>The layer.</span></p>
+          <h2 class="headline" id="s3-h"><span data-u>So I build the layer that removes the glue.</span></h2>
+        </div>
+        <div class="beat">
+          <p class="narr"><span data-u>One memory the whole business shares. Tools that load when the work needs them. A record of what ran.</span></p>
+          <p class="narr"><span data-u>The agents do the work. A person approves anything that moves money, mail or a calendar.</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="art">
+      <svg class="solid" data-art="3" viewBox="0 0 800 800" role="img" aria-label="Five rooms slide together around a central round core labelled one memory. An ochre conveyor track connects each room to the core, and an approval gate lifts at the end."></svg>
+    </div>
+  </div>
+</section>
+<section class="scene" data-scene="4" aria-labelledby="s4-h">
+  <div class="stage">
+    <div class="text">
+      <div class="beats">
+        <div class="beat">
+          <p class="eyebrow"><span data-u>Verslay.</span></p>
+          <h2 class="large" id="s4-h"><span data-u>Verslay is where I proved it.</span></h2>
+        </div>
+        <div class="beat">
+          <p class="narr"><span data-u>I built the whole platform myself: schema, server, interface, integrations, end to end. My co-founder runs sales.</span></p>
+          <p class="narr"><span data-u>It gives a business ready-made AI use-cases that run on its own tools, inside the model the operator already uses, with one shared memory.</span></p>
+        </div>
+        <div class="beat">
+          <p class="narr"><span data-u>Logins sit in an encrypted vault. Each customer is kept apart. Verslay does not train on customer data.</span></p>
+          <p class="note"><span data-u>40+ Indian businesses booked a Verslay demo.</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="art">
+      <svg class="solid" data-art="4" viewBox="0 0 800 800" role="img" aria-label="Isometric city block of modules rising from the ground, with four tall towers labelled memory, tools, agents and actions joined by thin ochre lines, and a small vault box."></svg>
+    </div>
+  </div>
+</section>
+<section class="scene" data-scene="5" aria-labelledby="s5-h">
+  <div class="stage">
+    <div class="text">
+      <div class="beats">
+        <div class="beat">
+          <p class="eyebrow"><span data-u>The approach.</span></p>
+          <p class="narr"><span data-u>I start with the rough problem.</span> <span data-u>The one someone is still doing by hand.</span></p>
+        </div>
+        <div class="beat">
+          <h2 class="large" id="s5-h"><span data-u>Name the constraint. Then build the system around it.</span></h2>
+          <p class="narr"><span data-u>I run my own company on the same kind of system: a fleet of agents with seats, approvals, and a receipt for every run.</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="art flow">
+      <div class="vig">
+        <figure class="vcell">
+          <svg class="solid" data-art="5a" viewBox="0 0 300 260" role="img" aria-label="A desk with a pile of paper sums that becomes a neat ledger with an ochre approval stamp."></svg>
+          <figcaption class="cap" data-cap="a">Store dues worked out by hand every month. Now a payment engine, and nothing is sent until a person approves.</figcaption>
+        </figure>
+        <figure class="vcell">
+          <svg class="solid" data-art="5b" viewBox="0 0 300 260" role="img" aria-label="A phone with a column of chat bubbles that becomes one packed parcel with a label."></svg>
+          <figcaption class="cap" data-cap="b">Orders taken one WhatsApp message at a time. Now an agent that sells, and modules for order, payment and production.</figcaption>
+        </figure>
+        <figure class="vcell">
+          <svg class="solid" data-art="5c" viewBox="0 0 300 260" role="img" aria-label="A sound wave that becomes a wall calendar with ticks."></svg>
+          <figcaption class="cap" data-cap="c">A voice note comes in. Now speech becomes intent, and tasks and calendar changes go out, with a person approving the plan.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="scene" data-scene="6" aria-label="Who I build for">
+  <div class="stage">
+    <div class="text">
+      <div class="beats">
+        <div class="beat">
+          <p class="eyebrow"><span data-u>Who I build for.</span></p>
+          <p class="narr"><span data-u>Operators who already run a company, whose work is split across tools that do not share a memory.</span></p>
+          <p class="narr"><span data-u>The operator should run the business. The system should carry the work.</span></p>
+        </div>
+        <div class="beat">
+          <p class="note"><span data-u>If you are shopping for a landing page or a one-week chatbot, this is the wrong call.</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="art flow">
+      <div class="street" data-street="6" role="img" aria-label="A row of nine isometric shopfronts with different awnings. Their lights come on one by one, labelled with the industries they serve."></div>
+    </div>
+  </div>
+</section>
+<section class="scene scene-close" data-scene="7" aria-labelledby="s7-h">
+  <div class="stage">
+    <div class="text">
+      <div class="beats">
+        <div class="beat">
+          <h2 class="headline" id="s7-h"><span data-u>Bring the operation.</span></h2>
+          <p class="narr"><span data-u>I will tell you whether it should run on Verslay, or be built around the tools you already have.</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="art flow dawn">
+      <a class="btn cta" id="cta" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+      <p class="note" id="cta-note">The appointment sits on LinkedIn.</p>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="foot">
+  <p>Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+  <p>Shubham Gupta. Delhi.</p>
+</footer>
+<div class="card" id="card" aria-hidden="true"><i></i><i></i><i></i></div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+/* ---- Engine: one rAF loop, scroll progress, text beats, clock, order card ---- */
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+const lerp = (a, b, t) => a + (b - a) * t;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const SCENES = $$('.scene');
+const N = SCENES.length;
+const CARD = $('#card');
+const CLOCK = $('#clock');
+const ART = new Array(N).fill(null);   // ART[i](p, now) draws scene i
+const WIN = { 5: [[0, 0.2], [0.82, 1]], 7: [[0, 0.02]] }; // custom text windows: scene 5 spreads its beats around the vignettes; scene 7 shows at once
+const introAt = performance.now();
+let introDone = false;
+let heroVisible = true;
+setTimeout(() => { introDone = true; }, 1200);
+
+const setOp = (el, v) => {
+  const s = v.toFixed(3);
+  if (el._o !== s) { el._o = s; el.style.opacity = s; }
+};
+
+// Text beats stack in place. Their lines reveal in sequence as p advances, then stay on screen until the scene ends.
+const BEATS = SCENES.map((sc, i) => {
+  const els = $$('.beat', sc);
+  const n = els.length;
+  return els.map((el, k) => {
+    const w = WIN[i] ? WIN[i][k] : [k / n, (k + 1) / n];
+    return { el, a: w[0], z: w[1], units: $$('[data-u]', el) };
+  });
+});
+function updateBeats(i, p) {
+  for (const b of BEATS[i]) {
+    const span = b.z - b.a;
+    b.units.forEach((u, j) => {
+      const s = b.a + span * j * 0.12;
+      setOp(u, smooth(s, s + span * 0.12, p));
+    });
+  }
+}
+
+// Page clock: 23:47 at the top, 07:00 at the bottom.
+function updateClock(g) {
+  const m = Math.floor((1427 + g * 433) % 1440);
+  const txt = String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
+  if (CLOCK._t !== txt) { CLOCK._t = txt; CLOCK.textContent = txt; }
+}
+
+// The order card has its own lane above the art column, so it never covers art or text.
+// In the close it morphs into the Book a call outline (width, height, border), then hides.
+const CARD_ART = $('.art', SCENES[0]);
+const BAR_EL = $('.bar');
+function cardPlace(p7) {
+  if (RM) return;
+  const small = window.innerWidth <= 760;
+  const w0 = small ? 44 : 64, h0 = small ? 58 : 84;
+  const a = CARD_ART.getBoundingClientRect();
+  let x = a.left + (small ? 20 : 24) + w0 / 2;
+  let y = BAR_EL.getBoundingClientRect().height + (small ? 6 : 10) + h0 / 2;
+  let w = w0, h = h0;
+  const m = smooth(0.5, 0.74, p7);
+  if (m > 0) {
+    const r = CTA.getBoundingClientRect();
+    x = lerp(x, r.left + r.width / 2, m);
+    y = lerp(y, r.top + r.height / 2, m);
+    w = lerp(w0, r.width, m);
+    h = lerp(h0, r.height, m);
+  }
+  CARD.style.width = w.toFixed(1) + 'px';
+  CARD.style.height = h.toFixed(1) + 'px';
+  CARD.style.background = `rgba(201,139,43,${(1 - m).toFixed(3)})`;
+  CARD.style.border = `${m.toFixed(2)}px solid rgba(233,230,223,${m.toFixed(3)})`;
+  CARD.style.setProperty('--m', m.toFixed(3));
+  CARD.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -50%)`;
+  setOp(CARD, introDone ? 1 - smooth(0.8, 0.84, p7) : 0);
+}
+
+function frame(now) {
+  const vh = window.innerHeight;
+  const rects = SCENES.map(s => s.getBoundingClientRect());
+  const ps = rects.map(r => clamp(-r.top / Math.max(1, r.height - vh)));
+  const g = clamp(window.scrollY / Math.max(1, document.documentElement.scrollHeight - vh));
+  for (let i = 0; i < N; i++) {
+    updateBeats(i, ps[i]);
+    if (ART[i]) ART[i](ps[i], now);
+  }
+  updateClock(g);
+  cardPlace(ps[7]);
+  requestAnimationFrame(frame);
+}
+
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(es => { heroVisible = es[0].isIntersecting; }).observe(SCENES[0]);
+}
+
+function boot() {
+  sizeHero();
+  if (RM) {
+    // Reduced motion: every scene is drawn in its final state once, with no loop.
+    ART.forEach((fn, i) => { if (fn) fn(1, 0); });
+    updateClock(1);
+    return;
+  }
+  requestAnimationFrame(frame);
+}
+/* ---- Isometric helpers, shared by the hero fallback and every scene ---- */
+const ISO_C = 0.8660254;
+const iso = (c, x, y, z) => [c.ox + (x - z) * ISO_C * c.s, c.oy + (x + z) * 0.5 * c.s - y * c.s];
+const f2 = q => q[0].toFixed(1) + ',' + q[1].toFixed(1);
+const mkD = (pts, close) => 'M' + pts.map(f2).join('L') + (close ? 'Z' : '');
+const polyD = (c, a, close = true) => mkD(a.map(q => iso(c, q[0], q[1], q[2])), close);
+const lineD = (c, a) => polyD(c, a, false);
+function faceD(c, x, y, z, w, h, d) {
+  const I = (a, b, e) => iso(c, a, b, e);
+  return {
+    l: mkD([I(x, y, z + d), I(x + w, y, z + d), I(x + w, y + h, z + d), I(x, y + h, z + d)], true),
+    r: mkD([I(x + w, y, z), I(x + w, y, z + d), I(x + w, y + h, z + d), I(x + w, y + h, z)], true),
+    t: mkD([I(x, y + h, z), I(x + w, y + h, z), I(x + w, y + h, z + d), I(x, y + h, z + d)], true)
+  };
+}
+// A filled isometric box (corner at x, y, z) as three shaded faces.
+const boxSVG = (c, x, y, z, w, h, d, f) => {
+  const k = faceD(c, x, y, z, w, h, d);
+  return `<path d="${k.l}" fill="${f.l}"/><path d="${k.r}" fill="${f.r}"/><path d="${k.t}" fill="${f.t}"/>`;
+};
+const PAL = {
+  slab: { l: '#15181B', r: '#111316', t: '#1D2226' },
+  wall: { l: '#2A3036', r: '#22272C', t: '#343B42' },
+  obj: { l: '#3E454D', r: '#343A41', t: '#4E565E' },
+  chalk: { l: '#8C939B', r: '#7A8189', t: '#B9B6AF' },
+  dark: { l: '#1F2327', r: '#191C20', t: '#2C3238' }
+};
+
+/* ---- Hero: three.js diorama, with an SVG fallback drawn from the same objects ---- */
+const HERO_CANVAS = $('#hero-canvas');
+const HERO_SVG = $('#hero-fallback');
+let THR = null;
+let heroRendered = false;
+
+function buildHeroSVG() {
+  const c = { ox: 400, oy: 420, s: 34 };
+  const B = (x, y, z, w, h, d, f) => boxSVG(c, x, y, z, w, h, d, f);
+  let s = '';
+  s += B(-3.6, -0.3, -3.6, 7.2, 0.3, 7.2, PAL.slab);
+  s += B(-3.6, 0, -3.6, 7.2, 2.4, 0.18, PAL.wall);
+  s += B(-3.6, 0, -3.6, 0.18, 2.4, 7.2, PAL.wall);
+  s += B(-3.2, 0.9, -3.4, 2.8, 0.1, 0.5, PAL.chalk);
+  s += B(-3.2, 1.7, -3.4, 2.8, 0.1, 0.5, PAL.chalk);
+  s += B(-3.0, 1.0, -3.4, 0.5, 0.5, 0.4, PAL.dark) + B(-2.2, 1.0, -3.4, 0.6, 0.4, 0.4, PAL.obj) + B(-1.2, 1.0, -3.4, 0.45, 0.6, 0.4, PAL.chalk);
+  s += B(-2.8, 1.8, -3.4, 0.5, 0.45, 0.4, PAL.obj) + B(-1.9, 1.8, -3.4, 0.7, 0.4, 0.4, PAL.dark);
+  s += B(-2.6, 0, -1.6, 3.0, 0.9, 1.0, PAL.wall) + B(-2.7, 0.9, -1.6, 3.2, 0.1, 1.2, PAL.chalk);
+  s += B(-2.2, 1.0, -1.5, 0.6, 0.35, 0.5, PAL.dark);
+  s += B(1.2, 0, 0.6, 1.8, 0.85, 1.1, PAL.wall) + B(1.2, 0.85, 0.6, 1.9, 0.08, 1.2, PAL.chalk);
+  s += B(0.8, 0.93, 0.6, 0.5, 0.4, 0.5, PAL.obj);
+  s += B(-0.6, 0, 2.0, 2.3, 1.0, 1.3, PAL.chalk) + B(1.7, 0, 2.0, 0.9, 0.8, 1.3, PAL.wall);
+  HERO_SVG.innerHTML = s;
+}
+
+function initThree() {
+  if (!window.THREE) return null;
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: HERO_CANVAS, antialias: true, alpha: true });
+  } catch (e) { return null; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  const scene = new THREE.Scene();
+  const cam = new THREE.OrthographicCamera(-4, 4, 4, -4, 0.1, 100);
+  const g = new THREE.Group();
+  scene.add(g);
+  const mat = (hex, r = 0.9) => new THREE.MeshStandardMaterial({ color: hex, roughness: r, metalness: 0, flatShading: true });
+  const M = { slab: mat(0x1C2024), wall: mat(0x2A3036), slate: mat(0x3A424A), chalk: mat(0xB9B6AF, 0.75), dark: mat(0x23282D), tyre: mat(0x111417, 0.95) };
+  const add = (geo, m, x, y, z) => { const me = new THREE.Mesh(geo, m); me.position.set(x, y, z); me.castShadow = true; me.receiveShadow = true; g.add(me); return me; };
+  const box = (x, y, z, w, h, d, m) => add(new THREE.BoxGeometry(w, h, d), m, x + w / 2, y + h / 2, z + d / 2);
+  const wheel = (x, y, z) => { const me = add(new THREE.CylinderGeometry(0.22, 0.22, 0.2, 14), M.tyre, x, y, z); me.rotation.x = Math.PI / 2; };
+  // Same layout as the SVG fallback: slab, walls, shelves, counter, table, van.
+  box(-3.6, -0.3, -3.6, 7.2, 0.3, 7.2, M.slab);
+  box(-3.6, 0, -3.6, 7.2, 2.4, 0.18, M.wall);
+  box(-3.6, 0, -3.6, 0.18, 2.4, 7.2, M.wall);
+  box(-3.2, 0.9, -3.4, 2.8, 0.1, 0.5, M.chalk);
+  box(-3.2, 1.7, -3.4, 2.8, 0.1, 0.5, M.chalk);
+  box(-3.0, 1.0, -3.4, 0.5, 0.5, 0.4, M.dark);
+  box(-2.2, 1.0, -3.4, 0.6, 0.4, 0.4, M.slate);
+  box(-1.2, 1.0, -3.4, 0.45, 0.6, 0.4, M.chalk);
+  box(-2.8, 1.8, -3.4, 0.5, 0.45, 0.4, M.slate);
+  box(-1.9, 1.8, -3.4, 0.7, 0.4, 0.4, M.dark);
+  box(-2.6, 0, -1.6, 3.0, 0.9, 1.0, M.wall);
+  box(-2.7, 0.9, -1.6, 3.2, 0.1, 1.2, M.chalk);
+  box(-2.2, 1.0, -1.5, 0.6, 0.35, 0.5, M.dark);
+  box(1.2, 0, 0.6, 1.8, 0.85, 1.1, M.wall);
+  box(1.2, 0.85, 0.6, 1.9, 0.08, 1.2, M.chalk);
+  box(0.8, 0.93, 0.6, 0.5, 0.4, 0.5, M.slate);
+  box(-0.6, 0, 2.0, 2.3, 1.0, 1.3, M.chalk);
+  box(1.7, 0, 2.0, 0.9, 0.8, 1.3, M.wall);
+  wheel(0.0, 0.22, 1.95); wheel(0.0, 0.22, 3.35); wheel(2.1, 0.22, 1.95); wheel(2.1, 0.22, 3.35);
+  // Lights: cool key with soft shadows, low slate ambient, one warm ochre point light.
+  scene.add(new THREE.AmbientLight(0x9AA3AD, 0.55));
+  const key = new THREE.DirectionalLight(0xE9E6DF, 1.5);
+  key.position.set(6, 10, 4);
+  key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024);
+  Object.assign(key.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: 1, far: 30 });
+  key.shadow.camera.updateProjectionMatrix();
+  key.shadow.bias = -0.0008;
+  scene.add(key);
+  const warm = new THREE.PointLight(0xC98B2B, 9, 9, 2);
+  warm.position.set(-2.2, 2.4, -1.2);
+  scene.add(warm);
+  return { renderer, scene, cam };
+}
+
+function sizeHero() {
+  if (!THR) return;
+  const r = HERO_CANVAS.getBoundingClientRect();
+  if (!r.width || !r.height) return;
+  THR.renderer.setSize(r.width, r.height, false);
+  const F = 4.2, a = r.width / r.height;
+  THR.cam.left = -F * a; THR.cam.right = F * a; THR.cam.top = F; THR.cam.bottom = -F;
+  THR.cam.updateProjectionMatrix();
+}
+
+// Slow orbit and push-in tied to p; the slab fades up over the first 1.4 s.
+function heroDraw(p, now) {
+  if (!THR) return;
+  const e = RM ? 1 : smooth(0, 1400, now - introAt);
+  HERO_CANVAS.style.opacity = e.toFixed(3);
+  HERO_CANVAS.style.transform = `translateY(${((1 - e) * 18).toFixed(1)}px)`;
+  const th = Math.PI / 4 - 0.42 + 0.84 * p;
+  THR.cam.position.set(12 * Math.cos(th), 9.5, 12 * Math.sin(th));
+  THR.cam.lookAt(0.2, 0.6, 0);
+  THR.cam.zoom = 1 + 0.2 * p;
+  THR.cam.updateProjectionMatrix();
+  THR.cam.updateMatrixWorld();
+  if (RM ? !heroRendered : heroVisible) { THR.renderer.render(THR.scene, THR.cam); heroRendered = true; }
+}
+
+THR = initThree();
+if (THR) {
+  sizeHero();
+} else {
+  HERO_CANVAS.style.display = 'none';
+  buildHeroSVG();
+  HERO_SVG.classList.remove('is-off');
+}
+window.addEventListener('resize', sizeHero);
+ART[0] = (p, now) => heroDraw(p, now);
+
+/* ---- Scene 1: the counter by day, drawn line by line on scroll ---- */
+(function () {
+  const svg = $('svg[data-art="1"]');
+  const c = { ox: 380, oy: 470, s: 40 };
+  const parts = [];
+  const add = (d, s) => parts.push({ d, s });
+  const faces = (x, y, z, w, h, d, s) => {
+    const k = faceD(c, x, y, z, w, h, d);
+    add(k.l, s); add(k.r, s + 0.04); add(k.t, s + 0.08);
+  };
+  add(polyD(c, [[-5, 0, -3], [4.5, 0, -3], [4.5, 4.2, -3], [-5, 4.2, -3]]), 0.0);
+  add(polyD(c, [[-4, 1.5, -2.9], [-1.2, 1.5, -2.9], [-1.2, 3.2, -2.9], [-4, 3.2, -2.9]]), 0.1);
+  [[-3.6, 0.5], [-3.0, 0.9], [-2.4, 0.7], [-1.8, 1.2]].forEach(([x, h], k) => add(lineD(c, [[x, 1.5, -2.9], [x, 1.5 + h * 0.6, -2.9]]), 0.16 + k * 0.03));
+  add(polyD(c, [[1.2, 3.0, -2.9], [3.0, 3.0, -2.9], [2.5, 2.2, -2.9], [1.7, 2.2, -2.9]]), 0.24);
+  add(lineD(c, [[2.1, 2.2, -2.9], [2.1, 1.5, -2.9]]), 0.3);
+  faces(-3.6, 0, -1.4, 6.4, 1.2, 1.4, 0.32);
+  faces(-1.6, 1.2, -0.7, 1.0, 0.45, 0.8, 0.5);
+  faces(-1.45, 1.65, -0.55, 0.7, 0.04, 0.45, 0.6);
+  for (let k = 0; k < 3; k++) faces(1.0, 1.2 + k * 0.03, -0.9 + k * 0.06, 1.3, 0.03, 1.1, 0.66 + k * 0.06);
+  svg.innerHTML = parts.map(q => `<path class="draw" pathLength="1" d="${q.d}"/>`).join('');
+  const els = $$('.draw', svg).map((el, k) => ({ el, s: parts[k].s }));
+  ART[1] = (p) => { for (const e of els) e.el.style.strokeDashoffset = (1 - smooth(e.s, e.s + 0.2, p)).toFixed(3); };
+})();
+
+/* ---- Scene 2: five rooms from one box function, joined by a dashed loop ---- */
+(function () {
+  const svg = $('svg[data-art="2"]');
+  const c = { ox: 400, oy: 300, s: 30 };
+  const OBJ = [
+    (x0) => boxSVG(c, x0 + 0.3, 0.12, 0.7, 1.8, 0.55, 0.6, PAL.chalk) + boxSVG(c, x0 + 1.5, 0.67, 0.9, 0.35, 0.3, 0.3, PAL.dark),
+    (x0) => boxSVG(c, x0 + 0.5, 0.12, 0.5, 1.4, 0.22, 1.2, PAL.chalk) + `<path class="ochre" fill="none" d="${lineD(c, [[x0 + 0.8, 0.36, 0.9], [x0 + 1.7, 0.36, 0.9]])}"/>`,
+    (x0) => boxSVG(c, x0 + 0.4, 0.12, 0.4, 1.6, 0.3, 1.6, PAL.obj) + boxSVG(c, x0 + 0.7, 0.42, 0.7, 1.0, 0.05, 0.8, PAL.dark),
+    (x0) => boxSVG(c, x0 + 0.5, 0.12, 0.5, 1.4, 0.04, 1.4, PAL.chalk) + [0, 1, 2].map(k => `<path fill="none" d="${lineD(c, [[x0 + 0.7, 0.18, 0.7 + 0.35 * k], [x0 + 1.7, 0.18, 0.7 + 0.35 * k]])}"/>`).join(''),
+    (x0) => boxSVG(c, x0 + 0.4, 0.12, 0.4, 1.6, 0.5, 1.6, PAL.obj) + boxSVG(c, x0 + 0.4, 0.62, 0.4, 1.6, 0.12, 0.5, PAL.chalk)
+  ];
+  let s = '';
+  for (let i = 0; i < 5; i++) {
+    const x0 = -6 + i * 3;
+    s += boxSVG(c, x0, 0, 0, 2.4, 0.12, 2.4, PAL.dark);
+    s += boxSVG(c, x0, 0, 0, 0.12, 1.3, 2.4, PAL.wall);
+    s += boxSVG(c, x0, 0, 0, 2.4, 1.3, 0.12, PAL.wall);
+    s += OBJ[i](x0);
+  }
+  const L = [];
+  for (let i = 0; i <= 24; i++) L.push([-6.2 + 12.4 * i / 24, 0.35, 2.9]);
+  for (let i = 1; i <= 12; i++) { const a = -Math.PI / 2 + Math.PI * i / 12; L.push([6.2 + 0.45 * Math.cos(a), 0.35, 3.35 + 0.45 * Math.sin(a)]); }
+  for (let i = 0; i <= 24; i++) L.push([6.2 - 12.4 * i / 24, 0.35, 3.8]);
+  for (let i = 1; i <= 12; i++) { const a = Math.PI / 2 + Math.PI * i / 12; L.push([-6.2 + 0.45 * Math.cos(a), 0.35, 3.35 + 0.45 * Math.sin(a)]); }
+  s += `<path id="s2-loop" class="loop" fill="none" d="${lineD(c, L)}"/>`;
+  svg.innerHTML = s;
+})();
+
+/* ---- Scene 3: the rooms slide into a ring around one memory; the gate lifts ---- */
+(function () {
+  const svg = $('svg[data-art="3"]');
+  const CORE = { x: 400, y: 360 };
+  const rc = { ox: 0, oy: 0, s: 28 };
+  const OBJS = [[-0.6, 0.12, -0.4, 1.2, 0.5, 0.9], [-0.5, 0.12, -0.5, 1.0, 0.2, 1.0], [-0.6, 0.12, -0.3, 1.2, 0.3, 0.8], [-0.5, 0.12, -0.5, 1.0, 0.05, 1.0], [-0.5, 0.12, -0.5, 1.0, 0.8, 1.0]];
+  const rows = [], tgt = [];
+  let spokes = '', rooms = '';
+  for (let k = 0; k < 5; k++) {
+    rows.push([150 + k * 130, 600]);
+    const th = Math.PI + (k + 0.5) * Math.PI / 5;
+    const x = CORE.x + 290 * Math.cos(th), y = CORE.y + 170 * Math.sin(th);
+    tgt.push([x, y]);
+    const dx = x - CORE.x, dy = y - CORE.y, d = Math.hypot(dx, dy), f = (d - 70) / d;
+    spokes += `<path id="s3-spoke-${k}" class="draw" pathLength="1" fill="none" d="M${x.toFixed(1)},${y.toFixed(1)}L${(CORE.x + dx * f).toFixed(1)},${(CORE.y + dy * f).toFixed(1)}"/>`;
+    rooms += `<g class="room">`
+      + boxSVG(rc, -1.2, 0, -1.2, 2.4, 0.12, 2.4, PAL.dark)
+      + boxSVG(rc, -1.2, 0, -1.2, 0.12, 1.3, 2.4, PAL.wall)
+      + boxSVG(rc, -1.2, 0, -1.2, 2.4, 1.3, 0.12, PAL.wall)
+      + boxSVG(rc, OBJS[k][0], OBJS[k][1], OBJS[k][2], OBJS[k][3], OBJS[k][4], OBJS[k][5], PAL.obj)
+      + `</g>`;
+  }
+  svg.innerHTML = spokes
+    + `<circle cx="${CORE.x}" cy="${CORE.y}" r="56" fill="#0E1012"/>`
+    + `<text x="${CORE.x}" y="${CORE.y + 5}" text-anchor="middle" style="text-transform:none">one memory</text>`
+    + `<path fill="none" d="M470,470L470,440"/><path id="s3-arm" fill="none" d="M470,440L530,440"/>`
+    + rooms;
+  const roomEls = $$('.room', svg);
+  const spokeEls = $$('.draw', svg);
+  const arm = $('#s3-arm', svg);
+  ART[3] = (p) => {
+    const e = smooth(0.04, 0.6, p);
+    roomEls.forEach((g, k) => g.setAttribute('transform', `translate(${lerp(rows[k][0], tgt[k][0], e).toFixed(1)} ${lerp(rows[k][1], tgt[k][1], e).toFixed(1)})`));
+    spokeEls.forEach((el, k) => { el.style.strokeDashoffset = (1 - smooth(0.45 + k * 0.04, 0.65 + k * 0.04, p)).toFixed(3); });
+    const phi = 1.3 * smooth(0.86, 1, p);
+    arm.setAttribute('d', `M470,440L${(470 + 60 * Math.cos(phi)).toFixed(1)},${(440 - 60 * Math.sin(phi)).toFixed(1)}`);
+  };
+})();
+
+/* ---- Scene 4: a city block of modules rises; four towers link up; the camera pulls back ---- */
+(function () {
+  const svg = $('svg[data-art="4"]');
+  const c = { ox: 400, oy: 430, s: 24 };
+  const hash = (i, j) => { const v = Math.sin(i * 12.9898 + j * 78.233) * 43758.5453; return v - Math.floor(v); };
+  const TOW = { '1,1': ['memory', 6.0, 0.18], '5,1': ['tools', 4.9, 0.28], '1,5': ['agents', 4.3, 0.36], '5,5': ['actions', 5.5, 0.44] };
+  const mods = [];
+  for (let sum = 0; sum <= 12; sum++) {
+    for (let i = 0; i <= 6; i++) {
+      const j = sum - i;
+      if (j < 0 || j > 6) continue;
+      const tw = TOW[i + ',' + j];
+      mods.push(tw
+        ? { i, j, H: tw[1], t0: tw[2], name: tw[0] }
+        : { i, j, H: 0.6 + 1.1 * hash(i, j), t0: 0.04 + 0.5 * (sum / 12), name: null });
+    }
+  }
+  const towers = mods.filter(m => m.name);
+  const at = name => towers.find(m => m.name === name);
+  const order = ['memory', 'tools', 'actions', 'agents', 'memory'];
+  const linkD = lineD(c, order.map(n => [at(n).i - 3 + 0.5, at(n).H + 0.2, at(n).j - 3 + 0.5]));
+  const [vx, vy] = iso(c, -0.75, 0.45, 4.6);
+  let html = `<g id="s4-cam">` + boxSVG(c, -3.6, -0.12, -3.6, 7.2, 0.12, 7.2, PAL.dark);
+  mods.forEach(() => { html += `<g class="mod"></g>`; });
+  html += `<path class="draw" pathLength="1" fill="none" d="${linkD}"/>`;
+  html += `<g id="s4-vault" style="opacity:0">` + boxSVG(c, -1.2, 0, 3.8, 0.9, 0.9, 0.8, PAL.obj)
+    + `<circle cx="${vx.toFixed(1)}" cy="${vy.toFixed(1)}" r="7" fill="none"/></g>`;
+  towers.forEach(m => { html += `<text class="tl">${m.name}</text>`; });
+  html += `</g>`;
+  svg.innerHTML = html;
+  const modEls = $$('.mod', svg);
+  const tls = $$('.tl', svg);
+  const linkEl = $('.draw', svg), vault = $('#s4-vault', svg), cam = $('#s4-cam', svg);
+  const last = new Array(mods.length).fill(-1);
+  ART[4] = (p) => {
+    mods.forEach((m, k) => {
+      const h = m.name ? m.H * smooth(m.t0, m.t0 + 0.24, p) : m.H * smooth(m.t0, m.t0 + 0.16, p);
+      if (Math.abs(h - last[k]) > 0.01) {
+        last[k] = h;
+        modEls[k].innerHTML = h < 0.02 ? '' : boxSVG(c, m.i - 3 + 0.08, 0, m.j - 3 + 0.08, 0.84, h, 0.84, m.name ? PAL.chalk : PAL.obj);
+      }
+    });
+    towers.forEach((m, k) => {
+      const h = m.H * smooth(m.t0, m.t0 + 0.24, p);
+      const [x, y] = iso(c, m.i - 3 + 0.5, h + 0.45, m.j - 3 + 0.5);
+      tls[k].setAttribute('x', x.toFixed(1));
+      tls[k].setAttribute('y', y.toFixed(1));
+      tls[k].setAttribute('text-anchor', 'middle');
+      setOp(tls[k], smooth(0.55, 0.7, p));
+    });
+    linkEl.style.strokeDashoffset = (1 - smooth(0.62, 0.8, p)).toFixed(3);
+    setOp(vault, smooth(0.7, 0.85, p));
+    cam.setAttribute('transform', `translate(400 400) scale(${(1.16 - 0.16 * smooth(0, 0.6, p)).toFixed(4)}) translate(-400 -400)`);
+  };
+})();
+
+/* ---- Scene 5: three vignettes switch from rough to handled; each caption stays once shown ---- */
+(function () {
+  const C = { ox: 150, oy: 150, s: 17 };
+  const S = { a: $('svg[data-art="5a"]'), b: $('svg[data-art="5b"]'), c: $('svg[data-art="5c"]') };
+  const OCHRE = { l: '#C98B2B', r: '#A8711F', t: '#D69A3C' };
+  const scribble = pts => `<path fill="none" d="${lineD(C, pts)}"/>`;
+  S.a.innerHTML =
+    `<g id="s5a-rough">` + boxSVG(C, -3, 0, -2.2, 6, 0.5, 4.4, PAL.wall)
+    + boxSVG(C, -2.3, 0.5, -1.6, 1.4, 0.03, 1.0, PAL.chalk) + boxSVG(C, -0.6, 0.5, -0.9, 1.3, 0.03, 1.0, PAL.chalk) + boxSVG(C, 0.9, 0.5, -0.2, 1.3, 0.03, 1.0, PAL.chalk)
+    + scribble([[-2.1, 0.56, -1.3], [-1.7, 0.56, -0.9], [-1.3, 0.56, -1.3], [-0.9, 0.56, -0.9]])
+    + scribble([[-0.4, 0.56, -0.6], [0.0, 0.56, -0.2], [0.4, 0.56, -0.6], [0.8, 0.56, -0.2]])
+    + `</g><g id="s5a-done">` + boxSVG(C, -1.8, 0, -1.2, 2.8, 0.4, 2.2, PAL.chalk)
+    + [-0.9, -0.4, 0.1].map(z => scribble([[-1.5, 0.42, z], [0.5, 0.42, z]])).join('')
+    + boxSVG(C, 0.1, 0.42, 0.2, 0.8, 0.02, 0.8, OCHRE) + `</g>`;
+  const bubble = k => `<rect x="${k % 2 ? 140 : 110}" y="${52 + k * 28}" width="74" height="18" rx="9" fill="#3E454D"/>`;
+  S.b.innerHTML =
+    `<g id="s5b-rough"><rect x="96" y="30" width="108" height="200" rx="16" fill="#1C2024"/>`
+    + [0, 1, 2, 3, 4, 5].map(bubble).join('') + `</g>`
+    + `<g id="s5b-done" style="opacity:0">` + boxSVG(C, -1.6, 0, -1.3, 3.2, 2.2, 2.6, PAL.chalk)
+    + boxSVG(C, -0.25, 2.2, -1.3, 0.5, 0.02, 2.6, OCHRE)
+    + boxSVG(C, 0.5, 2.22, -0.7, 0.9, 0.02, 0.6, { l: '#E9E6DF', r: '#E9E6DF', t: '#E9E6DF' }) + `</g>`;
+  let wave = '';
+  for (let x = 30; x <= 270; x += 4) {
+    const y = 130 + 34 * Math.sin(x * 0.09) * (0.5 + 0.5 * Math.sin(x * 0.031));
+    wave += (wave ? 'L' : 'M') + x + ',' + y.toFixed(1);
+  }
+  let cells = '';
+  for (let r = 0; r < 4; r++) for (let k = 0; k < 5; k++) cells += `<rect x="${84 + k * 30}" y="${100 + r * 30}" width="16" height="16" fill="none"/>`;
+  S.c.innerHTML =
+    `<g id="s5c-rough"><path fill="none" d="${wave}"/></g>`
+    + `<g id="s5c-done" style="opacity:0"><rect x="64" y="44" width="172" height="170" rx="8" fill="#1C2024"/>`
+    + `<rect x="64" y="44" width="172" height="36" rx="8" fill="#E9E6DF" stroke="none"/>` + cells
+    + `<path class="ochre" fill="none" d="M84,130L94,140L108,118"/><path class="ochre" fill="none" d="M144,160L154,170L168,148"/></g>`;
+  const ga = [$('#s5a-rough', S.a), $('#s5a-done', S.a)];
+  const gb = [$('#s5b-rough', S.b), $('#s5b-done', S.b)];
+  const gc = [$('#s5c-rough', S.c), $('#s5c-done', S.c)];
+  // Crop each vignette to its drawing so the drawing fills its cell.
+  [S.a, S.b, S.c].forEach(svg => {
+    const b = svg.getBBox(), pad = 8;
+    svg.setAttribute('viewBox', `${b.x - pad} ${b.y - pad} ${b.width + 2 * pad} ${b.height + 2 * pad}`);
+  });
+  const caps = $$('.cap');
+  ART[5] = (p) => {
+    const sa = smooth(0.22, 0.36, p), sb = smooth(0.42, 0.56, p), sc = smooth(0.62, 0.76, p);
+    setOp(ga[0], 1 - sa); setOp(ga[1], sa);
+    setOp(gb[0], 1 - sb); setOp(gb[1], sb);
+    setOp(gc[0], 1 - sc); setOp(gc[1], sc);
+    caps.forEach((el, k) => {
+      const lo = 0.2 + 0.2 * k;
+      setOp(el, smooth(lo, lo + 0.03, p));
+    });
+  };
+})();
+
+/* ---- Scene 6: nine shopfronts, each with its own awning, light up in turn ---- */
+(function () {
+  const wrap = $('[data-street="6"]');
+  const NAMES = ['D2C fashion and ethnic wear', 'Gifting', 'Jewellery', 'Beauty', 'Home decor', 'Fitness', 'Textiles and B2B', 'Agencies', 'Creators'];
+  const c = { ox: 50, oy: 60, s: 18 };
+  const SLATE = '#2A3036';
+  let html = '';
+  NAMES.forEach((name, k) => {
+    let s = boxSVG(c, -1.1, 0, -0.9, 2.2, 1.5, 1.8, PAL.wall);
+    s += `<path fill="#1C2024" style="stroke:none" d="${polyD(c, [[-0.8, 0.25, 0.9], [0.8, 0.25, 0.9], [0.8, 0.9, 0.9], [-0.8, 0.9, 0.9]])}"/>`;
+    s += `<path class="lamp" fill="#C98B2B" style="stroke:none;opacity:0" d="${polyD(c, [[-0.8, 0.25, 0.9], [0.8, 0.25, 0.9], [0.8, 0.9, 0.9], [-0.8, 0.9, 0.9]])}"/>`;
+    s += boxSVG(c, -0.6, 1.5, -0.6, 1.2, 0.3, 1.0, PAL.dark);
+    s += boxSVG(c, -1.25, 1.0, 0.9, 2.5, 0.16, 0.5, PAL.chalk);
+    const pat = k % 4;
+    if (pat === 0) {
+      for (let m = 0; m < 5; m++) {
+        const xa = -1.25 + m * 0.5;
+        s += `<path fill="${SLATE}" style="stroke:none" d="${polyD(c, [[xa, 1.0, 1.42], [xa + 0.25, 1.0, 1.42], [xa + 0.25, 1.16, 1.42], [xa, 1.16, 1.42]])}"/>`;
+      }
+    } else if (pat === 1) {
+      for (let m = 0; m < 5; m++) {
+        const q = iso(c, -1.0 + m * 0.5, 1.08, 1.42);
+        s += `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="2" fill="${SLATE}" style="stroke:none"/>`;
+      }
+    } else if (pat === 2) {
+      const pts = [];
+      for (let m = 0; m <= 10; m++) pts.push([-1.25 + m * 0.25, m % 2 ? 1.02 : 1.14, 1.42]);
+      s += `<path fill="none" d="${lineD(c, pts)}"/>`;
+    }
+    html += `<figure class="shop"><svg class="solid" viewBox="0 0 100 100" aria-hidden="true">${s}</svg><figcaption>${name}</figcaption></figure>`;
+  });
+  wrap.innerHTML = html;
+  const figs = $$('.shop', wrap);
+  const lamps = $$('.lamp', wrap);
+  ART[6] = (p) => { lamps.forEach((el, k) => setOp(el, 0.9 * smooth(0.08 + k * 0.06, 0.14 + k * 0.06, p))); };
+})();
+
+/* ---- Scene 7: the sky warms; the order card lands as the outlined button (see cardPlace) ---- */
+const CTA = $('#cta');
+const CTA_NOTE = $('#cta-note');
+ART[7] = (p) => {
+  SCENES[7].style.setProperty('--dawn', smooth(0.1, 0.9, p).toFixed(3));
+  const v = smooth(0.7, 0.8, p);
+  setOp(CTA, v);
+  setOp(CTA_NOTE, v);
+  CTA.style.visibility = v > 0 ? 'visible' : 'hidden';
+};
+
+boot();
+</script>
+</body>
+</html>

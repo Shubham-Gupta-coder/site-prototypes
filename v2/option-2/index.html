@@ -1,0 +1,1555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Shubham Gupta. Delhi.</title>
+<meta name="description" content="Shubham Gupta builds the AI layer that runs businesses. Verslay's only technical founder.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,800;1,300&amp;family=Inter+Tight:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<script>(function(){var h=document.documentElement;h.classList.add('js');setTimeout(function(){if(!h.dataset.ready)h.classList.remove('js');},6000);})();</script>
+<style>
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#F1ECE2;
+  --paper-hi:#FAF7F1;
+  --paper-lo:#E6DDCD;
+  --paper-deep:#D8CBB2;
+  --ink:#141414;
+  --ink-2:#3B3934;
+  --ink-body:rgba(20,20,20,.9);
+  --vermilion:#E0401F;
+  --shadow-cut:0 1px 1px rgba(20,20,20,.08),0 12px 24px -10px rgba(20,20,20,.30);
+  --shadow-lift:0 2px 3px rgba(20,20,20,.10),0 28px 44px -16px rgba(20,20,20,.40);
+  --f-display:"Fraunces","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --f-body:"Inter Tight","Helvetica Neue",Arial,system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --gutter:20px;
+  --header-h:56px;
+  --s2:16px;
+  --s3:24px;
+}
+@media (min-width:1024px){:root{--gutter:64px;--header-h:64px}}
+
+html{background:var(--paper);-webkit-text-size-adjust:100%}
+body{margin:0;background-color:var(--paper);background-image:var(--paper-noise,none);background-size:220px 220px;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+@media (min-width:1024px){body{font-size:17px}}
+main{display:block;overflow-x:clip}
+h1,h2,p,figure{margin:0}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+
+/* Top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--header-h);display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:var(--paper);border-bottom:1px solid rgba(20,20,20,.14)}
+.brand{font-family:var(--f-body);font-weight:600;font-size:15px;letter-spacing:.01em}
+.top-cta{font-family:var(--f-body);font-weight:500;font-size:15px;white-space:nowrap;padding:8px 0;text-decoration-line:underline;text-decoration-color:var(--vermilion);text-decoration-thickness:2px;text-underline-offset:6px}
+
+/* Scenes and sticky stages */
+.scene{position:relative;height:220vh;overflow-x:clip}
+.scene--close{height:160vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;padding-top:var(--header-h);display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,55svh) minmax(0,1fr)}
+.stage.s5{grid-template-rows:minmax(0,58svh) minmax(0,1fr)}
+.stage.s0{grid-template-rows:minmax(0,50svh) minmax(0,1fr)}
+.stage.s6{grid-template-rows:minmax(0,70svh) minmax(0,1fr)}
+.copy{grid-row:2;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:var(--s3) var(--gutter);position:relative}
+.art{grid-row:1;position:relative;min-width:0;min-height:0;overflow:hidden}
+/* Beats stack in normal flow: a revealed line keeps its place until its scene ends. */
+.beats{display:flex;flex-direction:column;min-width:0}
+.beat{min-width:0}
+@media (min-width:1024px){
+  .stage{grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:minmax(0,1fr);column-gap:24px;padding-left:var(--gutter);padding-right:0}
+  .stage.s0,.stage.s5,.stage.s6{grid-template-rows:minmax(0,1fr)}
+  .copy{grid-column:1 / span 6;grid-row:1;padding:0}
+  .art{grid-column:7 / -1;grid-row:1}
+}
+@media (min-width:1280px){
+  .copy{grid-column:1 / span 5}
+  .art{grid-column:6 / -1}
+}
+
+/* Type */
+.eyebrow{font-family:var(--f-mono);font-size:13px;line-height:1.5;letter-spacing:.02em;color:var(--ink-2);margin:0 0 var(--s3)}
+.name{font-family:var(--f-display);font-weight:800;font-size:clamp(40px,14vw,72px);line-height:1;letter-spacing:.06em;margin:0 0 var(--s3)}
+@media (min-width:1024px){.name{font-size:clamp(48px,6vw,100px)}}
+.headline{font-family:var(--f-display);font-weight:300;font-style:italic;font-size:clamp(24px,6.6vw,34px);line-height:1.2;letter-spacing:-.01em;margin:0 0 var(--s3)}
+@media (min-width:1024px){.headline{font-size:clamp(24px,2.3vw,36px);max-width:24ch}}
+.line{font-family:var(--f-display);font-weight:300;font-size:clamp(26px,7.2vw,38px);line-height:1.12;letter-spacing:-.02em;margin:0 0 var(--s3)}
+@media (min-width:1024px){.line{font-size:clamp(30px,3.3vw,52px)}}
+.body{font-family:var(--f-body);font-weight:400;font-size:16px;line-height:1.6;color:var(--ink-body);max-width:52ch;margin:0 0 var(--s2)}
+@media (min-width:1024px){.body{font-size:18px;max-width:60ch}}
+.small{font-family:var(--f-body);font-size:16px;line-height:1.5;color:var(--ink-2);margin:var(--s2) 0 0}
+.lbl{display:block;margin-top:8px;font-family:var(--f-mono);font-size:12px;line-height:1.4;letter-spacing:.02em;color:var(--ink-2)}
+
+/* Copy reveal: JS writes --t (0 to 1) per element */
+.js .rv{opacity:var(--t,0)}
+.js p.rv,.js h1.rv,.js h2.rv{transform:translate3d(0,calc((1 - var(--t,0)) * 14px),0)}
+
+/* Hero */
+.hero-canvas{position:absolute;inset:0}
+.hero-canvas canvas{display:block;width:100%;height:100%}
+.hero-fallback{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+
+/* Anchors: tiny markers the thread engine reads */
+.a{position:absolute;width:4px;height:4px;pointer-events:none;opacity:0}
+
+/* Thread overlay (fixed, drawn by the page engine) */
+.thread{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:30;overflow:visible}
+.thread-line{fill:none;stroke:var(--vermilion);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.needle-halo{fill:var(--vermilion);fill-opacity:.18}
+.needle-dot{fill:var(--vermilion)}
+
+/* Paper cutouts and ink */
+.cut{position:relative;margin:0;min-width:0;background:var(--paper-hi);border-radius:4px;box-shadow:var(--shadow-cut);padding:14px;transform:translate3d(0,calc(var(--lift,0) * -10px),0)}
+.cut::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:var(--shadow-lift);opacity:var(--lift,0);pointer-events:none}
+.cut > svg{display:block;width:100%;height:auto;overflow:visible}
+.ink{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.ink .f{fill:var(--paper-lo)}
+.ink .solid{fill:var(--ink)}
+.ink .v{stroke:var(--vermilion)}
+.ink .vf{fill:var(--vermilion)}
+.draw{stroke-dasharray:1 1}
+.local{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.pin{position:absolute;top:-10px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--ink);box-shadow:0 4px 5px rgba(20,20,20,.35)}
+.pin::after{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:var(--paper-hi)}
+
+/* Scene 1: motif cards in a zigzag */
+.zig{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:5% 6%;padding:11% 9%;place-items:center}
+.zig .cut{width:100%;max-width:300px}
+.zig .cut:nth-child(2){margin-top:14%}
+.zig .cut:nth-child(3){margin-bottom:14%}
+
+/* Scene 2: five pinned cutouts */
+.glue .cut{position:absolute;width:31%;padding:10px 10px 12px}
+.glue .g1{left:5%;top:8%;rotate:-2.5deg}
+.glue .g2{left:40%;top:5%;rotate:2deg}
+.glue .g3{left:12%;top:42%;rotate:1.5deg}
+.glue .g4{left:52%;top:40%;rotate:-1.5deg}
+.glue .g5{left:30%;top:70%;rotate:-0.5deg}
+
+/* Scene 3: ring of cutouts around a spool */
+.ring{position:absolute;inset:0}
+.ring .cut{position:absolute;left:50%;top:50%;width:min(200px,38%);padding:10px 10px 12px;transform:translate(-50%,-50%) translate(var(--x,0px),var(--y,0px)) rotate(var(--r,0deg))}
+.spool{position:absolute;left:50%;top:50%;width:min(180px,30%);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
+.spool > svg{display:block;width:100%;height:auto;overflow:visible}
+.spool .lbl{margin-top:10px;color:var(--ink)}
+
+/* Scene 4: canvas loom and padlock */
+.loom{position:absolute;inset:0;display:flex;flex-direction:column;padding:12% 12% 10%}
+.warp-labels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-family:var(--f-mono);font-size:12px;line-height:1.4;letter-spacing:.02em;color:var(--ink-2);text-align:center;margin-bottom:10px}
+.loom-canvas{display:block;flex:1 1 0;min-height:0;width:100%}
+.padlock{position:absolute;right:9%;bottom:9%;width:clamp(84px,22%,120px);padding:10px}
+
+/* Scene 5: three stitched vignettes */
+.trio{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:12% 6%;align-content:center}
+.card3{display:flex;flex-direction:column;gap:12px;padding:14px}
+.card3 > svg{width:100%;height:auto}
+.card3 figcaption{font-size:16px;line-height:1.5;color:var(--ink)}
+
+/* Scene 6: nine-patch quilt */
+.quilt{position:absolute;top:0;bottom:0;left:50%;width:min(100%,540px);transform:translateX(-50%);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:8% 0;align-content:center}
+.patch{position:relative;background:var(--paper-hi);box-shadow:var(--shadow-cut);padding:8px 8px 10px;transform:translate3d(var(--qx,0px),var(--qy,0px),0)}
+.js .patch{opacity:var(--qo,0)}
+.patch > svg{display:block;width:100%;height:auto}
+.patch::after{content:"";position:absolute;inset:5px;border:1.5px dashed var(--ink);opacity:var(--st,0);pointer-events:none}
+.patch .tag{display:block;margin-top:8px;font-family:var(--f-mono);font-size:12px;line-height:1.35;letter-spacing:.02em;color:var(--ink)}
+
+/* Scene 7: bow and the close */
+.bow-wrap{position:absolute;left:50%;top:50%;width:min(72%,440px);transform:translate(-50%,-50%)}
+.bow-wrap > svg{display:block;width:100%;height:auto;overflow:visible}
+.big-link{position:relative;display:inline-block;font-family:var(--f-display);font-weight:800;font-size:clamp(44px,12vw,64px);line-height:1.04;letter-spacing:-.02em;color:var(--ink);text-decoration:none;white-space:nowrap;padding-bottom:.14em}
+@media (min-width:1024px){.big-link{font-size:clamp(48px,6.2vw,92px)}}
+.cta{margin:0}
+
+/* Footer */
+.foot{padding:40px var(--gutter) 56px;border-top:1px solid rgba(20,20,20,.14);color:var(--ink-2);font-size:16px;line-height:1.6}
+.foot p{max-width:68ch;margin:0 0 12px}
+.foot .who{color:var(--ink);font-weight:600}
+
+/* Mobile: art on top, copy below */
+@media (max-width:1023px){
+  /* Copy takes its natural height so every revealed line fits; the art takes the rest. */
+  .stage,.stage.s0,.stage.s5,.stage.s6{grid-template-rows:minmax(0,1fr) auto}
+  .copy{padding:var(--s2) var(--gutter)}
+  .trio{grid-template-columns:1fr;gap:10px;padding:3%;align-content:center}
+  .card3{flex-direction:row;align-items:center;gap:12px;padding:10px}
+  .card3 > svg{width:30%;flex:0 0 auto}
+  .card3 figcaption{flex:1 1 auto}
+  .quilt{gap:10px;padding:4% 6%}
+  .glue .cut{width:33%}
+  .ring .cut{width:118px;padding:8px}
+}
+
+/* Reduced motion: every scene static and fully readable */
+.is-static .scene,.is-static .scene--close{height:auto}
+.is-static .stage{position:relative;height:auto;min-height:100svh;grid-template-rows:auto auto}
+.is-static .beats{display:block}
+.is-static .beat{grid-area:auto}
+.is-static .art{min-height:72svh}
+.is-static .thread{display:none}
+.is-static .rv{opacity:1!important;transform:none!important}
+.is-static .big-link{text-decoration:underline;text-decoration-thickness:.07em;text-underline-offset:.12em;text-decoration-color:var(--vermilion)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <p class="brand">Shubham Gupta</p>
+  <a class="top-cta" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+</header>
+
+<main>
+
+<!-- HERO: the knot -->
+<section class="scene" data-scene="0" aria-labelledby="hero-name">
+  <div class="stage s0">
+    <div class="copy">
+      <p class="eyebrow">Delhi.</p>
+      <h1 id="hero-name" class="name rv" data-in="-0.5">SHUBHAM <br>GUPTA</h1>
+      <p class="headline rv" data-in="0.06">I build the AI that runs businesses.</p>
+      <p class="body rv" data-in="0.18">Verslay's only technical founder. I built the entire platform. My co-founder runs sales.</p>
+    </div>
+    <div class="art" data-art="hero" aria-hidden="true">
+      <div class="hero-canvas"></div>
+      <svg class="hero-fallback" viewBox="-260 -460 520 920" preserveAspectRatio="xMidYMid meet" focusable="false" hidden>
+        <path class="hero-fb" d="" fill="none" stroke="#E0401F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="a" data-k="0" style="left:50%;bottom:0"></span>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 1: where it started -->
+<section class="scene" data-scene="1" aria-labelledby="s1-line">
+  <div class="stage s1">
+    <div class="copy">
+      <p class="eyebrow">The business came first.</p>
+      <div class="beats">
+        <div class="beat">
+          <p class="body"><span class="rv" data-in="0.02" data-out="0.30">I started on the selling side.</span> <span class="rv" data-in="0.08" data-out="0.30">Marketing, funnels, growth, clients.</span></p>
+        </div>
+        <div class="beat">
+          <p class="body rv" data-in="0.40" data-out="0.56">Then strategy at a trading venture, where I learned the commercial side of software.</p>
+        </div>
+        <div class="beat">
+          <h2 id="s1-line" class="line rv" data-in="0.64">I learned how a company sells before I built the machine that runs one.</h2>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s1" aria-hidden="true">
+      <div class="zig">
+        <figure class="cut c1">
+          <svg class="ink" viewBox="0 0 240 180" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M24 56H216V72a16 12 0 0 1-32 0a16 12 0 0 1-32 0a16 12 0 0 1-32 0a16 12 0 0 1-32 0a16 12 0 0 1-32 0a16 12 0 0 1-32 0Z"/>
+            <path class="draw" pathLength="1" d="M52 84V150M188 84V150M40 128H200"/>
+            <circle class="draw" pathLength="1" cx="82" cy="110" r="9"/>
+            <circle class="draw" pathLength="1" cx="112" cy="110" r="9"/>
+            <circle class="draw" pathLength="1" cx="142" cy="110" r="9"/>
+            <circle class="draw" pathLength="1" cx="172" cy="110" r="9"/>
+          </svg>
+          <span class="a" data-k="1" style="right:4px;top:4px"></span>
+        </figure>
+        <figure class="cut c2">
+          <svg class="ink" viewBox="0 0 240 180" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M44 40H196L136 104V152L104 138V104Z"/>
+            <path class="draw" pathLength="1" d="M60 62H180"/>
+            <circle class="draw" pathLength="1" cx="108" cy="162" r="4"/>
+            <circle class="draw" pathLength="1" cx="120" cy="170" r="4"/>
+            <circle class="draw" pathLength="1" cx="132" cy="160" r="4"/>
+          </svg>
+          <span class="a" data-k="2" style="left:4px;top:4px"></span>
+        </figure>
+        <figure class="cut c3">
+          <svg class="ink" viewBox="0 0 240 180" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M36 24V150H212"/>
+            <path class="draw" pathLength="1" d="M48 132C80 130 98 112 124 104S170 74 200 46"/>
+            <circle class="draw" pathLength="1" cx="124" cy="104" r="5"/>
+            <circle class="draw" pathLength="1" cx="170" cy="74" r="5"/>
+            <path class="draw" pathLength="1" d="M190 42L202 46L196 58"/>
+          </svg>
+          <span class="a" data-k="3" style="right:4px;bottom:4px"></span>
+        </figure>
+        <figure class="cut c4">
+          <svg class="ink" viewBox="0 0 240 180" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M64 130a56 16 0 1 0 112 0a56 16 0 1 0-112 0M64 94V130M176 94V130"/>
+            <path class="draw" pathLength="1" d="M64 112a56 16 0 1 0 112 0a56 16 0 1 0-112 0"/>
+            <path class="draw" pathLength="1" d="M64 94a56 16 0 1 0 112 0a56 16 0 1 0-112 0"/>
+          </svg>
+          <span class="a" data-k="4" style="left:4px;bottom:4px"></span>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 2: what I kept seeing -->
+<section class="scene" data-scene="2" aria-label="The glue">
+  <div class="stage s2">
+    <div class="copy">
+      <p class="eyebrow">The glue.</p>
+      <div class="beats">
+        <div class="beat">
+          <p class="body rv" data-in="0.02" data-out="0.32">Every company I worked with collected tools. A store. A ledger. An inbox. A sheet. A calendar.</p>
+        </div>
+        <div class="beat">
+          <p class="body rv" data-in="0.40" data-out="0.58">None of them remembered the others. So a person became the glue, carrying the business from one tab to the next by hand.</p>
+        </div>
+        <div class="beat">
+          <h2 class="line rv" data-in="0.66">Orchestration is the bottleneck.</h2>
+        </div>
+      </div>
+    </div>
+    <div class="art glue" data-art="s2" aria-hidden="true">
+        <figure class="cut g1">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M24 62L40 34H160L176 62"/>
+            <path class="draw" pathLength="1" d="M24 62H176V132H24Z"/>
+            <path class="draw" pathLength="1" d="M84 132V92H116V132"/>
+          </svg>
+          <figcaption class="lbl">store</figcaption>
+          <span class="pin"></span>
+        </figure>
+        <figure class="cut g2">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M52 22H150V138H52Z"/>
+            <path class="draw" pathLength="1" d="M52 22V138"/>
+            <path class="draw" pathLength="1" d="M70 52H132M70 74H132M70 96H132M70 118H118"/>
+          </svg>
+          <figcaption class="lbl">ledger</figcaption>
+          <span class="pin"></span>
+        </figure>
+        <figure class="cut g3">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M20 84L40 46H160L180 84V124H20Z"/>
+            <path class="draw" pathLength="1" d="M20 84H66L76 98H124L134 84H180"/>
+          </svg>
+          <figcaption class="lbl">inbox</figcaption>
+          <span class="pin"></span>
+        </figure>
+        <figure class="cut g4">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M56 16H132L154 38V134H56Z"/>
+            <path class="draw" pathLength="1" d="M132 16V38H154"/>
+            <path class="draw" pathLength="1" d="M72 56H138M72 78H138M72 100H138M72 120H116"/>
+          </svg>
+          <figcaption class="lbl">sheet</figcaption>
+          <span class="pin"></span>
+        </figure>
+        <figure class="cut g5">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M34 30H166V138H34Z"/>
+            <path class="draw" pathLength="1" d="M34 56H166M70 14V42M130 14V42"/>
+            <path class="draw" pathLength="1" d="M56 80H84M100 80H128M56 102H84M100 102H128M56 124H84"/>
+          </svg>
+          <figcaption class="lbl">calendar</figcaption>
+          <span class="pin"></span>
+          <span class="a" data-k="5" style="right:6px;top:50%"></span>
+        </figure>
+        <svg class="local" data-tangle aria-hidden="true"><g class="tangle"></g></svg>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 3: what I build -->
+<section class="scene" data-scene="3" aria-label="The layer">
+  <div class="stage s3">
+    <div class="copy">
+      <p class="eyebrow">The layer.</p>
+      <h2 class="line rv" data-in="0.02">So I build the layer that removes the glue.</h2>
+      <div class="beats">
+        <div class="beat">
+          <p class="body rv" data-in="0.28" data-out="0.56">One memory the whole business shares. Tools that load when the work needs them. A record of what ran.</p>
+        </div>
+        <div class="beat">
+          <p class="body rv" data-in="0.66">The agents do the work. A person approves anything that moves money, mail or a calendar.</p>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s3" aria-hidden="true">
+      <div class="ring" data-ring>
+        <div class="spool" data-spool>
+          <svg class="ink" viewBox="0 0 200 240" aria-hidden="true">
+            <rect x="60" y="34" width="80" height="172" style="fill:var(--paper-deep)"/>
+            <g class="wound"></g>
+            <ellipse cx="100" cy="34" rx="78" ry="18" style="fill:var(--paper-deep)"/>
+            <ellipse cx="100" cy="206" rx="88" ry="22" style="fill:var(--paper-deep)"/>
+            <ellipse cx="100" cy="34" rx="22" ry="6" style="fill:var(--paper-hi)"/>
+          </svg>
+          <span class="lbl">one memory</span>
+          <span class="a" data-k="6" style="right:-4px;top:38%"></span>
+        </div>
+      </div>
+      <svg class="local" data-threads aria-hidden="true"><g class="ths"></g></svg>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 4: Verslay -->
+<section class="scene" data-scene="4" aria-label="Verslay">
+  <div class="stage s4">
+    <div class="copy">
+      <p class="eyebrow">Verslay.</p>
+      <h2 id="s4-line" class="line rv" data-in="0.02">Verslay is where I proved it.</h2>
+      <div class="beats">
+        <div class="beat">
+          <p class="body rv" data-in="0.14" data-out="0.38">I built the whole platform myself: schema, server, interface, integrations, end to end. My co-founder runs sales.</p>
+        </div>
+        <div class="beat">
+          <p class="body rv" data-in="0.46" data-out="0.70">It gives a business ready-made AI use-cases that run on its own tools, inside the model the operator already uses, with one shared memory.</p>
+        </div>
+        <div class="beat">
+          <p class="body rv" data-in="0.78">Logins sit in an encrypted vault. Each customer is kept apart. Verslay does not train on customer data.</p>
+          <p class="small rv" data-in="0.88">40+ Indian businesses booked a Verslay demo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s4" aria-hidden="true">
+      <div class="loom">
+        <div class="warp-labels"><span>memory</span><span>tools</span><span>agents</span><span>actions</span></div>
+        <canvas class="loom-canvas" aria-hidden="true"></canvas>
+        <span class="a" data-k="7" data-gutter="1" style="right:6%;top:58%"></span>
+      </div>
+      <figure class="cut padlock">
+        <svg class="ink" viewBox="0 0 80 96" aria-hidden="true">
+          <path class="draw" pathLength="1" d="M22 42V30a18 18 0 0 1 36 0V42"/>
+          <rect class="draw" pathLength="1" x="12" y="42" width="56" height="44" rx="4"/>
+          <circle class="solid" cx="40" cy="62" r="4"/>
+          <path d="M40 66V76"/>
+        </svg>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 5: how I work -->
+<section class="scene" data-scene="5" aria-label="The approach">
+  <div class="stage s5">
+    <div class="copy">
+      <p class="eyebrow">The approach.</p>
+      <div class="beats">
+        <div class="beat">
+          <p class="body rv" data-in="0.03" data-out="0.26">I start with the rough problem. The one someone is still doing by hand.</p>
+        </div>
+        <div class="beat">
+          <h2 class="line rv" data-in="0.66">Name the constraint. Then build the system around it.</h2>
+          <p class="body rv" data-in="0.80">I run my own company on the same kind of system: a fleet of agents with seats, approvals, and a receipt for every run.</p>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s5" aria-hidden="true">
+      <div class="trio">
+        <figure class="cut card3" data-card="a">
+          <svg class="ink rs" viewBox="0 0 200 150" aria-hidden="true"></svg>
+          <figcaption>Store dues worked out by hand every month. Now a payment engine, and nothing is sent until a person approves.</figcaption>
+        </figure>
+        <figure class="cut card3" data-card="b">
+          <svg class="ink rs" viewBox="0 0 200 150" aria-hidden="true"></svg>
+          <figcaption>Orders taken one WhatsApp message at a time. Now an agent that sells, and modules for order, payment and production.</figcaption>
+        </figure>
+        <figure class="cut card3" data-card="c">
+          <svg class="ink rs" viewBox="0 0 200 150" aria-hidden="true"></svg>
+          <figcaption>A voice note comes in. Now speech becomes intent, and tasks and calendar changes go out, with a person approving the plan.</figcaption>
+          <span class="a" data-k="8" data-gutter="1" style="right:-3px;top:50%"></span>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 6: who I work with -->
+<section class="scene" data-scene="6" aria-label="Who I build for">
+  <div class="stage s6">
+    <div class="copy">
+      <p class="eyebrow">Who I build for.</p>
+      <div class="beats">
+        <div class="beat">
+          <p class="body rv" data-in="0.03" data-out="0.34">Operators who already run a company, whose work is split across tools that do not share a memory.</p>
+        </div>
+        <div class="beat">
+          <p class="body rv" data-in="0.42" data-out="0.66">The operator should run the business. The system should carry the work.</p>
+        </div>
+        <div class="beat">
+          <p class="small rv" data-in="0.74">If you are shopping for a landing page or a one-week chatbot, this is the wrong call.</p>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s6" aria-hidden="true">
+      <div class="quilt" data-quilt>
+        <figure class="patch" data-pattern="curls">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">D2C fashion and ethnic wear</span>
+        </figure>
+        <figure class="patch" data-pattern="bows">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">gifting</span>
+        </figure>
+        <figure class="patch" data-pattern="diamonds">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">jewellery</span>
+        </figure>
+        <figure class="patch" data-pattern="petals">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">beauty</span>
+        </figure>
+        <figure class="patch" data-pattern="tiles">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">home decor</span>
+        </figure>
+        <figure class="patch" data-pattern="chevrons">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">fitness</span>
+        </figure>
+        <figure class="patch" data-pattern="weave">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">textiles and B2B</span>
+        </figure>
+        <figure class="patch" data-pattern="grid">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">agencies</span>
+        </figure>
+        <figure class="patch" data-pattern="waves">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">creators</span>
+          <span class="a" data-k="9" data-gutter="1" style="right:-3px;top:50%"></span>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 7: the close -->
+<section class="scene scene--close" data-scene="7" aria-label="Book a call">
+  <div class="stage s7">
+    <div class="copy">
+      <div class="beats">
+        <div class="beat">
+          <p class="body rv" data-in="0.04" data-out="0.36">Bring the operation. I will tell you whether it should run on Verslay, or be built around the tools you already have.</p>
+        </div>
+        <div class="beat">
+          <p class="cta rv" data-in="0.44"><a class="big-link" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call<span class="a" data-k="11" style="right:0;bottom:0.02em"></span><span class="a" data-k="12" data-line="1" style="left:0;bottom:0.02em"></span></a></p>
+          <p class="small rv" data-in="0.58">The appointment sits on LinkedIn.</p>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s7" aria-hidden="true">
+      <div class="bow-wrap">
+        <svg class="ink" viewBox="0 0 400 300" aria-hidden="true" style="stroke-width:3">
+          <path class="draw v" pathLength="1" d="M200 150C150 60 60 70 84 130C100 170 170 160 200 150Z"/>
+          <path class="draw v" pathLength="1" d="M200 150C250 60 340 70 316 130C300 170 230 160 200 150Z"/>
+          <path class="draw v" pathLength="1" d="M200 150C176 196 140 240 110 286"/>
+          <path class="draw v" pathLength="1" d="M200 150C224 196 260 240 290 286"/>
+          <circle class="draw v" pathLength="1" cx="200" cy="150" r="9"/>
+        </svg>
+        <span class="a" data-k="10" style="left:50%;top:50%"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p>Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+  <p class="who">Shubham Gupta. Delhi.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+/* ===== Motion engine: one requestAnimationFrame loop drives every scene ===== */
+(() => {
+'use strict';
+
+const root = document.documentElement;
+const NS = 'http://www.w3.org/2000/svg';
+const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let staticMode = reduceQuery.matches;
+if (staticMode) root.classList.add('is-static');
+
+const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const smooth = (x) => { const t = clamp(x, 0, 1); return t * t * (3 - 2 * t); };
+const ramp = (p, a, d) => clamp((p - a) / d, 0, 1);
+const seg = (p, a, b) => smooth(ramp(p, a, b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const report = (err) => { try { console.error(err); } catch (e) { /* ignore */ } };
+const FADE_IN = 0.07;
+const FADE_OUT = 0.05;
+
+
+const ART = {};
+const scenes = Array.from(document.querySelectorAll('[data-scene]')).map((el) => ({
+  el, n: Number(el.dataset.scene), p: 0, range: 1
+}));
+const byN = {};
+scenes.forEach((s) => { byN[s.n] = s; });
+
+const reveals = Array.from(document.querySelectorAll('[data-in]')).map((el) => {
+  const host = el.closest('[data-scene]');
+  return {
+    el,
+    s: byN[host ? Number(host.dataset.scene) : 0],
+    a: parseFloat(el.dataset.in),
+    b: Infinity, // data-out is ignored: once revealed, a line stays until its scene ends
+    last: -1
+  };
+});
+
+let mobile = window.innerWidth < 1024;
+let maxScroll = 1;
+let anchorEls = [];
+let dirty = true;
+let needMeasure = true;
+let running = false;
+let lastY = -1;
+
+// Fixed thread overlay: one path through the anchors, drawn by page progress.
+const thread = document.createElementNS(NS, 'svg');
+thread.setAttribute('class', 'thread');
+thread.setAttribute('aria-hidden', 'true');
+thread.setAttribute('focusable', 'false');
+const threadPath = document.createElementNS(NS, 'path');
+threadPath.setAttribute('class', 'thread-line');
+const needle = document.createElementNS(NS, 'g');
+const halo = document.createElementNS(NS, 'circle');
+halo.setAttribute('class', 'needle-halo');
+halo.setAttribute('r', '11');
+const dot = document.createElementNS(NS, 'circle');
+dot.setAttribute('class', 'needle-dot');
+dot.setAttribute('r', '3.6');
+needle.append(halo, dot);
+thread.append(threadPath, needle);
+
+function safe(fn) { try { fn(); } catch (err) { report(err); } }
+
+// Paper fibre texture from canvas noise, set once as a CSS variable.
+function makePaper() {
+  const c = document.createElement('canvas');
+  c.width = 220;
+  c.height = 220;
+  const g = c.getContext('2d');
+  if (!g) return;
+  const img = g.createImageData(220, 220);
+  const d = img.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const v = 120 + Math.random() * 110;
+    d[i] = v;
+    d[i + 1] = v;
+    d[i + 2] = v;
+    d[i + 3] = 8 + Math.random() * 14;
+  }
+  g.putImageData(img, 0, 0);
+  g.strokeStyle = 'rgba(20,20,20,0.06)';
+  g.lineWidth = 0.6;
+  for (let k = 0; k < 70; k++) {
+    const x = Math.random() * 220;
+    const y = Math.random() * 220;
+    g.beginPath();
+    g.moveTo(x, y);
+    g.quadraticCurveTo(x + (Math.random() - 0.5) * 50, y + (Math.random() - 0.5) * 50,
+      x + (Math.random() - 0.5) * 80, y + (Math.random() - 0.5) * 80);
+    g.stroke();
+  }
+  root.style.setProperty('--paper-noise', 'url("' + c.toDataURL('image/png') + '")');
+}
+
+// Copy reveal: each element gets --t (0 to 1) from its own timeline.
+function revealAlpha(p, a, b) {
+  const inA = smooth(ramp(p, a, FADE_IN));
+  if (b === Infinity) return inA;
+  return inA * (1 - smooth(ramp(p, b, FADE_OUT)));
+}
+
+function writeReveals() {
+  for (const r of reveals) {
+    const v = Math.round(revealAlpha(r.s ? r.s.p : 0, r.a, r.b) * 1000) / 1000;
+    if (v !== r.last) {
+      r.last = v;
+      r.el.style.setProperty('--t', String(v));
+    }
+  }
+}
+
+function readAnchors() {
+  return anchorEls.map((el) => {
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, line: el.dataset.line === '1', gutter: el.dataset.gutter === '1' };
+  });
+}
+
+// Default: S-curves between anchors, inside the art column.
+// Gutter hops (both ends on a right-hand edge) and every phone hop run out to a
+// right-hand lane, so the thread never crosses a card, the quilt or the copy.
+function threadData(pts) {
+  const f = (n) => n.toFixed(1);
+  const lane = document.documentElement.clientWidth - (mobile ? 8 : 12);
+  let d = 'M' + f(pts[0].x) + ' ' + f(pts[0].y);
+  for (let i = 1; i < pts.length; i++) {
+    const a = pts[i - 1];
+    const b = pts[i];
+    const my = (a.y + b.y) / 2;
+    if (b.line) {
+      d += 'L' + f(b.x) + ' ' + f(b.y);
+    } else if (mobile || (a.gutter && b.gutter)) {
+      d += 'C' + f(a.x + (lane - a.x) * 0.5) + ' ' + f(a.y) + ' ' + f(lane) + ' ' + f(a.y) + ' ' + f(lane) + ' ' + f(my);
+      d += 'C' + f(lane) + ' ' + f(b.y) + ' ' + f(b.x + (lane - b.x) * 0.5) + ' ' + f(b.y) + ' ' + f(b.x) + ' ' + f(b.y);
+    } else {
+      d += 'C' + f(a.x) + ' ' + f(my) + ' ' + f(b.x) + ' ' + f(my) + ' ' + f(b.x) + ' ' + f(b.y);
+    }
+  }
+  return d;
+}
+
+function drawThread(pts, q) {
+  if (pts.length < 2) return;
+  threadPath.setAttribute('d', threadData(pts));
+  const len = threadPath.getTotalLength();
+  if (!(len > 0)) return;
+  threadPath.style.strokeDasharray = len + ' ' + len;
+  threadPath.style.strokeDashoffset = String(len * (1 - q));
+  const drawn = len * q;
+  if (drawn < 1) { needle.style.opacity = '0'; return; }
+  const pt = threadPath.getPointAtLength(Math.min(drawn, len));
+  needle.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ' ' + pt.y.toFixed(1) + ')');
+  needle.style.opacity = '1';
+}
+
+// Reads first (scene progress, anchors), writes second.
+function update() {
+  const forced = staticMode;
+  for (const s of scenes) {
+    if (forced) { s.p = 1; continue; }
+    const r = s.el.getBoundingClientRect();
+    s.p = clamp(-r.top / s.range, 0, 1);
+  }
+  const pts = forced ? null : readAnchors();
+  const q = clamp(window.scrollY / maxScroll, 0, 1);
+  if (!forced) safe(writeReveals);
+  for (const s of scenes) {
+    const fn = ART[s.n];
+    if (fn) safe(() => fn(s.p, forced));
+  }
+  if (!forced) safe(() => drawThread(pts, q));
+}
+
+function measure() {
+  mobile = window.innerWidth < 1024;
+  // The thread completes when the close stage releases, so the footer does not delay it.
+  const foot = document.querySelector('.foot');
+  const endY = foot ? foot.offsetTop : document.documentElement.scrollHeight;
+  maxScroll = Math.max(1, endY - window.innerHeight);
+  for (const s of scenes) s.range = Math.max(1, s.el.offsetHeight - window.innerHeight);
+  layoutArt();
+}
+
+function frame() {
+  if (staticMode) { running = false; return; }
+  requestAnimationFrame(frame);
+  if (needMeasure) { needMeasure = false; dirty = true; safe(measure); }
+  const y = window.scrollY;
+  if (dirty || y !== lastY) { lastY = y; dirty = false; update(); }
+  safe(heroTick);
+}
+
+function start() {
+  if (running) return;
+  running = true;
+  requestAnimationFrame(frame);
+}
+
+function onResize() {
+  needMeasure = true;
+  if (staticMode) safe(() => { measure(); update(); });
+}
+
+function onMotionChange(e) {
+  staticMode = e.matches;
+  root.classList.toggle('is-static', staticMode);
+  needMeasure = true;
+  if (staticMode) safe(() => { measure(); update(); });
+  else { lastY = -1; start(); }
+}
+
+function boot() {
+  safe(makePaper);
+  anchorEls = Array.from(document.querySelectorAll('[data-k]'))
+    .sort((a, b) => Number(a.dataset.k) - Number(b.dataset.k));
+  document.body.appendChild(thread);
+  safe(setupScenes);
+  safe(setupHero);
+  safe(measure);
+  safe(update);
+  window.addEventListener('resize', onResize, { passive: true });
+  if (reduceQuery.addEventListener) reduceQuery.addEventListener('change', onMotionChange);
+  root.dataset.ready = '1';
+  if (!staticMode) start();
+}
+
+/* ===== Hero: torus knot untying into a vertical thread (three.js, SVG fallback) ===== */
+const hero = {
+  mode: 'none', p: 0, dirty: true, visible: true, N: 300,
+  K: null, L: null, pts: null, host: null, fbSvg: null, fbPath: null,
+  renderer: null, scene: null, camera: null, group: null, mesh: null, material: null
+};
+ART[0] = heroSet;
+
+// Per-point blend from knot (0) to straight line (1). Points further along untie later.
+function heroPointFactor(i) {
+  const s = i / (hero.N - 1);
+  return smooth((hero.p - 0.12 - 0.5 * s) / 0.38);
+}
+
+// 300 points, TubeGeometry with 6 radial segments: about 3.6k triangles.
+function heroBuildTube() {
+  const THREE = window.THREE;
+  const N = hero.N;
+  for (let i = 0; i < N; i++) {
+    const f = heroPointFactor(i);
+    const k = i * 3;
+    hero.pts[i].set(
+      hero.K[k] + (hero.L[k] - hero.K[k]) * f,
+      hero.K[k + 1] + (hero.L[k + 1] - hero.K[k + 1]) * f,
+      hero.K[k + 2] + (hero.L[k + 2] - hero.K[k + 2]) * f
+    );
+  }
+  const curve = new THREE.CatmullRomCurve3(hero.pts, false, 'centripetal');
+  return new THREE.TubeGeometry(curve, N - 1, 0.06, 6, false);
+}
+
+function heroDrawFallback() {
+  if (!hero.fbPath) return;
+  let d = '';
+  for (let i = 0; i < hero.N; i++) {
+    const f = heroPointFactor(i);
+    const k = i * 3;
+    const x = (hero.K[k] + (hero.L[k] - hero.K[k]) * f) * 100;
+    const y = -(hero.K[k + 1] + (hero.L[k + 1] - hero.K[k + 1]) * f) * 100;
+    d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+  }
+  hero.fbPath.setAttribute('d', d);
+}
+
+function heroUseFallback() {
+  hero.mode = 'fallback';
+  if (hero.host) hero.host.hidden = true;
+  if (hero.fbSvg) hero.fbSvg.hidden = false;
+  heroDrawFallback();
+  hero.dirty = false;
+}
+
+function heroInitWebGL() {
+  const THREE = window.THREE;
+  const w = Math.max(1, hero.host.clientWidth);
+  const h = Math.max(1, hero.host.clientHeight);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(w, h, false);
+  hero.host.appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, w / h, 0.1, 100);
+  camera.position.set(0, 0, 14);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8c7f6b, 1.1));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.3);
+  sun.position.set(4, 6, 8);
+  scene.add(sun);
+  const material = new THREE.MeshStandardMaterial({ color: 0xe0401f, roughness: 0.6, metalness: 0 });
+  const group = new THREE.Group();
+  scene.add(group);
+  hero.pts = [];
+  for (let i = 0; i < hero.N; i++) hero.pts.push(new THREE.Vector3());
+  const mesh = new THREE.Mesh(heroBuildTube(), material);
+  group.add(mesh);
+  Object.assign(hero, { mode: 'webgl', renderer, scene, camera, group, mesh, material, dirty: false });
+}
+
+function setupHero() {
+  const art = document.querySelector('[data-art="hero"]');
+  if (!art) return;
+  hero.host = art.querySelector('.hero-canvas');
+  hero.fbSvg = art.querySelector('.hero-fallback');
+  hero.fbPath = art.querySelector('.hero-fb');
+  hero.K = new Float64Array(hero.N * 3);
+  hero.L = new Float64Array(hero.N * 3);
+  for (let i = 0; i < hero.N; i++) {
+    const t = (i / hero.N) * Math.PI * 2;
+    const rr = 1.6 + 0.6 * Math.cos(3 * t);
+    const k = i * 3;
+    hero.K[k] = rr * Math.cos(2 * t);
+    hero.K[k + 1] = rr * Math.sin(2 * t);
+    hero.K[k + 2] = 0.6 * Math.sin(3 * t);
+    hero.L[k] = 0;
+    hero.L[k + 1] = 4.4 - 8.8 * (i / (hero.N - 1));
+    hero.L[k + 2] = 0;
+  }
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const en of entries) hero.visible = en.isIntersecting;
+    });
+    io.observe(art);
+  }
+  let ok = false;
+  if (window.THREE && hero.host) {
+    try { heroInitWebGL(); ok = true; } catch (err) { ok = false; }
+  }
+  if (!ok) heroUseFallback();
+}
+
+function heroResize() {
+  if (hero.mode !== 'webgl' || !hero.host) return;
+  const w = Math.max(1, hero.host.clientWidth);
+  const h = Math.max(1, hero.host.clientHeight);
+  hero.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  hero.renderer.setSize(w, h, false);
+  hero.camera.aspect = w / h;
+  hero.camera.updateProjectionMatrix();
+  hero.dirty = true;
+}
+
+function heroRender(now) {
+  if (hero.mode !== 'webgl') return;
+  if (hero.dirty) {
+    const geo = heroBuildTube();
+    hero.mesh.geometry.dispose();
+    hero.mesh.geometry = geo;
+    hero.dirty = false;
+  }
+  hero.group.rotation.y = (now * 0.00012) % (Math.PI * 2);
+  hero.group.rotation.x = 0.12;
+  hero.camera.position.z = 14 - 1.4 * hero.p;
+  hero.renderer.render(hero.scene, hero.camera);
+}
+
+// Render only while the hero section is on screen.
+function heroTick() {
+  if (hero.mode !== 'webgl' || !hero.visible) return;
+  heroRender(performance.now());
+}
+
+function heroSet(p, forced) {
+  if (Math.abs(p - hero.p) > 0.0005) {
+    hero.p = p;
+    hero.dirty = true;
+  }
+  if (hero.mode === 'fallback') {
+    if (hero.dirty) { heroDrawFallback(); hero.dirty = false; }
+    return;
+  }
+  if (forced && hero.mode === 'webgl') heroRender(performance.now());
+}
+/* ===== Scene art: setup, layout and per-scene motion ===== */
+const S1 = { cards: [] };
+const S2 = { art: null, loc: null, g: null, segs: [] };
+const S3 = { art: null, ring: null, spool: null, cards: [], wound: [], ths: null, mark: null, W: 1, H: 1, cx: 0, cy: 0, sr: 60 };
+const S4 = { canvas: null, ctx: null, labels: null, pad: null, W: 1, H: 1, dpr: 1, lastT: -1 };
+const S5 = { cards: [] };
+const S6 = { patches: [] };
+const S7 = { draws: [] };
+const ORDER2 = [0, 2, 4, 1, 3, 0, 4, 2, 1, 3, 0, 1, 4, 2, 3];
+const WARPS = 28;
+const ROWS = 22;
+
+// Deterministic pseudo-random in 0..1, so jitter is stable from frame to frame.
+function rnd(i) { const s = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return s - Math.floor(s); }
+
+// Evenly spaced points around a rectangle, used to morph the crumpled page.
+function rectPerimeter(x0, y0, x1, y1, n) {
+  const w = x1 - x0;
+  const h = y1 - y0;
+  const P = 2 * (w + h);
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    let d = (i / n) * P;
+    if (d < w) out.push([x0 + d, y0]);
+    else if ((d -= w) < h) out.push([x1, y0 + d]);
+    else if ((d -= h) < w) out.push([x1 - d, y1]);
+    else out.push([x0, y1 - (d - w)]);
+  }
+  return out;
+}
+
+// Scene 2: a bezier hop between two pins, bulging to alternate sides.
+function tangleD(a, b, k) {
+  const dx = b[0] - a[0];
+  const dy = b[1] - a[1];
+  const L = Math.hypot(dx, dy) || 1;
+  const nx = -dy / L;
+  const ny = dx / L;
+  const amp = (k % 2 ? 1 : -1) * (46 + ((k * 23) % 40));
+  const c1x = a[0] + dx * 0.25 + nx * amp;
+  const c1y = a[1] + dy * 0.25 + ny * amp;
+  const c2x = a[0] + dx * 0.75 - nx * amp * 0.7;
+  const c2y = a[1] + dy * 0.75 - ny * amp * 0.7;
+  return 'M' + a[0].toFixed(1) + ' ' + a[1].toFixed(1)
+    + 'C' + c1x.toFixed(1) + ' ' + c1y.toFixed(1) + ' ' + c2x.toFixed(1) + ' ' + c2y.toFixed(1)
+    + ' ' + b[0].toFixed(1) + ' ' + b[1].toFixed(1);
+}
+
+function setupScene2() {
+  S2.art = document.querySelector('[data-art="s2"]');
+  S2.loc = document.querySelector('[data-tangle]');
+  S2.g = S2.loc ? S2.loc.querySelector('.tangle') : null;
+  if (!S2.loc || !S2.g) return;
+  const defs = document.createElementNS(NS, 'defs');
+  const filt = document.createElementNS(NS, 'filter');
+  filt.setAttribute('id', 'thread-shadow');
+  filt.setAttribute('x', '-10%');
+  filt.setAttribute('y', '-10%');
+  filt.setAttribute('width', '120%');
+  filt.setAttribute('height', '120%');
+  const drop = document.createElementNS(NS, 'feDropShadow');
+  drop.setAttribute('dx', '3');
+  drop.setAttribute('dy', '6');
+  drop.setAttribute('stdDeviation', '3');
+  drop.setAttribute('flood-color', '#141414');
+  drop.setAttribute('flood-opacity', '0.24');
+  filt.appendChild(drop);
+  defs.appendChild(filt);
+  S2.loc.insertBefore(defs, S2.loc.firstChild);
+  S2.g.setAttribute('filter', 'url(#thread-shadow)');
+  for (let k = 0; k < ORDER2.length - 1; k++) {
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('class', 'draw');
+    p.setAttribute('pathLength', '1');
+    p.style.fill = 'none';
+    p.style.stroke = 'var(--vermilion)';
+    p.style.strokeWidth = '2.2';
+    p.style.strokeLinecap = 'round';
+    S2.g.appendChild(p);
+    S2.segs.push(p);
+  }
+}
+
+function layoutScene2() {
+  if (!S2.art || !S2.loc || !S2.segs.length) return;
+  const ar = S2.art.getBoundingClientRect();
+  S2.loc.setAttribute('viewBox', '0 0 ' + ar.width.toFixed(0) + ' ' + ar.height.toFixed(0));
+  const pins = Array.from(S2.art.querySelectorAll('.pin')).map((el) => {
+    const r = el.getBoundingClientRect();
+    return [r.left - ar.left + r.width / 2, r.top - ar.top + r.height / 2];
+  });
+  if (pins.length < 5) return;
+  S2.segs.forEach((path, k) => {
+    path.setAttribute('d', tangleD(pins[ORDER2[k]], pins[ORDER2[k + 1]], k));
+  });
+}
+
+function updateScene2(p, forced) {
+  S2.segs.forEach((path, k) => {
+    const t = forced ? 1 : seg(p, 0.06 + k * 0.03, 0.10 + k * 0.03);
+    path.style.strokeDashoffset = String(1 - t);
+  });
+}
+
+// Scene 1: a paper cutout lifts when the thread reaches it.
+function setupScene1() {
+  S1.cards = Array.from(document.querySelectorAll('.zig .cut')).map((el, i) => ({
+    el,
+    draws: Array.from(el.querySelectorAll('.draw')),
+    start: [0.02, 0.22, 0.42, 0.60][i],
+    lift: [0.24, 0.42, 0.60, 0.78][i]
+  }));
+}
+
+function updateScene1(p, forced) {
+  for (const c of S1.cards) {
+    const t = forced ? 1 : seg(p, c.start, c.start + 0.18);
+    for (const d of c.draws) d.style.strokeDashoffset = String(1 - t);
+    // The card appears only as its own motif starts to draw, so no card is ever blank.
+    c.el.style.opacity = forced ? '1' : clamp(t * 4, 0, 1).toFixed(3);
+    const lift = forced ? 1 : seg(p, c.lift, c.lift + 0.08);
+    c.el.style.setProperty('--lift', lift.toFixed(3));
+  }
+}
+
+// Scene 3: five cutouts slide into a ring around the spool, with five threads.
+function setupScene3() {
+  S3.art = document.querySelector('[data-art="s3"]');
+  S3.ring = document.querySelector('[data-ring]');
+  S3.spool = document.querySelector('[data-spool]');
+  S3.ths = document.querySelector('[data-threads] .ths');
+  const woundG = document.querySelector('[data-spool] .wound');
+  if (woundG) {
+    for (let i = 0; i < 12; i++) {
+      const y = 50 + i * 12;
+      const ln = document.createElementNS(NS, 'path');
+      ln.setAttribute('d', 'M60 ' + y + 'L140 ' + (y - 9));
+      ln.setAttribute('pathLength', '1');
+      ln.setAttribute('class', 'draw v');
+      ln.style.strokeWidth = '2';
+      woundG.appendChild(ln);
+      S3.wound.push(ln);
+    }
+  }
+  if (S3.ring) {
+    const src = Array.from(document.querySelectorAll('.glue .cut'));
+    const fr = [[-0.34, -0.26], [0.32, -0.30], [-0.36, 0.22], [0.34, 0.20], [0.02, 0.38]];
+    const rot0 = [-8, 6, -5, 9, -3];
+    src.forEach((node, i) => {
+      const c = node.cloneNode(true);
+      c.querySelectorAll('[data-k]').forEach((n) => n.remove());
+      c.classList.add('rc');
+      S3.ring.appendChild(c);
+      S3.cards.push({ el: c, fx: fr[i][0], fy: fr[i][1], rot0: rot0[i], line: null, sxp: 0, syp: 0, tx: 0, ty: 0, w: 100, h: 100 });
+    });
+  }
+  if (S3.ths) {
+    S3.cards.forEach((c) => {
+      const line = document.createElementNS(NS, 'path');
+      line.setAttribute('class', 'draw');
+      line.setAttribute('pathLength', '1');
+      line.style.fill = 'none';
+      line.style.stroke = 'var(--vermilion)';
+      line.style.strokeWidth = '2';
+      line.style.strokeLinecap = 'round';
+      S3.ths.appendChild(line);
+      c.line = line;
+    });
+    const mark = document.createElementNS(NS, 'path');
+    mark.setAttribute('d', 'M0 0L9 10L26 -12');
+    mark.setAttribute('pathLength', '1');
+    mark.setAttribute('class', 'draw');
+    mark.style.fill = 'none';
+    mark.style.stroke = 'var(--ink)';
+    mark.style.strokeWidth = '2.6';
+    mark.style.strokeLinecap = 'round';
+    mark.style.strokeLinejoin = 'round';
+    S3.ths.appendChild(mark);
+    S3.mark = mark;
+  }
+}
+
+function layoutScene3() {
+  if (!S3.art || !S3.spool) return;
+  const ar = S3.art.getBoundingClientRect();
+  S3.W = ar.width;
+  S3.H = ar.height;
+  const R = Math.min(S3.W * 0.31, S3.H * 0.30);
+  S3.cards.forEach((c, i) => {
+    const th = (-90 + i * 72) * Math.PI / 180;
+    c.tx = Math.cos(th) * R;
+    c.ty = Math.sin(th) * R;
+    c.sxp = c.fx * S3.W;
+    c.syp = c.fy * S3.H;
+    c.w = c.el.offsetWidth || 100;
+    c.h = c.el.offsetHeight || 100;
+  });
+  const sr = S3.spool.getBoundingClientRect();
+  S3.cx = sr.left - ar.left + sr.width / 2;
+  S3.cy = sr.top - ar.top + sr.height / 2;
+  S3.sr = sr.width * 0.4;
+  const loc = document.querySelector('[data-threads]');
+  if (loc) loc.setAttribute('viewBox', '0 0 ' + S3.W.toFixed(0) + ' ' + S3.H.toFixed(0));
+}
+
+function updateScene3(p, forced) {
+  const e = forced ? 1 : smooth(ramp(p, 0.06, 0.38));
+  const hw = S3.W / 2;
+  const hh = S3.H / 2;
+  let end = null;
+  S3.cards.forEach((c, i) => {
+    const x = lerp(c.sxp, c.tx, e);
+    const y = lerp(c.syp, c.ty, e);
+    c.el.style.setProperty('--x', x.toFixed(1) + 'px');
+    c.el.style.setProperty('--y', y.toFixed(1) + 'px');
+    c.el.style.setProperty('--r', lerp(c.rot0, 0, e).toFixed(2) + 'deg');
+    if (!c.line) return;
+    const cx = hw + x;
+    const cy = hh + y;
+    const dx = cx - S3.cx;
+    const dy = cy - S3.cy;
+    const L = Math.hypot(dx, dy) || 1;
+    const ux = dx / L;
+    const uy = dy / L;
+    const ext = Math.min(c.w, c.h) * 0.5;
+    const sx = S3.cx + ux * S3.sr;
+    const sy = S3.cy + uy * S3.sr;
+    const ex = cx - ux * ext;
+    const ey = cy - uy * ext;
+    const side = i % 2 ? 1 : -1;
+    const mx = (sx + ex) / 2 - uy * 18 * side;
+    const my = (sy + ey) / 2 + ux * 18 * side;
+    c.line.setAttribute('d', 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1)
+      + 'Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + ex.toFixed(1) + ' ' + ey.toFixed(1));
+    c.line.style.strokeDashoffset = String(1 - (forced ? 1 : seg(p, 0.42 + i * 0.05, 0.56 + i * 0.05)));
+    if (i === S3.cards.length - 1) end = { x: ex, y: ey };
+  });
+  for (const ln of S3.wound) ln.style.strokeDashoffset = String(1 - (forced ? 1 : seg(p, 0.08, 0.34)));
+  if (S3.mark && end) {
+    S3.mark.setAttribute('transform', 'translate(' + (end.x - 30).toFixed(1) + ' ' + (end.y - 34).toFixed(1) + ')');
+    S3.mark.style.strokeDashoffset = String(1 - (forced ? 1 : seg(p, 0.80, 0.92)));
+  }
+}
+
+// Scene 4: a canvas loom. The weft weaves row by row over and under the warp.
+function setupScene4() {
+  S4.canvas = document.querySelector('.loom-canvas');
+  S4.ctx = S4.canvas ? S4.canvas.getContext('2d') : null;
+  S4.labels = document.querySelector('.warp-labels');
+  S4.pad = document.querySelector('.padlock');
+}
+
+function layoutScene4() {
+  if (!S4.canvas) return;
+  const r = S4.canvas.getBoundingClientRect();
+  S4.W = Math.max(1, r.width);
+  S4.H = Math.max(1, r.height);
+  S4.dpr = Math.min(window.devicePixelRatio || 1, 2);
+  S4.canvas.width = Math.round(S4.W * S4.dpr);
+  S4.canvas.height = Math.round(S4.H * S4.dpr);
+  S4.lastT = -1;
+}
+
+function drawLoom(t) {
+  const ctx = S4.ctx;
+  if (!ctx) return;
+  const W = S4.W;
+  const H = S4.H;
+  ctx.setTransform(S4.dpr, 0, 0, S4.dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  const gap = W / WARPS;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#141414';
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  for (let i = 0; i < WARPS; i++) {
+    const x = (i + 0.5) * gap;
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, H);
+  }
+  ctx.stroke();
+  const rows = t * ROWS;
+  for (let r = 0; r < ROWS; r++) {
+    const k = clamp(rows - r, 0, 1);
+    if (k <= 0) break;
+    const y = (r + 0.5) * (H / ROWS);
+    ctx.strokeStyle = '#E0401F';
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W * k, y);
+    ctx.stroke();
+    ctx.strokeStyle = '#141414';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    for (let i = 0; i < WARPS; i++) {
+      const x = (i + 0.5) * gap;
+      if (x > W * k) break;
+      if ((i + r) % 2 === 1) {
+        ctx.moveTo(x, y - 6);
+        ctx.lineTo(x, y + 6);
+      }
+    }
+    ctx.stroke();
+  }
+}
+
+function updateScene4(p, forced) {
+  const t = forced ? 1 : seg(p, 0.06, 0.80);
+  if (S4.ctx && (forced || Math.abs(t - S4.lastT) > 0.002)) {
+    S4.lastT = t;
+    drawLoom(t);
+  }
+  if (S4.labels) S4.labels.style.opacity = String(forced ? 1 : seg(p, 0.02, 0.10));
+  if (S4.pad) S4.pad.style.setProperty('--lift', (forced ? 1 : seg(p, 0.84, 0.94)).toFixed(3));
+}
+
+// Scene 5: three stitched vignettes. Each morph runs over its own stretch of progress.
+function buildPageMorph(card, svg) {
+  const neat = rectPerimeter(44, 18, 156, 122, 24);
+  const page = document.createElementNS(NS, 'path');
+  page.style.fill = 'var(--paper-lo)';
+  const scrib = document.createElementNS(NS, 'path');
+  let sd = '';
+  for (let r = 0; r < 4; r++) {
+    const y = 40 + r * 18;
+    sd += 'M56 ' + y;
+    for (let k = 1; k <= 8; k++) sd += 'L' + (56 + k * 11) + ' ' + (y + (k % 2 ? -5 : 5) + (rnd(r * 9 + k) - 0.5) * 3).toFixed(1);
+  }
+  scrib.setAttribute('d', sd);
+  const rules = document.createElementNS(NS, 'path');
+  rules.setAttribute('d', 'M56 44H144M56 62H144M56 80H144M56 98H144M46 24V122');
+  rules.style.opacity = '0';
+  const stamp = document.createElementNS(NS, 'circle');
+  stamp.setAttribute('cx', '126');
+  stamp.setAttribute('cy', '106');
+  stamp.setAttribute('r', '9');
+  stamp.style.stroke = 'var(--vermilion)';
+  stamp.style.strokeWidth = '2.4';
+  stamp.style.fill = 'none';
+  stamp.style.opacity = '0';
+  svg.append(page, scrib, rules, stamp);
+  card.update = (m) => {
+    let d = '';
+    for (let i = 0; i < neat.length; i++) {
+      const x = neat[i][0] + (rnd(i) - 0.5) * 22 * (1 - m);
+      const y = neat[i][1] + (rnd(i + 50) - 0.5) * 22 * (1 - m);
+      d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+    }
+    page.setAttribute('d', d + 'Z');
+    scrib.style.opacity = String(1 - m);
+    rules.style.opacity = String(m);
+    stamp.style.opacity = String(seg(m, 0.6, 1));
+  };
+}
+
+function buildBubbleMorph(card, svg) {
+  const from = [[22, 36, 84, 40], [58, 62, 84, 40], [94, 88, 84, 40]];
+  const to = [62, 30, 76, 96];
+  const boxes = from.map(() => {
+    const r = document.createElementNS(NS, 'rect');
+    r.style.fill = 'var(--paper-hi)';
+    svg.appendChild(r);
+    return r;
+  });
+  const stubs = document.createElementNS(NS, 'path');
+  stubs.setAttribute('d', 'M34 50H92M34 62H76M70 74H132M70 86H116M106 100H170M106 112H150');
+  const lines = document.createElementNS(NS, 'path');
+  lines.setAttribute('d', 'M76 52H130M76 70H130M76 88H116');
+  lines.style.opacity = '0';
+  svg.append(stubs, lines);
+  card.update = (m) => {
+    boxes.forEach((r, k) => {
+      const f = from[k];
+      r.setAttribute('x', lerp(f[0], to[0], m).toFixed(1));
+      r.setAttribute('y', lerp(f[1], to[1], m).toFixed(1));
+      r.setAttribute('width', lerp(f[2], to[2], m).toFixed(1));
+      r.setAttribute('height', lerp(f[3], to[3], m).toFixed(1));
+      r.setAttribute('rx', lerp(10, 3, m).toFixed(1));
+    });
+    stubs.style.opacity = String(1 - seg(m, 0, 0.5));
+    lines.style.opacity = String(seg(m, 0.55, 1));
+  };
+}
+
+function buildWaveMorph(card, svg) {
+  const wave = document.createElementNS(NS, 'path');
+  const cal = document.createElementNS(NS, 'path');
+  cal.setAttribute('d', 'M50 30H150V126H50Z M50 48H150 M66 30V126 M84 30V126 M102 30V126 M120 30V126 M50 66H150 M50 88H150 M50 108H150');
+  cal.style.opacity = '0';
+  const ticks = document.createElementNS(NS, 'path');
+  ticks.setAttribute('d', 'M72 80L78 86L90 72 M120 102L126 108L138 94 M72 102L78 108L90 94');
+  ticks.style.stroke = 'var(--vermilion)';
+  ticks.style.opacity = '0';
+  svg.append(wave, cal, ticks);
+  card.update = (m) => {
+    const amp = 26 * (1 - m);
+    let d = '';
+    for (let i = 0; i <= 40; i++) {
+      const x = 20 + i * 4;
+      const y = 74 + Math.sin(i * 0.7) * amp * (0.6 + 0.4 * Math.sin(i * 0.23));
+      d += (i ? 'L' : 'M') + x + ' ' + y.toFixed(1);
+    }
+    wave.setAttribute('d', d);
+    wave.style.opacity = String(1 - seg(m, 0.5, 0.9));
+    cal.style.opacity = String(seg(m, 0.5, 0.9));
+    ticks.style.opacity = String(seg(m, 0.85, 1));
+  };
+}
+
+function buildStitchCard(el, i) {
+  const svg = el.querySelector('svg');
+  const card = { el, stitches: [], start: [0.10, 0.36, 0.60][i], update: () => {} };
+  for (let k = 0; k < 18; k++) {
+    const x = 18 + k * 9.4;
+    const ln = document.createElementNS(NS, 'line');
+    ln.setAttribute('x1', x.toFixed(1));
+    ln.setAttribute('y1', '138');
+    ln.setAttribute('x2', (x + 5).toFixed(1));
+    ln.setAttribute('y2', '138');
+    ln.style.stroke = 'var(--vermilion)';
+    ln.style.strokeWidth = '2.4';
+    ln.style.strokeLinecap = 'round';
+    ln.style.opacity = '0';
+    svg.appendChild(ln);
+    card.stitches.push(ln);
+  }
+  if (i === 0) buildPageMorph(card, svg);
+  else if (i === 1) buildBubbleMorph(card, svg);
+  else buildWaveMorph(card, svg);
+  return card;
+}
+
+function setupScene5() {
+  S5.cards = Array.from(document.querySelectorAll('.trio .card3')).map((el, i) => buildStitchCard(el, i));
+}
+
+function updateScene5(p, forced) {
+  for (const c of S5.cards) {
+    const st = forced ? 1 : seg(p, c.start, c.start + 0.12);
+    const m = forced ? 1 : seg(p, c.start + 0.05, c.start + 0.25);
+    const n = Math.round(st * c.stitches.length);
+    for (let k = 0; k < c.stitches.length; k++) c.stitches[k].style.opacity = k < n ? '1' : '0';
+    c.update(m);
+  }
+}
+
+// Scene 6: nine quilt patches, each drawn in JS from a small pattern.
+function makeQuiltArt(kind, svg) {
+  const out = [];
+  const mk = (tag, attrs, cls) => {
+    const e = document.createElementNS(NS, tag);
+    Object.keys(attrs).forEach((key) => e.setAttribute(key, String(attrs[key])));
+    e.setAttribute('pathLength', '1');
+    e.setAttribute('class', cls ? 'draw ' + cls : 'draw');
+    svg.appendChild(e);
+    out.push(e);
+    return e;
+  };
+  if (kind === 'curls') {
+    let d = '';
+    for (let j = 0; j < 3; j++) {
+      for (let i = 0; i < 3; i++) {
+        const cx = 20 + i * 40;
+        const cy = 20 + j * 40;
+        for (let s = 0; s <= 36; s++) {
+          const th = (s / 36) * 3 * Math.PI;
+          const r = 2 + th * 1.5;
+          d += (s ? 'L' : 'M') + (cx + r * Math.cos(th)).toFixed(1) + ' ' + (cy + r * Math.sin(th)).toFixed(1);
+        }
+      }
+    }
+    mk('path', { d });
+  } else if (kind === 'bows') {
+    let d = '';
+    const pts = [[30, 30], [90, 30], [30, 90], [90, 90]];
+    for (const [x, y] of pts) {
+      d += 'M' + x + ' ' + y + 'L' + (x - 16) + ' ' + (y - 10) + 'L' + (x - 16) + ' ' + (y + 10) + 'Z';
+      d += 'M' + x + ' ' + y + 'L' + (x + 16) + ' ' + (y - 10) + 'L' + (x + 16) + ' ' + (y + 10) + 'Z';
+    }
+    mk('path', { d }, 'v');
+    for (const [x, y] of pts) mk('circle', { cx: x, cy: y, r: 4 }, 'v');
+  } else if (kind === 'diamonds') {
+    let d = '';
+    for (let j = 0; j < 3; j++) {
+      for (let i = 0; i < 3; i++) {
+        const cx = 20 + i * 40;
+        const cy = 20 + j * 40;
+        d += 'M' + cx + ' ' + (cy - 14) + 'L' + (cx + 12) + ' ' + cy + 'L' + cx + ' ' + (cy + 14) + 'L' + (cx - 12) + ' ' + cy + 'Z';
+        d += 'M' + (cx - 12) + ' ' + cy + 'H' + (cx + 12) + 'M' + cx + ' ' + (cy - 14) + 'L' + (cx - 5) + ' ' + cy;
+        d += 'M' + cx + ' ' + (cy - 14) + 'L' + (cx + 5) + ' ' + cy;
+      }
+    }
+    mk('path', { d });
+  } else if (kind === 'petals') {
+    for (const [cx, cy] of [[40, 40], [80, 80]]) {
+      for (let k = 0; k < 6; k++) {
+        mk('ellipse', { cx, cy: cy - 14, rx: 7, ry: 13, transform: 'rotate(' + (k * 60) + ' ' + cx + ' ' + cy + ')' });
+      }
+      mk('circle', { cx, cy, r: 3 });
+    }
+  } else if (kind === 'tiles') {
+    let d = '';
+    for (let j = 0; j < 4; j++) {
+      for (let i = 0; i < 4; i++) {
+        const x = 10 + i * 25;
+        const y = 10 + j * 25;
+        d += 'M' + x + ' ' + y + 'h25v25h-25Z';
+        d += ((i + j) % 2) ? 'M' + x + ' ' + y + 'L' + (x + 25) + ' ' + (y + 25) : 'M' + (x + 25) + ' ' + y + 'L' + x + ' ' + (y + 25);
+      }
+    }
+    mk('path', { d });
+  } else if (kind === 'chevrons') {
+    let d = '';
+    for (let r = 0; r < 6; r++) {
+      const y = 12 + r * 18;
+      d += 'M8 ' + y;
+      for (let k = 1; k <= 7; k++) d += 'L' + (8 + k * 14) + ' ' + (y + (k % 2 ? 10 : 0));
+    }
+    mk('path', { d });
+  } else if (kind === 'weave') {
+    let d = '';
+    for (let k = 0; k <= 8; k++) {
+      const v = 10 + k * 13;
+      d += 'M10 ' + v + 'H110M' + v + ' 10V110';
+    }
+    mk('path', { d });
+  } else if (kind === 'grid') {
+    let d = '';
+    for (let k = 0; k <= 6; k++) {
+      const v = 14 + k * 15;
+      d += 'M14 ' + v + 'H104M' + v + ' 14V104';
+    }
+    mk('path', { d });
+    mk('rect', { x: 44, y: 44, width: 30, height: 30 }, 'v');
+  } else if (kind === 'waves') {
+    let d = '';
+    for (let r = 0; r < 6; r++) {
+      const y = 12 + r * 17;
+      for (let x = 0; x <= 120; x += 4) {
+        const yy = y + Math.sin((x / 120) * Math.PI * 4 + r * 0.7) * 5;
+        d += (x ? 'L' : 'M') + x + ' ' + yy.toFixed(1);
+      }
+    }
+    mk('path', { d });
+  }
+  return out;
+}
+
+function setupScene6() {
+  S6.patches = Array.from(document.querySelectorAll('.quilt .patch')).map((el, k) => {
+    const svg = el.querySelector('svg');
+    return { el, draws: makeQuiltArt(el.dataset.pattern, svg), dx: k % 3 === 1 ? 0 : (k % 2 ? 16 : -16) };
+  });
+}
+
+function updateScene6(p, forced) {
+  S6.patches.forEach((pt, k) => {
+    // Patches 0 to 2 (the top row) are on the table from the start; the rest stitch in with progress.
+    const early = k < 3;
+    const start = early ? 0 : 0.06 + (k - 3) * 0.09;
+    const e = forced || early ? 1 : seg(p, start, start + 0.10);
+    const st = forced || early ? 1 : seg(p, start + 0.06, start + 0.16);
+    const d = forced || early ? 1 : seg(p, start, start + 0.14);
+    pt.el.style.setProperty('--qo', e.toFixed(3));
+    pt.el.style.setProperty('--qx', ((1 - e) * pt.dx).toFixed(1) + 'px');
+    pt.el.style.setProperty('--qy', ((1 - e) * 14).toFixed(1) + 'px');
+    pt.el.style.setProperty('--st', st.toFixed(3));
+    for (const el of pt.draws) el.style.strokeDashoffset = String(1 - d);
+  });
+}
+
+// Scene 7: the thread ties a small bow.
+function setupScene7() {
+  S7.draws = Array.from(document.querySelectorAll('.bow-wrap .draw'));
+}
+
+function updateScene7(p, forced) {
+  S7.draws.forEach((el, k) => {
+    const t = forced ? 1 : seg(p, 0.50 + k * 0.05, 0.62 + k * 0.05);
+    el.style.strokeDashoffset = String(1 - t);
+  });
+}
+
+function setupScenes() {
+  setupScene1();
+  setupScene2();
+  setupScene3();
+  setupScene4();
+  setupScene5();
+  setupScene6();
+  setupScene7();
+}
+
+function layoutArt() {
+  layoutScene2();
+  layoutScene3();
+  layoutScene4();
+  heroResize();
+}
+
+ART[1] = updateScene1;
+ART[2] = updateScene2;
+ART[3] = updateScene3;
+ART[4] = updateScene4;
+ART[5] = updateScene5;
+ART[6] = updateScene6;
+ART[7] = updateScene7;
+
+boot();
+})();
+</script>
+</body>
+</html>
