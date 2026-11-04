@@ -160,6 +160,10 @@ main,.foot{position:relative;z-index:1}
 .spool{position:absolute;left:50%;top:50%;width:min(180px,30%);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
 .spool > svg{display:block;width:100%;height:auto;overflow:visible}
 .spool .lbl{margin-top:10px;color:var(--ink)}
+/* Scenes 1 to 3 in WebGL: cutouts, pins and the spool replace the SVG art while the stage is live. */
+.s1-gl:not(.is-nogl) .zig,.s2-gl:not(.is-nogl) .glue>.cut,.s2-gl:not(.is-nogl) .glue>[data-tangle],.s3-gl:not(.is-nogl) .ring,.s3-gl:not(.is-nogl) [data-threads]{display:none}
+.s3-gl:not(.is-nogl) .tag-paper{transform-origin:50% 0}
+@media (max-width:1023px){.s3-gl:not(.is-nogl) .tag-paper{font-size:16px}}
 
 /* Scene 4: the loom. WebGL draws the cloth, beams, heddles and clasp; the 2D canvas and SVG clasp are the no-WebGL fallback. */
 .loom{position:absolute;inset:0;display:flex;flex-direction:column;padding:12% 12% 10%}
@@ -273,7 +277,7 @@ main,.foot{position:relative;z-index:1}
     <div class="copy">
       <div class="beats">
         <div class="beat">
-          <h2 id="s1-line" class="line rv" data-in="0.64">I learned how a company sells before I built the machine that runs one.</h2>
+          <h2 id="s1-line" class="line rv" data-in="0.06">I learned how a company sells before I built the machine that runs one.</h2>
         </div>
       </div>
     </div>
@@ -333,10 +337,10 @@ main,.foot{position:relative;z-index:1}
     <div class="copy">
       <div class="beats">
         <div class="beat">
-          <p class="note rv" data-in="0.30">None of them remembered the others.</p>
+          <p class="note rv" data-in="0.08">None of them remembered the others.</p>
         </div>
         <div class="beat">
-          <h2 class="line rv" data-in="0.66">Orchestration is the bottleneck.</h2>
+          <h2 class="line rv" data-in="0.2">Orchestration is the bottleneck.</h2>
         </div>
       </div>
     </div>
@@ -411,9 +415,9 @@ main,.foot{position:relative;z-index:1}
           <span class="a" data-k="6" style="right:-4px;top:38%"></span>
         </div>
       </div>
-      <p class="s-note" style="left:4%;top:16%">tools load when needed</p>
-      <p class="s-note" style="right:4%;top:72%">a record of what ran</p>
-      <span class="tag-paper s-note" style="left:6%;bottom:6%;white-space:normal;max-width:30ch">A person approves anything that moves money, mail or a calendar.</span>
+      <p class="s-note" style="left:4%;top:8%">tools load when needed</p>
+      <p class="s-note" style="right:4%;top:8%">a record of what ran</p>
+      <span class="tag-paper s-note" style="right:4%;bottom:4%;white-space:normal;max-width:30ch;text-align:left">A person approves anything that moves money, mail or a calendar.</span>
       <svg class="local" data-threads aria-hidden="true"><g class="ths"></g></svg>
     </div>
   </div>
@@ -2358,6 +2362,448 @@ function updateScene7(p, forced) {
   });
 }
 
+/* ===== Scenes 1 to 3 in 3D: paper cutouts pinned to the shared thread, a tangle, and a spool the thread wraps ===== */
+const CUT_W = 512;
+const CUT_H = 576;
+const CUT_FONT = '600 72px Outfit, "Helvetica Neue", Arial, sans-serif';
+const CUT_PAPER = '#FAF7F0';
+const CUT_INK = '#1C1915';
+const G1 = { cuts: [], box: null };
+const G2 = { cuts: [], box: null };
+const G3 = { cuts: [], box: null, spool: null, wood: null, label: null, labelW: 100, tag: null };
+
+// Art box of a scene, measured from its stage (the same frame buildThreadKeys uses).
+function artBox(n) {
+  const s = byN[n];
+  if (!s) return null;
+  const art = s.el.querySelector('[data-art]');
+  const stageEl = s.el.querySelector('.stage');
+  if (!art || !stageEl) return null;
+  const sr = stageEl.getBoundingClientRect();
+  const ar = art.getBoundingClientRect();
+  return { x: ar.left - sr.left, y: ar.top - sr.top, w: ar.width, h: ar.height };
+}
+
+// Control point j of the shared thread, in client pixels and depth, interpolated the same way updateSharedThread does.
+function threadAt(j) {
+  const q = clamp(window.scrollY / maxScroll, 0, 1);
+  const span = keySpan(q);
+  const A = THREAD_KEYS[span[0]];
+  const B = THREAD_KEYS[span[0] + 1];
+  if (!A || !B || !A[j] || !B[j]) return null;
+  const a = A[j];
+  const b = B[j];
+  const px = lerp(a.x, b.x, span[1]);
+  const py = lerp(a.y, b.y, span[1]);
+  const z = lerp(a.z, b.z, span[1]);
+  return { px, py, z, world: worldAtPx(px, py, z) };
+}
+
+// Each SVG path or circle of a cutout becomes a Path2D with its length, so the ink can be written in progressively.
+function cutItems(fig) {
+  const items = [];
+  let vb = [0, 0, 240, 180];
+  const svg = fig.querySelector('svg');
+  if (svg) {
+    const parts = (svg.getAttribute('viewBox') || '').split(/\s+/).map(Number);
+    if (parts.length === 4 && parts.every((n) => Number.isFinite(n)) && parts[2] > 0 && parts[3] > 0) vb = parts;
+    svg.querySelectorAll('path, circle').forEach((el) => {
+      if (el.tagName.toLowerCase() === 'circle') {
+        const r = Number(el.getAttribute('r')) || 0;
+        const arc = new Path2D();
+        arc.arc(Number(el.getAttribute('cx')) || 0, Number(el.getAttribute('cy')) || 0, r, 0, Math.PI * 2);
+        items.push({ path: arc, len: 2 * Math.PI * r });
+      } else {
+        let len = 0;
+        try { len = el.getTotalLength(); } catch (err) { len = 0; }
+        items.push({ path: new Path2D(el.getAttribute('d') || ''), len: len > 0 ? len : 0 });
+      }
+    });
+  }
+  return { items, vb };
+}
+
+// Fits the drawing (in SVG units) into the upper part of the face; the stroke is about 8 canvas px on a 512 px face.
+function frameCut(c) {
+  c.s = Math.min((CUT_W * 0.78) / c.vb[2], (CUT_H * 0.66) / c.vb[3]);
+  c.tx = (CUT_W - c.vb[2] * c.s) / 2 - c.vb[0] * c.s;
+  c.ty = CUT_H * 0.06 + (CUT_H * 0.66 - c.vb[3] * c.s) / 2 - c.vb[1] * c.s;
+  c.lw = 8 / c.s;
+}
+
+// Letterpress word: a light offset under the ink, so the print reads as pressed into the paper.
+function printWord(g, word, x, y) {
+  g.font = CUT_FONT;
+  g.textAlign = 'center';
+  g.textBaseline = 'alphabetic';
+  g.fillStyle = 'rgba(255,255,255,0.75)';
+  g.fillText(word, x, y + 2);
+  g.fillStyle = CUT_INK;
+  g.fillText(word, x, y);
+}
+
+// Paints one face: paper, the drawing written in up to inkT (0 to 1), then the printed word.
+function paintCut(c, inkT) {
+  const g = c.ctx;
+  g.setLineDash([]);
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  g.fillStyle = CUT_PAPER;
+  g.fillRect(0, 0, CUT_W, CUT_H);
+  g.setTransform(c.s, 0, 0, c.s, c.tx, c.ty);
+  g.lineWidth = c.lw;
+  g.lineCap = 'round';
+  g.lineJoin = 'round';
+  g.strokeStyle = CUT_INK;
+  for (const it of c.items) {
+    g.setLineDash(inkT >= 1 || !(it.len > 0) ? [] : [Math.max(0.0001, it.len * inkT), it.len * 2 + 2]);
+    g.stroke(it.path);
+  }
+  g.setLineDash([]);
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  printWord(g, c.word, CUT_W / 2, CUT_H * 0.88);
+  c.tex.needsUpdate = true;
+}
+
+function paintLabel(L) {
+  const g = L.ctx;
+  g.setLineDash([]);
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  g.fillStyle = CUT_PAPER;
+  g.fillRect(0, 0, 512, 160);
+  printWord(g, 'one memory', 256, 106);
+  L.tex.needsUpdate = true;
+}
+
+// A paper cutout: a thin box whose corners curl up, with the drawn face on the front and plain paper behind.
+function makeCutMesh(tex) {
+  const THREE = window.THREE;
+  const geo = new THREE.BoxGeometry(1, 1, 0.04, 12, 12, 1);
+  const pos = geo.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const u = pos.getX(i) * 2;
+    const v = pos.getY(i) * 2;
+    pos.setZ(i, pos.getZ(i) + 0.07 * u * u * v * v + 0.02 * u * u);
+  }
+  pos.needsUpdate = true;
+  geo.computeVertexNormals();
+  const edge = new THREE.MeshStandardMaterial({ color: 0xe9e1cf, roughness: 0.95, metalness: 0 });
+  const face = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.9, metalness: 0 });
+  const back = new THREE.MeshStandardMaterial({ color: 0xfaf7f0, roughness: 0.95, metalness: 0 });
+  const mesh = new THREE.Mesh(geo, [edge, edge, edge, edge, face, back]);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  return mesh;
+}
+
+// Ink bleed: a noise threshold that drops as uBloom rises, so ink spreads outward behind a drawing.
+function makeBleedMaterial(seed) {
+  const THREE = window.THREE;
+  return new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    uniforms: { uBloom: { value: 0 }, uSeed: { value: seed } },
+    vertexShader: 'varying vec2 vUv;\nvoid main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: [
+      'uniform float uBloom;',
+      'uniform float uSeed;',
+      'varying vec2 vUv;',
+      'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7)) + uSeed) * 43758.5453); }',
+      'float noise(vec2 p) {',
+      '  vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);',
+      '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);',
+      '}',
+      'void main() {',
+      '  vec2 q = (vUv - 0.5) * vec2(1.0, 0.8) * 6.0;',
+      '  float v = noise(q) * 0.65 + noise(q * 2.7) * 0.35;',
+      '  float thr = mix(1.02, 0.42, uBloom);',
+      '  float ink = smoothstep(thr - 0.03, thr + 0.03, v);',
+      '  float edge = 1.0 - smoothstep(0.30, 0.52, length((vUv - 0.5) * vec2(1.0, 0.8)));',
+      '  gl_FragColor = vec4(0.11, 0.098, 0.082, ink * edge * uBloom * 0.22);',
+      '}'
+    ].join('\n')
+  });
+}
+
+// Brass-headed pin. Built in client pixels; placePin sets its world position and scale.
+function makePin() {
+  const THREE = window.THREE;
+  const pin = new THREE.Group();
+  const brass = new THREE.MeshStandardMaterial({ color: 0xa88b4a, roughness: 0.35, metalness: 0.6 });
+  const head = new THREE.Mesh(new THREE.CylinderGeometry(6, 6, 4, 20), brass);
+  head.rotation.x = Math.PI / 2;
+  head.position.z = 3;
+  const stem = new THREE.Mesh(new THREE.CylinderGeometry(2.2, 2.2, 16, 10), brass);
+  stem.rotation.x = Math.PI / 2;
+  stem.position.z = -5;
+  pin.add(head, stem);
+  return pin;
+}
+
+function placePin(pin, pt) {
+  pin.position.copy(pt);
+  pin.scale.setScalar(1 / pxPerUnitAt(pt));
+}
+
+// Top centre of a cutout at client pixel (tx, ty) and depth z; w and h are its size in client pixels.
+function placeCard(c, tx, ty, z, w, h, rot) {
+  const pos = worldAtPx(tx, ty, z);
+  c.root.position.copy(pos);
+  c.root.scale.setScalar(1 / pxPerUnitAt(pos));
+  c.root.rotation.z = rot;
+  c.body.position.set(0, -h / 2, 0);
+  c.body.scale.set(w, h, w);
+  if (c.bleed) {
+    c.bleed.position.set(0, -h / 2, -w * 0.04);
+    c.bleed.scale.set(w * 1.5, h * 1.4, 1);
+  }
+}
+
+function makeCut(fig, word, j, above, rot0) {
+  const THREE = window.THREE;
+  const canvas = document.createElement('canvas');
+  canvas.width = CUT_W;
+  canvas.height = CUT_H;
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 4;
+  const src = cutItems(fig);
+  const c = {
+    root: new THREE.Group(), body: null, bleed: null, pin: makePin(),
+    canvas, ctx: canvas.getContext('2d'), tex, items: src.items, vb: src.vb, word,
+    j, above, rot0, lastT: -1, w: 120, h: 135, s: 1, tx: 0, ty: 0, lw: 6, drop: 0, ink0: 0, ink1: 1
+  };
+  c.body = makeCutMesh(tex);
+  c.root.add(c.body);
+  frameCut(c);
+  paintCut(c, 0);
+  return c;
+}
+
+// Scene 1: four cutouts fall from above onto pins on the shared thread, then the ink writes in and the bleed blooms.
+function build1GL(group) {
+  const THREE = window.THREE;
+  const figs = Array.from(document.querySelectorAll('.zig .cut')).slice(0, 4);
+  const words = ['marketing', 'funnels', 'growth', 'clients'];
+  const js = [19, 14, 9, 4];
+  const drops = [0.2, 0.27, 0.34, 0.41];
+  const rots = [-9, 7, -4, 11];
+  G1.cuts = figs.map((fig, i) => {
+    const c = makeCut(fig, words[i], js[i], i % 2 === 0, (rots[i] * Math.PI) / 180);
+    c.bleed = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), makeBleedMaterial(i + 1));
+    c.bleed.frustumCulled = false;
+    c.root.add(c.bleed);
+    c.drop = drops[i];
+    c.ink0 = 0.6 + i * 0.03;
+    c.ink1 = 0.9;
+    c.pin.visible = false;
+    group.add(c.root, c.pin);
+    return c;
+  });
+}
+
+function update1GL(p) {
+  const b = G1.box;
+  if (!b) return;
+  const back = staticMode ? 0 : seg(p, 0.86, 0.99);
+  G1.cuts.forEach((c, i) => {
+    const pin = threadAt(c.j);
+    if (!pin) return;
+    const e = seg(p, c.drop, c.drop + 0.2);
+    c.pin.visible = e > 0.01;
+    placePin(c.pin, pin.world);
+    const hangY = c.above ? pin.py - 6 - c.h : pin.py + 6;
+    const pileY = b.y - c.h - 30;
+    const x = pin.px + (1 - e) * (i % 2 ? 14 : -14);
+    const y = lerp(lerp(pileY, hangY, e), pileY, back);
+    const sway = 0.05 * Math.sin(p * 17 + i * 1.7) * e;
+    const rot = lerp(lerp(c.rot0, 0, e) + sway, c.rot0, back);
+    placeCard(c, x, y, pin.z, c.w, c.h, rot);
+    const ink = seg(p, c.ink0, c.ink1);
+    c.bleed.material.uniforms.uBloom.value = ink;
+    const tq = Math.round(ink * 32) / 32;
+    if (tq !== c.lastT) { c.lastT = tq; paintCut(c, tq); }
+  });
+}
+
+// Scene 2: five cutouts hang on pins along the thread; as the progress rises they tilt and jostle.
+function build2GL(group) {
+  const figs = Array.from(document.querySelectorAll('.glue .cut')).slice(0, 5);
+  const words = ['store', 'ledger', 'inbox', 'sheet', 'calendar'];
+  const js = [21, 17, 12, 6, 2];
+  const rots = [-2.5, 2, 1.5, -1.5, -0.5];
+  G2.cuts = figs.map((fig, i) => {
+    const c = makeCut(fig, words[i], js[i], i % 2 === 0, (rots[i] * Math.PI) / 180);
+    group.add(c.root, c.pin);
+    return c;
+  });
+}
+
+function update2GL(p) {
+  if (!G2.box) return;
+  const k = seg(p, 0.3, 0.8);
+  G2.cuts.forEach((c, i) => {
+    const pin = threadAt(c.j);
+    if (!pin) return;
+    placePin(c.pin, pin.world);
+    const top = c.above ? pin.py - 6 - c.h : pin.py + 6;
+    const dx = k * 7 * Math.sin(p * 23 + i * 1.9);
+    const tilt = c.rot0 + k * 0.16 * Math.sin(p * 31 + i * 2.3);
+    placeCard(c, pin.px + dx, top, pin.z, c.w, c.h, tilt);
+  });
+}
+
+// Scene 3: a lathe spool on the helix axis of the shared thread, the five cutouts settle in a ring round it,
+// and the paper label sits on the spool front. The spool is never rotated: its grain winds through the texture offset.
+function build3GL(group) {
+  const THREE = window.THREE;
+  const prof = [[0, -1], [1.16, -1], [1.16, -0.9], [1, -0.86], [1, 0.86], [1.16, 0.9], [1.16, 1], [0, 1]];
+  const lathe = new THREE.LatheGeometry(prof.map((q) => new THREE.Vector2(q[0], q[1])), 48);
+  const wc = document.createElement('canvas');
+  wc.width = 256;
+  wc.height = 512;
+  const wg = wc.getContext('2d');
+  wg.fillStyle = '#8A5A34';
+  wg.fillRect(0, 0, 256, 512);
+  for (let k = 0; k < 140; k++) {
+    const x0 = rnd(k) * 256;
+    wg.strokeStyle = k % 3 ? 'rgba(60,34,18,0.18)' : 'rgba(236,206,166,0.12)';
+    wg.lineWidth = 0.6 + rnd(k + 0.5) * 2.4;
+    wg.beginPath();
+    wg.moveTo(x0, 0);
+    wg.bezierCurveTo(x0 + (rnd(k + 1.5) - 0.5) * 14, 170, x0 - (rnd(k + 2.5) - 0.5) * 14, 340, x0 + (rnd(k + 3.5) - 0.5) * 6, 512);
+    wg.stroke();
+  }
+  const wood = new THREE.CanvasTexture(wc);
+  wood.colorSpace = THREE.SRGBColorSpace;
+  wood.wrapS = THREE.RepeatWrapping;
+  G3.wood = wood;
+  const spool = new THREE.Mesh(lathe, new THREE.MeshStandardMaterial({ map: wood, roughness: 0.72, metalness: 0 }));
+  spool.castShadow = true;
+  spool.receiveShadow = true;
+  group.add(spool);
+  G3.spool = spool;
+  const lc = document.createElement('canvas');
+  lc.width = 512;
+  lc.height = 160;
+  const lt = new THREE.CanvasTexture(lc);
+  lt.colorSpace = THREE.SRGBColorSpace;
+  const lmesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: lt }));
+  group.add(lmesh);
+  G3.label = { mesh: lmesh, canvas: lc, ctx: lc.getContext('2d'), tex: lt };
+  paintLabel(G3.label);
+  const turns = [-8, 6, -5, 9, -3];
+  G3.cuts = G2.cuts.map((src, i) => {
+    const c = { root: new THREE.Group(), body: makeCutMesh(src.tex), bleed: null, pin: null, w: 100, h: 112, rot0: (turns[i] * Math.PI) / 180 };
+    c.root.add(c.body);
+    group.add(c.root);
+    return c;
+  });
+}
+
+function update3GL(p) {
+  const b = G3.box;
+  if (!b || !G3.spool || !G3.label) return;
+  const ax = b.x + b.w / 2;
+  const ay = b.y + b.h / 2;
+  // The helix of the shared thread spans 0.26 of the art width at its widest and 0.38 of its height either side of centre.
+  const axis = worldAtPx(ax, ay, 0);
+  const Rw = worldAtPx(ax + 0.26 * b.w, ay, 0).distanceTo(axis);
+  const Hw = worldAtPx(ax, ay + 0.38 * b.h, 0).distanceTo(worldAtPx(ax, ay - 0.38 * b.h, 0)) / 2;
+  G3.spool.position.copy(axis);
+  G3.spool.scale.set(Rw, Hw, 0.26);
+  if (G3.wood) G3.wood.offset.x = p * 1.5;
+  const lp = worldAtPx(ax, ay, 0.34);
+  const k = 1 / pxPerUnitAt(lp);
+  G3.label.mesh.position.copy(lp);
+  G3.label.mesh.scale.set(G3.labelW * k, G3.labelW * 0.3125 * k, 1);
+  const e = seg(p, 0.06, 0.38);
+  G3.cuts.forEach((c) => {
+    const mx = lerp(c.sx, c.rx, e);
+    const my = lerp(c.sy, c.ry, e);
+    placeCard(c, b.x + mx, b.y + my - c.h / 2, 0.35, c.w, c.h, lerp(c.rot0, 0, e));
+  });
+  if (G3.tag) {
+    const te = seg(p, 0.5, 0.75);
+    const lift = ((te - 1) * 24).toFixed(1);
+    const tilt = ((1 - te) * 5 + 1.6 * Math.sin(p * 13) * te).toFixed(2);
+    G3.tag.style.transform = 'translate3d(0,' + lift + 'px,0) rotate(' + tilt + 'deg)';
+  }
+}
+
+// Sizes and resting places, in client pixels, for every cutout and the spool. Runs on each measure.
+function layout123() {
+  G1.box = artBox(1);
+  G2.box = artBox(2);
+  G3.box = artBox(3);
+  const b1 = G1.box;
+  if (b1) {
+    G1.cuts.forEach((c) => {
+      c.w = b1.w < 520 ? b1.w * 0.38 : Math.min(b1.w * 0.22, 200);
+      c.h = c.w * 1.125;
+    });
+  }
+  const b2 = G2.box;
+  if (b2) {
+    G2.cuts.forEach((c) => {
+      c.w = b2.w < 520 ? b2.w * 0.32 : Math.min(b2.w * 0.22, 200);
+      c.h = c.w * 1.125;
+    });
+  }
+  const b3 = G3.box;
+  if (b3 && G3.cuts.length) {
+    const W = b3.w;
+    const H = b3.h;
+    const cw = W < 520 ? W * 0.34 : Math.min(W * 0.22, 200);
+    // Ring radius clears the spool core and the cutout width, and keeps the outer cutouts inside the art box.
+    const ring = Math.min(0.26 * W + 0.6 * cw + 10, (W - cw) / 2 / 0.95);
+    const fx = [-0.34, 0.32, -0.36, 0.34, 0.02];
+    const fy = [-0.26, -0.3, 0.22, 0.2, 0.38];
+    G3.labelW = W * 0.36;
+    G3.cuts.forEach((c, i) => {
+      const a = ((-90 + i * 72) * Math.PI) / 180;
+      c.w = cw;
+      c.h = cw * 1.125;
+      c.rx = W / 2 + Math.cos(a) * ring;
+      c.ry = H / 2 + Math.sin(a) * ring;
+      c.sx = W / 2 + fx[i] * W;
+      c.sy = H / 2 + fy[i] * H;
+    });
+  }
+}
+
+// Once the webfont arrives, repaint every face so the words are set in Outfit.
+function repaint123() {
+  G1.cuts.forEach((c) => { c.lastT = -1; });
+  G2.cuts.forEach((c) => paintCut(c, 1));
+  if (G3.label) paintLabel(G3.label);
+}
+
+// Builds the three groups, registers them on the shared stage, then hides the SVG art they replace.
+// If WebGL is not live, stage.ok is false and the SVG art stays as the fallback.
+function setup123() {
+  const THREE = window.THREE;
+  if (!stage.ok || !THREE) return;
+  try {
+    const g1 = new THREE.Group();
+    const g2 = new THREE.Group();
+    const g3 = new THREE.Group();
+    build1GL(g1);
+    build2GL(g2);
+    build3GL(g3);
+    window.THREAD.register(1, { group: g1, update: update1GL });
+    window.THREAD.register(2, { group: g2, update: update2GL });
+    window.THREAD.register(3, { group: g3, update: update3GL });
+    G3.tag = document.querySelector('[data-art="s3"] .tag-paper');
+    layout123();
+    root.classList.add('s1-gl', 's2-gl', 's3-gl');
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load(CUT_FONT).then(repaint123, () => {});
+    }
+  } catch (err) {
+    report(err);
+  }
+}
+
 function setupScenes() {
   setupScene1();
   setupScene2();
@@ -2366,9 +2812,11 @@ function setupScenes() {
   setupScene5();
   setupScene6();
   setupScene7();
+  setup123();
 }
 
 function layoutArt() {
+  layout123();
   layoutScene2();
   layoutScene3();
   layoutScene4();
