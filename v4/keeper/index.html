@@ -1,0 +1,1209 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shubham Gupta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+:root{
+  --graphite:#121110;
+  --ceramic:#ECE6DA;
+  --brass:#B08D57;
+  --oxide:#D04A24;
+  --bone:#F1EBDF;
+  --pad:clamp(20px,4vw,56px);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--graphite);color:var(--bone)}
+body{font-family:"Manrope",system-ui,sans-serif;font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+h1,h2,.display{font-family:"Syne",system-ui,sans-serif;font-weight:800;letter-spacing:-.02em;line-height:.9}
+
+/* top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:20px var(--pad);font-size:15px;font-weight:600;letter-spacing:.02em;pointer-events:none}
+.topbar a,.topbar span{pointer-events:auto;text-decoration:none}
+.topbar a{border-bottom:1px solid var(--brass);padding-bottom:2px}
+
+/* persistent three.js canvas */
+#world{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block}
+.fallback-bg{position:fixed;inset:0;z-index:0;background:var(--graphite);display:none}
+.no-webgl #world{display:none}
+.no-webgl .fallback-bg{display:block}
+
+/* story */
+main{position:relative;z-index:2}
+.scene{position:relative;height:220vh;width:100%}
+.stage{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;position:sticky}
+.layer{position:absolute;inset:0}
+
+/* scene placeholders, filled per scene */
+.s0 .stage{}
+.s1 .stage{}
+.s2 .stage{}
+.s3 .stage{}
+.s4 .stage{}
+.s5 .stage{}
+.s6 .stage{}
+.s7 .stage{}
+
+@media (max-width:600px){
+  .scene{height:170vh}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+}
+/* scene typography and placement: all words are solid bone, above the canvas */
+.layer > *{position:absolute;pointer-events:none}
+.line{left:var(--pad);right:var(--pad);max-width:36ch;color:var(--bone);font-size:clamp(18px,1.6vw,24px);line-height:1.6;margin:0;opacity:0}
+.big{left:var(--pad);right:var(--pad);color:var(--bone);font-family:"Syne",system-ui,sans-serif;font-weight:800;font-size:clamp(30px,6.4vw,96px);line-height:.98;letter-spacing:-.02em;margin:0;opacity:0}
+.small{left:var(--pad);right:var(--pad);color:var(--bone);font-size:16px;line-height:1.5;margin:0;opacity:0}
+.tag{right:var(--pad);color:var(--bone);font-size:18px;font-weight:600;margin:0;opacity:0}
+.lbl{left:0;top:0;white-space:nowrap;color:var(--bone);font-size:15px;font-weight:600;letter-spacing:.02em;line-height:1.2;padding:6px 10px;background:rgba(18,17,16,.86);border:1px solid rgba(176,141,87,.6);opacity:0;will-change:transform}
+.vt-host{left:var(--pad);right:var(--pad)}
+.vt-svg{display:block;width:100%;height:auto;overflow:visible}
+.vt-canvas{display:block}
+.s0 .vt-host{top:19vh;opacity:0}
+.s0 .line{bottom:15vh;max-width:30ch}
+.s0 .tag{bottom:9vh}
+.s1 .line{bottom:12vh;max-width:34ch}
+.s2 .vt-host{top:9vh}
+.s2 .line{bottom:12vh;max-width:34ch}
+.s3 .big{top:9vh;max-width:16ch}
+.s3 .line{bottom:12vh;max-width:36ch}
+.s4 .big{top:12vh;max-width:18ch}
+.s4 .line{bottom:20vh;max-width:36ch}
+.s4 .small{bottom:12vh}
+.s5 .big{top:8vh;max-width:20ch}
+.s5 .caps{display:contents}
+.s5 .cap{position:absolute;left:0;top:0;max-width:26ch;color:var(--bone);font-size:18px;line-height:1.5;padding:6px 10px;background:rgba(18,17,16,.86);opacity:0;margin:0}
+.s6 .line{top:8vh;bottom:auto;max-width:44ch}
+.s7 .big{top:14vh;max-width:14ch}
+.s7 .cta{position:absolute;left:var(--pad);top:44vh;display:inline-block;pointer-events:auto;background:var(--oxide);color:var(--bone);font-family:"Syne",system-ui,sans-serif;font-weight:800;font-size:clamp(22px,3vw,40px);line-height:1;padding:.55em .9em;text-decoration:none;box-shadow:0 0 0 1px rgba(208,74,36,.6),0 0 48px rgba(208,74,36,.38);opacity:0}
+.s7 .cta:focus-visible{outline:2px solid var(--bone);outline-offset:4px}
+.s7 .after{top:calc(44vh + 92px);color:var(--bone);font-size:18px;margin:0;opacity:0}
+.s7 .foot{left:0;right:0;bottom:0;padding:28px var(--pad) 32px;background:var(--graphite);opacity:1;color:var(--bone);font-size:16px;line-height:1.6;margin:0}
+.s7 .foot p{margin:0 0 8px;max-width:72ch}
+@media (max-width:600px){
+  .s0 .line,.s1 .line,.s2 .line,.s3 .line,.s4 .line{max-width:none}
+  .s4 .big,.s5 .big,.s7 .big{font-size:clamp(30px,8vw,42px)}
+  .s3 .big,.s6 .line{font-size:clamp(30px,8vw,42px)}
+  .s5 .caps{position:absolute;left:var(--pad);right:var(--pad);bottom:8vh;display:grid;gap:12px}
+  .s5 .cap{position:static;max-width:none}
+  .s7 .cta{top:40vh}
+  .s7 .after{top:calc(40vh + 92px)}
+}
+</style>
+</head>
+<body>
+
+<div class="fallback-bg" aria-hidden="true"></div>
+<canvas id="world" aria-hidden="true"></canvas>
+
+<header class="topbar">
+  <span>Shubham Gupta</span>
+  <a href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+</header>
+
+<main>
+  <section class="scene s0" data-scene="0" aria-label="Shubham Gupta">
+    <div class="stage">
+      <div class="layer s0-words">
+      <div class="vt-host" data-vt="name"></div>
+      <span class="tag">Delhi.</span>
+      <p class="line">I build the AI that runs businesses.</p>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene s1" data-scene="1">
+    <div class="stage">
+      <div class="layer s1-words">
+      <span class="lbl" data-pin="tile0">marketing</span>
+      <span class="lbl" data-pin="tile1">funnels</span>
+      <span class="lbl" data-pin="tile2">growth</span>
+      <span class="lbl" data-pin="tile3">clients</span>
+      <p class="line">I learned how a company sells before I built the machine that runs one.</p>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene s2" data-scene="2">
+    <div class="stage">
+      <div class="layer s2-words">
+      <div class="vt-host" data-vt="line2"></div>
+      <span class="lbl" data-pin="obj0">store</span>
+      <span class="lbl" data-pin="obj1">ledger</span>
+      <span class="lbl" data-pin="obj2">inbox</span>
+      <span class="lbl" data-pin="obj3">sheet</span>
+      <span class="lbl" data-pin="obj4">calendar</span>
+      <p class="line">None of them remembered the others.</p>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene s3" data-scene="3">
+    <div class="stage">
+      <div class="layer s3-words">
+      <p class="big">So I build the layer that removes the glue.</p>
+      <span class="lbl" data-pin="core">one memory</span>
+      <p class="line">A person approves anything that moves money, mail or a calendar.</p>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene s4" data-scene="4">
+    <div class="stage">
+      <div class="layer s4-words">
+      <p class="big">Verslay is where I proved it.</p>
+      <p class="line">Verslay's only technical founder. My co-founder runs sales.</p>
+      <p class="small">40+ Indian businesses booked a Verslay demo.</p>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene s5" data-scene="5">
+    <div class="stage">
+      <div class="layer s5-words">
+      <p class="big">Name the constraint. Then build the system around it.</p>
+      <div class="caps">
+        <p class="cap" data-pin="plinth0">Store dues by hand. Now a payment engine.</p>
+        <p class="cap" data-pin="plinth1">Orders one message at a time. Now an agent that sells.</p>
+        <p class="cap" data-pin="plinth2">A voice note. Now tasks and a calendar.</p>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene s6" data-scene="6">
+    <div class="stage">
+      <div class="layer s6-words">
+      <p class="line">The operator should run the business. The system should carry the work.</p>
+      <span class="lbl" data-pin="m0">D2C fashion</span>
+      <span class="lbl" data-pin="m1">gifting</span>
+      <span class="lbl" data-pin="m2">jewellery</span>
+      <span class="lbl" data-pin="m3">beauty</span>
+      <span class="lbl" data-pin="m4">home decor</span>
+      <span class="lbl" data-pin="m5">fitness</span>
+      <span class="lbl" data-pin="m6">Textiles and B2B</span>
+      <span class="lbl" data-pin="m7">agencies</span>
+      <span class="lbl" data-pin="m8">creators</span>
+    </div>
+    </div>
+  </section>
+
+  <section class="scene s7" data-scene="7">
+    <div class="stage">
+      <div class="layer s7-words">
+      <p class="big">Bring the operation.</p>
+      <a class="cta" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+      <p class="after">The appointment sits on LinkedIn.</p>
+      <div class="foot">
+        <p>Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+        <p>Shubham Gupta. Delhi.</p>
+      </div>
+    </div>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+/* ---------- MODULE SCRIPT START ---------- */
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+
+/* ---------- MOTION ENGINE ---------- */
+/* ---------- ENGINE A: helpers, renderer, camera, post ---------- */
+const TAU = Math.PI * 2;
+const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const smooth01 = (x) => { const k = clamp01(x); return k * k * (3 - 2 * k); };
+const smoothR = (a, b, v) => smooth01((v - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeIO = (x) => { const k = clamp01(x); return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; };
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const narrow = () => window.innerWidth < 600;
+const hasGL = (() => {
+  try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); }
+  catch (e) { return false; }
+})();
+
+/* keyed(keys, t, out): pure, reversible interpolation of [{t, v:[x,y,z]}] keys */
+function keyed(keys, t, out) {
+  const n = keys.length;
+  if (t <= keys[0].t) return out.set(keys[0].v[0], keys[0].v[1], keys[0].v[2]);
+  if (t >= keys[n - 1].t) return out.set(keys[n - 1].v[0], keys[n - 1].v[1], keys[n - 1].v[2]);
+  for (let i = 0; i < n - 1; i++) {
+    const a = keys[i], b = keys[i + 1];
+    if (t <= b.t) {
+      const k = smooth01((t - a.t) / (b.t - a.t));
+      return out.set(lerp(a.v[0], b.v[0], k), lerp(a.v[1], b.v[1], k), lerp(a.v[2], b.v[2], k));
+    }
+  }
+  return out;
+}
+
+/* ----- renderer (one WebGLRenderer, one canvas) ----- */
+const canvas = document.getElementById('world');
+let renderer = null;
+if (hasGL) {
+  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' }); }
+  catch (e) { renderer = null; }
+}
+if (!renderer) document.documentElement.classList.add('no-webgl');
+const pixelRatio = () => Math.min(window.devicePixelRatio || 1, narrow() ? 1.25 : 1.75);
+let VW = window.innerWidth, VH = window.innerHeight;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x121110);
+scene.fog = new THREE.FogExp2(0x121110, 0.03);
+const camera = new THREE.PerspectiveCamera(30, VW / VH, 0.1, 240);
+scene.add(camera);
+
+if (renderer) {
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.setPixelRatio(pixelRatio());
+  renderer.setSize(VW, VH, false);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+}
+
+/* ----- post: bloom, ACES output, then film grain, edge aberration, vignette ----- */
+const FilmShader = {
+  uniforms: {
+    tDiffuse: { value: null },
+    uTime: { value: 0 },
+    uGrain: { value: 0.075 },
+    uAberr: { value: 0.0018 },
+    uVignette: { value: 0.45 }
+  },
+  vertexShader: `varying vec2 vUv;
+    void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+  fragmentShader: `uniform sampler2D tDiffuse;
+    uniform float uTime; uniform float uGrain; uniform float uAberr; uniform float uVignette;
+    varying vec2 vUv;
+    float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+    void main(){
+      vec2 uv = vUv;
+      vec2 d = uv - 0.5;
+      float r = length(d);
+      vec2 off = d * uAberr * (0.5 + r * 2.0);
+      vec3 col;
+      col.r = texture2D(tDiffuse, uv + off).r;
+      col.g = texture2D(tDiffuse, uv).g;
+      col.b = texture2D(tDiffuse, uv - off).b;
+      float g = hash(gl_FragCoord.xy + fract(uTime * 7.0) * 311.7) - 0.5;
+      col += g * uGrain;
+      col *= 1.0 - uVignette * smoothstep(0.30, 0.95, r * 1.3);
+      gl_FragColor = vec4(col, 1.0);
+    }`
+};
+let composer = null, bloom = null, filmPass = null;
+if (renderer) {
+  composer = new EffectComposer(renderer);
+  composer.setPixelRatio(pixelRatio());
+  composer.setSize(VW, VH);
+  composer.addPass(new RenderPass(scene, camera));
+  bloom = new UnrealBloomPass(new THREE.Vector2(VW, VH), 0.3, 0.55, 0.9);
+  composer.addPass(bloom);
+  composer.addPass(new OutputPass());
+  filmPass = new ShaderPass(FilmShader);
+  composer.addPass(filmPass);
+}
+
+/* ----- full-bleed procedural footage: clip-space quad drawn before the 3D ----- */
+const footageU = { uTime: { value: 0 }, uMode: { value: 0 }, uAmt: { value: 0 } };
+const footage = new THREE.Mesh(
+  new THREE.PlaneGeometry(2, 2),
+  new THREE.ShaderMaterial({
+    uniforms: footageU,
+    depthTest: false,
+    depthWrite: false,
+    vertexShader: `void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+    fragmentShader: `uniform float uTime; uniform float uMode; uniform float uAmt;
+      float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+      void main(){
+        vec2 px = gl_FragCoord.xy;
+        float fr = floor(uTime * 24.0);
+        float n = hash(px + fr * 17.0);
+        float bars = 0.5 + 0.5 * sin(px.y * 0.35 + fr * 1.7);
+        float stat = n * 0.62 + bars * 0.12;
+        vec2 q = px / 260.0;
+        float tt = uTime * 0.4;
+        float c = sin(q.x + sin(q.y + tt) * 1.7) + sin(q.y * 1.3 - tt * 1.1) + sin((q.x + q.y) * 0.8 + tt);
+        float caus = pow(clamp(1.0 - abs(c) * 0.42, 0.0, 1.0), 3.0);
+        float v = mix(stat, caus * 0.55, uMode);
+        vec3 base = vec3(0.071, 0.067, 0.063);
+        vec3 tint = mix(vec3(0.085, 0.078, 0.07), vec3(0.30, 0.16, 0.10), uMode);
+        vec3 col = base + tint * v;
+        gl_FragColor = vec4(mix(base, col, uAmt), 1.0);
+      }`
+  })
+);
+footage.frustumCulled = false;
+footage.renderOrder = -10;
+footage.visible = false;
+scene.add(footage);
+
+/* ----- video in letters: a live 2D canvas, shown only inside real SVG text ----- */
+const videoTexts = [];
+const SVGNS = 'http://www.w3.org/2000/svg';
+const XHTMLNS = 'http://www.w3.org/1999/xhtml';
+const measurer = document.createElement('canvas').getContext('2d');
+function emWidth(s) { measurer.font = '800 100px Syne, sans-serif'; return measurer.measureText(s).width / 100; }
+
+/* o: { label, lines[], min, max, vw, fit, lh, align, res, draw(ctx, w, h, time) } */
+function videoText(host, o) {
+  const id = 'vtm' + (videoTexts.length + 1);
+  const svg = document.createElementNS(SVGNS, 'svg');
+  svg.setAttribute('class', 'vt-svg');
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', o.label);
+  const defs = document.createElementNS(SVGNS, 'defs');
+  const mask = document.createElementNS(SVGNS, 'mask');
+  mask.setAttribute('id', id);
+  mask.setAttribute('maskUnits', 'userSpaceOnUse');
+  const texts = o.lines.map((s) => {
+    const tx = document.createElementNS(SVGNS, 'text');
+    tx.setAttribute('fill', '#fff');
+    tx.setAttribute('font-family', 'Syne, sans-serif');
+    tx.setAttribute('font-weight', '800');
+    tx.textContent = s;
+    mask.appendChild(tx);
+    return tx;
+  });
+  defs.appendChild(mask);
+  svg.appendChild(defs);
+  const fo = document.createElementNS(SVGNS, 'foreignObject');
+  fo.setAttribute('mask', 'url(#' + id + ')');
+  const cv = document.createElementNS(XHTMLNS, 'canvas');
+  cv.setAttribute('class', 'vt-canvas');
+  fo.appendChild(cv);
+  svg.appendChild(fo);
+  host.appendChild(svg);
+  const ctx = cv.getContext('2d');
+  const api = { on: false, px: 0, layout, draw };
+  videoTexts.push(api);
+
+  function layout() {
+    const w = Math.max(200, Math.round(host.clientWidth || VW));
+    const widest = Math.max(...o.lines.map(emWidth));
+    let px = Math.max(o.min, Math.min(o.max, w * o.vw));
+    if (o.fit) px = Math.min(px, (w * o.fit) / widest);
+    const gap = px * o.lh;
+    const base = px * 0.8;
+    const h = Math.ceil(base + gap * (o.lines.length - 1) + px * 0.24);
+    svg.setAttribute('width', w);
+    svg.setAttribute('height', h);
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    mask.setAttribute('x', 0);
+    mask.setAttribute('y', 0);
+    mask.setAttribute('width', w);
+    mask.setAttribute('height', h);
+    fo.setAttribute('x', 0);
+    fo.setAttribute('y', 0);
+    fo.setAttribute('width', w);
+    fo.setAttribute('height', h);
+    texts.forEach((tx, i) => {
+      tx.setAttribute('font-size', px.toFixed(2));
+      tx.setAttribute('text-anchor', o.align === 'start' ? 'start' : 'middle');
+      tx.setAttribute('x', o.align === 'start' ? 0 : w / 2);
+      tx.setAttribute('y', (base + gap * i).toFixed(2));
+    });
+    cv.width = Math.max(64, Math.round(w * o.res));
+    cv.height = Math.max(32, Math.round(h * o.res));
+    cv.style.width = w + 'px';
+    cv.style.height = h + 'px';
+    api.px = px;
+  }
+  function draw(time) { o.draw(ctx, cv.width, cv.height, time); }
+  layout();
+  return api;
+}
+
+/* ----- scroll: Lenis smooths, the GSAP ticker drives Lenis, one scrubbed ScrollTrigger per section ----- */
+gsap.registerPlugin(ScrollTrigger);
+let lenis = null;
+if (!reduceMotion && window.Lenis) {
+  lenis = new Lenis({ duration: 1.15, smoothWheel: true, touchMultiplier: 1.2 });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+}
+const sections = Array.from(document.querySelectorAll('main > section.scene'));
+const NSCENE = sections.length;
+const storyP = sections.map(() => ({ p: 0 }));
+sections.forEach((sec, i) => {
+  gsap.timeline({
+    scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: reduceMotion ? true : 0.8 }
+  }).to(storyP[i], { p: 1, ease: 'none', duration: 1 }, 0);
+});
+
+/* story value t = sum of section progress: scene i spans t in [i, i+1]; pure and reversible */
+function sectionIndexAt() {
+  const mid = VH * 0.5;
+  let idx = 0;
+  for (let i = 0; i < NSCENE; i++) {
+    if (sections[i].getBoundingClientRect().top <= mid) idx = i;
+  }
+  return idx;
+}
+function storyValue() {
+  if (reduceMotion) return sectionIndexAt() + 0.999; /* each scene at its finished state */
+  let sum = 0;
+  for (let i = 0; i < NSCENE; i++) sum += storyP[i].p;
+  return sum;
+}
+
+/* ----- camera path: keyed by story value, framed wider on portrait screens ----- */
+const CAM_POS = [
+  { t: 0, v: [0.3, 0.6, 7.6] }, { t: 1, v: [0.0, 0.5, 6.9] }, { t: 2, v: [-1.0, 1.1, 8.6] },
+  { t: 3, v: [0.2, 1.0, 9.6] }, { t: 4, v: [0.0, 1.4, 8.8] }, { t: 5, v: [0.0, 2.6, 10.0] },
+  { t: 5.22, v: [-3.6, 1.6, 8.2] }, { t: 5.48, v: [0.0, 1.6, 8.2] }, { t: 5.74, v: [3.6, 1.6, 8.2] },
+  { t: 6, v: [0.0, 1.2, 13.0] }, { t: 7, v: [0.2, 0.8, 11.6] }, { t: 7.6, v: [0.0, 0.5, 7.4] },
+  { t: 8, v: [0.0, 0.4, 6.2] }
+];
+const CAM_LOOK = [
+  { t: 0, v: [0, 0.2, 0] }, { t: 1, v: [0, 0.25, 0] }, { t: 2, v: [-0.2, 0.55, 0] },
+  { t: 3, v: [0, 0.6, 0] }, { t: 4, v: [0, 1.0, 0] }, { t: 5, v: [0, 1.4, 0] },
+  { t: 5.22, v: [-3.4, 0.5, 0] }, { t: 5.48, v: [0, 0.5, 0] }, { t: 5.74, v: [3.4, 0.5, 0] },
+  { t: 6, v: [0, 0.6, 0] }, { t: 7, v: [0, 0.5, 0] }, { t: 7.6, v: [0, 0.3, 0] },
+  { t: 8, v: [0, 0.2, 0] }
+];
+const _cp = new THREE.Vector3(), _cl = new THREE.Vector3();
+function placeCamera(T) {
+  keyed(CAM_POS, T, _cp);
+  keyed(CAM_LOOK, T, _cl);
+  const fs = VW / VH < 0.85 ? 1.6 : 1.0;
+  camera.position.copy(_cl).add(_cp.sub(_cl).multiplyScalar(fs));
+  camera.lookAt(_cl);
+}
+
+/* ----- labels pinned to 3D points via projected screen positions ----- */
+const _pv = new THREE.Vector3();
+function pinTo(el, v3, dx, dy) {
+  _pv.copy(v3).project(camera);
+  const x = (_pv.x * 0.5 + 0.5) * VW + (dx || 0) - el.offsetWidth / 2;
+  const y = (-_pv.y * 0.5 + 0.5) * VH + (dy || 0) - el.offsetHeight / 2;
+  el.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+}
+/* word reveal tied to scrub: enters by p 0.22, fully visible through 0.86, leaves by 0.98 */
+function reveal(el, lp, a, b, c, d, rise) {
+  const enter = smoothR(a === undefined ? 0.04 : a, b === undefined ? 0.22 : b, lp);
+  const exit = 1 - smoothR(c === undefined ? 0.86 : c, d === undefined ? 0.98 : d, lp);
+  el.style.opacity = Math.max(0, Math.min(enter, exit)).toFixed(3);
+  el.style.transform = 'translate3d(0,' + ((1 - enter) * (rise === undefined ? 24 : rise)).toFixed(2) + 'px,0)';
+}
+
+/* ----- scene registry and the single render loop ----- */
+const sceneFns = [];
+const regScene = (i, fn) => { sceneFns[i] = fn; };   /* fn(local, T, time), local = T - i */
+function frame(time) {
+  const T = storyValue();
+  placeCamera(T);
+  camera.updateMatrixWorld();
+  footageU.uTime.value = time;
+  for (let i = 0; i < NSCENE; i++) { const fn = sceneFns[i]; if (fn) fn(T - i, T, time); }
+  videoTexts.forEach((v) => { if (v.on) v.draw(time); });
+  if (composer) {
+    filmPass.uniforms.uTime.value = time;
+    composer.render();
+  }
+}
+
+function onResize() {
+  VW = window.innerWidth;
+  VH = window.innerHeight;
+  camera.aspect = VW / VH;
+  camera.updateProjectionMatrix();
+  if (renderer) {
+    renderer.setPixelRatio(pixelRatio());
+    renderer.setSize(VW, VH, false);
+    composer.setPixelRatio(pixelRatio());
+    composer.setSize(VW, VH);
+  }
+  videoTexts.forEach((v) => v.layout());
+}
+window.addEventListener('resize', onResize);
+
+/* @@ENGINE_END@@ */
+
+
+/* ---------- SCENES ---------- */
+/* ===== THE KEEPER: the hero machine, shared by several scenes ===== */
+const KR = 0.5;
+const mats = {
+  ceramic: new THREE.MeshPhysicalMaterial({ color: 0xECE6DA, roughness: 0.42, clearcoat: 0.5, clearcoatRoughness: 0.3, envMapIntensity: 0.55 }),
+  brass: new THREE.MeshStandardMaterial({ color: 0xB08D57, metalness: 1, roughness: 0.34, envMapIntensity: 0.9 }),
+  glass: new THREE.MeshStandardMaterial({ color: 0x07070a, roughness: 0.05, metalness: 0.35, envMapIntensity: 1.2 }),
+  shutter: new THREE.MeshStandardMaterial({ color: 0x1b191c, roughness: 0.6, metalness: 0.2, envMapIntensity: 0.3 }),
+  core: new THREE.MeshBasicMaterial({ color: new THREE.Color(0, 0, 0) }),
+  glow: new THREE.MeshBasicMaterial({ color: new THREE.Color(2.2, 0.8, 0.4) }),
+  mini: new THREE.MeshPhysicalMaterial({ color: 0xECE6DA, roughness: 0.45, clearcoat: 0.4, envMapIntensity: 0.5 })
+};
+const K = {};
+K.root = new THREE.Group();
+scene.add(K.root);
+K.body = new THREE.Group();
+K.body.rotation.y = Math.PI / 8;
+K.root.add(K.body);
+K.plates = [];
+for (let i = 0; i < 8; i++) {
+  const ph0 = (i * TAU) / 8 + 0.035;
+  const phL = TAU / 8 - 0.07;
+  const m = new THREE.Mesh(new THREE.SphereGeometry(KR, 40, 28, ph0, phL, 0, Math.PI), mats.ceramic);
+  const phc = ph0 + phL / 2;
+  m.userData.dir = new THREE.Vector3(-Math.cos(phc), 0, Math.sin(phc));
+  m.castShadow = true;
+  K.body.add(m);
+  K.plates.push(m);
+}
+K.core = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 24), mats.core);
+K.body.add(K.core);
+
+/* lens: brass ring, dark glass, shutter disc and glow dot; the pivot always looks at the work */
+K.lens = new THREE.Group();
+/* the lens sits at the centre of plate 1, which the body turn brings to the front */
+K.lens.position.set(-Math.cos((3 * Math.PI) / 8) * KR, 0, Math.sin((3 * Math.PI) / 8) * KR);
+K.body.add(K.lens);
+const lensRing = new THREE.Mesh(new THREE.TorusGeometry(0.13, 0.024, 12, 48), mats.brass);
+const lensGlass = new THREE.Mesh(new THREE.CircleGeometry(0.108, 40), mats.glass);
+lensGlass.position.z = 0.004;
+K.shutter = new THREE.Mesh(new THREE.CircleGeometry(0.11, 40), mats.shutter);
+K.shutter.position.z = 0.008;
+const lensDot = new THREE.Mesh(new THREE.CircleGeometry(0.036, 24), mats.glow);
+lensDot.position.z = 0.012;
+K.lens.add(lensRing, lensGlass, K.shutter, lensDot);
+
+/* two thin brass orbit rings */
+K.rings = [0, 1].map((k) => {
+  const r = new THREE.Mesh(new THREE.TorusGeometry(KR * 1.42, 0.011, 10, 180), mats.brass);
+  r.rotation.set(k === 0 ? 1.15 : 0.35, 0, k === 0 ? 0.3 : -0.9);
+  K.root.add(r);
+  return r;
+});
+
+/* four articulated tool arms: brass rods with rounded tips, not hands */
+const armRodGeo = new THREE.CylinderGeometry(0.018, 0.018, 1, 8);
+armRodGeo.rotateX(Math.PI / 2);
+armRodGeo.translate(0, 0, 0.5);
+const armTipGeo = new THREE.SphereGeometry(0.05, 14, 10);
+K.arms = [0, 1, 2, 3].map(() => {
+  const base = new THREE.Group();
+  const rod = new THREE.Mesh(armRodGeo, mats.brass);
+  const tip = new THREE.Mesh(armTipGeo, mats.brass);
+  base.add(rod, tip);
+  base.visible = false;
+  K.root.add(base);
+  return { base, rod, tip };
+});
+const _ad = new THREE.Vector3();
+/* setArm(i, target, ext): ext 0..1 extends the arm from the shell toward a world point */
+K.setArm = (i, target, ext) => {
+  const a = K.arms[i];
+  a.base.visible = ext > 0.003;
+  if (!a.base.visible) return;
+  _ad.copy(target).sub(K.root.position);
+  const dist = _ad.length();
+  _ad.normalize();
+  a.base.position.copy(_ad).multiplyScalar(KR * 0.9);
+  a.base.lookAt(target);
+  const len = Math.max(0.001, (dist - KR * 0.9 - 0.08) * ext);
+  a.rod.scale.set(1, 1, len);
+  a.tip.position.set(0, 0, len);
+};
+K.setPetals = (k) => K.plates.forEach((m) => m.position.copy(m.userData.dir).multiplyScalar(k * 0.22));
+K.setCore = (k) => mats.core.color.setRGB(2.6 * k, 0.9 * k, 0.42 * k);
+K.setShutter = (open) => K.shutter.scale.setScalar(Math.max(0.001, 1 - open));
+const _lt = new THREE.Vector3();
+K.lookAt = (world) => { K.lens.lookAt(_lt.copy(world)); };
+
+/* a small scaled copy for the nine-Keeper grid: simplified geometry, shared materials */
+const miniSphereGeo = new THREE.SphereGeometry(0.2, 18, 12);
+const miniDotGeo = new THREE.CircleGeometry(0.05, 16);
+const miniDotMat = mats.glow;
+function makeMini() {
+  const g = new THREE.Group();
+  const s = new THREE.Mesh(miniSphereGeo, mats.mini);
+  const d = new THREE.Mesh(miniDotGeo, miniDotMat);
+  d.position.z = 0.206;
+  g.add(s, d);
+  scene.add(g);
+  return g;
+}
+
+/* ===== WORLD: studio light, cyclorama, contact shadow, haze shaft, three dust layers ===== */
+const keyLight = new THREE.SpotLight(0xf3e7d6, 120, 45, 0.5, 0.85, 2);
+keyLight.position.set(-4.2, 6.5, 5.0);
+keyLight.target.position.set(0, 0, 0);
+keyLight.castShadow = true;
+keyLight.shadow.mapSize.set(1024, 1024);
+keyLight.shadow.bias = -0.0004;
+keyLight.shadow.radius = 6;
+keyLight.shadow.camera.near = 1;
+keyLight.shadow.camera.far = 30;
+scene.add(keyLight, keyLight.target);
+const rimLight = new THREE.DirectionalLight(0xD04A24, 0.9);
+rimLight.position.set(3, 2, -5);
+scene.add(rimLight);
+scene.add(new THREE.HemisphereLight(0x3a3430, 0x0b0a09, 0.35));
+
+/* seamless dark cyclorama floor with a contact shadow under the Keeper */
+const floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(90, 90),
+  new THREE.MeshStandardMaterial({ color: 0x1a1816, roughness: 0.92, metalness: 0, envMapIntensity: 0.15 })
+);
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -1.3;
+floor.receiveShadow = true;
+scene.add(floor);
+function softDot(size, inner) {
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const x = c.getContext('2d');
+  const h = size / 2;
+  const g = x.createRadialGradient(h, h, 0, h, h, h);
+  g.addColorStop(0, inner);
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  x.fillStyle = g;
+  x.fillRect(0, 0, size, size);
+  return new THREE.CanvasTexture(c);
+}
+const blob = new THREE.Mesh(
+  new THREE.PlaneGeometry(2.2, 2.2),
+  new THREE.MeshBasicMaterial({ map: softDot(128, 'rgba(0,0,0,0.9)'), transparent: true, depthWrite: false })
+);
+blob.rotation.x = -Math.PI / 2;
+blob.position.y = -1.29;
+scene.add(blob);
+
+/* far layer: a faint light shaft with an additive shader */
+const shaftU = { uOp: { value: 0 } };
+const shaft = new THREE.Mesh(
+  new THREE.PlaneGeometry(6, 16),
+  new THREE.ShaderMaterial({
+    uniforms: shaftU,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    vertexShader: `varying vec2 vUv;
+      void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+    fragmentShader: `uniform float uOp; varying vec2 vUv;
+      void main(){
+        float x = abs(vUv.x - 0.5) * 2.0;
+        float a = pow(1.0 - x, 3.0) * (0.35 + 0.65 * vUv.y) * uOp;
+        gl_FragColor = vec4(vec3(0.95, 0.78, 0.55) * a * 0.2, 1.0);
+      }`
+  })
+);
+shaft.position.set(-0.8, 3.0, -6.0);
+shaft.rotation.z = 0.22;
+scene.add(shaft);
+
+/* dust: far haze particles, and near fragments that drift faster (parallax) */
+const dustTex = softDot(64, 'rgba(255,255,255,1)');
+function makeDust(count, sx, sy, sz, size, opacity) {
+  const pos = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    pos[i * 3] = (Math.random() - 0.5) * sx;
+    pos[i * 3 + 1] = (Math.random() - 0.5) * sy;
+    pos[i * 3 + 2] = (Math.random() - 0.5) * sz;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({ map: dustTex, size, transparent: true, opacity, depthWrite: false, color: 0xECE6DA });
+  const pts = new THREE.Points(geo, mat);
+  scene.add(pts);
+  return pts;
+}
+const dustFar = makeDust(260, 60, 30, 40, 0.09, 0.32);
+const dustNear = makeDust(60, 14, 8, 8, 0.16, 0.5);
+const bolts = [];
+for (let i = 0; i < 6; i++) {
+  const b = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.28, 6), mats.brass);
+  b.userData.seed = i * 1.37;
+  scene.add(b);
+  bolts.push(b);
+}
+
+/* per-frame world motion: pure in T, with idle drift from time */
+function worldFrame(T, time) {
+  fillLightStrength(T);
+  shaftU.uOp.value = 0.25 + 0.35 * Math.max(0, 1 - Math.abs(T - 0.4) / 1.6) + 0.1 * Math.sin(time * 0.5);
+  dustFar.position.y = -T * 0.12 + Math.sin(time * 0.05) * 0.2;
+  dustNear.position.y = -T * 0.5;
+  dustNear.position.x = T * -0.25;
+  dustNear.rotation.y = time * 0.02;
+  bolts.forEach((b, i) => {
+    const s = b.userData.seed;
+    b.position.set(Math.sin(s + time * 0.3) * 3.2 - 1.2, Math.cos(s * 1.7 + time * 0.25) * 1.6 + 0.4 - T * 0.4, 2.6 + Math.sin(s) * 0.6);
+    b.rotation.set(time * 0.4 + s, time * 0.3, s);
+    b.visible = Math.abs(b.position.y) < 4;
+  });
+}
+function fillLightStrength(T) { keyLight.intensity = 110 * smoothR(0.0, 0.45, T) + 20 * smoothR(2.6, 3.4, T); }
+
+/* ===== SCENE 0: the sealed sphere powers on; the name is a warm light leak ===== */
+const KEEPER_KEYS = [
+  { t: 0, v: [0, 0.0, 0] }, { t: 1, v: [0, 0.05, 0] }, { t: 2, v: [0, 0.1, 0] },
+  { t: 3, v: [0, 0.2, 0] }, { t: 4, v: [0, 0.2, 0] }, { t: 5, v: [0, 0.4, 0] },
+  { t: 5.22, v: [-3.4, 1.4, 0] }, { t: 5.48, v: [0, 1.4, 0] }, { t: 5.74, v: [3.4, 1.4, 0] },
+  { t: 6.5, v: [0, 0.8, -1.5] }, { t: 7, v: [0, 0.6, -2] }, { t: 7.6, v: [0.4, 0.5, 0.5] },
+  { t: 8, v: [0.9, 0.5, 2.6] }
+];
+const _kp = new THREE.Vector3();
+
+/* procedural light leak: graphite to oxide to warm bone, drawn at low resolution */
+const leak = { w: 0, h: 0, img: null, u32: null };
+function drawLeak(ctx, w, h, time) {
+  if (leak.w !== w || leak.h !== h) {
+    leak.w = w;
+    leak.h = h;
+    leak.img = ctx.createImageData(w, h);
+    leak.u32 = new Uint32Array(leak.img.data.buffer);
+  }
+  const d = leak.u32;
+  const tt = time * 0.2;
+  for (let y = 0; y < h; y++) {
+    const fy = (y / h) * 2 - 1;
+    for (let x = 0; x < w; x++) {
+      const fx = ((x / w) * 2 - 1) * (w / h);
+      const a = Math.sin(fx * 1.6 + tt * 1.3 + Math.sin(fy * 2.2 - tt));
+      const b = Math.sin(fy * 2.7 - tt * 0.9 + Math.cos(fx * 1.1 + tt));
+      const c = Math.sin((fx * fx + fy * fy) * 2.4 - tt * 1.7);
+      const v = clamp01(((a + b + c) / 3) * 0.5 + 0.5);
+      const m1 = clamp01(v * 1.5);
+      const m2 = clamp01((v - 0.45) * 2.2);
+      let r = lerp(18, 208, m1), g = lerp(17, 74, m1), bl = lerp(16, 36, m1);
+      r = lerp(r, 226, m2 * 0.55); g = lerp(g, 190, m2 * 0.55); bl = lerp(bl, 140, m2 * 0.55);
+      d[y * w + x] = (255 << 24) | ((bl | 0) << 16) | ((g | 0) << 8) | (r | 0);
+    }
+  }
+  ctx.putImageData(leak.img, 0, 0);
+}
+const nameVT = videoText(document.querySelector('[data-vt="name"]'), {
+  label: 'Shubham Gupta', lines: ['SHUBHAM', 'GUPTA'], min: 40, max: 2400, vw: 0.16,
+  fit: 0.94, lh: 0.86, align: 'middle', res: 0.25, draw: drawLeak
+});
+
+/* footage bands: static noise in scene 2, caustic light in scene 5; pure in T */
+function footageFrame(T) {
+  const a = smoothR(1.6, 2.05, T) * (1 - smoothR(2.95, 3.35, T));
+  const c = smoothR(4.9, 5.2, T) * (1 - smoothR(6.0, 6.3, T));
+  footageU.uMode.value = c > a ? 1 : 0;
+  footageU.uAmt.value = Math.max(a * 0.9, c * 0.45);
+  footage.visible = footageU.uAmt.value > 0.002;
+}
+
+const s0 = {
+  host: document.querySelector('.s0 .vt-host'),
+  tag: document.querySelector('.s0 .tag'),
+  line: document.querySelector('.s0 .line')
+};
+regScene(0, (L, T, time) => {
+  keyed(KEEPER_KEYS, T, _kp);
+  K.root.position.set(_kp.x, _kp.y + 0.05 * Math.sin(time * 1.1), _kp.z);
+  const power = smoothR(0.0, 0.35, L);
+  K.setCore(power);
+  K.setPetals(0);
+  K.setShutter(smoothR(0.25, 0.6, L));
+  mats.ceramic.envMapIntensity = 0.08 + 0.47 * power;
+  rimLight.intensity = 0.9 * power;
+  K.lookAt(camera.position);
+  for (let i = 0; i < 4; i++) K.setArm(i, _kp, 0);
+  blob.position.set(K.root.position.x, -1.29, K.root.position.z);
+  const hgt = Math.max(0.2, K.root.position.y + 1.3);
+  blob.scale.setScalar(1.1 - 0.12 * hgt);
+  worldFrame(T, time);
+  footageFrame(T);
+  s0.host.style.opacity = (smoothR(0.06, 0.3, L) * (1 - smoothR(0.8, 0.96, L))).toFixed(3);
+  nameVT.on = L > -0.05 && L < 1.05;
+  reveal(s0.line, L, 0.12, 0.24, 0.86, 0.98, 18);
+  reveal(s0.tag, L, 0.18, 0.3, 0.86, 0.98, 12);
+});
+
+/* ===== SCENE 1: the shell opens like petals; four tagged tiles arc out ===== */
+const fadeAt = (L, a, b, c, d) => Math.max(0, Math.min(smoothR(a, b, L), 1 - smoothR(c, d, L)));
+const tileGeo = new RoundedBoxGeometry(0.95, 1.2, 0.1, 4, 0.05);
+const tileMat = new THREE.MeshPhysicalMaterial({ color: 0xECE6DA, roughness: 0.4, clearcoat: 0.4, envMapIntensity: 0.5 });
+const tiles = [0, 1, 2, 3].map(() => {
+  const m = new THREE.Mesh(tileGeo, tileMat);
+  m.castShadow = true;
+  scene.add(m);
+  return m;
+});
+const tileEnd = [[-2.4, 0.2, 1.3], [-0.8, 0.55, 1.8], [0.8, 0.55, 1.8], [2.4, 0.2, 1.3]];
+const tileRot = [0.42, 0.14, -0.14, -0.42];
+const tileLbl = [0, 1, 2, 3].map((i) => document.querySelector('.s1 [data-pin="tile' + i + '"]'));
+const s1line = document.querySelector('.s1 .line');
+const _tp = new THREE.Vector3();
+regScene(1, (L) => {
+  K.setPetals(smoothR(0.0, 0.3, L));
+  if (L > -0.001) K.setCore(1);
+  const k = VW / VH < 0.85 ? 0.62 : 1;
+  tiles.forEach((m, i) => {
+    const p = easeIO(smoothR(0.1 + i * 0.07, 0.55 + i * 0.07, L));
+    const e = tileEnd[i];
+    m.position.set(lerp(0, e[0] * k, p), lerp(0.1, e[1], p), lerp(0.25, e[2], p));
+    m.rotation.y = lerp(0, tileRot[i], p);
+    m.scale.setScalar(lerp(0.2, 1, p));
+    m.visible = p > 0.001;
+    _tp.set(e[0] * k, e[1] + 0.72, e[2]);
+    pinTo(tileLbl[i], _tp);
+    tileLbl[i].style.opacity = fadeAt(L, 0.2 + i * 0.03, 0.3 + i * 0.03, 0.86, 0.98);
+  });
+  const idx = Math.min(3, Math.floor(clamp01(L) * 4));
+  K.lookAt(tiles[idx].position);
+  reveal(s1line, L, 0.12, 0.24, 0.86, 0.98, 16);
+});
+
+/* ===== SCENE 2: chaos; five mismatched objects tumble in and collide ===== */
+const crateMat = new THREE.MeshPhysicalMaterial({ color: 0xECE6DA, roughness: 0.5, clearcoat: 0.2, envMapIntensity: 0.4 });
+const coverMat = new THREE.MeshStandardMaterial({ color: 0x2a2724, roughness: 0.7, envMapIntensity: 0.35 });
+function makeObj(kind) {
+  const g = new THREE.Group();
+  const add = (geo, mat, x, y, z) => {
+    const m = new THREE.Mesh(geo, mat);
+    m.position.set(x, y, z);
+    m.castShadow = true;
+    g.add(m);
+    return m;
+  };
+  if (kind === 0) { /* crate, for store */
+    add(new THREE.BoxGeometry(0.7, 0.5, 0.7), crateMat, 0, 0, 0);
+    add(new THREE.BoxGeometry(0.74, 0.07, 0.74), mats.brass, 0, 0.22, 0);
+    add(new THREE.BoxGeometry(0.74, 0.07, 0.74), mats.brass, 0, -0.22, 0);
+  } else if (kind === 1) { /* stacked book, for ledger */
+    for (let i = 0; i < 3; i++) add(new THREE.BoxGeometry(0.8, 0.12, 0.6), i === 1 ? coverMat : crateMat, 0, (i - 1) * 0.13, 0);
+    add(new THREE.BoxGeometry(0.06, 0.38, 0.62), mats.brass, -0.4, 0, 0);
+  } else if (kind === 2) { /* envelope, for inbox */
+    add(new THREE.BoxGeometry(0.95, 0.06, 0.62), crateMat, 0, 0, 0);
+    const flap = add(new THREE.BoxGeometry(0.9, 0.04, 0.34), crateMat, 0, 0.03, 0.14);
+    flap.rotation.x = -0.5;
+  } else if (kind === 3) { /* grid slab, for sheet */
+    add(new THREE.BoxGeometry(0.9, 0.9, 0.06), coverMat, 0, 0, 0);
+    for (let i = -1; i <= 1; i++) {
+      add(new THREE.BoxGeometry(0.78, 0.012, 0.012), mats.brass, 0, i * 0.24, 0.035);
+      add(new THREE.BoxGeometry(0.012, 0.78, 0.012), mats.brass, i * 0.24, 0, 0.035);
+    }
+  } else { /* ring binder, for calendar */
+    add(new THREE.BoxGeometry(0.72, 0.9, 0.08), crateMat, 0, 0, 0);
+    for (let i = -1; i <= 1; i++) add(new THREE.TorusGeometry(0.05, 0.016, 8, 20), mats.brass, i * 0.26, 0.5, 0.02);
+  }
+  scene.add(g);
+  return g;
+}
+const objs = [0, 1, 2, 3, 4].map((k) => makeObj(k));
+const CH = [
+  { r: 1.6, th: 0.2, w: 0.9, y: 0.6 }, { r: 2.1, th: 1.9, w: -0.7, y: -0.4 }, { r: 1.9, th: 3.3, w: 1.1, y: 0.8 },
+  { r: 2.4, th: 4.6, w: -0.5, y: 0.3 }, { r: 1.8, th: 5.8, w: 0.8, y: -0.7 }
+];
+/* chaosPos: pure in L2, from the dark (radius 9) into conflicting orbits */
+function chaosPos(i, L2, out) {
+  const c = CH[i];
+  const e = easeIO(smoothR(i * 0.05, 0.45 + i * 0.05, L2));
+  const rr = lerp(9, c.r, e);
+  const a = c.th + c.w * L2 * TAU * 0.7;
+  return out.set(Math.cos(a) * rr, Math.sin(a * 1.3) * c.y * (0.4 + 0.6 * e), Math.sin(a) * rr * 0.55 - (1 - e) * 3);
+}
+
+/* static footage for the large line: a reused buffer, restless noise */
+const stat = { w: 0, h: 0, img: null };
+function drawStatic(ctx, w, h, time) {
+  if (stat.w !== w || stat.h !== h) {
+    stat.w = w;
+    stat.h = h;
+    stat.img = ctx.createImageData(w, h);
+  }
+  const d = stat.img.data;
+  const band = Math.floor(time * 24);
+  for (let y = 0; y < h; y++) {
+    const bar = 0.5 + 0.5 * Math.sin(y * 0.6 + band * 1.7);
+    for (let x = 0; x < w; x++) {
+      const v = (Math.random() * 0.7 + bar * 0.2) * 255;
+      const o = (y * w + x) * 4;
+      d[o] = v * 0.95;
+      d[o + 1] = v * 0.92;
+      d[o + 2] = v * 0.88;
+      d[o + 3] = 255;
+    }
+  }
+  ctx.putImageData(stat.img, 0, 0);
+}
+const line2VT = videoText(document.querySelector('[data-vt="line2"]'), {
+  label: 'Orchestration is the bottleneck.', lines: ['Orchestration is', 'the bottleneck.'],
+  min: 30, max: 96, vw: 0.064, fit: 0.92, lh: 1.0, align: 'start', res: 0.2, draw: drawStatic
+});
+const s2 = {
+  host: document.querySelector('[data-vt="line2"]'),
+  line: document.querySelector('.s2 .line')
+};
+const objLbl = [0, 1, 2, 3, 4].map((i) => document.querySelector('.s2 [data-pin="obj' + i + '"]'));
+regScene(2, (L2, T, time) => {
+  const objOn = T > 1.95 && T < 4.1;
+  for (let i = 0; i < 5; i++) {
+    const g = objs[i];
+    chaosPos(i, L2, g.position);
+    const dir = i % 2 ? -1 : 1;
+    g.rotation.set(time * 0.2 * dir + i, time * 0.3 + i * 0.7, i * 0.4 + L2 * 2.0 * dir);
+    g.visible = objOn;
+    pinTo(objLbl[i], g.position, 0, -58);
+    objLbl[i].style.opacity = fadeAt(L2, 0.12 + i * 0.02, 0.2 + i * 0.02, 0.84, 0.98);
+  }
+  /* the lens darts from one object to the next */
+  const idx = Math.floor(clamp01(L2) * 9) % 5;
+  K.lookAt(objs[idx].position);
+  s2.host.style.opacity = (smoothR(0.08, 0.26, L2) * (1 - smoothR(0.86, 0.98, L2))).toFixed(3);
+  line2VT.on = L2 > -0.05 && L2 < 1.05;
+  reveal(s2.line, L2, 0.12, 0.24, 0.86, 0.98, 18);
+});
+
+/* ===== SCENE 3: the Keeper catches each object and docks it; rings sync; the core blooms ===== */
+const gateMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(0, 0, 0) });
+const gate = new THREE.Mesh(new THREE.SphereGeometry(0.035, 12, 8), gateMat);
+gate.position.set(0.36, 0.18, 0.31);
+K.body.add(gate);
+const _ce = new THREE.Vector3(), _dk = new THREE.Vector3(), _coreLbl = new THREE.Vector3();
+const DOCK_PHI = [-0.8, 0.2, 1.2, 2.4, 3.6];
+const coreLbl = document.querySelector('.s3 [data-pin="core"]');
+const s3big = document.querySelector('.s3 .big');
+const s3line = document.querySelector('.s3 .line');
+regScene(3, (L3, T, time) => {
+  const objOn = T > 1.95 && T < 4.1;
+  let prox = 0;
+  for (let i = 0; i < 5; i++) {
+    const g = objs[i];
+    if (L3 >= -0.001) {
+      chaosPos(i, 1, _ce);
+      const a = DOCK_PHI[i] + TAU * L3 * 0.25;
+      _dk.set(Math.cos(a) * 1.05, Math.sin(a * 2) * 0.08 + 0.05, Math.sin(a) * 1.05);
+      g.position.lerpVectors(_ce, _dk, smoothR(0.15 + i * 0.05, 0.5 + i * 0.05, L3));
+      g.rotation.set(0, a, 0);
+    }
+    g.visible = objOn;
+    prox = Math.max(prox, clamp01(1 - g.position.distanceTo(K.root.position) / 1.6));
+  }
+  /* four arms catch the objects in turn; the fifth reuses the last arm */
+  for (let i = 0; i < 4; i++) {
+    let oi = i, ext;
+    if (i === 3) {
+      oi = L3 >= 0.5 ? 4 : 3;
+      ext = L3 < 0.5 ? fadeAt(L3, 0.26, 0.34, 0.46, 0.52) : fadeAt(L3, 0.6, 0.68, 0.8, 0.86);
+    } else {
+      ext = fadeAt(L3, 0.05 + i * 0.07, 0.14 + i * 0.07, 0.3 + i * 0.07, 0.42 + i * 0.07);
+    }
+    K.setArm(i, objs[oi].position, objOn ? ext : 0);
+  }
+  /* the rings sync into one orbit; the core expands with a soft bloom */
+  const sync = smoothR(0.4, 0.8, L3);
+  K.rings[0].rotation.set(lerp(1.15, 1.25, sync), time * lerp(0.6, 0.35, sync), 0.3);
+  K.rings[1].rotation.set(lerp(0.35, 1.25, sync), time * lerp(-0.9, 0.35, sync), -0.9);
+  const bloomK = smoothR(0.5, 0.9, L3);
+  K.core.scale.setScalar(lerp(1, 1.9, bloomK));
+  if (L3 >= -0.001) K.setCore(0.9 + 0.5 * bloomK);
+  const blink = prox * (0.5 + 0.5 * Math.sin(time * 9));
+  gateMat.color.setRGB(2.4 * blink, 0.8 * blink, 0.4 * blink);
+  const lensIdx = Math.min(4, Math.floor(clamp01(L3) * 5));
+  K.lookAt(L3 < 0.85 ? objs[lensIdx].position : camera.position);
+  _coreLbl.copy(K.root.position);
+  _coreLbl.y += 0.95;
+  pinTo(coreLbl, _coreLbl, 0, 0);
+  coreLbl.style.opacity = fadeAt(L3, 0.2, 0.32, 0.86, 0.98);
+  reveal(s3big, L3, 0.1, 0.22, 0.86, 0.98, 24);
+  reveal(s3line, L3, 0.14, 0.26, 0.86, 0.98, 16);
+});
+
+/* ===== SCENE 4: the Keeper prints a tiered platform block by block, then settles on top ===== */
+const blockGeo = new THREE.BoxGeometry(0.6, 0.2, 0.6);
+const blocks = [];
+[6, 5, 4, 3, 2].forEach((n, k) => {
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      blocks.push({ x: (i - (n - 1) / 2) * 0.62, y: -1.2 + k * 0.22, z: (j - (n - 1) / 2) * 0.62, k, o: (i * n + j) / (n * n) });
+    }
+  }
+});
+const blockMesh = new THREE.InstancedMesh(blockGeo, mats.ceramic, blocks.length);
+blockMesh.castShadow = true;
+blockMesh.receiveShadow = true;
+scene.add(blockMesh);
+const _bm = new THREE.Matrix4(), _bp = new THREE.Vector3(), _bs = new THREE.Vector3(), _bq = new THREE.Quaternion();
+const s4big = document.querySelector('.s4 .big');
+const s4line = document.querySelector('.s4 .line');
+const s4small = document.querySelector('.s4 .small');
+regScene(4, (L4) => {
+  for (let b = 0; b < blocks.length; b++) {
+    const bl = blocks[b];
+    const ts = 0.04 + bl.k * 0.13 + bl.o * 0.12;
+    const s = easeIO(smoothR(ts, ts + 0.1, L4));
+    _bp.set(bl.x, bl.y - (1 - s) * 0.3, bl.z);
+    _bs.setScalar(Math.max(0.0001, s));
+    _bm.compose(_bp, _bq, _bs);
+    blockMesh.setMatrixAt(b, _bm);
+  }
+  blockMesh.instanceMatrix.needsUpdate = true;
+  _bp.set(0, -0.9, 0);
+  K.lookAt(_bp);
+  reveal(s4big, L4, 0.1, 0.22, 0.86, 0.98, 24);
+  reveal(s4line, L4, 0.12, 0.22, 0.86, 0.98, 18);
+  reveal(s4small, L4, 0.16, 0.24, 0.86, 0.98, 12);
+});
+
+/* ===== SCENE 5: three broken things on plinths, made whole by the Keeper's arms ===== */
+const PLX = [-3.4, 0, 3.4];
+const plinthGeo = new THREE.CylinderGeometry(0.55, 0.62, 1.1, 40);
+PLX.forEach((x) => {
+  const p = new THREE.Mesh(plinthGeo, mats.ceramic);
+  p.position.set(x, -0.75, 0);
+  p.castShadow = true;
+  p.receiveShadow = true;
+  scene.add(p);
+});
+const VISIT = [5.22, 5.48, 5.74];
+const OBJC = [[-3.4, 0.27, 0], [0, 0.29, 0], [3.4, 0.3, 0]];
+const tileHalfGeo = new RoundedBoxGeometry(0.42, 0.9, 0.14, 3, 0.03);
+const tileHalves = [new THREE.Mesh(tileHalfGeo, mats.ceramic), new THREE.Mesh(tileHalfGeo, mats.ceramic)];
+tileHalves.forEach((m) => { m.castShadow = true; scene.add(m); });
+const ringArcGeo = new THREE.TorusGeometry(0.42, 0.07, 16, 96, Math.PI);
+const ringArcs = [new THREE.Mesh(ringArcGeo, mats.brass), new THREE.Mesh(ringArcGeo, mats.brass)];
+ringArcs[1].rotation.z = Math.PI;
+ringArcs.forEach((m) => { m.castShadow = true; scene.add(m); });
+const shardGeo = new THREE.IcosahedronGeometry(0.11, 0);
+const SHARD_DIR = Array.from({ length: 10 }, (_, i) => {
+  const z = 1 - (2 * (i + 0.5)) / 10;
+  const r = Math.sqrt(1 - z * z);
+  const a = i * 2.399;
+  return new THREE.Vector3(Math.cos(a) * r, z, Math.sin(a) * r);
+});
+const shards = SHARD_DIR.map((d, i) => {
+  const m = new THREE.Mesh(shardGeo, mats.ceramic);
+  m.castShadow = true;
+  m.userData.scatter = 0.85 + 0.55 * (((i * 37) % 7) / 7);
+  scene.add(m);
+  return m;
+});
+const _sc = new THREE.Vector3(), _sr = new THREE.Vector3(), _sq = new THREE.Vector3(), _ta = new THREE.Vector3(), _tb = new THREE.Vector3();
+const s5caps = [0, 1, 2].map((k) => document.querySelector('.s5 [data-pin="plinth' + k + '"]'));
+const s5big = document.querySelector('.s5 .big');
+regScene(5, (L5, T, time) => {
+  const visible = T > 4.95 && T < 6.05;
+  const rep = VISIT.map((tk) => smoothR(tk - 0.12, tk + 0.06, T));
+  const off0 = (1 - rep[0]) * 0.2;
+  tileHalves[0].position.set(OBJC[0][0] - 0.23 - off0, OBJC[0][1], 0);
+  tileHalves[0].rotation.z = (1 - rep[0]) * 0.08;
+  tileHalves[1].position.set(OBJC[0][0] + 0.23 + off0, OBJC[0][1], 0);
+  tileHalves[1].rotation.z = -(1 - rep[0]) * 0.08;
+  const off1 = (1 - rep[1]) * 0.22;
+  ringArcs[0].position.set(OBJC[1][0], OBJC[1][1] + off1, 0);
+  ringArcs[1].position.set(OBJC[1][0], OBJC[1][1] - off1, 0);
+  SHARD_DIR.forEach((d, i) => {
+    _sc.copy(d).multiplyScalar(shards[i].userData.scatter);
+    _sr.copy(d).multiplyScalar(0.42);
+    shards[i].position.lerpVectors(_sc, _sr, easeIO(rep[2])).add(_sq.set(OBJC[2][0], OBJC[2][1], 0));
+    shards[i].rotation.set((1 - rep[2]) * (i + 1) * 1.3, (1 - rep[2]) * i, 0);
+  });
+  tileHalves.forEach((m) => { m.visible = visible; });
+  ringArcs.forEach((m) => { m.visible = visible; });
+  shards.forEach((m) => { m.visible = visible; });
+  /* the Keeper's two arms reach to whichever object it is visiting */
+  let ai = 0;
+  if (T >= VISIT[1] - 0.12) ai = 1;
+  if (T >= VISIT[2] - 0.12) ai = 2;
+  const ext = fadeAt(T, VISIT[ai] - 0.22, VISIT[ai] - 0.1, VISIT[ai] + 0.1, VISIT[ai] + 0.22);
+  _ta.set(OBJC[ai][0] - 0.25, OBJC[ai][1] + 0.15, 0.2);
+  _tb.set(OBJC[ai][0] + 0.25, OBJC[ai][1] + 0.15, 0.2);
+  K.setArm(0, _ta, visible ? ext : 0);
+  K.setArm(1, _tb, visible ? ext : 0);
+  K.setArm(2, _sq.set(0, 0, 0), 0);
+  K.setArm(3, _sq.set(0, 0, 0), 0);
+  _sq.set(OBJC[ai][0], OBJC[ai][1], 0);
+  K.lookAt(_sq);
+  s5caps.forEach((el, k) => {
+    if (narrow()) {
+      el.style.transform = '';
+    } else {
+      _sq.set(OBJC[k][0], -0.2, 0.7);
+      pinTo(el, _sq, 0, 56);
+    }
+    el.style.opacity = fadeAt(L5, 0.12 + k * 0.02, 0.2 + k * 0.02, 0.86, 0.98);
+  });
+  reveal(s5big, L5, 0.1, 0.2, 0.86, 0.98, 24);
+});
+
+/* ===== SCENE 6: nine small Keepers launch from the platform and hover in a 3x3 grid ===== */
+const minis = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(() => makeMini());
+const miniLbl = [0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => document.querySelector('.s6 [data-pin="m' + i + '"]'));
+const s6line = document.querySelector('.s6 .line');
+const _mp = new THREE.Vector3();
+regScene(6, (L6, T) => {
+  const sp = VW / VH < 0.85 ? 2.0 : 2.6;
+  const showMinis = T > 5.95 && T < 7.2;
+  minis.forEach((g, i) => {
+    const r = Math.floor(i / 3), c = i % 3;
+    const gx = (c - 1) * sp, gy = 0.9 + (1 - r) * sp * 0.75, gz = 0;
+    const p = easeIO(smoothR(0.04 + i * 0.015, 0.26 + i * 0.015, L6));
+    g.position.set(lerp(0, gx, p), lerp(-0.25, gy, p), lerp(0.2, gz, p));
+    g.scale.setScalar(lerp(0.25, 1, p));
+    g.visible = showMinis && p > 0.001;
+    _mp.copy(g.position);
+    _mp.y -= 0.42 * g.scale.x;
+    pinTo(miniLbl[i], _mp, 0, 0);
+    miniLbl[i].style.opacity = fadeAt(L6, 0.22 + i * 0.01, 0.3 + i * 0.01, 0.86, 0.98);
+  });
+  K.lookAt(_mp.set(0, 0.9, 0));
+  reveal(s6line, L6, 0.1, 0.2, 0.86, 0.98, 18);
+});
+
+/* @@SCENES@@ */
+
+/* ===== SCENE 7: the Keeper drifts toward the camera; the oxide light frames the call ===== */
+const s7big = document.querySelector('.s7 .big');
+const s7cta = document.querySelector('.s7 .cta');
+const s7after = document.querySelector('.s7 .after');
+const s7foot = document.querySelector('.s7 .foot');
+regScene(7, (L7) => {
+  if (L7 > -0.001) K.setCore(1);
+  K.lookAt(camera.position);
+  reveal(s7big, L7, 0.1, 0.2, 2, 3, 24);
+  reveal(s7cta, L7, 0.2, 0.3, 2, 3, 12);
+  reveal(s7after, L7, 0.26, 0.34, 2, 3, 12);
+  s7foot.style.transform = 'translate3d(0,' + ((1 - smoothR(0.22, 0.34, L7)) * 24).toFixed(2) + 'px,0)';
+});
+
+/* ===== BOOT: start the single render loop once every scene is registered ===== */
+gsap.ticker.add(frame);
+if (document.fonts) {
+  document.fonts.load('800 100px Syne').then(() => videoTexts.forEach((v) => v.layout())).catch(() => {});
+  document.fonts.ready.then(() => {
+    videoTexts.forEach((v) => v.layout());
+    ScrollTrigger.refresh();
+  });
+}
+
+/* ---------- MODULE SCRIPT END ---------- */
+</script>
+</body>
+</html>
