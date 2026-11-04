@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en">
-<head><meta name="robots" content="noindex,nofollow">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
 <title>Shubham Gupta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,7 +49,7 @@ h1,h2,.display{font-family:"Syne",system-ui,sans-serif;font-weight:800;letter-sp
 /* story */
 main{position:relative;z-index:2}
 .scene{position:relative;height:220vh;width:100%}
-.stage{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;position:sticky}
+.stage{position:sticky;top:0;height:100vh;height:100svh;width:100%;overflow:hidden}
 .layer{position:absolute;inset:0}
 
 /* scene placeholders, filled per scene */
@@ -71,13 +72,13 @@ main{position:relative;z-index:2}
 .layer > *{position:absolute;pointer-events:none}
 .line{left:var(--pad);right:var(--pad);max-width:36ch;color:var(--bone);font-size:clamp(18px,1.6vw,24px);line-height:1.6;margin:0;opacity:0}
 .big{left:var(--pad);right:var(--pad);color:var(--bone);font-family:"Syne",system-ui,sans-serif;font-weight:800;font-size:clamp(30px,6.4vw,96px);line-height:.98;letter-spacing:-.02em;margin:0;opacity:0}
-.small{left:var(--pad);right:var(--pad);color:var(--bone);font-size:16px;line-height:1.5;margin:0;opacity:0}
+.small{left:var(--pad);right:var(--pad);color:var(--bone);font-size:18px;font-weight:500;line-height:1.5;margin:0;opacity:0}
 .tag{right:var(--pad);color:var(--bone);font-size:18px;font-weight:600;margin:0;opacity:0}
-.lbl{left:0;top:0;white-space:nowrap;color:var(--bone);font-size:15px;font-weight:600;letter-spacing:.02em;line-height:1.2;padding:6px 10px;background:rgba(18,17,16,.86);border:1px solid rgba(176,141,87,.6);opacity:0;will-change:transform}
+.lbl{left:0;top:0;max-width:124px;white-space:normal;text-align:center;color:var(--bone);font-size:15px;font-weight:600;letter-spacing:.02em;line-height:1.3;padding:4px 10px;background:rgba(10,10,12,0.78);border-radius:999px;opacity:0;will-change:transform}
 .vt-host{left:var(--pad);right:var(--pad)}
 .vt-svg{display:block;width:100%;height:auto;overflow:visible}
 .vt-canvas{display:block}
-.s0 .vt-host{top:19vh;opacity:0}
+.s0 .vt-host{top:12vh;opacity:0}
 .s0 .line{bottom:15vh;max-width:30ch}
 .s0 .tag{bottom:9vh}
 .s1 .line{bottom:12vh;max-width:34ch}
@@ -91,11 +92,12 @@ main{position:relative;z-index:2}
 .s5 .big{top:8vh;max-width:20ch}
 .s5 .caps{display:contents}
 .s5 .cap{position:absolute;left:0;top:0;max-width:26ch;color:var(--bone);font-size:18px;line-height:1.5;padding:6px 10px;background:rgba(18,17,16,.86);opacity:0;margin:0}
-.s6 .line{top:8vh;bottom:auto;max-width:44ch}
+.s6 .line{top:7vh;bottom:auto;max-width:44ch}
 .s7 .big{top:14vh;max-width:14ch}
-.s7 .cta{position:absolute;left:var(--pad);top:44vh;display:inline-block;pointer-events:auto;background:var(--oxide);color:var(--bone);font-family:"Syne",system-ui,sans-serif;font-weight:800;font-size:clamp(22px,3vw,40px);line-height:1;padding:.55em .9em;text-decoration:none;box-shadow:0 0 0 1px rgba(208,74,36,.6),0 0 48px rgba(208,74,36,.38);opacity:0}
-.s7 .cta:focus-visible{outline:2px solid var(--bone);outline-offset:4px}
-.s7 .after{top:calc(44vh + 92px);color:var(--bone);font-size:18px;margin:0;opacity:0}
+.s7 .cta{position:absolute;left:var(--pad);top:44vh;display:inline-block;pointer-events:auto;background:var(--bone);color:#0E0D0C;font-family:"Syne",system-ui,sans-serif;font-weight:800;font-size:clamp(22px,3vw,40px);line-height:1;padding:.55em .9em;text-decoration:none;box-shadow:0 0 0 2px rgba(208,74,36,.9),0 0 56px rgba(208,74,36,.5);opacity:0}
+.s7 .cta:hover{background:#FBF7EF}
+.s7 .cta:focus-visible{outline:3px solid var(--oxide);outline-offset:4px}
+.s7 .after{top:calc(44vh + 92px);color:var(--bone);font-size:18px;margin:0;left:var(--pad);opacity:0;background:rgba(18,17,16,.88);padding:8px 14px;width:max-content;max-width:calc(100vw - 40px)}
 .s7 .foot{left:0;right:0;bottom:0;padding:28px var(--pad) 32px;background:var(--graphite);opacity:1;color:var(--bone);font-size:16px;line-height:1.6;margin:0}
 .s7 .foot p{margin:0 0 8px;max-width:72ch}
 @media (max-width:600px){
@@ -104,8 +106,9 @@ main{position:relative;z-index:2}
   .s3 .big,.s6 .line{font-size:clamp(30px,8vw,42px)}
   .s5 .caps{position:absolute;left:var(--pad);right:var(--pad);bottom:8vh;display:grid;gap:12px}
   .s5 .cap{position:static;max-width:none}
-  .s7 .cta{top:40vh}
-  .s7 .after{top:calc(40vh + 92px)}
+  .s7 .cta{top:36vh}
+  .s7 .after{top:calc(36vh + 74px)}
+  .s7 .foot{padding:20px var(--pad) 20px}
 }
 </style>
 </head>
@@ -413,6 +416,7 @@ function videoText(host, o) {
     const widest = Math.max(...o.lines.map(emWidth));
     let px = Math.max(o.min, Math.min(o.max, w * o.vw));
     if (o.fit) px = Math.min(px, (w * o.fit) / widest);
+    if (o.capH) px = Math.min(px, VH * o.capH);
     const gap = px * o.lh;
     const base = px * 0.8;
     const h = Math.ceil(base + gap * (o.lines.length - 1) + px * 0.24);
@@ -445,9 +449,10 @@ function videoText(host, o) {
 }
 
 /* ----- scroll: Lenis smooths, the GSAP ticker drives Lenis, one scrubbed ScrollTrigger per section ----- */
-gsap.registerPlugin(ScrollTrigger);
+const HAS_GSAP = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
 let lenis = null;
-if (!reduceMotion && window.Lenis) {
+if (HAS_GSAP) gsap.registerPlugin(ScrollTrigger);
+if (HAS_GSAP && !reduceMotion && window.Lenis) {
   lenis = new Lenis({ duration: 1.15, smoothWheel: true, touchMultiplier: 1.2 });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => { lenis.raf(time * 1000); });
@@ -456,7 +461,7 @@ if (!reduceMotion && window.Lenis) {
 const sections = Array.from(document.querySelectorAll('main > section.scene'));
 const NSCENE = sections.length;
 const storyP = sections.map(() => ({ p: 0 }));
-sections.forEach((sec, i) => {
+if (HAS_GSAP) sections.forEach((sec, i) => {
   gsap.timeline({
     scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: reduceMotion ? true : 0.8 }
   }).to(storyP[i], { p: 1, ease: 'none', duration: 1 }, 0);
@@ -471,10 +476,17 @@ function sectionIndexAt() {
   }
   return idx;
 }
+/* section progress without ScrollTrigger (used only if GSAP failed to load) */
+function sectionProgress(i) {
+  const r = sections[i].getBoundingClientRect();
+  const span = r.height - VH;
+  if (span <= 0) return r.top <= 0 ? 1 : 0;
+  return clamp01(-r.top / span);
+}
 function storyValue() {
-  if (reduceMotion) return sectionIndexAt() + 0.999; /* each scene at its finished state */
+  if (reduceMotion) return sectionIndexAt() + 0.5; /* each scene held at its readable middle */
   let sum = 0;
-  for (let i = 0; i < NSCENE; i++) sum += storyP[i].p;
+  for (let i = 0; i < NSCENE; i++) sum += HAS_GSAP ? storyP[i].p : sectionProgress(i);
   return sum;
 }
 
@@ -494,11 +506,29 @@ const CAM_LOOK = [
   { t: 8, v: [0, 0.2, 0] }
 ];
 const _cp = new THREE.Vector3(), _cl = new THREE.Vector3();
+/* hero framing: while the name is up (p 0 to 0.9) the camera aims a little higher on landscape
+   screens, so the Keeper and its rings sit below the name. The shift eases out after p 0.9. */
+let heroShift = 0;
+function heroWeight(T) { return reduceMotion ? (T < 1.5 ? 1 : 0) : 1 - smoothR(0.9, 0.98, T); }
+function computeHeroShift() {
+  const host = document.querySelector('.s0 .vt-host');
+  if (!host) { heroShift = 0; return; }
+  const fs = VW / VH < 0.85 ? 1.6 : 1.0;
+  const p0 = new THREE.Vector3(CAM_POS[0].v[0], CAM_POS[0].v[1], CAM_POS[0].v[2]);
+  const l0 = new THREE.Vector3(CAM_LOOK[0].v[0], CAM_LOOK[0].v[1], CAM_LOOK[0].v[2]);
+  const D = l0.clone().add(p0.sub(l0).multiplyScalar(fs)).length();   /* camera to Keeper at the start */
+  const t15 = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const bottom = host.offsetTop + host.offsetHeight;                  /* name bottom, in px */
+  const ringPx = (0.75 / (D * t15)) * (VH / 2);                       /* body plus rings, in px */
+  const offsetPx = bottom + ringPx + 36 - VH / 2;
+  heroShift = Math.max(0, offsetPx) * 2 * D * t15 / VH;
+}
 function placeCamera(T) {
   keyed(CAM_POS, T, _cp);
   keyed(CAM_LOOK, T, _cl);
   const fs = VW / VH < 0.85 ? 1.6 : 1.0;
   camera.position.copy(_cl).add(_cp.sub(_cl).multiplyScalar(fs));
+  _cl.y += heroShift * heroWeight(T);
   camera.lookAt(_cl);
 }
 
@@ -507,10 +537,56 @@ const _pv = new THREE.Vector3();
 function pinTo(el, v3, dx, dy) {
   _pv.copy(v3).project(camera);
   const x = (_pv.x * 0.5 + 0.5) * VW + (dx || 0) - el.offsetWidth / 2;
-  const y = (-_pv.y * 0.5 + 0.5) * VH + (dy || 0) - el.offsetHeight / 2;
+  let y = (-_pv.y * 0.5 + 0.5) * VH + (dy || 0) - el.offsetHeight / 2;
+  const cx = Math.max(16, Math.min(VW - el.offsetWidth - 16, x)); y = Math.max(16, Math.min(VH - el.offsetHeight - 16, y));
+  el.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)'; return;
   el.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
 }
-/* word reveal tied to scrub: enters by p 0.22, fully visible through 0.86, leaves by 0.98 */
+/* 3D labels: pinned to world points, nudged apart on collision, kept on screen.
+   items: [{ el, v (world Vector3), dx, dy }] are all placed in one pass. */
+const LABEL_GAP = 6;
+function placeLabels(items) {
+  const boxes = [];
+  for (let i = 0; i < items.length; i++) {
+    const it = items[i];
+    _pv.copy(it.v).project(camera);
+    const w = it.el.offsetWidth, h = it.el.offsetHeight;
+    boxes.push({
+      el: it.el, w, h,
+      x: (_pv.x * 0.5 + 0.5) * VW + (it.dx || 0) - w / 2,
+      y: (-_pv.y * 0.5 + 0.5) * VH + (it.dy || 0) - h / 2
+    });
+  }
+  for (let iter = 0; iter < 8; iter++) {
+    let moved = false;
+    for (let i = 0; i < boxes.length; i++) {
+      for (let j = i + 1; j < boxes.length; j++) {
+        const a = boxes[i], b = boxes[j];
+        const ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x) + LABEL_GAP;
+        const oy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y) + LABEL_GAP;
+        if (ox <= 0 || oy <= 0) continue;
+        moved = true;
+        if (ox < oy) {
+          const s = (ox / 2) * (a.x + a.w / 2 <= b.x + b.w / 2 ? -1 : 1);
+          a.x += s;
+          b.x -= s;
+        } else {
+          const s = (oy / 2) * (a.y + a.h / 2 <= b.y + b.h / 2 ? -1 : 1);
+          a.y += s;
+          b.y -= s;
+        }
+      }
+    }
+    if (!moved) break;
+  }
+  for (let i = 0; i < boxes.length; i++) {
+    const b = boxes[i];
+    b.x = Math.max(8, Math.min(VW - b.w - 8, b.x));
+    b.y = Math.max(8, Math.min(VH - b.h - 8, b.y));
+    b.el.style.transform = 'translate3d(' + b.x.toFixed(1) + 'px,' + b.y.toFixed(1) + 'px,0)';
+  }
+}
+/* word reveal tied to scrub: fades in by p 0.22, fully visible from there to 0.86, fades out after 0.86 */
 function reveal(el, lp, a, b, c, d, rise) {
   const enter = smoothR(a === undefined ? 0.04 : a, b === undefined ? 0.22 : b, lp);
   const exit = 1 - smoothR(c === undefined ? 0.86 : c, d === undefined ? 0.98 : d, lp);
@@ -546,6 +622,7 @@ function onResize() {
     composer.setSize(VW, VH);
   }
   videoTexts.forEach((v) => v.layout());
+  computeHeroShift();
 }
 window.addEventListener('resize', onResize);
 
@@ -795,17 +872,19 @@ function drawLeak(ctx, w, h, time) {
       const b = Math.sin(fy * 2.7 - tt * 0.9 + Math.cos(fx * 1.1 + tt));
       const c = Math.sin((fx * fx + fy * fy) * 2.4 - tt * 1.7);
       const v = clamp01(((a + b + c) / 3) * 0.5 + 0.5);
-      const m1 = clamp01(v * 1.5);
-      const m2 = clamp01((v - 0.45) * 2.2);
-      let r = lerp(18, 208, m1), g = lerp(17, 74, m1), bl = lerp(16, 36, m1);
-      r = lerp(r, 226, m2 * 0.55); g = lerp(g, 190, m2 * 0.55); bl = lerp(bl, 140, m2 * 0.55);
+      /* bright floor only: every stop has lightness of at least 0.8 so letters never go dark */
+      const lo = v < 0.5;
+      const k1 = lo ? v * 2 : (v - 0.5) * 2;
+      const r = lerp(lo ? 232 : 246, lo ? 246 : 241, k1);
+      const g = lerp(lo ? 220 : 196, lo ? 196 : 235, k1);
+      const bl = lerp(lo ? 203 : 176, lo ? 176 : 223, k1);
       d[y * w + x] = (255 << 24) | ((bl | 0) << 16) | ((g | 0) << 8) | (r | 0);
     }
   }
   ctx.putImageData(leak.img, 0, 0);
 }
 const nameVT = videoText(document.querySelector('[data-vt="name"]'), {
-  label: 'Shubham Gupta', lines: ['SHUBHAM', 'GUPTA'], min: 40, max: 2400, vw: 0.16,
+  label: 'Shubham Gupta', lines: ['SHUBHAM', 'GUPTA'], min: 40, max: 2400, vw: 0.15, capH: 0.2,
   fit: 0.94, lh: 0.86, align: 'middle', res: 0.25, draw: drawLeak
 });
 
@@ -839,10 +918,10 @@ regScene(0, (L, T, time) => {
   blob.scale.setScalar(1.1 - 0.12 * hgt);
   worldFrame(T, time);
   footageFrame(T);
-  s0.host.style.opacity = (smoothR(0.06, 0.3, L) * (1 - smoothR(0.8, 0.96, L))).toFixed(3);
+  s0.host.style.opacity = (smoothR(0, 0.22, L) * (1 - smoothR(0.85, 0.9, L))).toFixed(3);
   nameVT.on = L > -0.05 && L < 1.05;
-  reveal(s0.line, L, 0.12, 0.24, 0.86, 0.98, 18);
-  reveal(s0.tag, L, 0.18, 0.3, 0.86, 0.98, 12);
+  reveal(s0.line, L, 0, 0.22, 0.86, 0.97, 18);
+  reveal(s0.tag, L, 0, 0.22, 0.86, 0.97, 12);
 });
 
 /* ===== SCENE 1: the shell opens like petals; four tagged tiles arc out ===== */
@@ -858,6 +937,7 @@ const tiles = [0, 1, 2, 3].map(() => {
 const tileEnd = [[-2.4, 0.2, 1.3], [-0.8, 0.55, 1.8], [0.8, 0.55, 1.8], [2.4, 0.2, 1.3]];
 const tileRot = [0.42, 0.14, -0.14, -0.42];
 const tileLbl = [0, 1, 2, 3].map((i) => document.querySelector('.s1 [data-pin="tile' + i + '"]'));
+const tileItems = tileLbl.map((el) => ({ el, v: new THREE.Vector3(), dx: 0, dy: -14 }));
 const s1line = document.querySelector('.s1 .line');
 const _tp = new THREE.Vector3();
 regScene(1, (L) => {
@@ -871,13 +951,14 @@ regScene(1, (L) => {
     m.rotation.y = lerp(0, tileRot[i], p);
     m.scale.setScalar(lerp(0.2, 1, p));
     m.visible = p > 0.001;
-    _tp.set(e[0] * k, e[1] + 0.72, e[2]);
-    pinTo(tileLbl[i], _tp);
-    tileLbl[i].style.opacity = fadeAt(L, 0.2 + i * 0.03, 0.3 + i * 0.03, 0.86, 0.98);
+    tileItems[i].v.copy(m.position);
+    tileItems[i].v.y += 0.66 * m.scale.x;
+    tileLbl[i].style.opacity = fadeAt(L, i * 0.02, 0.1 + i * 0.02, 0.86, 0.97);
   });
+  placeLabels(tileItems);
   const idx = Math.min(3, Math.floor(clamp01(L) * 4));
   K.lookAt(tiles[idx].position);
-  reveal(s1line, L, 0.12, 0.24, 0.86, 0.98, 16);
+  reveal(s1line, L, 0, 0.22, 0.86, 0.97, 16);
 });
 
 /* ===== SCENE 2: chaos; five mismatched objects tumble in and collide ===== */
@@ -943,11 +1024,11 @@ function drawStatic(ctx, w, h, time) {
   for (let y = 0; y < h; y++) {
     const bar = 0.5 + 0.5 * Math.sin(y * 0.6 + band * 1.7);
     for (let x = 0; x < w; x++) {
-      const v = (Math.random() * 0.7 + bar * 0.2) * 255;
+      const n = Math.random() * 0.8 + bar * 0.2;
       const o = (y * w + x) * 4;
-      d[o] = v * 0.95;
-      d[o + 1] = v * 0.92;
-      d[o + 2] = v * 0.88;
+      d[o] = 230 + n * 25;
+      d[o + 1] = 218 + n * 27;
+      d[o + 2] = 202 + n * 23;
       d[o + 3] = 255;
     }
   }
@@ -962,6 +1043,7 @@ const s2 = {
   line: document.querySelector('.s2 .line')
 };
 const objLbl = [0, 1, 2, 3, 4].map((i) => document.querySelector('.s2 [data-pin="obj' + i + '"]'));
+const objItems = objLbl.map((el) => ({ el, v: new THREE.Vector3(), dx: 0, dy: -58 }));
 regScene(2, (L2, T, time) => {
   const objOn = T > 1.95 && T < 4.1;
   for (let i = 0; i < 5; i++) {
@@ -970,15 +1052,16 @@ regScene(2, (L2, T, time) => {
     const dir = i % 2 ? -1 : 1;
     g.rotation.set(time * 0.2 * dir + i, time * 0.3 + i * 0.7, i * 0.4 + L2 * 2.0 * dir);
     g.visible = objOn;
-    pinTo(objLbl[i], g.position, 0, -58);
-    objLbl[i].style.opacity = fadeAt(L2, 0.12 + i * 0.02, 0.2 + i * 0.02, 0.84, 0.98);
+    objItems[i].v.copy(g.position);
+    objLbl[i].style.opacity = fadeAt(L2, i * 0.02, 0.1 + i * 0.02, 0.86, 0.97);
   }
+  placeLabels(objItems);
   /* the lens darts from one object to the next */
   const idx = Math.floor(clamp01(L2) * 9) % 5;
   K.lookAt(objs[idx].position);
-  s2.host.style.opacity = (smoothR(0.08, 0.26, L2) * (1 - smoothR(0.86, 0.98, L2))).toFixed(3);
+  s2.host.style.opacity = (smoothR(0, 0.22, L2) * (1 - smoothR(0.86, 0.97, L2))).toFixed(3);
   line2VT.on = L2 > -0.05 && L2 < 1.05;
-  reveal(s2.line, L2, 0.12, 0.24, 0.86, 0.98, 18);
+  reveal(s2.line, L2, 0, 0.22, 0.86, 0.97, 18);
 });
 
 /* ===== SCENE 3: the Keeper catches each object and docks it; rings sync; the core blooms ===== */
@@ -1030,10 +1113,10 @@ regScene(3, (L3, T, time) => {
   K.lookAt(L3 < 0.85 ? objs[lensIdx].position : camera.position);
   _coreLbl.copy(K.root.position);
   _coreLbl.y += 0.95;
-  pinTo(coreLbl, _coreLbl, 0, 0);
-  coreLbl.style.opacity = fadeAt(L3, 0.2, 0.32, 0.86, 0.98);
-  reveal(s3big, L3, 0.1, 0.22, 0.86, 0.98, 24);
-  reveal(s3line, L3, 0.14, 0.26, 0.86, 0.98, 16);
+  placeLabels([{ el: coreLbl, v: _coreLbl, dx: 0, dy: 0 }]);
+  coreLbl.style.opacity = fadeAt(L3, 0, 0.2, 0.86, 0.97);
+  reveal(s3big, L3, 0, 0.22, 0.86, 0.97, 24);
+  reveal(s3line, L3, 0, 0.22, 0.86, 0.97, 16);
 });
 
 /* ===== SCENE 4: the Keeper prints a tiered platform block by block, then settles on top ===== */
@@ -1067,9 +1150,9 @@ regScene(4, (L4) => {
   blockMesh.instanceMatrix.needsUpdate = true;
   _bp.set(0, -0.9, 0);
   K.lookAt(_bp);
-  reveal(s4big, L4, 0.1, 0.22, 0.86, 0.98, 24);
-  reveal(s4line, L4, 0.12, 0.22, 0.86, 0.98, 18);
-  reveal(s4small, L4, 0.16, 0.24, 0.86, 0.98, 12);
+  reveal(s4big, L4, 0, 0.22, 0.86, 0.97, 24);
+  reveal(s4line, L4, 0, 0.22, 0.86, 0.97, 18);
+  reveal(s4small, L4, 0, 0.22, 0.86, 0.97, 12);
 });
 
 /* ===== SCENE 5: three broken things on plinths, made whole by the Keeper's arms ===== */
@@ -1148,33 +1231,36 @@ regScene(5, (L5, T, time) => {
       _sq.set(OBJC[k][0], -0.2, 0.7);
       pinTo(el, _sq, 0, 56);
     }
-    el.style.opacity = fadeAt(L5, 0.12 + k * 0.02, 0.2 + k * 0.02, 0.86, 0.98);
+    el.style.opacity = fadeAt(L5, k * 0.02, 0.1 + k * 0.02, 0.86, 0.97);
   });
-  reveal(s5big, L5, 0.1, 0.2, 0.86, 0.98, 24);
+  reveal(s5big, L5, 0, 0.22, 0.86, 0.97, 24);
 });
 
 /* ===== SCENE 6: nine small Keepers launch from the platform and hover in a 3x3 grid ===== */
 const minis = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(() => makeMini());
 const miniLbl = [0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => document.querySelector('.s6 [data-pin="m' + i + '"]'));
+const miniItems = miniLbl.map((el) => ({ el, v: new THREE.Vector3(), dx: 0, dy: 0 }));
 const s6line = document.querySelector('.s6 .line');
 const _mp = new THREE.Vector3();
 regScene(6, (L6, T) => {
-  const sp = VW / VH < 0.85 ? 2.0 : 2.6;
+  const portrait = VW / VH < 0.85;
+  const spX = portrait ? 1.5 : 2.6;
+  const spY = portrait ? 1.3 : 1.8;
   const showMinis = T > 5.95 && T < 7.2;
   minis.forEach((g, i) => {
     const r = Math.floor(i / 3), c = i % 3;
-    const gx = (c - 1) * sp, gy = 0.9 + (1 - r) * sp * 0.75, gz = 0;
-    const p = easeIO(smoothR(0.04 + i * 0.015, 0.26 + i * 0.015, L6));
+    const gx = (c - 1) * spX, gy = 0.9 + (1 - r) * spY, gz = 0;
+    const p = easeIO(smoothR(0.02 + i * 0.008, 0.18 + i * 0.008, L6));
     g.position.set(lerp(0, gx, p), lerp(-0.25, gy, p), lerp(0.2, gz, p));
     g.scale.setScalar(lerp(0.25, 1, p));
     g.visible = showMinis && p > 0.001;
-    _mp.copy(g.position);
-    _mp.y -= 0.42 * g.scale.x;
-    pinTo(miniLbl[i], _mp, 0, 0);
-    miniLbl[i].style.opacity = fadeAt(L6, 0.22 + i * 0.01, 0.3 + i * 0.01, 0.86, 0.98);
+    miniItems[i].v.copy(g.position);
+    miniItems[i].v.y -= 0.42 * g.scale.x;
+    miniLbl[i].style.opacity = fadeAt(L6, i * 0.01, 0.08 + i * 0.01, 0.86, 0.97);
   });
+  placeLabels(miniItems);
   K.lookAt(_mp.set(0, 0.9, 0));
-  reveal(s6line, L6, 0.1, 0.2, 0.86, 0.98, 18);
+  reveal(s6line, L6, 0, 0.22, 0.86, 0.97, 18);
 });
 
 /* @@SCENES@@ */
@@ -1187,19 +1273,25 @@ const s7foot = document.querySelector('.s7 .foot');
 regScene(7, (L7) => {
   if (L7 > -0.001) K.setCore(1);
   K.lookAt(camera.position);
-  reveal(s7big, L7, 0.1, 0.2, 2, 3, 24);
-  reveal(s7cta, L7, 0.2, 0.3, 2, 3, 12);
-  reveal(s7after, L7, 0.26, 0.34, 2, 3, 12);
-  s7foot.style.transform = 'translate3d(0,' + ((1 - smoothR(0.22, 0.34, L7)) * 24).toFixed(2) + 'px,0)';
+  reveal(s7big, L7, 0, 0.22, 2, 3, 24);
+  reveal(s7cta, L7, 0, 0.22, 2, 3, 12);
+  reveal(s7after, L7, 0, 0.22, 2, 3, 12);
+  s7foot.style.transform = 'translate3d(0,' + ((1 - smoothR(0, 0.22, L7)) * 24).toFixed(2) + 'px,0)';
 });
 
 /* ===== BOOT: start the single render loop once every scene is registered ===== */
-gsap.ticker.add(frame);
+if (HAS_GSAP) gsap.ticker.add(frame);
+else {
+  const fallbackLoop = (ms) => { frame(ms / 1000); requestAnimationFrame(fallbackLoop); };
+  requestAnimationFrame(fallbackLoop);
+}
+computeHeroShift();
 if (document.fonts) {
   document.fonts.load('800 100px Syne').then(() => videoTexts.forEach((v) => v.layout())).catch(() => {});
   document.fonts.ready.then(() => {
     videoTexts.forEach((v) => v.layout());
-    ScrollTrigger.refresh();
+    if (HAS_GSAP) ScrollTrigger.refresh();
+    computeHeroShift();
   });
 }
 
