@@ -183,6 +183,7 @@ main,.foot{position:relative;z-index:1}
 .card3{display:flex;flex-direction:column;gap:12px;padding:14px}
 .card3 > svg{width:100%;height:auto}
 .card3 figcaption{font-size:16px;line-height:1.5;color:var(--ink)}
+@media (min-width:1024px){.card3 figcaption{font-size:18px}}
 
 /* Scene 6: nine-patch quilt */
 .quilt{position:absolute;top:0;bottom:0;left:50%;width:min(100%,540px);transform:translateX(-50%);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:8% 0;align-content:center}
@@ -198,7 +199,8 @@ main,.foot{position:relative;z-index:1}
 .patch-btn{position:relative;display:inline-block;font-family:var(--f-body);font-weight:600;font-size:22px;line-height:1.2;letter-spacing:.02em;color:var(--paper);background:var(--vermilion);border-radius:4px;box-shadow:var(--shadow-cut);padding:16px 28px;text-decoration:none;white-space:nowrap;outline:1.5px dashed rgba(241,234,220,.85);outline-offset:-7px}
 .patch-btn:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
 @media (min-width:1024px){.patch-btn{font-size:24px}}
-.care{position:relative;max-width:46ch;margin:var(--s3) 0 0;padding:16px 18px;background:var(--paper-hi);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;box-shadow:var(--shadow-cut);outline:1.5px dashed var(--ink);outline-offset:-7px}
+.care{position:relative;max-width:46ch;margin:var(--s3) 0 0;padding:16px 18px;background:var(--paper-hi);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;box-shadow:var(--shadow-cut)}
+.care::after{content:"";position:absolute;inset:7px;border:1.5px dashed var(--ink);pointer-events:none;clip-path:inset(0 calc((1 - var(--care,1)) * 100%) 0 0)}
 @media (min-width:1024px){.care{font-size:18px}}
 .cta{margin:0}
 /* Brass is used only for the clasp (the padlock) */
@@ -213,12 +215,12 @@ main,.foot{position:relative;z-index:1}
 /* Mobile: art on top, copy below */
 @media (max-width:1023px){
   /* Copy takes its natural height so every revealed line fits; the art takes the rest. */
-  .stage,.stage.s0,.stage.s5,.stage.s6{grid-template-rows:minmax(0,1fr) auto}
+  .stage,.stage.s0,.stage.s5,.stage.s6,.stage.s7{grid-template-rows:minmax(0,1fr) auto}
   .copy{padding:var(--s2) var(--gutter)}
-  .trio{grid-template-columns:1fr;gap:10px;padding:3%;align-content:center}
-  .card3{flex-direction:row;align-items:center;gap:12px;padding:10px}
-  .card3 > svg{width:30%;flex:0 0 auto}
-  .card3 figcaption{flex:1 1 auto}
+  .trio{grid-template-columns:1fr;gap:10px;padding:3% 3% 12%;align-content:center}
+  .card3{flex-direction:column;align-items:stretch;gap:10px;padding:10px}
+  .card3 > svg{width:100%;height:auto;aspect-ratio:16 / 5;flex:0 0 auto}
+  .card3 figcaption{flex:0 0 auto}
   .quilt{gap:10px;padding:4% 6%}
   .glue .cut{width:33%}
   .ring .cut{width:118px;padding:8px}
@@ -234,6 +236,17 @@ main,.foot{position:relative;z-index:1}
 .thread3d .thread{display:none}
 .is-static .rv{opacity:1!important;transform:none!important}
 .is-static .patch-btn{box-shadow:var(--shadow-cut)}
+/* Scenes 5 to 7 in WebGL: the 3D draws the paper cards, swatches, patches, seams and bow. Words stay HTML above the canvas; the SVG art is the fallback. */
+.s5-gl:not(.is-nogl) .card3{background:none;box-shadow:none}
+.s5-gl:not(.is-nogl) .card3 > svg{visibility:hidden}
+.s5-gl:not(.is-nogl) .swatch-cap{opacity:var(--cap,1)}
+.s6-gl:not(.is-nogl) .patch{background:none;box-shadow:none}
+.s6-gl:not(.is-nogl) .patch > svg{visibility:hidden}
+.s6-gl:not(.is-nogl) .patch::after{display:none}
+.js.s6-gl:not(.is-nogl) .patch{opacity:1;transform:none}
+.s6-gl:not(.is-nogl) .patch .tag{background:var(--paper-hi);padding:3px 6px;margin-top:10px;opacity:var(--qo,1)}
+.s7-gl:not(.is-nogl) .bow-wrap{visibility:hidden}
+@media (max-width:1023px){.patch-btn{display:block;width:100%;text-align:center}.care{max-width:none}}
 </style>
 </head>
 <body>
@@ -456,7 +469,7 @@ main,.foot{position:relative;z-index:1}
     <div class="copy">
       <div class="beats">
         <div class="beat">
-          <h2 class="line rv" data-in="0.66">Name the constraint. Then build the system around it.</h2>
+          <h2 class="line rv" data-in="0.04">Name the constraint. Then build the system around it.</h2>
         </div>
       </div>
     </div>
@@ -486,7 +499,7 @@ main,.foot{position:relative;z-index:1}
     <div class="copy">
       <div class="beats">
         <div class="beat">
-          <p class="hem rv" data-in="0.42">The operator should run the business. The system should carry the work.</p>
+          <p class="hem rv" data-in="0.12">The operator should run the business. The system should carry the work.</p>
         </div>
       </div>
     </div>
@@ -543,9 +556,9 @@ main,.foot{position:relative;z-index:1}
           <h2 class="line rv" data-in="0.04">Bring the operation.</h2>
         </div>
         <div class="beat">
-          <p class="cta rv" data-in="0.44"><a class="patch-btn" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call<span class="a" data-k="11" style="right:0;bottom:0.02em"></span><span class="a" data-k="12" data-line="1" style="left:0;bottom:0.02em"></span></a></p>
-          <p class="small rv" data-in="0.58">The appointment sits on LinkedIn.</p>
-          <p class="care rv" data-in="0.70">Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+          <p class="cta rv" data-in="0.10"><a class="patch-btn" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call<span class="a" data-k="11" style="right:0;bottom:0.02em"></span><span class="a" data-k="12" data-line="1" style="left:0;bottom:0.02em"></span></a></p>
+          <p class="small rv" data-in="0.16">The appointment sits on LinkedIn.</p>
+          <p class="care rv" data-in="0.22">Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
         </div>
       </div>
     </div>
@@ -996,9 +1009,9 @@ function resizeStage() {
   stage.paperMat.uniforms.uRes.value.set(bw, bh);
 }
 
-function registerGroup(index, group, update, pinned) {
+function registerGroup(index, group, update, pinned, band) {
   stage.scene.add(group);
-  stage.groups.set(index, { group, update, pinned: !!pinned });
+  stage.groups.set(index, { group, update, pinned: !!pinned, band: !!band });
 }
 
 // A pinned scene covers the viewport. Its stage then sits at the top, which is where its 3D art is placed.
@@ -1017,6 +1030,14 @@ function nearScreen(index) {
   return r.bottom > -window.innerHeight && r.top < window.innerHeight * 2;
 }
 
+// A band scene (5 to 7) shows its 3D only while its own section overlaps the middle of the viewport, so a neighbour never shows its art.
+function bandNow(index) {
+  const s = byN[index];
+  if (!s) return false;
+  const r = s.el.getBoundingClientRect();
+  return r.top < window.innerHeight * 0.7 && r.bottom > window.innerHeight * 0.3;
+}
+
 function stageTick(now) {
   if (!stage.ok || document.hidden) return;
   const r = stage.renderer;
@@ -1032,7 +1053,7 @@ function stageTick(now) {
   r.render(stage.blitScene, stage.bgCam);
   for (const [index, entry] of stage.groups) {
     // Scenes 1 to 3 show their 3D groups only while pinned on screen, so nothing draws over the next scene.
-    const near = entry.pinned && !staticMode ? pinnedNow(index) : nearScreen(index);
+    const near = entry.band ? bandNow(index) : entry.pinned && !staticMode ? pinnedNow(index) : nearScreen(index);
     entry.group.visible = near;
     if (near) entry.update(byN[index].p, now);
   }
@@ -1052,7 +1073,7 @@ window.THREAD = {
   get scene() { return stage.scene; },
   get camera() { return stage.camera; },
   get paper() { return stage.paperMat ? stage.paperMat.uniforms : null; },
-  register(index, opts) { registerGroup(index, opts.group, opts.update, opts.pinned); }
+  register(index, opts) { registerGroup(index, opts.group, opts.update, opts.pinned, opts.band); }
 };
 
 /* ===== Shared camera and 3D mapping. Every 3D placement goes through worldAtPx, so dolly and orbit never move the art. ===== */
@@ -2360,10 +2381,11 @@ function updateScene6(p, forced) {
   S6.patches.forEach((pt, k) => {
     // Patches 0 to 2 (the top row) are on the table from the start; the rest stitch in with progress.
     const early = k < 3;
-    const start = early ? 0 : 0.06 + (k - 3) * 0.09;
-    const e = forced || early ? 1 : seg(p, start, start + 0.10);
-    const st = forced || early ? 1 : seg(p, start + 0.06, start + 0.16);
-    const d = forced || early ? 1 : seg(p, start, start + 0.14);
+    // Every patch has landed by 30%, so each name on it is fully opaque by then.
+    const start = early ? 0 : 0.025 * k;
+    const e = forced || early ? 1 : seg(p, start, 0.30);
+    const st = forced || early ? 1 : seg(p, start + 0.02, 0.30);
+    const d = forced || early ? 1 : seg(p, start, 0.30);
     pt.el.style.setProperty('--qo', e.toFixed(3));
     pt.el.style.setProperty('--qx', ((1 - e) * pt.dx).toFixed(1) + 'px');
     pt.el.style.setProperty('--qy', ((1 - e) * 14).toFixed(1) + 'px');
@@ -2382,6 +2404,519 @@ function updateScene7(p, forced) {
     const t = forced ? 1 : seg(p, 0.50 + k * 0.05, 0.62 + k * 0.05);
     el.style.strokeDashoffset = String(1 - t);
   });
+}
+
+/* ===== Scenes 5 to 7 in 3D: one group per scene, placed on its art box through the live camera. One local unit is one CSS pixel at the art depth; each group faces the camera. ===== */
+// Client-pixel box of an element: its centre and size.
+function boxOf(el) {
+  const r = el.getBoundingClientRect();
+  return { cx: r.left + r.width / 2, cy: r.top + r.height / 2, w: r.width, h: r.height };
+}
+// A client box in local pixels of an art box: x to the right, y up, origin at the art centre.
+function localBox(art, b) {
+  return { x: b.cx - art.cx, y: art.cy - b.cy, w: b.w, h: b.h };
+}
+// Centres a group on its art box through the live camera, scaled so one unit is one pixel at that depth.
+function anchorGroup(group, art) {
+  const c = worldAtPx(art.cx, art.cy, 0);
+  group.position.copy(c);
+  group.quaternion.copy(stage.camera.quaternion);
+  group.scale.setScalar(1 / pxPerUnitAt(c));
+}
+function rgbVec(THREE, hex) {
+  return new THREE.Vector3(((hex >> 16) & 255) / 255, ((hex >> 8) & 255) / 255, (hex & 255) / 255);
+}
+function roundRectShape(THREE, x, y, w, h, r) {
+  const s = new THREE.Shape();
+  s.moveTo(x + r, y);
+  s.lineTo(x + w - r, y);
+  s.quadraticCurveTo(x + w, y, x + w, y + r);
+  s.lineTo(x + w, y + h - r);
+  s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  s.lineTo(x + r, y + h);
+  s.quadraticCurveTo(x, y + h, x, y + h - r);
+  s.lineTo(x, y + r);
+  s.quadraticCurveTo(x, y, x + r, y);
+  return s;
+}
+// Every instance starts at zero size, so no stitch shows before its scene has progressed.
+function hideInstances(mesh, count, THREE) {
+  const m = new THREE.Matrix4().makeScale(0, 0, 0);
+  for (let i = 0; i < count; i++) mesh.setMatrixAt(i, m);
+  mesh.instanceMatrix.needsUpdate = true;
+}
+const SW_VS = 'varying vec2 vUv;\nvarying vec3 vN;\nvoid main() { vUv = uv; vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }';
+// Weave swatch: a plain over-under weave with a torn slit. The slit closes with the mend; the paper card shows through it until then.
+const SW_FS = [
+  'precision highp float;',
+  'varying vec2 vUv;',
+  'varying vec3 vN;',
+  'uniform float uMend;',
+  'uniform float uSeed;',
+  'uniform vec3 uColor;',
+  'uniform vec3 uLight;',
+  'void main() {',
+  '  float edge = 0.5 + 0.03 * sin(vUv.x * 23.0 + uSeed) + 0.018 * sin(vUv.x * 57.0 + uSeed * 2.1);',
+  '  if (abs(vUv.y - edge) < (1.0 - uMend) * 0.07) discard;',
+  '  vec2 q = vUv * vec2(46.0, 32.0);',
+  '  float over = mod(floor(q.x) + floor(q.y), 2.0);',
+  '  float ridge = over > 0.5 ? abs(fract(q.y) - 0.5) : abs(fract(q.x) - 0.5);',
+  '  float lit = 0.84 + 0.16 * max(dot(normalize(vN), uLight), 0.0);',
+  '  gl_FragColor = vec4(uColor * (0.78 + 0.44 * ridge) * lit, 1.0);',
+  '}'
+].join('\n');
+const FLAT_VS = 'varying vec2 vUv;\nvoid main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }';
+// Darning ground: fine diagonal lines behind the swatches.
+const DARN_FS = [
+  'precision highp float;',
+  'varying vec2 vUv;',
+  'uniform vec2 uSize;',
+  'uniform float uA;',
+  'void main() {',
+  '  vec2 p = vUv * uSize;',
+  '  float a = abs(fract((p.x + p.y) / 12.0) - 0.5);',
+  '  float b = abs(fract((p.x - p.y) / 12.0) - 0.5);',
+  '  float line = min(step(0.46, a) + step(0.46, b), 1.0);',
+  '  gl_FragColor = vec4(0.72, 0.2, 0.12, line * uA);',
+  '}'
+].join('\n');
+// Warm lamp pool: a soft round light on the paper, behind scenes 6 and 7.
+const LAMP_FS = [
+  'precision highp float;',
+  'varying vec2 vUv;',
+  'uniform float uA;',
+  'void main() {',
+  '  float d = length(vUv - 0.5) * 2.0;',
+  '  gl_FragColor = vec4(0.96, 0.78, 0.5, (1.0 - smoothstep(0.0, 1.0, d)) * uA);',
+  '}'
+].join('\n');
+// Quilt patch: one instanced shader, the pattern picked per instance (block print, ikat, brocade, check, stripes, waves).
+const PATCH_VS = [
+  'attribute float aPat;',
+  'uniform float uPuff;',
+  'uniform float uSag;',
+  'varying vec2 vUv;',
+  'varying float vPat;',
+  'varying vec3 vN;',
+  'void main() {',
+  '  vUv = uv;',
+  '  vPat = aPat;',
+  '  vec2 q = uv * 2.0 - 1.0;',
+  '  float bulge = (1.0 - q.x * q.x) * (1.0 - q.y * q.y);',
+  '  vec2 slope = vec2(-2.0 * q.x * (1.0 - q.y * q.y), -2.0 * q.y * (1.0 - q.x * q.x)) * uPuff;',
+  '  vN = mat3(modelViewMatrix * instanceMatrix) * normalize(vec3(-slope * 0.05, 1.0));',
+  '  vec3 p = position;',
+  '  p.z += uPuff * bulge - uSag * 6.0 * (1.0 - uv.y) * sin(3.14159 * uv.x);',
+  '  gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(p, 1.0);',
+  '}'
+].join('\n');
+const PATCH_FS = [
+  'precision highp float;',
+  'varying vec2 vUv;',
+  'varying float vPat;',
+  'varying vec3 vN;',
+  'uniform vec3 uLight;',
+  'uniform float uLift;',
+  'vec3 tone(int i) {',
+  '  if (i == 0) return vec3(0.722, 0.196, 0.118);',
+  '  if (i == 1) return vec3(0.541, 0.353, 0.204);',
+  '  if (i == 2) return vec3(0.180, 0.231, 0.200);',
+  '  if (i == 3) return vec3(0.659, 0.545, 0.290);',
+  '  if (i == 4) return vec3(0.230, 0.275, 0.314);',
+  '  return vec3(0.788, 0.714, 0.557);',
+  '}',
+  'void main() {',
+  '  int kind = int(vPat + 0.5);',
+  '  vec2 uv = vUv;',
+  '  float m = 0.0;',
+  '  if (kind == 0) { m = step(length(fract(uv * 5.0) - 0.5), 0.2); }',
+  '  else if (kind == 1) { m = step(0.5, fract(uv.x * 4.0 + abs(fract(uv.y * 3.0) - 0.5) * 2.0)); }',
+  '  else if (kind == 2) { m = step(abs(fract(uv.x * 3.0) - 0.5) + abs(fract(uv.y * 3.0) - 0.5), 0.28); }',
+  '  else if (kind == 3) { m = mod(step(0.5, fract(uv.x * 4.0)) + step(0.5, fract(uv.y * 4.0)), 2.0); }',
+  '  else if (kind == 4) { m = step(0.5, fract(uv.x * 6.0)); }',
+  '  else { m = step(0.5, 0.5 + 0.5 * sin(uv.y * 26.0 + sin(uv.x * 7.0) * 2.0)); }',
+  '  vec3 base = tone(kind);',
+  '  vec3 acc = mix(base, vec3(0.98, 0.97, 0.94), 0.55);',
+  '  vec3 col = mix(base, acc, m);',
+  '  vec3 N = normalize(vN);',
+  '  float d = max(dot(N, uLight), 0.0);',
+  '  float spec = pow(max(dot(N, normalize(uLight + vec3(0.0, 0.0, 1.0))), 0.0), 18.0) * uLift * 0.4;',
+  '  gl_FragColor = vec4(col * (0.74 + 0.4 * d) + spec, 1.0);',
+  '}'
+].join('\n');
+
+// Scene 5: three swatches mended in turn, each on its paper card with darning stitches; a prop beside each; the running stitch and a darning ground.
+function build5(group) {
+  const THREE = window.THREE;
+  const artEl = document.querySelector('[data-art="s5"]');
+  const figs = Array.from(document.querySelectorAll('.trio .card3'));
+  const svgs = figs.map((f) => f.querySelector('svg'));
+  const light = new THREE.Vector3(-0.45, 0.6, 0.66).normalize();
+  const seeds = [1.3, 4.1, 2.7];
+  const tints = [0x3b2f25, 0x8a3a26, 0x4d5b47];
+  const N = 12; // darning stitches per swatch
+  const WAVE = 26; // dashes in the voice waveform
+  const RUN = 56; // dashes in the running stitch
+  const paperMat = new THREE.MeshStandardMaterial({ color: 0xfaf7f0, roughness: 0.9, metalness: 0 });
+  const pageMat = new THREE.MeshStandardMaterial({ color: 0xf1eadc, roughness: 0.95, metalness: 0 });
+  const inkMat = new THREE.MeshStandardMaterial({ color: 0x2b241d, roughness: 0.7, metalness: 0 });
+  const redMat = new THREE.MeshStandardMaterial({ color: 0xb8321e, roughness: 0.55, metalness: 0 });
+  const stitchGeo = new THREE.CylinderGeometry(1, 1, 1, 6);
+  const M = new THREE.Matrix4();
+  const P = new THREE.Vector3();
+  const Q = new THREE.Quaternion();
+  const Sc = new THREE.Vector3();
+  const E = new THREE.Euler();
+  const lastCap = [-1, -1, -1];
+  const cards = figs.map((f, i) => {
+    const card = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 16, 10), paperMat);
+    card.frustumCulled = false;
+    group.add(card);
+    const mat = new THREE.ShaderMaterial({
+      uniforms: { uMend: { value: 0 }, uSeed: { value: seeds[i] }, uColor: { value: rgbVec(THREE, tints[i]) }, uLight: { value: light } },
+      vertexShader: SW_VS,
+      fragmentShader: SW_FS
+    });
+    const sw = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 2, 2), mat);
+    sw.frustumCulled = false;
+    group.add(sw);
+    return { card, sw, mat };
+  });
+  const darnMat = new THREE.ShaderMaterial({
+    uniforms: { uSize: { value: new THREE.Vector2(1, 1) }, uA: { value: 0.12 } },
+    vertexShader: FLAT_VS,
+    fragmentShader: DARN_FS,
+    transparent: true,
+    depthWrite: false
+  });
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), darnMat);
+  ground.frustumCulled = false;
+  group.add(ground);
+  const darn = new THREE.InstancedMesh(stitchGeo, redMat, 3 * N);
+  const wave = new THREE.InstancedMesh(stitchGeo, redMat, WAVE);
+  const run = new THREE.InstancedMesh(stitchGeo, redMat, RUN);
+  for (const m of [darn, wave, run]) {
+    m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    m.frustumCulled = false;
+    group.add(m);
+  }
+  hideInstances(darn, 3 * N, THREE);
+  hideInstances(wave, WAVE, THREE);
+  hideInstances(run, RUN, THREE);
+  // Props: a ledger (cover and page block) beside swatch one, a rounded speech card beside swatch two.
+  const ledger = new THREE.Group();
+  const cover = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), inkMat);
+  const block = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), pageMat);
+  ledger.add(cover, block);
+  group.add(ledger);
+  const bubble = new THREE.Mesh(
+    new THREE.ExtrudeGeometry(roundRectShape(THREE, -0.5, -0.5, 1, 1, 0.18), { depth: 1, bevelEnabled: false, curveSegments: 6 }),
+    paperMat
+  );
+  group.add(bubble);
+
+  return function update5(p) {
+    const ab = boxOf(artEl);
+    anchorGroup(group, ab);
+    const narrow = document.documentElement.clientWidth < 1024;
+    ground.position.set(0, 0, -3);
+    ground.scale.set(ab.w * 0.86, ab.h * 0.9, 1);
+    darnMat.uniforms.uSize.value.set(ab.w * 0.86, ab.h * 0.9);
+    darnMat.uniforms.uA.value = 0.1 + 0.06 * seg(p, 0.6, 0.9);
+    for (let i = 0; i < 3; i++) {
+      const c = cards[i];
+      const fb = localBox(ab, boxOf(figs[i]));
+      const sb = localBox(ab, boxOf(svgs[i]));
+      // Each swatch is mended in turn; its caption inks in with the mend and is fully opaque by 30%.
+      const mend = seg(p, 0.12 + 0.07 * i, 0.30 + 0.07 * i);
+      const cap = seg(p, 0.05 + 0.07 * i, 0.15 + 0.07 * i);
+      if (Math.abs(cap - lastCap[i]) > 0.002) {
+        lastCap[i] = cap;
+        figs[i].style.setProperty('--cap', cap.toFixed(3));
+      }
+      // The paper card starts curled and unfolds flat by 25%.
+      const bend = 10 * (1 - seg(p, 0, 0.25));
+      c.card.position.set(fb.x, fb.y, -1.5);
+      c.card.scale.set(fb.w, fb.h, 1);
+      const pa = c.card.geometry.attributes.position;
+      for (let v = 0; v < pa.count; v++) {
+        const x = pa.getX(v);
+        pa.setZ(v, -bend * 4 * x * x); // the curl bends away from the viewer, so it never hides a swatch
+      }
+      pa.needsUpdate = true;
+      c.sw.position.set(sb.x, sb.y, 0);
+      c.sw.scale.set(sb.w, sb.h, 1);
+      c.mat.uniforms.uMend.value = mend;
+      // Darning stitches cross the tear one by one as it closes.
+      for (let j = 0; j < N; j++) {
+        const u = (j + 0.5) / N;
+        const edge = 0.5 + 0.03 * Math.sin(u * 23 + seeds[i]) + 0.018 * Math.sin(u * 57 + seeds[i] * 2.1);
+        const v = clamp(mend * N - j, 0, 1);
+        P.set(sb.x + (u - 0.5) * sb.w, sb.y + (edge - 0.5) * sb.h, 2.5);
+        Q.setFromEuler(E.set(0, 0, j % 2 ? 0.3 : -0.3));
+        Sc.set(1.3 * v + 0.001, sb.h * 0.16 * v + 0.001, 1.3 * v + 0.001);
+        darn.setMatrixAt(i * N + j, M.compose(P, Q, Sc));
+      }
+      // Each prop rises beside its swatch as the mend lands.
+      const pe = seg(p, 0.12 + 0.07 * i, 0.36 + 0.07 * i);
+      const off = 1 - pe;
+      if (i === 0) {
+        const lw = sb.w * 0.34;
+        const lh = sb.h * 0.36;
+        const lt = 12;
+        ledger.position.set(sb.x + sb.w * 0.33 + off * 36, sb.y - sb.h * 0.12 - off * 40, 6 + off * 30);
+        ledger.rotation.set(0.5 * off, 0, -0.1 * pe);
+        cover.scale.set(lw, lh, lt * 0.3);
+        block.position.set(-lw * 0.02, 0, -lt * 0.35);
+        block.scale.set(lw * 0.9, lh * 0.9, lt * 0.8);
+      } else if (i === 1) {
+        bubble.position.set(sb.x + sb.w * 0.3 + off * 30, sb.y + sb.h * 0.2 + off * 36, 4 + off * 24);
+        bubble.rotation.set(0, 0, 0.08 * pe);
+        bubble.scale.set(sb.w * 0.4, sb.h * 0.36, 5);
+      } else {
+        // The voice waveform: raised stitches along swatch three, flat at first and rising as the mend lands.
+        const amp = sb.h * 0.16 * (0.2 + 0.8 * pe);
+        const dash = (sb.w * 0.7) / WAVE;
+        for (let j = 0; j < WAVE; j++) {
+          const t = j / (WAVE - 1);
+          const th = 2 * Math.PI * 4 * t;
+          const ta = Math.atan2(amp * 8 * Math.PI * Math.cos(th), sb.w * 0.7);
+          P.set(sb.x + (t - 0.5) * sb.w * 0.7, sb.y - sb.h * 0.12 + amp * Math.sin(th), 5);
+          Q.setFromEuler(E.set(0, 0, ta - Math.PI / 2));
+          Sc.set(1.5 * pe + 0.001, dash * 0.9 * pe + 0.001, 1.5 * pe + 0.001);
+          wave.setMatrixAt(j, M.compose(P, Q, Sc));
+        }
+      }
+    }
+    // The running stitch writes across the bottom of the art, in two lines on a narrow screen.
+    const per = narrow ? RUN / 2 : RUN;
+    for (let j = 0; j < RUN; j++) {
+      const row = narrow && j >= per ? 1 : 0;
+      const k = j - row * per;
+      const t = (k + 0.5) / per;
+      const e = narrow ? seg(p, row ? 0.75 : 0.6, row ? 0.9 : 0.75) : seg(p, 0.6, 0.9);
+      const v = clamp(e * per - k, 0, 1);
+      const y = -ab.h / 2 + (narrow ? (row ? 12 : 30) : Math.max(12, ab.h * 0.06));
+      P.set((t - 0.5) * ab.w * 0.9, y, 1);
+      Q.setFromEuler(E.set(0, 0, Math.PI / 2));
+      Sc.set(1.2 * v + 0.001, 9 * v + 0.001, 1.2 * v + 0.001);
+      run.setMatrixAt(j, M.compose(P, Q, Sc));
+    }
+    darn.instanceMatrix.needsUpdate = true;
+    wave.instanceMatrix.needsUpdate = true;
+    run.instanceMatrix.needsUpdate = true;
+  };
+}
+
+// Scene 6: nine patches on one instanced mesh, each with its own pattern, puffed and sagging; stitched seams round each patch, a hem and a warm lamp pool.
+function build6(group) {
+  const THREE = window.THREE;
+  const artEl = document.querySelector('[data-art="s6"]');
+  const quiltEl = document.querySelector('.quilt');
+  const cells = Array.from(document.querySelectorAll('.quilt .patch'));
+  const svgs = cells.map((c) => c.querySelector('svg'));
+  const light = new THREE.Vector3(-0.45, 0.6, 0.66).normalize();
+  const DASH = 6; // dashes per patch edge
+  const HEM = 44; // dashes in the hem
+  const M = new THREE.Matrix4();
+  const P = new THREE.Vector3();
+  const Q = new THREE.Quaternion();
+  const Sc = new THREE.Vector3();
+  const E = new THREE.Euler();
+  const patMat = new THREE.ShaderMaterial({
+    uniforms: { uPuff: { value: 5 }, uSag: { value: 0 }, uLift: { value: 0 }, uLight: { value: light } },
+    vertexShader: PATCH_VS,
+    fragmentShader: PATCH_FS
+  });
+  const patGeo = new THREE.PlaneGeometry(1, 1, 20, 20);
+  const kinds = new Float32Array(9);
+  for (let k = 0; k < 9; k++) kinds[k] = k % 6;
+  patGeo.setAttribute('aPat', new THREE.InstancedBufferAttribute(kinds, 1));
+  const patches = new THREE.InstancedMesh(patGeo, patMat, 9);
+  const redMat = new THREE.MeshStandardMaterial({ color: 0xb8321e, roughness: 0.55, metalness: 0 });
+  const dashGeo = new THREE.CylinderGeometry(1, 1, 1, 5);
+  const seams = new THREE.InstancedMesh(dashGeo, redMat, 9 * 4 * DASH);
+  const hem = new THREE.InstancedMesh(dashGeo, redMat, HEM);
+  for (const m of [patches, seams, hem]) {
+    m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    m.frustumCulled = false;
+    group.add(m);
+  }
+  hideInstances(seams, 9 * 4 * DASH, THREE);
+  hideInstances(hem, HEM, THREE);
+  const lampMat = new THREE.ShaderMaterial({
+    uniforms: { uA: { value: 0.22 } },
+    vertexShader: FLAT_VS,
+    fragmentShader: LAMP_FS,
+    transparent: true,
+    depthWrite: false
+  });
+  const lamp = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), lampMat);
+  lamp.position.z = -4;
+  lamp.frustumCulled = false;
+  group.add(lamp);
+
+  return function update6(p) {
+    const ab = boxOf(artEl);
+    anchorGroup(group, ab);
+    const narrow = document.documentElement.clientWidth < 1024;
+    const lift = seg(p, 0.85, 1.0); // the quilt lifts at the end and catches the light
+    patMat.uniforms.uSag.value = seg(p, 0.3, 0.7);
+    patMat.uniforms.uLift.value = lift;
+    patMat.uniforms.uPuff.value = 5 + 4 * lift;
+    lamp.scale.set(ab.w * 0.6, ab.h * 0.6, 1);
+    lampMat.uniforms.uA.value = 0.22 + 0.1 * lift;
+    for (let k = 0; k < 9; k++) {
+      const sb = localBox(ab, boxOf(svgs[k]));
+      // The top row is sewn from the start; the rest land by 30%, so every name is fully opaque by then.
+      const e = k < 3 ? 1 : seg(p, 0.025 * k, 0.30);
+      const off = 1 - e;
+      const dir = k % 2 ? 1 : -1;
+      const x = sb.x + dir * 36 * off;
+      const y = sb.y - 30 * off;
+      const z = 70 * off + 6 * lift;
+      P.set(x, y, z);
+      Q.setFromEuler(E.set(0, 0, dir * 0.5 * off));
+      Sc.set(sb.w, sb.h, 1);
+      patches.setMatrixAt(k, M.compose(P, Q, Sc));
+      // Seam dashes run round each patch edge and sew on in turn as the patch lands.
+      const x0 = x - sb.w / 2;
+      const x1 = x + sb.w / 2;
+      const y0 = y - sb.h / 2;
+      const y1 = y + sb.h / 2;
+      for (let s = 0; s < 4; s++) {
+        const horiz = s < 2;
+        for (let j = 0; j < DASH; j++) {
+          const t = (j + 0.5) / DASH;
+          let px;
+          let py;
+          if (s === 0) { px = x0 + t * sb.w; py = y1 - 4; }
+          else if (s === 1) { px = x0 + t * sb.w; py = y0 + 4; }
+          else if (s === 2) { px = x0 + 4; py = y0 + t * sb.h; }
+          else { px = x1 - 4; py = y0 + t * sb.h; }
+          const v = clamp(e * 4 * DASH - (s * DASH + j), 0, 1);
+          P.set(px, py, z + 1.5);
+          Q.setFromEuler(E.set(0, 0, horiz ? Math.PI / 2 : 0));
+          const len = ((horiz ? sb.w : sb.h) / DASH) * 0.55 * v + 0.001;
+          Sc.set(1.1 * v + 0.001, len, 1.1 * v + 0.001);
+          seams.setMatrixAt((k * 4 + s) * DASH + j, M.compose(P, Q, Sc));
+        }
+      }
+    }
+    // The hem stitches along the bottom of the quilt from 72% to 85%, in two lines on a narrow screen.
+    const qb = localBox(ab, boxOf(quiltEl));
+    const last = localBox(ab, boxOf(cells[8]));
+    const hemY = last.y - last.h / 2 - 10;
+    const per = narrow ? HEM / 2 : HEM;
+    for (let j = 0; j < HEM; j++) {
+      const row = narrow && j >= per ? 1 : 0;
+      const k = j - row * per;
+      const t = (k + 0.5) / per;
+      const e = narrow ? seg(p, row ? 0.8 : 0.72, row ? 0.88 : 0.8) : seg(p, 0.72, 0.85);
+      const v = clamp(e * per - k, 0, 1);
+      P.set(qb.x + (t - 0.5) * qb.w, hemY - row * 9, 1);
+      Q.setFromEuler(E.set(0, 0, Math.PI / 2));
+      Sc.set(1.2 * v + 0.001, (qb.w / per) * 0.6 * v + 0.001, 1.2 * v + 0.001);
+      hem.setMatrixAt(j, M.compose(P, Q, Sc));
+    }
+    patches.instanceMatrix.needsUpdate = true;
+    seams.instanceMatrix.needsUpdate = true;
+    hem.instanceMatrix.needsUpdate = true;
+  };
+}
+
+// Scene 7: a thread comes down from the top and ties a bow over the close; the care label's stitched border sews on last.
+function build7(group) {
+  const THREE = window.THREE;
+  const artEl = document.querySelector('[data-art="s7"]');
+  const care = document.querySelector('.care');
+  const redMat = new THREE.MeshStandardMaterial({ color: 0xb8321e, roughness: 0.55, metalness: 0 });
+  const N = 9; // points per piece of thread
+  // Final shape in units of R: two loops that touch the knot, and two tails below it.
+  const loop = (sx) => Array.from({ length: N }, (_, i) => {
+    const th = (i / (N - 1)) * Math.PI * 2;
+    return [sx * (0.5 - 0.5 * Math.cos(th)), 0.6 * Math.sin(th)];
+  });
+  const tail = (sx) => Array.from({ length: N }, (_, i) => {
+    const s = i / (N - 1);
+    return [sx * 0.3 * s, -s - 0.06 * Math.sin(s * Math.PI)];
+  });
+  const FINAL = [loop(-1), loop(1), tail(-1), tail(1)];
+  const bow = new THREE.Group();
+  group.add(bow);
+  const pieces = FINAL.map((F) => {
+    const mesh = new THREE.Mesh(new THREE.BufferGeometry(), redMat);
+    mesh.frustumCulled = false;
+    bow.add(mesh);
+    return { F, mesh };
+  });
+  const knot = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), redMat);
+  knot.frustumCulled = false;
+  bow.add(knot);
+  const lampMat = new THREE.ShaderMaterial({
+    uniforms: { uA: { value: 0 } },
+    vertexShader: FLAT_VS,
+    fragmentShader: LAMP_FS,
+    transparent: true,
+    depthWrite: false
+  });
+  const lamp = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), lampMat);
+  lamp.position.z = -4;
+  lamp.frustumCulled = false;
+  group.add(lamp);
+  let tbDone = -1;
+  let rDone = -1;
+  let careDone = -1;
+
+  return function update7(p) {
+    const ab = boxOf(artEl);
+    anchorGroup(group, ab);
+    const R = Math.min(ab.w, ab.h) * 0.24;
+    // The thread comes down from the top (scaled in from nothing), then the loops tie.
+    bow.scale.setScalar(Math.max(0.001, seg(p, 0.2, 0.34)));
+    const tb = seg(p, 0.3, 0.6);
+    if (Math.abs(tb - tbDone) > 0.002 || Math.abs(R - rDone) > 0.5) {
+      tbDone = tb;
+      rDone = R;
+      for (const pc of pieces) {
+        const pts = pc.F.map((f, i) => {
+          const sy = (1.2 - (2.4 * i) / (N - 1)) * R; // the straight thread, top to bottom
+          const fy = f[1] * R;
+          return new THREE.Vector3(f[0] * R * tb, sy + (fy - sy) * tb, R * 0.12 * tb * Math.sin((i / (N - 1)) * Math.PI));
+        });
+        const geo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'centripetal'), 48, R * 0.05, 10, false);
+        pc.mesh.geometry.dispose();
+        pc.mesh.geometry = geo;
+      }
+    }
+    knot.scale.setScalar(Math.max(0.001, R * 0.09 * seg(p, 0.5, 0.6)));
+    lamp.scale.set(ab.w * 0.6, ab.h * 0.6, 1);
+    lampMat.uniforms.uA.value = 0.26 * seg(p, 0.4, 0.8);
+    const ce = seg(p, 0.6, 0.8);
+    if (care && Math.abs(ce - careDone) > 0.002) {
+      careDone = ce;
+      care.style.setProperty('--care', ce.toFixed(3));
+    }
+  };
+}
+
+// Builds the three scene groups and registers them. The WebGL classes are added only when all three are built, so the SVG art stays as the fallback otherwise.
+function setup567() {
+  if (!stage.ok) return;
+  try {
+    const g5 = new window.THREE.Group();
+    const g6 = new window.THREE.Group();
+    const g7 = new window.THREE.Group();
+    const u5 = build5(g5);
+    const u6 = build6(g6);
+    const u7 = build7(g7);
+    window.THREAD.register(5, { group: g5, update: u5, band: true });
+    window.THREAD.register(6, { group: g6, update: u6, band: true });
+    window.THREAD.register(7, { group: g7, update: u7, band: true });
+    root.classList.add('s5-gl', 's6-gl', 's7-gl');
+  } catch (err) {
+    report(err);
+  }
 }
 
 /* ===== Scenes 1 to 3 in 3D: paper cutouts pinned to the shared thread, a tangle, and a spool the thread wraps ===== */
@@ -2948,6 +3483,7 @@ function setupScenes() {
   setupScene6();
   setupScene7();
   setup123();
+  setup567();
 }
 
 function layoutArt() {
