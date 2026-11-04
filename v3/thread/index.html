@@ -1,0 +1,2390 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Shubham Gupta. Delhi.</title>
+<meta name="description" content="I build the AI that runs businesses. Verslay's only technical founder.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&amp;family=Outfit:wght@400;500;600&amp;display=swap">
+<script>(function(){var h=document.documentElement;h.classList.add('js');setTimeout(function(){if(!h.dataset.ready)h.classList.remove('js');},6000);})();</script>
+<style>
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#F1EADC;
+  --paper-hi:#FAF7F0;
+  --paper-lo:#E7DECC;
+  --paper-deep:#D6C9B0;
+  --ink:#1C1915;
+  --ink-2:#1C1915;
+  --ink-body:#1C1915;
+  --vermilion:#B8321E;
+  --thread-hi:#E0593F;
+  --wood:#8A5A34;
+  --brass:#A88B4A;
+  --shadow-cut:0 1px 1px rgba(28,25,21,.08),0 12px 24px -10px rgba(28,25,21,.30);
+  --shadow-lift:0 2px 3px rgba(28,25,21,.10),0 28px 44px -16px rgba(28,25,21,.40);
+  --f-display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --f-body:Outfit,"Helvetica Neue",Arial,system-ui,sans-serif;
+  --f-mono:Outfit,"Helvetica Neue",Arial,system-ui,sans-serif;
+  --gutter:20px;
+  --header-h:56px;
+  --s2:16px;
+  --s3:24px;
+}
+@media (min-width:1024px){:root{--gutter:64px;--header-h:64px}}
+
+html{background:var(--paper);-webkit-text-size-adjust:100%}
+body{margin:0;background-color:var(--paper);background-image:var(--paper-noise,none);background-size:220px 220px;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+@media (min-width:1024px){body{font-size:17px}}
+main{display:block;overflow-x:clip}
+h1,h2,p,figure{margin:0}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+
+/* Top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--header-h);display:flex;align-items:center;justify-content:flex-end;padding:0 var(--gutter);background:var(--paper);border-bottom:1px solid rgba(20,20,20,.14)}
+.brand{font-family:var(--f-body);font-weight:600;font-size:15px;letter-spacing:.01em}
+.top-cta{font-family:var(--f-body);font-weight:500;font-size:16px;white-space:nowrap;padding:8px 0;text-decoration-line:underline;text-decoration-color:var(--vermilion);text-decoration-thickness:2px;text-underline-offset:6px}
+
+/* Scenes and sticky stages */
+.scene{position:relative;height:200vh;overflow-x:clip}
+.scene--close{height:200vh}
+@media (max-width:600px){.scene,.scene--close{height:150vh}}
+.stage{position:sticky;top:0;height:100vh;height:100svh;padding-top:var(--header-h);display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,55svh) minmax(0,1fr)}
+.stage.s5{grid-template-rows:minmax(0,58svh) minmax(0,1fr)}
+.stage.s0{grid-template-rows:minmax(0,50svh) minmax(0,1fr)}
+.stage.s6{grid-template-rows:minmax(0,70svh) minmax(0,1fr)}
+.copy{grid-row:2;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:var(--s3) var(--gutter);position:relative}
+.art{grid-row:1;position:relative;min-width:0;min-height:0;overflow:hidden}
+/* Beats stack in normal flow: a revealed line keeps its place until its scene ends. */
+.beats{display:flex;flex-direction:column;min-width:0}
+.beat{min-width:0}
+@media (min-width:1024px){
+  .stage{grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:minmax(0,1fr);column-gap:24px;padding-left:var(--gutter);padding-right:0}
+  .stage.s0,.stage.s5,.stage.s6{grid-template-rows:minmax(0,1fr)}
+  .copy{grid-column:1 / span 6;grid-row:1;padding:0}
+  .art{grid-column:7 / -1;grid-row:1}
+}
+@media (min-width:1280px){
+  .copy{grid-column:1 / span 5}
+  .art{grid-column:6 / -1}
+}
+
+/* Type */
+.eyebrow{font-family:var(--f-mono);font-size:13px;line-height:1.5;letter-spacing:.02em;color:var(--ink-2);margin:0 0 var(--s3)}
+.name{font-family:var(--f-display);font-weight:800;font-size:clamp(48px,15vw,220px);line-height:1;letter-spacing:.06em;margin:0 0 var(--s3);text-shadow:0 -1px 1px rgba(28,25,21,.32),0 1px 0 rgba(255,255,255,.6)}
+@media (min-width:1024px){.name{font-size:clamp(56px,6.6vw,128px)}}
+.headline{font-family:var(--f-display);font-weight:400;font-style:italic;font-size:clamp(20px,5.6vw,26px);line-height:1.3;letter-spacing:-.01em;margin:0 0 var(--s3)}
+@media (min-width:1024px){.headline{font-size:clamp(20px,1.8vw,26px);max-width:30ch}}
+.line{font-family:var(--f-display);font-weight:400;font-size:clamp(30px,7.6vw,40px);line-height:1.2;letter-spacing:-.02em;margin:0 0 var(--s3)}
+@media (min-width:1024px){.line{font-size:clamp(44px,4.2vw,72px)}}
+.body{font-family:var(--f-body);font-weight:400;font-size:16px;line-height:1.6;color:var(--ink-body);max-width:52ch;margin:0 0 var(--s2)}
+@media (min-width:1024px){.body{font-size:18px;max-width:60ch}}
+.small{font-family:var(--f-body);font-size:18px;line-height:1.5;color:var(--ink);margin:var(--s2) 0 0}
+.lbl{display:block;margin-top:8px;font-family:var(--f-mono);font-size:15px;line-height:1.4;letter-spacing:.02em;color:var(--ink)}
+.note{font-family:var(--f-display);font-style:italic;font-weight:400;font-size:clamp(20px,2vw,26px);line-height:1.35;color:var(--ink);margin:0 0 var(--s3)}
+.tag-paper{display:inline-block;background:var(--paper-hi);color:var(--ink);box-shadow:var(--shadow-cut);padding:8px 12px;font-family:var(--f-body);font-size:15px;line-height:1.4;letter-spacing:.02em}
+
+/* Copy reveal: JS writes --t (0 to 1) per element */
+.js .rv{opacity:var(--t,0)}
+.js p.rv,.js h1.rv,.js h2.rv{transform:translate3d(0,calc((1 - var(--t,0)) * 14px),0)}
+
+/* Hero */
+.hero-canvas{position:absolute;inset:0}
+.hero-canvas canvas{display:block;width:100%;height:100%}
+.hero-fallback{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hero-ink{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.hero-sentence{fill:none;stroke:none}
+.hero-text{font-family:var(--f-display);font-style:italic;font-weight:400;font-size:24px;letter-spacing:0;fill:var(--ink)}
+.hero-string{fill:none;stroke:var(--ink);stroke-width:1.5px}
+.hero-tag{opacity:0;transform-origin:50% 0}
+@media (max-width:1023px){.hero-text{font-size:18px}}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Anchors: tiny markers the thread engine reads */
+.a{position:absolute;width:4px;height:4px;pointer-events:none;opacity:0}
+
+/* One shared WebGL canvas, fixed behind everything (z-index 0). Page content sits above it. */
+.stage-canvas{position:fixed;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+.is-nogl .stage-canvas{display:none}
+main,.foot{position:relative;z-index:1}
+.s-note{position:absolute;margin:0;font-family:var(--f-body);font-size:15px;line-height:1.35;letter-spacing:.02em;color:var(--ink);white-space:nowrap}
+.woven{position:absolute;display:inline-block;background:var(--paper-hi);color:var(--ink);box-shadow:var(--shadow-cut);padding:8px 12px;font-family:var(--f-body);font-size:15px;line-height:1.35;outline:1.5px dashed var(--ink);outline-offset:-6px}
+.stitch-word{position:absolute;font-family:var(--f-body);font-size:15px;letter-spacing:.02em;color:var(--paper-hi);background:var(--vermilion);padding:4px 8px;border-radius:3px}
+.swatch-cap{font-family:var(--f-body);font-size:16px;line-height:1.5;color:var(--ink);margin:0}
+.hem{font-family:var(--f-display);font-style:italic;font-size:clamp(20px,2.2vw,26px);line-height:1.35;color:var(--ink);margin:var(--s3) 0 0;padding-top:12px;border-top:2px dashed var(--vermilion)}
+
+/* Thread overlay (fixed, drawn by the page engine) */
+.thread{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:30;overflow:visible}
+.thread-line{fill:none;stroke:var(--vermilion);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.thread-hi{fill:none;stroke:var(--thread-hi);stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+.needle-halo{fill:var(--vermilion);fill-opacity:.18}
+.needle-dot{fill:var(--vermilion)}
+
+/* Paper cutouts and ink */
+.cut{position:relative;margin:0;min-width:0;background:var(--paper-hi);border-radius:4px;box-shadow:var(--shadow-cut);padding:14px;transform:translate3d(0,calc(var(--lift,0) * -10px),0)}
+.cut::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:var(--shadow-lift);opacity:var(--lift,0);pointer-events:none}
+.cut > svg{display:block;width:100%;height:auto;overflow:visible}
+.ink{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.ink .f{fill:var(--paper-lo)}
+.ink .solid{fill:var(--ink)}
+.ink .v{stroke:var(--vermilion)}
+.ink .vf{fill:var(--vermilion)}
+.draw{stroke-dasharray:1 1}
+.local{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.pin{position:absolute;top:-10px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--ink);box-shadow:0 4px 5px rgba(20,20,20,.35)}
+.pin::after{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:var(--paper-hi)}
+
+/* Scene 1: motif cards in a zigzag */
+.zig{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:5% 6%;padding:11% 9%;place-items:center}
+.zig .cut{width:100%;max-width:300px}
+.zig .cut:nth-child(2){margin-top:14%}
+.zig .cut:nth-child(3){margin-bottom:14%}
+
+/* Scene 2: five pinned cutouts */
+.glue .cut{position:absolute;width:31%;padding:10px 10px 12px}
+.glue .g1{left:5%;top:8%;rotate:-2.5deg}
+.glue .g2{left:40%;top:5%;rotate:2deg}
+.glue .g3{left:12%;top:42%;rotate:1.5deg}
+.glue .g4{left:52%;top:40%;rotate:-1.5deg}
+.glue .g5{left:30%;top:70%;rotate:-0.5deg}
+
+/* Scene 3: ring of cutouts around a spool */
+.ring{position:absolute;inset:0}
+.ring .cut{position:absolute;left:50%;top:50%;width:min(200px,38%);padding:10px 10px 12px;transform:translate(-50%,-50%) translate(var(--x,0px),var(--y,0px)) rotate(var(--r,0deg))}
+.spool{position:absolute;left:50%;top:50%;width:min(180px,30%);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
+.spool > svg{display:block;width:100%;height:auto;overflow:visible}
+.spool .lbl{margin-top:10px;color:var(--ink)}
+
+/* Scene 4: the loom. WebGL draws the cloth, beams, heddles and clasp; the 2D canvas and SVG clasp are the no-WebGL fallback. */
+.loom{position:absolute;inset:0;display:flex;flex-direction:column;padding:12% 12% 10%}
+.warp-labels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-family:var(--f-mono);font-size:15px;line-height:1.4;letter-spacing:.02em;color:var(--ink);text-align:center;margin-bottom:10px}
+.loom-slot{position:relative;flex:1 1 0;min-height:0;width:100%}
+.loom-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
+.emb-line{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);margin:0;padding:.3em .7em;background:var(--vermilion);color:var(--paper-hi);text-align:center;outline:1.5px dashed var(--paper-hi);outline-offset:-7px;clip-path:inset(0 calc((1 - var(--k,0)) * 100%) 0 0)}
+.padlock{position:absolute;right:9%;bottom:9%;width:clamp(84px,22%,120px);padding:10px}
+.s4-gl:not(.is-nogl) .loom-canvas{display:none}
+.s4-gl:not(.is-nogl) .padlock{background:transparent;box-shadow:none}
+.s4-gl:not(.is-nogl) .padlock .ink{visibility:hidden}
+@media (min-width:1024px){.stage.s4 .art{grid-column:1 / -1}}
+@media (max-width:600px){.loom .woven{position:static;align-self:flex-start;margin-top:10px;font-size:16px;line-height:1.35}}
+
+/* Scene 5: three stitched vignettes */
+.trio{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:12% 6%;align-content:center}
+.card3{display:flex;flex-direction:column;gap:12px;padding:14px}
+.card3 > svg{width:100%;height:auto}
+.card3 figcaption{font-size:16px;line-height:1.5;color:var(--ink)}
+
+/* Scene 6: nine-patch quilt */
+.quilt{position:absolute;top:0;bottom:0;left:50%;width:min(100%,540px);transform:translateX(-50%);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:8% 0;align-content:center}
+.patch{position:relative;background:var(--paper-hi);box-shadow:var(--shadow-cut);padding:8px 8px 10px;transform:translate3d(var(--qx,0px),var(--qy,0px),0)}
+.js .patch{opacity:var(--qo,0)}
+.patch > svg{display:block;width:100%;height:auto}
+.patch::after{content:"";position:absolute;inset:5px;border:1.5px dashed var(--ink);opacity:var(--st,0);pointer-events:none}
+.patch .tag{display:block;margin-top:8px;font-family:var(--f-mono);font-size:15px;line-height:1.35;letter-spacing:.02em;color:var(--ink)}
+
+/* Scene 7: bow and the close */
+.bow-wrap{position:absolute;left:50%;top:50%;width:min(72%,440px);transform:translate(-50%,-50%)}
+.bow-wrap > svg{display:block;width:100%;height:auto;overflow:visible}
+.patch-btn{position:relative;display:inline-block;font-family:var(--f-body);font-weight:600;font-size:22px;line-height:1.2;letter-spacing:.02em;color:var(--paper);background:var(--vermilion);border-radius:4px;box-shadow:var(--shadow-cut);padding:16px 28px;text-decoration:none;white-space:nowrap;outline:1.5px dashed rgba(241,234,220,.85);outline-offset:-7px}
+.patch-btn:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+@media (min-width:1024px){.patch-btn{font-size:24px}}
+.care{position:relative;max-width:46ch;margin:var(--s3) 0 0;padding:16px 18px;background:var(--paper-hi);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;box-shadow:var(--shadow-cut);outline:1.5px dashed var(--ink);outline-offset:-7px}
+@media (min-width:1024px){.care{font-size:18px}}
+.cta{margin:0}
+/* Brass is used only for the clasp (the padlock) */
+.padlock .ink{stroke:var(--brass)}
+.padlock .solid{fill:var(--brass)}
+
+/* Footer */
+.foot{padding:40px var(--gutter) 56px;border-top:1px solid rgba(20,20,20,.14);color:var(--ink-2);font-size:16px;line-height:1.6}
+.foot p{max-width:68ch;margin:0 0 12px}
+.foot .who{color:var(--ink);font-weight:600}
+
+/* Mobile: art on top, copy below */
+@media (max-width:1023px){
+  /* Copy takes its natural height so every revealed line fits; the art takes the rest. */
+  .stage,.stage.s0,.stage.s5,.stage.s6{grid-template-rows:minmax(0,1fr) auto}
+  .copy{padding:var(--s2) var(--gutter)}
+  .trio{grid-template-columns:1fr;gap:10px;padding:3%;align-content:center}
+  .card3{flex-direction:row;align-items:center;gap:12px;padding:10px}
+  .card3 > svg{width:30%;flex:0 0 auto}
+  .card3 figcaption{flex:1 1 auto}
+  .quilt{gap:10px;padding:4% 6%}
+  .glue .cut{width:33%}
+  .ring .cut{width:118px;padding:8px}
+}
+
+/* Reduced motion: every scene static and fully readable */
+.is-static .scene,.is-static .scene--close{height:auto}
+.is-static .stage{position:relative;height:auto;min-height:100svh;grid-template-rows:auto auto}
+.is-static .beats{display:block}
+.is-static .beat{grid-area:auto}
+.is-static .art{min-height:72svh}
+.is-static .thread{display:none}
+.thread3d .thread{display:none}
+.is-static .rv{opacity:1!important;transform:none!important}
+.is-static .patch-btn{box-shadow:var(--shadow-cut)}
+</style>
+</head>
+<body>
+<canvas class="stage-canvas" aria-hidden="true"></canvas>
+
+<header class="topbar">
+  <a class="top-cta" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+</header>
+
+<main>
+
+<!-- HERO: the knot -->
+<section class="scene" data-scene="0" aria-labelledby="hero-name">
+  <div class="stage s0">
+    <div class="copy">
+      <h1 id="hero-name" class="name rv" data-in="-0.5">SHUBHAM <br>GUPTA</h1>
+      <p class="sr-only">I build the AI that runs businesses.</p>
+    </div>
+    <div class="art" data-art="hero" aria-hidden="true">
+      <div class="hero-canvas"></div>
+      <svg class="hero-fallback" viewBox="-260 -460 520 920" preserveAspectRatio="xMidYMid meet" focusable="false" hidden>
+        <path class="hero-fb" d="" fill="none" stroke="#B8321E" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <svg class="hero-ink" aria-hidden="true" focusable="false">
+        <defs><clipPath id="hero-clip" clipPathUnits="userSpaceOnUse"><rect x="0" y="-400" width="0" height="1200"></rect></clipPath></defs>
+        <g class="hero-ink-g">
+          <path class="hero-sentence" id="hero-sentence" d=""></path>
+          <text class="hero-text" clip-path="url(#hero-clip)"><textPath href="#hero-sentence">I build the AI that runs businesses.</textPath></text>
+          <path class="hero-string" d=""></path>
+        </g>
+      </svg>
+      <span class="a" data-k="0" style="right:0;top:50%"></span>
+      <span class="tag-paper s-note hero-tag" style="left:74%;top:54%">Delhi.</span>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 1: where it started -->
+<section class="scene" data-scene="1" aria-labelledby="s1-line">
+  <div class="stage s1">
+    <div class="copy">
+      <div class="beats">
+        <div class="beat">
+          <h2 id="s1-line" class="line rv" data-in="0.64">I learned how a company sells before I built the machine that runs one.</h2>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s1" aria-hidden="true">
+      <div class="zig">
+        <figure class="cut c1">
+          <svg class="ink" viewBox="0 0 240 180" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M24 56H216V72a16 12 0 0 1-32 0a16 12 0 0 1-32 0a16 12 0 0 1-32 0a16 12 0 0 1-32 0a16 12 0 0 1-32 0a16 12 0 0 1-32 0Z"/>
+            <path class="draw" pathLength="1" d="M52 84V150M188 84V150M40 128H200"/>
+            <circle class="draw" pathLength="1" cx="82" cy="110" r="9"/>
+            <circle class="draw" pathLength="1" cx="112" cy="110" r="9"/>
+            <circle class="draw" pathLength="1" cx="142" cy="110" r="9"/>
+            <circle class="draw" pathLength="1" cx="172" cy="110" r="9"/>
+          </svg>
+          <figcaption class="lbl">marketing</figcaption>
+          <span class="a" data-k="1" style="right:4px;top:4px"></span>
+        </figure>
+        <figure class="cut c2">
+          <svg class="ink" viewBox="0 0 240 180" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M44 40H196L136 104V152L104 138V104Z"/>
+            <path class="draw" pathLength="1" d="M60 62H180"/>
+            <circle class="draw" pathLength="1" cx="108" cy="162" r="4"/>
+            <circle class="draw" pathLength="1" cx="120" cy="170" r="4"/>
+            <circle class="draw" pathLength="1" cx="132" cy="160" r="4"/>
+          </svg>
+          <figcaption class="lbl">funnels</figcaption>
+          <span class="a" data-k="2" style="left:4px;top:4px"></span>
+        </figure>
+        <figure class="cut c3">
+          <svg class="ink" viewBox="0 0 240 180" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M36 24V150H212"/>
+            <path class="draw" pathLength="1" d="M48 132C80 130 98 112 124 104S170 74 200 46"/>
+            <circle class="draw" pathLength="1" cx="124" cy="104" r="5"/>
+            <circle class="draw" pathLength="1" cx="170" cy="74" r="5"/>
+            <path class="draw" pathLength="1" d="M190 42L202 46L196 58"/>
+          </svg>
+          <figcaption class="lbl">growth</figcaption>
+          <span class="a" data-k="3" style="right:4px;bottom:4px"></span>
+        </figure>
+        <figure class="cut c4">
+          <svg class="ink" viewBox="0 0 240 180" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M64 130a56 16 0 1 0 112 0a56 16 0 1 0-112 0M64 94V130M176 94V130"/>
+            <path class="draw" pathLength="1" d="M64 112a56 16 0 1 0 112 0a56 16 0 1 0-112 0"/>
+            <path class="draw" pathLength="1" d="M64 94a56 16 0 1 0 112 0a56 16 0 1 0-112 0"/>
+          </svg>
+          <figcaption class="lbl">clients</figcaption>
+          <span class="a" data-k="4" style="left:4px;bottom:4px"></span>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 2: what I kept seeing -->
+<section class="scene" data-scene="2" aria-label="The glue">
+  <div class="stage s2">
+    <div class="copy">
+      <div class="beats">
+        <div class="beat">
+          <p class="note rv" data-in="0.30">None of them remembered the others.</p>
+        </div>
+        <div class="beat">
+          <h2 class="line rv" data-in="0.66">Orchestration is the bottleneck.</h2>
+        </div>
+      </div>
+    </div>
+    <div class="art glue" data-art="s2" aria-hidden="true">
+        <figure class="cut g1">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M24 62L40 34H160L176 62"/>
+            <path class="draw" pathLength="1" d="M24 62H176V132H24Z"/>
+            <path class="draw" pathLength="1" d="M84 132V92H116V132"/>
+          </svg>
+          <figcaption class="lbl">store</figcaption>
+          <span class="pin"></span>
+        </figure>
+        <figure class="cut g2">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M52 22H150V138H52Z"/>
+            <path class="draw" pathLength="1" d="M52 22V138"/>
+            <path class="draw" pathLength="1" d="M70 52H132M70 74H132M70 96H132M70 118H118"/>
+          </svg>
+          <figcaption class="lbl">ledger</figcaption>
+          <span class="pin"></span>
+        </figure>
+        <figure class="cut g3">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M20 84L40 46H160L180 84V124H20Z"/>
+            <path class="draw" pathLength="1" d="M20 84H66L76 98H124L134 84H180"/>
+          </svg>
+          <figcaption class="lbl">inbox</figcaption>
+          <span class="pin"></span>
+        </figure>
+        <figure class="cut g4">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M56 16H132L154 38V134H56Z"/>
+            <path class="draw" pathLength="1" d="M132 16V38H154"/>
+            <path class="draw" pathLength="1" d="M72 56H138M72 78H138M72 100H138M72 120H116"/>
+          </svg>
+          <figcaption class="lbl">sheet</figcaption>
+          <span class="pin"></span>
+        </figure>
+        <figure class="cut g5">
+          <svg class="ink" viewBox="0 0 200 150" aria-hidden="true">
+            <path class="draw" pathLength="1" d="M34 30H166V138H34Z"/>
+            <path class="draw" pathLength="1" d="M34 56H166M70 14V42M130 14V42"/>
+            <path class="draw" pathLength="1" d="M56 80H84M100 80H128M56 102H84M100 102H128M56 124H84"/>
+          </svg>
+          <figcaption class="lbl">calendar</figcaption>
+          <span class="pin"></span>
+          <span class="a" data-k="5" style="right:6px;top:50%"></span>
+        </figure>
+        <svg class="local" data-tangle aria-hidden="true"><g class="tangle"></g></svg>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 3: what I build -->
+<section class="scene" data-scene="3" aria-label="The layer">
+  <div class="stage s3">
+    <div class="copy">
+      <h2 class="line rv" data-in="0.02">So I build the layer that removes the glue.</h2>
+    </div>
+    <div class="art" data-art="s3" aria-hidden="true">
+      <div class="ring" data-ring>
+        <div class="spool" data-spool>
+          <svg class="ink" viewBox="0 0 200 240" aria-hidden="true">
+            <rect x="60" y="34" width="80" height="172" style="fill:var(--paper-deep)"/>
+            <g class="wound"></g>
+            <ellipse cx="100" cy="34" rx="78" ry="18" style="fill:var(--paper-deep)"/>
+            <ellipse cx="100" cy="206" rx="88" ry="22" style="fill:var(--paper-deep)"/>
+            <ellipse cx="100" cy="34" rx="22" ry="6" style="fill:var(--paper-hi)"/>
+          </svg>
+          <span class="lbl">one memory</span>
+          <span class="a" data-k="6" style="right:-4px;top:38%"></span>
+        </div>
+      </div>
+      <p class="s-note" style="left:4%;top:16%">tools load when needed</p>
+      <p class="s-note" style="right:4%;top:72%">a record of what ran</p>
+      <span class="tag-paper s-note" style="left:6%;bottom:6%;white-space:normal;max-width:30ch">A person approves anything that moves money, mail or a calendar.</span>
+      <svg class="local" data-threads aria-hidden="true"><g class="ths"></g></svg>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 4: Verslay -->
+<section class="scene" data-scene="4" aria-label="Verslay">
+  <div class="stage s4">
+    <div class="art" data-art="s4">
+      <div class="loom">
+        <div class="warp-labels"><span>memory</span><span>tools</span><span>agents</span><span>actions</span></div>
+        <div class="loom-slot" data-loom-slot>
+          <canvas class="loom-canvas" aria-hidden="true"></canvas>
+          <h2 id="s4-line" class="line emb-line">Verslay is where I proved it.</h2>
+        </div>
+        <span class="a" data-k="7" data-gutter="1" style="right:6%;top:58%"></span>
+        <span class="woven" style="left:6%;top:30%;max-width:min(62%,30ch)">Verslay's only technical founder.</span>
+        <span class="woven" style="left:10%;bottom:14%;max-width:min(62%,30ch)">40+ Indian businesses booked a Verslay demo.</span>
+      </div>
+      <figure class="cut padlock">
+        <svg class="ink" viewBox="0 0 80 96" aria-hidden="true">
+          <path class="draw" pathLength="1" d="M22 42V30a18 18 0 0 1 36 0V42"/>
+          <rect class="draw" pathLength="1" x="12" y="42" width="56" height="44" rx="4"/>
+          <circle class="solid" cx="40" cy="62" r="4"/>
+          <path d="M40 66V76"/>
+        </svg>
+        <span class="stitch-word" style="left:50%;bottom:-14px;transform:translateX(-50%)">vault</span>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 5: how I work -->
+<section class="scene" data-scene="5" aria-label="The approach">
+  <div class="stage s5">
+    <div class="copy">
+      <div class="beats">
+        <div class="beat">
+          <h2 class="line rv" data-in="0.66">Name the constraint. Then build the system around it.</h2>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s5" aria-hidden="true">
+      <div class="trio">
+        <figure class="cut card3" data-card="a">
+          <svg class="ink rs" viewBox="0 0 200 150" aria-hidden="true"></svg>
+          <figcaption class="swatch-cap">Store dues by hand. Now a payment engine.</figcaption>
+        </figure>
+        <figure class="cut card3" data-card="b">
+          <svg class="ink rs" viewBox="0 0 200 150" aria-hidden="true"></svg>
+          <figcaption class="swatch-cap">Orders one message at a time. Now an agent that sells.</figcaption>
+        </figure>
+        <figure class="cut card3" data-card="c">
+          <svg class="ink rs" viewBox="0 0 200 150" aria-hidden="true"></svg>
+          <figcaption class="swatch-cap">A voice note. Now tasks and a calendar.</figcaption>
+          <span class="a" data-k="8" data-gutter="1" style="right:-3px;top:50%"></span>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 6: who I work with -->
+<section class="scene" data-scene="6" aria-label="Who I build for">
+  <div class="stage s6">
+    <div class="copy">
+      <div class="beats">
+        <div class="beat">
+          <p class="hem rv" data-in="0.42">The operator should run the business. The system should carry the work.</p>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s6" aria-hidden="true">
+      <div class="quilt" data-quilt>
+        <figure class="patch" data-pattern="curls">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">D2C fashion</span>
+        </figure>
+        <figure class="patch" data-pattern="bows">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">gifting</span>
+        </figure>
+        <figure class="patch" data-pattern="diamonds">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">jewellery</span>
+        </figure>
+        <figure class="patch" data-pattern="petals">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">beauty</span>
+        </figure>
+        <figure class="patch" data-pattern="tiles">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">home decor</span>
+        </figure>
+        <figure class="patch" data-pattern="chevrons">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">fitness</span>
+        </figure>
+        <figure class="patch" data-pattern="weave">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">Textiles and B2B</span>
+        </figure>
+        <figure class="patch" data-pattern="grid">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">agencies</span>
+        </figure>
+        <figure class="patch" data-pattern="waves">
+          <svg class="ink" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <span class="tag">creators</span>
+          <span class="a" data-k="9" data-gutter="1" style="right:-3px;top:50%"></span>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 7: the close -->
+<section class="scene scene--close" data-scene="7" aria-label="Book a call">
+  <div class="stage s7">
+    <div class="copy">
+      <div class="beats">
+        <div class="beat">
+          <h2 class="line rv" data-in="0.04">Bring the operation.</h2>
+        </div>
+        <div class="beat">
+          <p class="cta rv" data-in="0.44"><a class="patch-btn" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call<span class="a" data-k="11" style="right:0;bottom:0.02em"></span><span class="a" data-k="12" data-line="1" style="left:0;bottom:0.02em"></span></a></p>
+          <p class="small rv" data-in="0.58">The appointment sits on LinkedIn.</p>
+          <p class="care rv" data-in="0.70">Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+        </div>
+      </div>
+    </div>
+    <div class="art" data-art="s7" aria-hidden="true">
+      <div class="bow-wrap">
+        <svg class="ink" viewBox="0 0 400 300" aria-hidden="true" style="stroke-width:3">
+          <path class="draw v" pathLength="1" d="M200 150C150 60 60 70 84 130C100 170 170 160 200 150Z"/>
+          <path class="draw v" pathLength="1" d="M200 150C250 60 340 70 316 130C300 170 230 160 200 150Z"/>
+          <path class="draw v" pathLength="1" d="M200 150C176 196 140 240 110 286"/>
+          <path class="draw v" pathLength="1" d="M200 150C224 196 260 240 290 286"/>
+          <circle class="draw v" pathLength="1" cx="200" cy="150" r="9"/>
+        </svg>
+        <span class="a" data-k="10" style="left:50%;top:50%"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p class="who">Shubham Gupta. Delhi.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+window.THREE = THREE;
+/* ===== Motion engine: one shared renderer, one ScrollTrigger per scene ===== */
+(() => {
+'use strict';
+
+const root = document.documentElement;
+const NS = 'http://www.w3.org/2000/svg';
+const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let staticMode = reduceQuery.matches;
+if (staticMode) root.classList.add('is-static');
+
+const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const smooth = (x) => { const t = clamp(x, 0, 1); return t * t * (3 - 2 * t); };
+const ramp = (p, a, d) => clamp((p - a) / d, 0, 1);
+const seg = (p, a, b) => smooth(ramp(p, a, b - a));
+const lerp = (a, b, t) => a + (b - a) * t;
+const report = (err) => { try { console.error(err); } catch (e) { /* ignore */ } };
+const FADE_IN = 0.07;
+const FADE_OUT = 0.05;
+
+
+const ART = {};
+const scenes = Array.from(document.querySelectorAll('[data-scene]')).map((el) => ({
+  el, n: Number(el.dataset.scene), p: 0, range: 1
+}));
+const byN = {};
+scenes.forEach((s) => { byN[s.n] = s; });
+
+const reveals = Array.from(document.querySelectorAll('[data-in]')).map((el) => {
+  const host = el.closest('[data-scene]');
+  return {
+    el,
+    s: byN[host ? Number(host.dataset.scene) : 0],
+    a: parseFloat(el.dataset.in),
+    b: Infinity, // data-out is ignored: once revealed, a line stays until its scene ends
+    last: -1
+  };
+});
+
+let mobile = window.innerWidth < 1024;
+let maxScroll = 1;
+let anchorEls = [];
+let dirty = true;
+let needMeasure = true;
+let running = false;
+let lastY = -1;
+
+// Fixed thread overlay: one path through the anchors, drawn by page progress.
+const thread = document.createElementNS(NS, 'svg');
+thread.setAttribute('class', 'thread');
+thread.setAttribute('aria-hidden', 'true');
+thread.setAttribute('focusable', 'false');
+const threadPath = document.createElementNS(NS, 'path');
+threadPath.setAttribute('class', 'thread-line');
+const threadHi = document.createElementNS(NS, 'path');
+threadHi.setAttribute('class', 'thread-hi');
+const needle = document.createElementNS(NS, 'g');
+const halo = document.createElementNS(NS, 'circle');
+halo.setAttribute('class', 'needle-halo');
+halo.setAttribute('r', '11');
+const dot = document.createElementNS(NS, 'circle');
+dot.setAttribute('class', 'needle-dot');
+dot.setAttribute('r', '3.6');
+needle.append(halo, dot);
+thread.append(threadPath, threadHi, needle);
+
+function safe(fn) { try { fn(); } catch (err) { report(err); } }
+
+// Paper fibre texture from canvas noise, set once as a CSS variable.
+function makePaper() {
+  const c = document.createElement('canvas');
+  c.width = 220;
+  c.height = 220;
+  const g = c.getContext('2d');
+  if (!g) return;
+  const img = g.createImageData(220, 220);
+  const d = img.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const v = 120 + Math.random() * 110;
+    d[i] = v;
+    d[i + 1] = v;
+    d[i + 2] = v;
+    d[i + 3] = 8 + Math.random() * 14;
+  }
+  g.putImageData(img, 0, 0);
+  g.strokeStyle = 'rgba(20,20,20,0.06)';
+  g.lineWidth = 0.6;
+  for (let k = 0; k < 70; k++) {
+    const x = Math.random() * 220;
+    const y = Math.random() * 220;
+    g.beginPath();
+    g.moveTo(x, y);
+    g.quadraticCurveTo(x + (Math.random() - 0.5) * 50, y + (Math.random() - 0.5) * 50,
+      x + (Math.random() - 0.5) * 80, y + (Math.random() - 0.5) * 80);
+    g.stroke();
+  }
+  root.style.setProperty('--paper-noise', 'url("' + c.toDataURL('image/png') + '")');
+}
+
+// Copy reveal: each element gets --t (0 to 1) from its own timeline.
+function revealAlpha(p, a, b) {
+  const inA = smooth(ramp(p, a, FADE_IN));
+  if (b === Infinity) return inA;
+  return inA * (1 - smooth(ramp(p, b, FADE_OUT)));
+}
+
+function writeReveals() {
+  for (const r of reveals) {
+    const v = Math.round(revealAlpha(r.s ? r.s.p : 0, r.a, r.b) * 1000) / 1000;
+    if (v !== r.last) {
+      r.last = v;
+      r.el.style.setProperty('--t', String(v));
+    }
+  }
+}
+
+function readAnchors() {
+  return anchorEls.map((el) => {
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, line: el.dataset.line === '1', gutter: el.dataset.gutter === '1' };
+  });
+}
+
+// Default: S-curves between anchors, inside the art column.
+// Gutter hops (both ends on a right-hand edge) and every phone hop run out to a
+// right-hand lane, so the thread never crosses a card, the quilt or the copy.
+function threadData(pts) {
+  const f = (n) => n.toFixed(1);
+  const lane = document.documentElement.clientWidth - (mobile ? 8 : 12);
+  let d = 'M' + f(pts[0].x) + ' ' + f(pts[0].y);
+  for (let i = 1; i < pts.length; i++) {
+    const a = pts[i - 1];
+    const b = pts[i];
+    const my = (a.y + b.y) / 2;
+    if (b.line) {
+      d += 'L' + f(b.x) + ' ' + f(b.y);
+    } else if (mobile || (a.gutter && b.gutter)) {
+      d += 'C' + f(a.x + (lane - a.x) * 0.5) + ' ' + f(a.y) + ' ' + f(lane) + ' ' + f(a.y) + ' ' + f(lane) + ' ' + f(my);
+      d += 'C' + f(lane) + ' ' + f(b.y) + ' ' + f(b.x + (lane - b.x) * 0.5) + ' ' + f(b.y) + ' ' + f(b.x) + ' ' + f(b.y);
+    } else {
+      d += 'C' + f(a.x) + ' ' + f(my) + ' ' + f(b.x) + ' ' + f(my) + ' ' + f(b.x) + ' ' + f(b.y);
+    }
+  }
+  return d;
+}
+
+function drawThread(pts, q) {
+  if (pts.length < 2) return;
+  const d = threadData(pts);
+  threadPath.setAttribute('d', d);
+  threadHi.setAttribute('d', d);
+  const len = threadPath.getTotalLength();
+  if (!(len > 0)) return;
+  threadPath.style.strokeDasharray = len + ' ' + len;
+  threadPath.style.strokeDashoffset = String(len * (1 - q));
+  threadHi.style.strokeDasharray = len + ' ' + len;
+  threadHi.style.strokeDashoffset = String(len * (1 - q));
+  const drawn = len * q;
+  if (drawn < 1) { needle.style.opacity = '0'; return; }
+  const pt = threadPath.getPointAtLength(Math.min(drawn, len));
+  needle.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ' ' + pt.y.toFixed(1) + ')');
+  needle.style.opacity = '1';
+}
+
+// Reads first (scene progress, anchors), writes second.
+function update() {
+  const forced = staticMode;
+  // s.p comes from each scene's ScrollTrigger (set to 1 in static mode), not from a rect read.
+  const pts = forced ? null : readAnchors();
+  const q = clamp(window.scrollY / maxScroll, 0, 1);
+  if (!forced) safe(writeReveals);
+  for (const s of scenes) {
+    const fn = ART[s.n];
+    if (fn) safe(() => fn(s.p, forced));
+  }
+  if (!forced) {
+    // The 3D strand holds the hero until it has slid off the right edge; the SVG thread then takes over.
+    thread.style.visibility = hero.art && hero.p < 0.985 ? 'hidden' : '';
+    safe(() => drawThread(pts, q));
+  }
+  // Reduced motion runs no frame loop, so the stage is drawn here for the still frame.
+  if (forced) safe(() => stageTick(performance.now()));
+}
+
+function measure() {
+  mobile = window.innerWidth < 1024;
+  // The thread completes when the close stage releases, so the footer does not delay it.
+  const foot = document.querySelector('.foot');
+  const endY = foot ? foot.offsetTop : document.documentElement.scrollHeight;
+  maxScroll = Math.max(1, endY - window.innerHeight);
+  buildThreadKeys();
+  resizeStage();
+  layoutArt();
+}
+
+// One page loop: GSAP's ticker runs Lenis and ScrollTrigger, then the shared stage draws.
+function frame() {
+  if (needMeasure) { needMeasure = false; dirty = true; safe(measure); }
+  const y = window.scrollY;
+  if (dirty || y !== lastY) { lastY = y; dirty = false; update(); }
+  safe(() => stageTick(performance.now()));
+}
+
+function rafFrame() {
+  if (!running || window.gsap) return;
+  frame();
+  requestAnimationFrame(rafFrame);
+}
+
+function start() {
+  if (running) return;
+  running = true;
+  if (window.gsap) gsap.ticker.add(frame);
+  else requestAnimationFrame(rafFrame);
+}
+
+function stop() {
+  running = false;
+  if (window.gsap) gsap.ticker.remove(frame);
+}
+
+let lenis = null;
+let lenisTick = null;
+
+// Lenis drives smooth scrolling. One ScrollTrigger per scene (scrub 0.6) feeds its progress into s.p.
+function setupScroll() {
+  if (staticMode || !window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+  if (window.Lenis && !lenis) {
+    lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    lenisTick = (t) => lenis.raf(t * 1000);
+    gsap.ticker.add(lenisTick);
+    gsap.ticker.lagSmoothing(0);
+  }
+  for (const s of scenes) {
+    const v = { p: 0 };
+    gsap.to(v, {
+      p: 1,
+      ease: 'none',
+      onUpdate: () => { s.p = v.p; dirty = true; },
+      scrollTrigger: { trigger: s.el, start: 'top top', end: 'bottom bottom', scrub: 0.6 }
+    });
+  }
+  ScrollTrigger.refresh();
+}
+
+function teardownScroll() {
+  if (lenisTick && window.gsap) { gsap.ticker.remove(lenisTick); lenisTick = null; }
+  if (lenis) { lenis.destroy(); lenis = null; }
+  if (window.ScrollTrigger) ScrollTrigger.getAll().forEach((st) => st.kill(false));
+}
+
+function onResize() {
+  needMeasure = true;
+  if (staticMode) safe(() => { measure(); update(); });
+}
+
+function onMotionChange(e) {
+  staticMode = e.matches;
+  root.classList.toggle('is-static', staticMode);
+  needMeasure = true;
+  if (staticMode) {
+    stop();
+    teardownScroll();
+    for (const s of scenes) s.p = 1;
+    safe(() => { measure(); update(); });
+  } else {
+    lastY = -1;
+    safe(setupScroll);
+    start();
+  }
+}
+
+function boot() {
+  safe(makePaper);
+  anchorEls = Array.from(document.querySelectorAll('[data-k]'))
+    .sort((a, b) => Number(a.dataset.k) - Number(b.dataset.k));
+  document.body.appendChild(thread);
+  try { initStage(); } catch (err) { report(err); setNoGL(); }
+  safe(setupScenes);
+  safe(setupHero);
+  if (staticMode) for (const s of scenes) s.p = 1;
+  safe(measure);
+  safe(update);
+  if (!staticMode) safe(setupScroll);
+  window.addEventListener('resize', onResize, { passive: true });
+  if (reduceQuery.addEventListener) reduceQuery.addEventListener('change', onMotionChange);
+  root.dataset.ready = '1';
+  if (!staticMode) start();
+}
+
+/* ===== Shared stage: ONE renderer, ONE scene, ONE camera. A paper-fibre shader sits behind everything. ===== */
+const stage = {
+  ok: false, renderer: null, scene: null, camera: null, paperMat: null,
+  bgScene: null, bgCam: null, blitScene: null, rt: null, groups: new Map()
+};
+const PAPER_VS = 'varying vec2 vUv;\nvoid main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }';
+const PAPER_FS = [
+  'precision highp float;',
+  'varying vec2 vUv;',
+  'uniform float uTime;',
+  'uniform float uPaperShade;',
+  'uniform float uCloth;',
+  'uniform vec2 uRes;',
+  'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
+  'float noise(vec2 p) {',
+  '  vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);',
+  '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);',
+  '}',
+  'float fbm(vec2 p) {',
+  '  float v = 0.0; float a = 0.5;',
+  '  for (int i = 0; i < 5; i++) { v += a * noise(p); p *= 2.02; a *= 0.5; }',
+  '  return v;',
+  '}',
+  'void main() {',
+  '  vec2 uv = vUv;',
+  '  vec2 p = vec2(uv.x * uRes.x / uRes.y, uv.y) * 3.0;',
+  '  vec2 drift = vec2(uTime * 0.006, -uTime * 0.004);',
+  '  float tooth = fbm(p * 2.2 + drift);',
+  '  float fib = noise(vec2(p.x * 0.35 + drift.x * 3.0, p.y * 28.0));',
+  '  float streak = smoothstep(0.80, 0.98, fib) * 0.045;',
+  '  float weave = (sin(p.x * 90.0) * sin(p.y * 90.0)) * 0.5 + 0.5;',
+  '  vec3 col = vec3(241.0, 234.0, 220.0) / 255.0;',
+  '  col = mix(col, vec3(250.0, 247.0, 240.0) / 255.0, uCloth * 0.5);',
+  '  col *= 1.0 - 0.035 * length(uv - vec2(0.0, 1.0));',
+  '  col -= (tooth - 0.5) * 0.035;',
+  '  col -= streak;',
+  '  col -= uCloth * (weave * 0.035 + 0.01);',
+  '  float vig = 1.0 - smoothstep(0.35, 1.05, length((uv - 0.5) * vec2(1.0, 1.1)));',
+  '  col *= mix(0.9, 1.0, vig);',
+  '  col *= 1.0 - uPaperShade;',
+  '  gl_FragColor = vec4(col, 1.0);',
+  '}'
+].join('\n');
+const BLIT_FS = 'uniform sampler2D tDiffuse;\nvarying vec2 vUv;\nvoid main() { gl_FragColor = texture2D(tDiffuse, vUv); }';
+
+function initStage() {
+  const THREE = window.THREE;
+  const canvas = document.querySelector('.stage-canvas');
+  if (!THREE || !canvas) throw new Error('stage unavailable');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+  renderer.autoClear = false;
+  renderer.setClearColor(0xf1eadc, 1);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  camera.position.set(0, 0, 14);
+  scene.add(new THREE.HemisphereLight(0xfff6e8, 0x8c7f6b, 1.1));
+  // One warm key light (about 3200K) raking from the top left: the only shadow-casting light on the site.
+  const key = new THREE.SpotLight(0xffd3a4, 150, 0, 0.55, 0.8, 2);
+  key.position.set(-5, 7, 9);
+  key.target.position.set(0, 0, 0);
+  key.castShadow = true;
+  const mapSize = window.innerWidth < 600 ? 512 : 1024;
+  key.shadow.mapSize.set(mapSize, mapSize);
+  key.shadow.camera.near = 4;
+  key.shadow.camera.far = 40;
+  key.shadow.bias = -0.0006;
+  scene.add(key, key.target);
+  // Paper background: a full-screen quad, drawn into a target that is half size on narrow screens.
+  const paperMat = new THREE.ShaderMaterial({
+    vertexShader: PAPER_VS,
+    fragmentShader: PAPER_FS,
+    depthTest: false,
+    depthWrite: false,
+    uniforms: {
+      uTime: { value: 0 },
+      uPaperShade: { value: 0 },
+      uCloth: { value: 0 },
+      uRes: { value: new THREE.Vector2(1, 1) }
+    }
+  });
+  const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), paperMat);
+  quad.frustumCulled = false;
+  const bgScene = new THREE.Scene();
+  bgScene.add(quad);
+  const bgCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const blitMat = new THREE.ShaderMaterial({
+    vertexShader: PAPER_VS,
+    fragmentShader: BLIT_FS,
+    depthTest: false,
+    depthWrite: false,
+    uniforms: { tDiffuse: { value: null } }
+  });
+  const blitQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), blitMat);
+  blitQuad.frustumCulled = false;
+  const blitScene = new THREE.Scene();
+  blitScene.add(blitQuad);
+  const rt = new THREE.WebGLRenderTarget(1, 1, {
+    depthBuffer: false,
+    minFilter: THREE.LinearFilter,
+    magFilter: THREE.LinearFilter
+  });
+  blitMat.uniforms.tDiffuse.value = rt.texture;
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); stage.ok = false; setNoGL(); }, false);
+  Object.assign(stage, { ok: true, renderer, scene, camera, paperMat, bgScene, bgCam, blitScene, rt });
+  buildSharedThread();
+  resizeStage();
+}
+
+function resizeStage() {
+  if (!stage.ok) return;
+  // Client size (no scrollbar): the canvas, the camera aspect and the DOM mapping use the same pixels.
+  const W = Math.max(1, document.documentElement.clientWidth);
+  const H = Math.max(1, document.documentElement.clientHeight);
+  const narrow = W < 600;
+  const pr = Math.min(window.devicePixelRatio || 1, narrow ? 1.25 : 1.75);
+  stage.renderer.setPixelRatio(pr);
+  stage.renderer.setSize(W, H, false);
+  stage.camera.aspect = W / H;
+  stage.camera.updateProjectionMatrix();
+  const scale = narrow ? 0.5 : 1;
+  const bw = Math.max(1, Math.round(W * pr * scale));
+  const bh = Math.max(1, Math.round(H * pr * scale));
+  stage.rt.setSize(bw, bh);
+  stage.paperMat.uniforms.uRes.value.set(bw, bh);
+}
+
+function registerGroup(index, group, update) {
+  stage.scene.add(group);
+  stage.groups.set(index, { group, update });
+}
+
+// A scene is near when its section overlaps the screen or sits within one viewport of it.
+function nearScreen(index) {
+  const s = byN[index];
+  if (!s) return false;
+  const r = s.el.getBoundingClientRect();
+  return r.bottom > -window.innerHeight && r.top < window.innerHeight * 2;
+}
+
+function stageTick(now) {
+  if (!stage.ok || document.hidden) return;
+  const r = stage.renderer;
+  stage.paperMat.uniforms.uTime.value = now / 1000;
+  // Camera and shared thread first; the scene groups then place themselves through the same camera.
+  const q = clamp(window.scrollY / maxScroll, 0, 1);
+  updateStageCamera(q);
+  updateSharedThread(q);
+  r.clear();
+  r.setRenderTarget(stage.rt);
+  r.render(stage.bgScene, stage.bgCam);
+  r.setRenderTarget(null);
+  r.render(stage.blitScene, stage.bgCam);
+  for (const [index, entry] of stage.groups) {
+    const near = nearScreen(index);
+    entry.group.visible = near;
+    if (near) entry.update(byN[index].p, now);
+  }
+  r.render(stage.scene, stage.camera);
+}
+
+function setNoGL() {
+  root.classList.add('is-nogl');
+  root.classList.remove('thread3d');
+  if (sharedThread.mesh) sharedThread.mesh.visible = false;
+  heroUseFallback();
+}
+
+window.THREAD = {
+  THREE: window.THREE,
+  get renderer() { return stage.renderer; },
+  get scene() { return stage.scene; },
+  get camera() { return stage.camera; },
+  get paper() { return stage.paperMat ? stage.paperMat.uniforms : null; },
+  register(index, opts) { registerGroup(index, opts.group, opts.update); }
+};
+
+/* ===== Shared camera and 3D mapping. Every 3D placement goes through worldAtPx, so dolly and orbit never move the art. ===== */
+// Scene keys 0 to 7: dolly distance R, orbit yaw (radians, around the look target), drift dx and dy.
+// tx and ty are the look target on the paper plane, taken from each scene's art box in buildThreadKeys.
+const CAM_KEY = {
+  R: [14.0, 13.7, 13.5, 13.4, 13.9, 14.4, 13.2, 12.8],
+  yaw: [0, 0.02, -0.02, 0.01, 0.07, 0, -0.02, -0.09],
+  dx: [0, 0.1, -0.15, 0.1, 0.25, -0.2, 0.15, 0],
+  dy: [0, -0.05, 0.1, 0, 0.12, -0.1, 0.08, 0],
+  tx: [0, 0, 0, 0, 0, 0, 0, 0],
+  ty: [0, 0, 0, 0, 0, 0, 0, 0]
+};
+// Global page progress (0 to 1) at which each scene is centred on screen. Set by buildThreadKeys.
+const KEY_Q = [0, 0, 0, 0, 0, 0, 0, 0];
+const TAU = Math.PI * 2;
+const TH_M = 24;        // control points on the thread
+const TH_T = 400;       // tubular segments
+const TH_RAD = 8;       // radial segments
+const TH_R = 0.05;      // tube radius, world units
+const THREAD_KEYS = []; // per scene: TH_M {x, y, z} points, screen pixels and depth in world units
+
+// Each shape maps s (0 to 1) to a point in its scene's art box: u and v from 0 to 1 (v downward), plus a depth z in world units.
+const triWave = (x) => (2 / Math.PI) * Math.asin(Math.sin(TAU * x));
+// Bow: a tail in, a figure eight of two loops, and a tail out. Every point is parametric.
+function bowShape(s) {
+  if (s < 0.12) { const k = s / 0.12; return { u: 0.34 + 0.16 * k, v: 0.92 - 0.42 * k, z: 0.25 * k }; }
+  if (s > 0.88) { const k = (s - 0.88) / 0.12; return { u: 0.5 + 0.16 * k, v: 0.5 + 0.42 * k, z: 0.25 * (1 - k) }; }
+  const th = Math.PI / 2 + (TAU * (s - 0.12)) / 0.76;
+  const c = Math.cos(th);
+  return { u: 0.5 + 0.3 * c, v: 0.5 + 0.22 * Math.sin(th) * c, z: 0.25 * Math.sin(th) };
+}
+const THREAD_SHAPE = [
+  (s) => ({ u: 1.35 - 0.9 * s, v: 0.5, z: 0 }),                                                              // hero: the strand the knot leaves
+  (s) => ({ u: 0.95 - 0.9 * s, v: 0.5 + 0.1 * Math.sin(TAU * 1.25 * s), z: 0.22 * Math.sin(TAU * 0.75 * s) }), // scene 1: gentle 3D wave
+  (s) => ({ u: 0.95 - 0.9 * s, v: 0.5 + 0.12 * Math.sin(TAU * 1.5 * s + 1), z: 0.25 * Math.cos(TAU * s) }),    // scene 2: wave past the pins
+  (s) => ({ u: 0.5 + 0.26 * Math.cos(TAU * 3 * s), v: 0.12 + 0.76 * s, z: 0.26 * Math.sin(TAU * 3 * s) }),    // scene 3: helix around the spool
+  (s) => ({ u: 0.03 + 0.94 * s, v: 0.5 + 0.01 * Math.sin(TAU * 6 * s), z: 0.1 * Math.sin(TAU * 6 * s) }),     // scene 4: one weft row
+  (s) => ({ u: 0.04 + 0.92 * s, v: 0.5 + 0.05 * Math.sin(TAU * 4 * s), z: 0.38 * Math.sin(TAU * 4 * s) }),    // scene 5: running stitch
+  (s) => ({ u: 0.08 + 0.84 * s, v: 0.5 + 0.3 * triWave(1.5 * s), z: 0.12 * Math.sin(TAU * 3 * s) }),          // scene 6: zigzag between patches
+  (s) => bowShape(s)                                                                                          // scene 7: bow loop
+];
+
+// Reads each scene's art box in stage space. Stages are sticky at the top, so the box offset inside its stage is its screen position while the scene is active.
+function buildThreadKeys() {
+  const W = Math.max(1, document.documentElement.clientWidth);
+  const H = Math.max(1, document.documentElement.clientHeight);
+  const halfH = 14 * Math.tan(Math.PI / 12); // half height of the view at distance 14, the base lens
+  for (let n = 0; n < 8; n++) {
+    const sc = byN[n];
+    if (!sc) continue;
+    const secTop = sc.el.getBoundingClientRect().top + window.scrollY;
+    KEY_Q[n] = clamp((secTop + (sc.el.offsetHeight - H) / 2) / maxScroll, 0, 1);
+    const stageEl = sc.el.querySelector('.stage');
+    const art = sc.el.querySelector('[data-art]');
+    let box = { x: W * 0.5, y: H * 0.3, w: W * 0.4, h: H * 0.4 };
+    if (stageEl && art) {
+      const sr = stageEl.getBoundingClientRect();
+      const ar = art.getBoundingClientRect();
+      box = { x: ar.left - sr.left, y: ar.top - sr.top, w: ar.width, h: ar.height };
+    }
+    CAM_KEY.tx[n] = ((box.x + box.w / 2) / W * 2 - 1) * halfH * (W / H);
+    CAM_KEY.ty[n] = (1 - (box.y + box.h / 2) / H * 2) * halfH;
+    const keys = [];
+    for (let j = 0; j < TH_M; j++) {
+      const sp = THREAD_SHAPE[n](j / (TH_M - 1));
+      keys.push({ x: box.x + sp.u * box.w, y: box.y + sp.v * box.h, z: sp.z });
+    }
+    THREAD_KEYS[n] = keys;
+  }
+  buildCameraSpline();
+}
+
+// Lower scene key index for progress q, and the eased weight toward the next key.
+function keySpan(q) {
+  if (q <= KEY_Q[0]) return [0, 0];
+  if (q >= KEY_Q[7]) return [6, 1];
+  let i = 0;
+  while (i < 6 && q >= KEY_Q[i + 1]) i++;
+  const span = KEY_Q[i + 1] - KEY_Q[i];
+  return [i, span > 1e-6 ? smooth((q - KEY_Q[i]) / span) : 1];
+}
+
+// World point under a screen pixel, on the plane at world depth z, through the live camera.
+function worldAtPx(px, py, z) {
+  const THREE = window.THREE;
+  const cam = stage.camera;
+  const W = Math.max(1, document.documentElement.clientWidth);
+  const H = Math.max(1, document.documentElement.clientHeight);
+  const d = new THREE.Vector3((px / W) * 2 - 1, 1 - (py / H) * 2, 0.5).unproject(cam).sub(cam.position).normalize();
+  return cam.position.clone().addScaledVector(d, (z - cam.position.z) / d.z);
+}
+
+// Screen pixels per world unit at the depth of point pt (square pixels, 30 degree lens).
+function pxPerUnitAt(pt) {
+  const THREE = window.THREE;
+  const cam = stage.camera;
+  const H = Math.max(1, document.documentElement.clientHeight);
+  const dir = cam.getWorldDirection(new THREE.Vector3());
+  const depth = Math.max(0.5, pt.clone().sub(cam.position).dot(dir));
+  return H / (2 * Math.tan(cam.fov * Math.PI / 360) * depth);
+}
+
+// Camera path: one CatmullRom spline through the eight scene keys (dolly, orbit and drift), plus a spline for the look target.
+const camSpline = { pos: null, look: null, pa: null, la: null };
+function buildCameraSpline() {
+  const THREE = window.THREE;
+  const pos = [];
+  const look = [];
+  for (let n = 0; n < 8; n++) {
+    const R = CAM_KEY.R[n];
+    const yaw = CAM_KEY.yaw[n];
+    pos.push(new THREE.Vector3(CAM_KEY.tx[n] + CAM_KEY.dx[n] + R * Math.sin(yaw), CAM_KEY.ty[n] + CAM_KEY.dy[n], R * Math.cos(yaw)));
+    look.push(new THREE.Vector3(CAM_KEY.tx[n], CAM_KEY.ty[n], 0));
+  }
+  camSpline.pos = new THREE.CatmullRomCurve3(pos, false, 'centripetal');
+  camSpline.look = new THREE.CatmullRomCurve3(look, false, 'centripetal');
+  camSpline.pa = new THREE.Vector3();
+  camSpline.la = new THREE.Vector3();
+}
+
+// The camera sits on the spline at progress q and looks at the target spline, which follows the active scene's art.
+function updateStageCamera(q) {
+  if (!camSpline.pos) return;
+  const cam = stage.camera;
+  const [i, w] = keySpan(q);
+  const t = (i + w) / 7; // spline parameter: scene key n sits exactly at n / 7
+  cam.position.copy(camSpline.pos.getPoint(t, camSpline.pa));
+  cam.lookAt(camSpline.look.getPoint(t, camSpline.la));
+  cam.updateMatrixWorld();
+}
+
+/* ===== The shared thread: one tube owned by the stage. Control points morph with page progress; the hero hands over its strand. ===== */
+const sharedThread = { mesh: null, geo: null, curve: null, pts: null, ready: false };
+const threadTmp = { p: null, t: null };
+
+function buildSharedThread() {
+  const THREE = window.THREE;
+  // Starts as a short straight line so the first frames are well defined; every frame then rewrites the buffers in place.
+  sharedThread.pts = Array.from({ length: TH_M }, (_, j) => new THREE.Vector3(j * 0.01, 0, 0));
+  sharedThread.curve = new THREE.CatmullRomCurve3(sharedThread.pts, false, 'centripetal');
+  sharedThread.geo = new THREE.TubeGeometry(sharedThread.curve, TH_T, TH_R, TH_RAD, false);
+  const fibre = heroPlyTexture();
+  if (fibre) fibre.repeat.set(24, 1);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0xb8321f,
+    roughness: 0.55,
+    metalness: 0,
+    normalMap: fibre,
+    normalScale: new THREE.Vector2(0.4, 0.4),
+    side: THREE.DoubleSide
+  });
+  sharedThread.mesh = new THREE.Mesh(sharedThread.geo, material);
+  sharedThread.mesh.frustumCulled = false;
+  sharedThread.mesh.visible = false;
+  stage.scene.add(sharedThread.mesh);
+  sharedThread.ready = true;
+  root.classList.add('thread3d');
+}
+
+// Control points for progress q, then the tube rebuilt in place: same topology, parallel-transport frames, no new buffers.
+function updateSharedThread(q) {
+  const st = sharedThread;
+  if (!st.ready) return;
+  // The hero knot keeps its own mesh until its strand has slid off the right edge; the shared thread waits for that.
+  const hidden = staticMode || (hero.mode === 'webgl' && hero.pe < 0.985);
+  st.mesh.visible = !hidden;
+  if (hidden) return;
+  const [i, w] = keySpan(q);
+  const A = THREAD_KEYS[i];
+  const B = THREAD_KEYS[i + 1];
+  if (!A || !B) return;
+  for (let j = 0; j < TH_M; j++) {
+    const a = A[j];
+    const b = B[j];
+    st.pts[j].copy(worldAtPx(lerp(a.x, b.x, w), lerp(a.y, b.y, w), lerp(a.z, b.z, w)));
+  }
+  const THREE = window.THREE;
+  threadTmp.p = threadTmp.p || new THREE.Vector3();
+  threadTmp.t = threadTmp.t || new THREE.Vector3();
+  const P = threadTmp.p;
+  const T = threadTmp.t;
+  const pos = st.geo.attributes.position.array;
+  const nor = st.geo.attributes.normal.array;
+  let nx = 0, ny = 0, nz = 0, have = false;
+  for (let k = 0; k <= TH_T; k++) {
+    const u = k / TH_T;
+    st.curve.getPoint(u, P);
+    st.curve.getTangent(u, T);
+    const tx = T.x, ty = T.y, tz = T.z;
+    if (have) {
+      const dot = nx * tx + ny * ty + nz * tz;
+      nx -= dot * tx; ny -= dot * ty; nz -= dot * tz;
+    }
+    let len = Math.hypot(nx, ny, nz);
+    if (!have || len < 1e-6) {
+      // Reference axis: y, or x when the tangent is nearly vertical.
+      const useY = Math.abs(ty) < 0.9;
+      const dd = useY ? ty : tx;
+      nx = (useY ? 0 : 1) - dd * tx;
+      ny = (useY ? 1 : 0) - dd * ty;
+      nz = -dd * tz;
+      len = Math.hypot(nx, ny, nz);
+      have = true;
+    }
+    nx /= len; ny /= len; nz /= len;
+    const bx = ty * nz - tz * ny;
+    const by = tz * nx - tx * nz;
+    const bz = tx * ny - ty * nx;
+    for (let r = 0; r <= TH_RAD; r++) {
+      const ang = (r / TH_RAD) * TAU;
+      const ca = Math.cos(ang);
+      const sa = Math.sin(ang);
+      const ox = ca * nx + sa * bx;
+      const oy = ca * ny + sa * by;
+      const oz = ca * nz + sa * bz;
+      const v = (k * (TH_RAD + 1) + r) * 3;
+      nor[v] = ox; nor[v + 1] = oy; nor[v + 2] = oz;
+      pos[v] = P.x + TH_R * ox; pos[v + 1] = P.y + TH_R * oy; pos[v + 2] = P.z + TH_R * oz;
+    }
+  }
+  st.geo.attributes.position.needsUpdate = true;
+  st.geo.attributes.normal.needsUpdate = true;
+}
+
+/* ===== Hero: a (3,7) torus knot unties into a horizontal thread (three.js, SVG fallback) ===== */
+// Local units: knot outer radius 2.2, tube radius 0.06. hero.pxu is screen pixels per local unit,
+// so the WebGL knot and the SVG fallback draw the same pose at the same size.
+const hero = {
+  mode: 'none', p: 0, pe: 0, lastPe: -1, dirty: true, K: null, buf: null,
+  art: null, host: null, fbSvg: null, fbPath: null,
+  ink: null, inkG: null, sentPath: null, clipRect: null, string: null, tag: null,
+  group: null, mesh: null, material: null, visible: true, bw: 0, bh: 0
+};
+ART[0] = heroSet;
+
+// Untie factor per knot sample: 0 is the loose knot, 1 is the straight strand.
+// Samples nearer the start let go first, so the strand is drawn out in order.
+function heroUntie(s, pe) {
+  return smooth((pe - 0.2 - 0.25 * s) / 0.3);
+}
+
+// Screen metrics of the art column. half is the local half-length that reaches both edges.
+function heroMetrics() {
+  const r = hero.art.getBoundingClientRect();
+  const bw = Math.max(1, r.width);
+  const bh = Math.max(1, r.height);
+  const pxu = clamp(Math.min(bh / 14, bw / 9), 38, 66);
+  return { cx: r.left + bw / 2, cy: r.top + bh / 2, bw, bh, pxu, half: bw / 2 / pxu };
+}
+
+// The pose at progress pe: knot samples blended toward the strand. 600 samples, 300 on mobile.
+function heroPoints(m, pe) {
+  const N = mobile ? 300 : 600;
+  const K = hero.K;
+  const stride = K.length / 3 / N;
+  if (!hero.buf || hero.buf.length !== N) {
+    hero.buf = Array.from({ length: N }, () => ({ x: 0, y: 0, z: 0 }));
+  }
+  const k = seg(pe, 0.9, 1); // at the very end the strand slides out to the right
+  const left = -m.half + 2.4 * m.half * k;
+  const right = m.half + 2.4 * m.half * k;
+  for (let j = 0; j < N; j++) {
+    const s = j / (N - 1);
+    const f = heroUntie(s, pe);
+    const i3 = j * stride * 3;
+    const q = hero.buf[j];
+    q.x = K[i3] + (lerp(left, right, s) - K[i3]) * f;
+    q.y = K[i3 + 1] * (1 - f);
+    q.z = K[i3 + 2] * (1 - f);
+  }
+  return hero.buf;
+}
+
+// TubeGeometry with 6 radial segments: about 7k triangles on desktop, half that on mobile.
+function heroBuildTube(m, pe) {
+  const THREE = window.THREE;
+  const pts = heroPoints(m, pe).map((q) => new THREE.Vector3(q.x, q.y, q.z));
+  const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
+  return new THREE.TubeGeometry(curve, pts.length - 1, 0.06, 6, false);
+}
+
+// No-WebGL path: the same pose as an SVG path in screen pixels, centred on the art column.
+function heroDrawFallback(m, pe) {
+  if (!hero.fbPath) return;
+  const pts = heroPoints(m, pe);
+  let d = '';
+  for (let j = 0; j < pts.length; j++) {
+    d += (j ? 'L' : 'M') + (pts[j].x * m.pxu).toFixed(1) + ' ' + (-pts[j].y * m.pxu).toFixed(1);
+  }
+  hero.fbPath.setAttribute('d', d);
+  hero.fbPath.setAttribute('stroke-width', (0.12 * m.pxu).toFixed(2));
+  hero.fbSvg.setAttribute('viewBox', (-m.bw / 2).toFixed(0) + ' ' + (-m.bh / 2).toFixed(0) + ' ' + m.bw.toFixed(0) + ' ' + m.bh.toFixed(0));
+}
+
+function heroUseFallback() {
+  hero.mode = 'fallback';
+  if (hero.host) hero.host.hidden = true;
+  if (hero.fbSvg) hero.fbSvg.hidden = false;
+  hero.dirty = true;
+  dirty = true;
+}
+
+// Procedural plied-fibre normal map: diagonal strands repeat along the tube, so the thread reads as twisted.
+function heroPlyTexture() {
+  const THREE = window.THREE;
+  const S = 128;
+  const c = document.createElement('canvas');
+  c.width = S;
+  c.height = S;
+  const g = c.getContext('2d');
+  if (!g) return null;
+  const img = g.createImageData(S, S);
+  const height = (x, y) => 0.5 + 0.5 * Math.sin(2 * Math.PI * (2 * x + 3 * y) / S)
+    + 0.12 * Math.sin(2 * Math.PI * (9 * x - 2 * y) / S);
+  for (let y = 0; y < S; y++) {
+    for (let x = 0; x < S; x++) {
+      const nx = -(height(x + 1, y) - height(x - 1, y)) * 3;
+      const ny = -(height(x, y + 1) - height(x, y - 1)) * 3;
+      const len = Math.hypot(nx, ny, 1);
+      const i = (y * S + x) * 4;
+      img.data[i] = (nx / len * 0.5 + 0.5) * 255;
+      img.data[i + 1] = (ny / len * 0.5 + 0.5) * 255;
+      img.data[i + 2] = (1 / len * 0.5 + 0.5) * 255;
+      img.data[i + 3] = 255;
+    }
+  }
+  g.putImageData(img, 0, 0);
+  const tex = new THREE.CanvasTexture(c);
+  tex.wrapS = THREE.RepeatWrapping;
+  tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(6, 1);
+  return tex;
+}
+
+// The knot lives on the shared stage as scene 0's group. The stage supplies the lamp and the shadow map.
+function heroInitWebGL() {
+  const THREE = window.THREE;
+  const material = new THREE.MeshPhysicalMaterial({
+    color: 0xb8321e,
+    roughness: 0.6,
+    metalness: 0,
+    sheen: 1,
+    sheenRoughness: 0.5,
+    sheenColor: new THREE.Color(0xe0593f),
+    normalMap: heroPlyTexture(),
+    normalScale: new THREE.Vector2(0.6, 0.6)
+  });
+  const group = new THREE.Group();
+  // Shadow catcher on the paper plane: it draws only the thread's shadow, so the paper shows through.
+  const catcher = new THREE.Mesh(
+    new THREE.PlaneGeometry(60, 60),
+    new THREE.ShadowMaterial({ color: 0x1c1915, opacity: 0.22 })
+  );
+  catcher.position.z = -2.4;
+  catcher.receiveShadow = true;
+  const mesh = new THREE.Mesh(heroBuildTube(heroMetrics(), hero.pe), material);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  group.add(mesh, catcher);
+  Object.assign(hero, { mode: 'webgl', group, mesh, material, dirty: false });
+  registerGroup(0, group, heroUpdate);
+}
+
+function setupHero() {
+  const art = document.querySelector('[data-art="hero"]');
+  if (!art) return;
+  hero.art = art;
+  hero.host = art.querySelector('.hero-canvas');
+  hero.fbSvg = art.querySelector('.hero-fallback');
+  hero.fbPath = art.querySelector('.hero-fb');
+  hero.ink = art.querySelector('.hero-ink');
+  hero.inkG = art.querySelector('.hero-ink-g');
+  hero.sentPath = art.querySelector('.hero-sentence');
+  hero.clipRect = art.querySelector('#hero-clip rect');
+  hero.string = art.querySelector('.hero-string');
+  hero.tag = art.querySelector('.hero-tag');
+  // 600 samples of a (3,7) torus knot with R 1.6 and r 0.6, so the outer radius is 2.2.
+  const N = 600;
+  hero.K = new Float64Array(N * 3);
+  for (let i = 0; i < N; i++) {
+    const th = (i / N) * Math.PI * 2;
+    const rr = 1.6 + 0.6 * Math.cos(7 * th);
+    hero.K[i * 3] = rr * Math.cos(3 * th);
+    hero.K[i * 3 + 1] = rr * Math.sin(3 * th);
+    hero.K[i * 3 + 2] = 0.6 * Math.sin(7 * th);
+  }
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const en of entries) hero.visible = en.isIntersecting;
+    });
+    io.observe(art);
+  }
+  let ok = false;
+  if (stage.ok && hero.host) {
+    try { heroInitWebGL(); ok = true; } catch (err) { ok = false; }
+  }
+  if (!ok) heroUseFallback();
+}
+
+function heroResize() {
+  hero.dirty = true;
+}
+
+// Scene 0 on the shared stage (the stage tick calls this only while the hero is near the screen).
+// The knot's origin sits on the centre of the art column, placed through the live camera.
+// No view offset and no per-scene dolly: a stale offset here shifted every later scene (the scene 4 loom bug).
+function heroUpdate(p, now) {
+  const pe = hero.pe;
+  const m = heroMetrics();
+  const c = worldAtPx(m.cx, m.cy, 0);
+  hero.group.position.copy(c);
+  hero.group.scale.setScalar(m.pxu / pxPerUnitAt(c));
+  // Slow turning while the knot is still tied; the strand is kept flat once it starts to untie.
+  const idle = 1 - seg(pe, 0.12, 0.3);
+  hero.group.rotation.y = idle * 0.6 * Math.sin(now * 0.00025);
+  hero.group.rotation.x = idle * 0.12;
+  if (hero.dirty) {
+    const geo = heroBuildTube(m, pe);
+    hero.mesh.geometry.dispose();
+    hero.mesh.geometry = geo;
+    hero.dirty = false;
+  }
+}
+
+// Sentence baseline: one straight line just above the strand on desktop, two curves on mobile.
+function heroSentenceD(bw, yc) {
+  if (!mobile) return 'M28 ' + (yc - 16).toFixed(1) + 'H' + (bw - 28).toFixed(1);
+  const y0 = (yc - 14).toFixed(1);
+  return 'M18 ' + y0
+    + 'C' + (bw * 0.25).toFixed(1) + ' ' + (yc - 30).toFixed(1) + ' ' + (bw * 0.5).toFixed(1) + ' ' + (yc - 30).toFixed(1) + ' ' + (bw / 2).toFixed(1) + ' ' + (yc - 16).toFixed(1)
+    + 'C' + (bw * 0.62).toFixed(1) + ' ' + (yc - 6).toFixed(1) + ' ' + (bw * 0.84).toFixed(1) + ' ' + (yc - 6).toFixed(1) + ' ' + (bw - 18).toFixed(1) + ' ' + y0;
+}
+
+// Words and tag in screen space, shared by WebGL and fallback. The sentence is inked along the freed strand,
+// the tag swings in once the line is straight, and the strand slides out to the right at the end.
+function heroInk(m, pe) {
+  if (!hero.ink) return;
+  const bw = m.bw;
+  const yc = m.bh / 2;
+  if (bw !== hero.bw || m.bh !== hero.bh) {
+    hero.bw = bw;
+    hero.bh = m.bh;
+    const xt = bw * 0.74;
+    hero.ink.setAttribute('viewBox', '0 0 ' + bw.toFixed(0) + ' ' + m.bh.toFixed(0));
+    hero.sentPath.setAttribute('d', heroSentenceD(bw, yc));
+    hero.string.setAttribute('d', 'M' + xt.toFixed(1) + ' ' + yc.toFixed(1) + 'V' + (yc + 14).toFixed(1));
+    hero.tag.style.left = xt.toFixed(1) + 'px';
+    hero.tag.style.top = (yc + 14).toFixed(1) + 'px';
+  }
+  const reveal = seg(pe, 0.5, 0.75);
+  const e = seg(pe, 0.75, 0.9);
+  const shift = seg(pe, 0.9, 1) * bw * 1.2;
+  hero.clipRect.setAttribute('width', (bw * reveal).toFixed(1));
+  hero.inkG.setAttribute('transform', 'translate(' + shift.toFixed(1) + ' 0)');
+  hero.string.style.opacity = e.toFixed(3);
+  hero.tag.style.opacity = e.toFixed(3);
+  hero.tag.style.transform = 'translate(calc(-50% + ' + shift.toFixed(1) + 'px), ' + ((1 - e) * -10).toFixed(1) + 'px) rotate(' + ((1 - e) * -24).toFixed(2) + 'deg)';
+}
+
+function heroSet(p, forced) {
+  if (!hero.art) return;
+  hero.p = p;
+  // Reduced motion: the still frame is the straight strand with its sentence and tag fully shown.
+  const pe = forced ? 0.9 : p;
+  hero.pe = pe;
+  if (Math.abs(pe - hero.lastPe) > 0.0005) {
+    hero.lastPe = pe;
+    hero.dirty = true;
+  }
+  const m = heroMetrics();
+  heroInk(m, pe);
+  if (hero.mode === 'fallback') {
+    if (hero.dirty) { heroDrawFallback(m, pe); hero.dirty = false; }
+    return;
+  }
+  if (forced && hero.mode === 'webgl') stageTick(performance.now());
+}
+/* ===== Scene art: setup, layout and per-scene motion ===== */
+const S1 = { cards: [] };
+const S2 = { art: null, loc: null, g: null, segs: [] };
+const S3 = { art: null, ring: null, spool: null, cards: [], wound: [], ths: null, mark: null, W: 1, H: 1, cx: 0, cy: 0, sr: 60 };
+const S4 = { canvas: null, ctx: null, labels: null, pad: null, W: 1, H: 1, dpr: 1, lastT: -1, slot: null, clasp: null, line: null, tags: [], gl: null };
+const S5 = { cards: [] };
+const S6 = { patches: [] };
+const S7 = { draws: [] };
+const ORDER2 = [0, 2, 4, 1, 3, 0, 4, 2, 1, 3, 0, 1, 4, 2, 3];
+const WARPS = 28;
+const ROWS = 22;
+
+// Deterministic pseudo-random in 0..1, so jitter is stable from frame to frame.
+function rnd(i) { const s = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return s - Math.floor(s); }
+
+// Evenly spaced points around a rectangle, used to morph the crumpled page.
+function rectPerimeter(x0, y0, x1, y1, n) {
+  const w = x1 - x0;
+  const h = y1 - y0;
+  const P = 2 * (w + h);
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    let d = (i / n) * P;
+    if (d < w) out.push([x0 + d, y0]);
+    else if ((d -= w) < h) out.push([x1, y0 + d]);
+    else if ((d -= h) < w) out.push([x1 - d, y1]);
+    else out.push([x0, y1 - (d - w)]);
+  }
+  return out;
+}
+
+// Scene 2: a bezier hop between two pins, bulging to alternate sides.
+function tangleD(a, b, k) {
+  const dx = b[0] - a[0];
+  const dy = b[1] - a[1];
+  const L = Math.hypot(dx, dy) || 1;
+  const nx = -dy / L;
+  const ny = dx / L;
+  const amp = (k % 2 ? 1 : -1) * (46 + ((k * 23) % 40));
+  const c1x = a[0] + dx * 0.25 + nx * amp;
+  const c1y = a[1] + dy * 0.25 + ny * amp;
+  const c2x = a[0] + dx * 0.75 - nx * amp * 0.7;
+  const c2y = a[1] + dy * 0.75 - ny * amp * 0.7;
+  return 'M' + a[0].toFixed(1) + ' ' + a[1].toFixed(1)
+    + 'C' + c1x.toFixed(1) + ' ' + c1y.toFixed(1) + ' ' + c2x.toFixed(1) + ' ' + c2y.toFixed(1)
+    + ' ' + b[0].toFixed(1) + ' ' + b[1].toFixed(1);
+}
+
+function setupScene2() {
+  S2.art = document.querySelector('[data-art="s2"]');
+  S2.loc = document.querySelector('[data-tangle]');
+  S2.g = S2.loc ? S2.loc.querySelector('.tangle') : null;
+  if (!S2.loc || !S2.g) return;
+  const defs = document.createElementNS(NS, 'defs');
+  const filt = document.createElementNS(NS, 'filter');
+  filt.setAttribute('id', 'thread-shadow');
+  filt.setAttribute('x', '-10%');
+  filt.setAttribute('y', '-10%');
+  filt.setAttribute('width', '120%');
+  filt.setAttribute('height', '120%');
+  const drop = document.createElementNS(NS, 'feDropShadow');
+  drop.setAttribute('dx', '3');
+  drop.setAttribute('dy', '6');
+  drop.setAttribute('stdDeviation', '3');
+  drop.setAttribute('flood-color', '#1C1915');
+  drop.setAttribute('flood-opacity', '0.24');
+  filt.appendChild(drop);
+  defs.appendChild(filt);
+  S2.loc.insertBefore(defs, S2.loc.firstChild);
+  S2.g.setAttribute('filter', 'url(#thread-shadow)');
+  for (let k = 0; k < ORDER2.length - 1; k++) {
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('class', 'draw');
+    p.setAttribute('pathLength', '1');
+    p.style.fill = 'none';
+    p.style.stroke = 'var(--vermilion)';
+    p.style.strokeWidth = '2.2';
+    p.style.strokeLinecap = 'round';
+    S2.g.appendChild(p);
+    S2.segs.push(p);
+  }
+}
+
+function layoutScene2() {
+  if (!S2.art || !S2.loc || !S2.segs.length) return;
+  const ar = S2.art.getBoundingClientRect();
+  S2.loc.setAttribute('viewBox', '0 0 ' + ar.width.toFixed(0) + ' ' + ar.height.toFixed(0));
+  const pins = Array.from(S2.art.querySelectorAll('.pin')).map((el) => {
+    const r = el.getBoundingClientRect();
+    return [r.left - ar.left + r.width / 2, r.top - ar.top + r.height / 2];
+  });
+  if (pins.length < 5) return;
+  S2.segs.forEach((path, k) => {
+    path.setAttribute('d', tangleD(pins[ORDER2[k]], pins[ORDER2[k + 1]], k));
+  });
+}
+
+function updateScene2(p, forced) {
+  S2.segs.forEach((path, k) => {
+    const t = forced ? 1 : seg(p, 0.06 + k * 0.03, 0.10 + k * 0.03);
+    path.style.strokeDashoffset = String(1 - t);
+  });
+}
+
+// Scene 1: a paper cutout lifts when the thread reaches it.
+function setupScene1() {
+  S1.cards = Array.from(document.querySelectorAll('.zig .cut')).map((el, i) => ({
+    el,
+    draws: Array.from(el.querySelectorAll('.draw')),
+    start: [0.02, 0.22, 0.42, 0.60][i],
+    lift: [0.24, 0.42, 0.60, 0.78][i]
+  }));
+}
+
+function updateScene1(p, forced) {
+  for (const c of S1.cards) {
+    const t = forced ? 1 : seg(p, c.start, c.start + 0.18);
+    for (const d of c.draws) d.style.strokeDashoffset = String(1 - t);
+    // The card appears only as its own motif starts to draw, so no card is ever blank.
+    c.el.style.opacity = forced ? '1' : clamp(t * 4, 0, 1).toFixed(3);
+    const lift = forced ? 1 : seg(p, c.lift, c.lift + 0.08);
+    c.el.style.setProperty('--lift', lift.toFixed(3));
+  }
+}
+
+// Scene 3: five cutouts slide into a ring around the spool, with five threads.
+function setupScene3() {
+  S3.art = document.querySelector('[data-art="s3"]');
+  S3.ring = document.querySelector('[data-ring]');
+  S3.spool = document.querySelector('[data-spool]');
+  S3.ths = document.querySelector('[data-threads] .ths');
+  const woundG = document.querySelector('[data-spool] .wound');
+  if (woundG) {
+    for (let i = 0; i < 12; i++) {
+      const y = 50 + i * 12;
+      const ln = document.createElementNS(NS, 'path');
+      ln.setAttribute('d', 'M60 ' + y + 'L140 ' + (y - 9));
+      ln.setAttribute('pathLength', '1');
+      ln.setAttribute('class', 'draw v');
+      ln.style.strokeWidth = '2';
+      woundG.appendChild(ln);
+      S3.wound.push(ln);
+    }
+  }
+  if (S3.ring) {
+    const src = Array.from(document.querySelectorAll('.glue .cut'));
+    const fr = [[-0.34, -0.26], [0.32, -0.30], [-0.36, 0.22], [0.34, 0.20], [0.02, 0.38]];
+    const rot0 = [-8, 6, -5, 9, -3];
+    src.forEach((node, i) => {
+      const c = node.cloneNode(true);
+      c.querySelectorAll('[data-k]').forEach((n) => n.remove());
+      c.classList.add('rc');
+      S3.ring.appendChild(c);
+      S3.cards.push({ el: c, fx: fr[i][0], fy: fr[i][1], rot0: rot0[i], line: null, sxp: 0, syp: 0, tx: 0, ty: 0, w: 100, h: 100 });
+    });
+  }
+  if (S3.ths) {
+    S3.cards.forEach((c) => {
+      const line = document.createElementNS(NS, 'path');
+      line.setAttribute('class', 'draw');
+      line.setAttribute('pathLength', '1');
+      line.style.fill = 'none';
+      line.style.stroke = 'var(--vermilion)';
+      line.style.strokeWidth = '2';
+      line.style.strokeLinecap = 'round';
+      S3.ths.appendChild(line);
+      c.line = line;
+    });
+    const mark = document.createElementNS(NS, 'path');
+    mark.setAttribute('d', 'M0 0L9 10L26 -12');
+    mark.setAttribute('pathLength', '1');
+    mark.setAttribute('class', 'draw');
+    mark.style.fill = 'none';
+    mark.style.stroke = 'var(--ink)';
+    mark.style.strokeWidth = '2.6';
+    mark.style.strokeLinecap = 'round';
+    mark.style.strokeLinejoin = 'round';
+    S3.ths.appendChild(mark);
+    S3.mark = mark;
+  }
+}
+
+function layoutScene3() {
+  if (!S3.art || !S3.spool) return;
+  const ar = S3.art.getBoundingClientRect();
+  S3.W = ar.width;
+  S3.H = ar.height;
+  const R = Math.min(S3.W * 0.31, S3.H * 0.30);
+  S3.cards.forEach((c, i) => {
+    const th = (-90 + i * 72) * Math.PI / 180;
+    c.tx = Math.cos(th) * R;
+    c.ty = Math.sin(th) * R;
+    c.sxp = c.fx * S3.W;
+    c.syp = c.fy * S3.H;
+    c.w = c.el.offsetWidth || 100;
+    c.h = c.el.offsetHeight || 100;
+  });
+  const sr = S3.spool.getBoundingClientRect();
+  S3.cx = sr.left - ar.left + sr.width / 2;
+  S3.cy = sr.top - ar.top + sr.height / 2;
+  S3.sr = sr.width * 0.4;
+  const loc = document.querySelector('[data-threads]');
+  if (loc) loc.setAttribute('viewBox', '0 0 ' + S3.W.toFixed(0) + ' ' + S3.H.toFixed(0));
+}
+
+function updateScene3(p, forced) {
+  const e = forced ? 1 : smooth(ramp(p, 0.06, 0.38));
+  const hw = S3.W / 2;
+  const hh = S3.H / 2;
+  let end = null;
+  S3.cards.forEach((c, i) => {
+    const x = lerp(c.sxp, c.tx, e);
+    const y = lerp(c.syp, c.ty, e);
+    c.el.style.setProperty('--x', x.toFixed(1) + 'px');
+    c.el.style.setProperty('--y', y.toFixed(1) + 'px');
+    c.el.style.setProperty('--r', lerp(c.rot0, 0, e).toFixed(2) + 'deg');
+    if (!c.line) return;
+    const cx = hw + x;
+    const cy = hh + y;
+    const dx = cx - S3.cx;
+    const dy = cy - S3.cy;
+    const L = Math.hypot(dx, dy) || 1;
+    const ux = dx / L;
+    const uy = dy / L;
+    const ext = Math.min(c.w, c.h) * 0.5;
+    const sx = S3.cx + ux * S3.sr;
+    const sy = S3.cy + uy * S3.sr;
+    const ex = cx - ux * ext;
+    const ey = cy - uy * ext;
+    const side = i % 2 ? 1 : -1;
+    const mx = (sx + ex) / 2 - uy * 18 * side;
+    const my = (sy + ey) / 2 + ux * 18 * side;
+    c.line.setAttribute('d', 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1)
+      + 'Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + ex.toFixed(1) + ' ' + ey.toFixed(1));
+    c.line.style.strokeDashoffset = String(1 - (forced ? 1 : seg(p, 0.42 + i * 0.05, 0.56 + i * 0.05)));
+    if (i === S3.cards.length - 1) end = { x: ex, y: ey };
+  });
+  for (const ln of S3.wound) ln.style.strokeDashoffset = String(1 - (forced ? 1 : seg(p, 0.08, 0.34)));
+  if (S3.mark && end) {
+    S3.mark.setAttribute('transform', 'translate(' + (end.x - 30).toFixed(1) + ' ' + (end.y - 34).toFixed(1) + ')');
+    S3.mark.style.strokeDashoffset = String(1 - (forced ? 1 : seg(p, 0.80, 0.92)));
+  }
+}
+
+// Scene 4: a canvas loom. The weft weaves row by row over and under the warp.
+function setupScene4() {
+  S4.slot = document.querySelector('[data-loom-slot]');
+  S4.canvas = document.querySelector('.loom-canvas');
+  S4.ctx = S4.canvas ? S4.canvas.getContext('2d') : null;
+  S4.labels = document.querySelector('.warp-labels');
+  S4.pad = document.querySelector('.padlock');
+  S4.clasp = S4.pad ? S4.pad.querySelector('.ink') : null;
+  S4.line = document.getElementById('s4-line');
+  S4.tags = Array.from(document.querySelectorAll('.loom .woven'));
+  if (!stage.ok || !S4.slot) return;
+  try {
+    S4.gl = buildLoom3D();
+    window.THREAD.register(4, { group: S4.gl.group, update: update4GL });
+    document.documentElement.classList.add('s4-gl');
+  } catch (err) {
+    S4.gl = null;
+    report(err);
+  }
+}
+
+function layoutScene4() {
+  if (!S4.canvas) return;
+  const r = (S4.slot || S4.canvas).getBoundingClientRect();
+  S4.W = Math.max(1, r.width);
+  S4.H = Math.max(1, r.height);
+  S4.dpr = Math.min(window.devicePixelRatio || 1, 2);
+  S4.canvas.width = Math.round(S4.W * S4.dpr);
+  S4.canvas.height = Math.round(S4.H * S4.dpr);
+  S4.lastT = -1;
+}
+
+function drawLoom(t) {
+  const ctx = S4.ctx;
+  if (!ctx) return;
+  const W = S4.W;
+  const H = S4.H;
+  ctx.setTransform(S4.dpr, 0, 0, S4.dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  const gap = W / WARPS;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#1C1915';
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  for (let i = 0; i < WARPS; i++) {
+    const x = (i + 0.5) * gap;
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, H);
+  }
+  ctx.stroke();
+  const rows = t * ROWS;
+  for (let r = 0; r < ROWS; r++) {
+    const k = clamp(rows - r, 0, 1);
+    if (k <= 0) break;
+    const y = (r + 0.5) * (H / ROWS);
+    ctx.strokeStyle = '#B8321E';
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W * k, y);
+    ctx.stroke();
+    ctx.strokeStyle = '#1C1915';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    for (let i = 0; i < WARPS; i++) {
+      const x = (i + 0.5) * gap;
+      if (x > W * k) break;
+      if ((i + r) % 2 === 1) {
+        ctx.moveTo(x, y - 6);
+        ctx.lineTo(x, y + 6);
+      }
+    }
+    ctx.stroke();
+  }
+}
+
+// ---- Scene 4 WebGL loom: one group on the shared stage (woven cloth, turned beams, heddle comb, shuttle, brass clasp). ----
+const HEDDLES = 30;
+const CLOTH_VS = [
+  'uniform float uTime;',
+  'uniform float uRipple;',
+  'varying vec2 vUv;',
+  'void main() {',
+  '  vUv = uv;',
+  '  vec3 p = position;',
+  '  p.z += uRipple * sin(p.x * 9.0 + uTime * 1.3) * cos(p.y * 7.0 - uTime * 0.9);',
+  '  gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);',
+  '}'
+].join('\n');
+const CLOTH_FS = [
+  'precision highp float;',
+  'varying vec2 vUv;',
+  'uniform float uWeave;',
+  'uniform float uWarps;',
+  'uniform float uRows;',
+  'uniform float uFade;',
+  'void main() {',
+  '  float wx = vUv.x * uWarps;',
+  '  float wr = (1.0 - vUv.y) * uRows;',
+  '  float col = floor(wx);',
+  '  float row = floor(wr);',
+  '  float fx = fract(wx);',
+  '  float fy = fract(wr);',
+  '  float warpBand = smoothstep(0.30, 0.36, fx) * (1.0 - smoothstep(0.64, 0.70, fx));',
+  '  float weftBand = smoothstep(0.20, 0.30, fy) * (1.0 - smoothstep(0.70, 0.80, fy));',
+  '  // A row is woven from left to right once the weave has passed it.',
+  '  float k = clamp(uWeave * uRows - row, 0.0, 1.0);',
+  '  float woven = 1.0 - smoothstep(k - 0.003, k + 0.003, vUv.x);',
+  '  // Plain weave: the weft lies over the warp at alternate crossings.',
+  '  float weftOver = 1.0 - mod(col + row, 2.0);',
+  '  float weftOn = weftBand * woven * max(weftOver, 1.0 - warpBand);',
+  '  float warpOn = warpBand * (1.0 - weftOn);',
+  '  // Rounded threads give the normal; one warm raking light from the top left.',
+  '  vec3 n = normalize(vec3((fx - 0.5) * 1.6 * warpOn, (fy - 0.5) * 1.6 * weftOn, 1.0));',
+  '  vec3 L = normalize(vec3(-0.55, 0.65, 0.5));',
+  '  float diff = max(dot(n, L), 0.0);',
+  '  vec3 albedo = mix(vec3(0.110, 0.098, 0.082), vec3(0.722, 0.196, 0.118), weftOn);',
+  '  gl_FragColor = vec4(albedo * (0.62 + 0.5 * diff), clamp(weftOn + warpOn, 0.0, 1.0) * uFade);',
+  '}'
+].join('\n');
+const HEDDLE_M = new THREE.Matrix4();
+const HEDDLE_P = new THREE.Vector3();
+const HEDDLE_S = new THREE.Vector3();
+const HEDDLE_Q = new THREE.Quaternion();
+
+// Procedural brushed-metal normal map: one tilt per streak (row), fine grain across it.
+function brushedNormalTexture() {
+  const size = 256;
+  const c = document.createElement('canvas');
+  c.width = size;
+  c.height = size;
+  const g = c.getContext('2d');
+  const img = g.createImageData(size, size);
+  const d = img.data;
+  for (let y = 0; y < size; y++) {
+    const streak = Math.random() - 0.5;
+    for (let x = 0; x < size; x++) {
+      const i = (y * size + x) * 4;
+      d[i] = 128 + (Math.random() - 0.5) * 10;
+      d[i + 1] = 128 + streak * 60;
+      d[i + 2] = 255;
+      d[i + 3] = 255;
+    }
+  }
+  g.putImageData(img, 0, 0);
+  const tex = new THREE.CanvasTexture(c);
+  tex.wrapS = THREE.RepeatWrapping;
+  tex.wrapT = THREE.RepeatWrapping;
+  return tex;
+}
+
+// Procedural studio environment for the brass: paper above, ink below, one warm key strip.
+function studioEnvironment() {
+  const c = document.createElement('canvas');
+  c.width = 512;
+  c.height = 256;
+  const g = c.getContext('2d');
+  g.fillStyle = '#F1EADC';
+  g.fillRect(0, 0, 512, 256);
+  g.fillStyle = '#1C1915';
+  g.fillRect(0, 150, 512, 106);
+  g.fillStyle = '#FFF1DC';
+  g.fillRect(96, 36, 64, 96);
+  const tex = new THREE.CanvasTexture(c);
+  tex.mapping = THREE.EquirectangularReflectionMapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const pmrem = new THREE.PMREMGenerator(stage.renderer);
+  const env = pmrem.fromEquirectangular(tex).texture;
+  pmrem.dispose();
+  tex.dispose();
+  return env;
+}
+
+// Builds the loom group and returns its parts. Geometry is unit-sized and scaled each frame in update4GL.
+function buildLoom3D() {
+  const group = new THREE.Group();
+  const clothMat = new THREE.ShaderMaterial({
+    vertexShader: CLOTH_VS,
+    fragmentShader: CLOTH_FS,
+    transparent: true,
+    depthWrite: false,
+    uniforms: {
+      uWeave: { value: 0 },
+      uWarps: { value: WARPS },
+      uRows: { value: ROWS },
+      uTime: { value: 0 },
+      uRipple: { value: 0 },
+      uFade: { value: 0 }
+    }
+  });
+  const cloth = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 128, 128), clothMat);
+  group.add(cloth);
+  // Turned wood: a lathe profile (radius relative to the beam's size), laid on its side.
+  // Transparent so the loom can fade in with scene progress (opacity is set each frame in update4GL).
+  const wood = new THREE.MeshStandardMaterial({ color: 0x8a5a34, roughness: 0.7, metalness: 0, transparent: true, opacity: 0 });
+  const turned = new THREE.LatheGeometry([
+    new THREE.Vector2(0, -0.5), new THREE.Vector2(0.7, -0.5), new THREE.Vector2(0.9, -0.44),
+    new THREE.Vector2(0.62, -0.3), new THREE.Vector2(0.7, -0.18), new THREE.Vector2(0.95, -0.1),
+    new THREE.Vector2(0.95, 0.1), new THREE.Vector2(0.7, 0.18), new THREE.Vector2(0.62, 0.3),
+    new THREE.Vector2(0.9, 0.44), new THREE.Vector2(0.7, 0.5), new THREE.Vector2(0, 0.5)
+  ], 48);
+  const beamTop = new THREE.Mesh(turned, wood);
+  const beamBottom = new THREE.Mesh(turned, wood);
+  beamTop.rotation.z = Math.PI / 2;
+  beamBottom.rotation.z = Math.PI / 2;
+  group.add(beamTop, beamBottom);
+  // Heddle comb: thin instanced boxes hanging above the weave.
+  const heddles = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), wood, HEDDLES);
+  heddles.frustumCulled = false;
+  group.add(heddles);
+  // Shuttle: the carrier that lays one weft row.
+  const shuttle = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), wood);
+  group.add(shuttle);
+  // Clasp: brass body with a Torus shackle; metalness 1, roughness 0.35, brushed normal map.
+  const brass = new THREE.MeshStandardMaterial({
+    color: 0xa88b4a,
+    metalness: 1,
+    roughness: 0.35,
+    normalMap: brushedNormalTexture(),
+    envMap: studioEnvironment()
+  });
+  const clasp = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), brass);
+  const shackle = new THREE.Group();
+  const bow = new THREE.Mesh(new THREE.TorusGeometry(1, 0.12, 16, 64, Math.PI), brass);
+  const legA = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), brass);
+  const legB = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), brass);
+  shackle.add(bow, legA, legB);
+  clasp.visible = false;
+  clasp.add(body, shackle);
+  group.add(clasp);
+  return { group, cloth, clothMat, wood, beamTop, beamBottom, heddles, shuttle, clasp, body, shackle, bow, legA, legB };
+}
+
+// Places the loom over the cloth slot each frame and advances it with the scene progress.
+function update4GL(p, time) {
+  const G = S4.gl;
+  if (!G || !S4.slot) return;
+  const r = S4.slot.getBoundingClientRect();
+  // The loom's centre goes through the live camera, so the cloth stays on the slot whatever the camera does.
+  const c = worldAtPx(r.left + r.width / 2, r.top + r.height / 2, 0);
+  const pxX = pxPerUnitAt(c); // screen pixels per world unit at the loom's depth (square pixels)
+  const pxY = pxX;
+  const sw = r.width / pxX;
+  const sh = r.height / pxY;
+  const wv = seg(p, 0.25, 0.60); // the weft fills the cloth row by row
+  const lr = seg(p, 0.02, 0.16); // the loom is fully opaque by 16%, well before the weave starts
+  const ap = seg(p, 0.24, 0.30); // the clasp is set on by 30%
+  const cl = seg(p, 0.94, 1.00); // and closes last
+  const rowsF = wv * ROWS;
+  const row = Math.min(ROWS - 1, Math.floor(rowsF));
+  const kx = rowsF - row;
+  // The loom faces the camera, so the cloth stays flat on screen while the camera orbits.
+  G.group.position.copy(c);
+  G.group.quaternion.copy(stage.camera.quaternion);
+  G.cloth.scale.set(sw, sh, 1);
+  G.clothMat.uniforms.uWeave.value = wv;
+  G.clothMat.uniforms.uFade.value = lr;
+  G.wood.opacity = lr;
+  G.clothMat.uniforms.uTime.value = time / 1000;
+  G.clothMat.uniforms.uRipple.value = staticMode ? 0 : 0.035 * (1 - wv);
+  // The beams wrap the top and bottom edges of the cloth.
+  const R = sh * 0.026;
+  G.beamTop.position.set(0, sh * 0.5 - R * 0.5, 0.12);
+  G.beamBottom.position.set(0, -sh * 0.5 + R * 0.5, 0.12);
+  G.beamTop.scale.set(R, sw * 1.04, R);
+  G.beamBottom.scale.set(R, sw * 1.04, R);
+  // The heddles rise and fall with the shed: alternate threads move opposite ways on each row.
+  const shed = row % 2 === 0 ? 1 : -1;
+  const hw = (sw / HEDDLES) * 0.16;
+  HEDDLE_S.set(hw, sh * 0.12, hw);
+  for (let i = 0; i < HEDDLES; i++) {
+    const lift = (i % 2 === 0 ? 1 : -1) * shed * sh * 0.018;
+    HEDDLE_P.set((-0.5 + (i + 0.5) / HEDDLES) * sw, sh * 0.4 + lift, 0.1);
+    G.heddles.setMatrixAt(i, HEDDLE_M.compose(HEDDLE_P, HEDDLE_Q, HEDDLE_S));
+  }
+  G.heddles.instanceMatrix.needsUpdate = true;
+  // The shuttle lays each row from left to right, then leaves the loom.
+  G.shuttle.visible = wv > 0 && wv < 1;
+  G.shuttle.position.set((kx - 0.5) * sw, (0.5 - (row + 0.5) / ROWS) * sh, 0.09);
+  G.shuttle.scale.set(sh * 0.2, (sh / ROWS) * 0.8, sh * 0.05);
+  // The clasp sits over the padlock's drawing box.
+  if (S4.clasp) {
+    const cr = S4.clasp.getBoundingClientRect();
+    const u = cr.width / pxX / 80; // svg viewBox units to world units
+    const ch = cr.height / pxY;
+    G.clasp.visible = ap > 0;
+    G.clasp.scale.setScalar(0.6 + 0.4 * ap);
+    G.clasp.position.set((cr.left + cr.width / 2 - r.left - r.width / 2) / pxX, (r.top + r.height / 2 - cr.top - cr.height / 2) / pxY, 0.14);
+    G.body.position.set(0, -16 * u, 0);
+    G.body.scale.set(56 * u, 44 * u, 14 * u);
+    G.shackle.position.set(0, 18 * u + (1 - cl) * ch * 0.28, 0);
+    G.shackle.rotation.z = (1 - cl) * -0.35;
+    G.bow.scale.set(18 * u, 18 * u, 18 * u);
+    G.legA.position.set(-18 * u, -6 * u, 0);
+    G.legB.position.set(18 * u, -6 * u, 0);
+    G.legA.scale.set(4 * u, 12 * u, 4 * u);
+    G.legB.scale.set(4 * u, 12 * u, 4 * u);
+  }
+}
+
+function updateScene4(p, forced) {
+  const t = forced ? 1 : seg(p, 0.06, 0.80);
+  const wv = forced ? 1 : seg(p, 0.25, 0.60);
+  // The paper ground takes on the cloth weave as the fabric grows, then returns to paper once the scene has scrolled past.
+  if (stage.ok) {
+    const sec = byN[4] ? byN[4].el : null;
+    const past = sec ? clamp((window.innerHeight - sec.getBoundingClientRect().bottom) / (window.innerHeight * 0.6), 0, 1) : 0;
+    stage.paperMat.uniforms.uCloth.value = wv * (1 - past);
+  }
+  if (!S4.gl && S4.ctx && (forced || Math.abs(t - S4.lastT) > 0.002)) {
+    S4.lastT = t;
+    drawLoom(t);
+  }
+  if (S4.labels) S4.labels.style.opacity = String(forced ? 1 : seg(p, 0.02, 0.10));
+  // Satin stitch: the large line is embroidered left to right across the cloth, done by 22%.
+  if (S4.line) S4.line.style.setProperty('--k', (forced ? 1 : seg(p, 0.12, 0.22)).toFixed(3));
+  // The woven labels are sewn on by 30%.
+  const tagT = forced ? 1 : seg(p, 0.22, 0.30);
+  for (const tag of S4.tags) {
+    tag.style.opacity = tagT.toFixed(3);
+    tag.style.transform = 'translateY(' + ((1 - tagT) * 6).toFixed(2) + 'px)';
+  }
+  if (S4.pad) {
+    if (S4.gl) S4.pad.style.opacity = String(forced ? 1 : seg(p, 0.24, 0.30));
+    else S4.pad.style.setProperty('--lift', (forced ? 1 : seg(p, 0.24, 0.30)).toFixed(3));
+  }
+}
+
+// Scene 5: three stitched vignettes. Each morph runs over its own stretch of progress.
+function buildPageMorph(card, svg) {
+  const neat = rectPerimeter(44, 18, 156, 122, 24);
+  const page = document.createElementNS(NS, 'path');
+  page.style.fill = 'var(--paper-lo)';
+  const scrib = document.createElementNS(NS, 'path');
+  let sd = '';
+  for (let r = 0; r < 4; r++) {
+    const y = 40 + r * 18;
+    sd += 'M56 ' + y;
+    for (let k = 1; k <= 8; k++) sd += 'L' + (56 + k * 11) + ' ' + (y + (k % 2 ? -5 : 5) + (rnd(r * 9 + k) - 0.5) * 3).toFixed(1);
+  }
+  scrib.setAttribute('d', sd);
+  const rules = document.createElementNS(NS, 'path');
+  rules.setAttribute('d', 'M56 44H144M56 62H144M56 80H144M56 98H144M46 24V122');
+  rules.style.opacity = '0';
+  const stamp = document.createElementNS(NS, 'circle');
+  stamp.setAttribute('cx', '126');
+  stamp.setAttribute('cy', '106');
+  stamp.setAttribute('r', '9');
+  stamp.style.stroke = 'var(--vermilion)';
+  stamp.style.strokeWidth = '2.4';
+  stamp.style.fill = 'none';
+  stamp.style.opacity = '0';
+  svg.append(page, scrib, rules, stamp);
+  card.update = (m) => {
+    let d = '';
+    for (let i = 0; i < neat.length; i++) {
+      const x = neat[i][0] + (rnd(i) - 0.5) * 22 * (1 - m);
+      const y = neat[i][1] + (rnd(i + 50) - 0.5) * 22 * (1 - m);
+      d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+    }
+    page.setAttribute('d', d + 'Z');
+    scrib.style.opacity = String(1 - m);
+    rules.style.opacity = String(m);
+    stamp.style.opacity = String(seg(m, 0.6, 1));
+  };
+}
+
+function buildBubbleMorph(card, svg) {
+  const from = [[22, 36, 84, 40], [58, 62, 84, 40], [94, 88, 84, 40]];
+  const to = [62, 30, 76, 96];
+  const boxes = from.map(() => {
+    const r = document.createElementNS(NS, 'rect');
+    r.style.fill = 'var(--paper-hi)';
+    svg.appendChild(r);
+    return r;
+  });
+  const stubs = document.createElementNS(NS, 'path');
+  stubs.setAttribute('d', 'M34 50H92M34 62H76M70 74H132M70 86H116M106 100H170M106 112H150');
+  const lines = document.createElementNS(NS, 'path');
+  lines.setAttribute('d', 'M76 52H130M76 70H130M76 88H116');
+  lines.style.opacity = '0';
+  svg.append(stubs, lines);
+  card.update = (m) => {
+    boxes.forEach((r, k) => {
+      const f = from[k];
+      r.setAttribute('x', lerp(f[0], to[0], m).toFixed(1));
+      r.setAttribute('y', lerp(f[1], to[1], m).toFixed(1));
+      r.setAttribute('width', lerp(f[2], to[2], m).toFixed(1));
+      r.setAttribute('height', lerp(f[3], to[3], m).toFixed(1));
+      r.setAttribute('rx', lerp(10, 3, m).toFixed(1));
+    });
+    stubs.style.opacity = String(1 - seg(m, 0, 0.5));
+    lines.style.opacity = String(seg(m, 0.55, 1));
+  };
+}
+
+function buildWaveMorph(card, svg) {
+  const wave = document.createElementNS(NS, 'path');
+  const cal = document.createElementNS(NS, 'path');
+  cal.setAttribute('d', 'M50 30H150V126H50Z M50 48H150 M66 30V126 M84 30V126 M102 30V126 M120 30V126 M50 66H150 M50 88H150 M50 108H150');
+  cal.style.opacity = '0';
+  const ticks = document.createElementNS(NS, 'path');
+  ticks.setAttribute('d', 'M72 80L78 86L90 72 M120 102L126 108L138 94 M72 102L78 108L90 94');
+  ticks.style.stroke = 'var(--vermilion)';
+  ticks.style.opacity = '0';
+  svg.append(wave, cal, ticks);
+  card.update = (m) => {
+    const amp = 26 * (1 - m);
+    let d = '';
+    for (let i = 0; i <= 40; i++) {
+      const x = 20 + i * 4;
+      const y = 74 + Math.sin(i * 0.7) * amp * (0.6 + 0.4 * Math.sin(i * 0.23));
+      d += (i ? 'L' : 'M') + x + ' ' + y.toFixed(1);
+    }
+    wave.setAttribute('d', d);
+    wave.style.opacity = String(1 - seg(m, 0.5, 0.9));
+    cal.style.opacity = String(seg(m, 0.5, 0.9));
+    ticks.style.opacity = String(seg(m, 0.85, 1));
+  };
+}
+
+function buildStitchCard(el, i) {
+  const svg = el.querySelector('svg');
+  const card = { el, stitches: [], start: [0.10, 0.36, 0.60][i], update: () => {} };
+  for (let k = 0; k < 18; k++) {
+    const x = 18 + k * 9.4;
+    const ln = document.createElementNS(NS, 'line');
+    ln.setAttribute('x1', x.toFixed(1));
+    ln.setAttribute('y1', '138');
+    ln.setAttribute('x2', (x + 5).toFixed(1));
+    ln.setAttribute('y2', '138');
+    ln.style.stroke = 'var(--vermilion)';
+    ln.style.strokeWidth = '2.4';
+    ln.style.strokeLinecap = 'round';
+    ln.style.opacity = '0';
+    svg.appendChild(ln);
+    card.stitches.push(ln);
+  }
+  if (i === 0) buildPageMorph(card, svg);
+  else if (i === 1) buildBubbleMorph(card, svg);
+  else buildWaveMorph(card, svg);
+  return card;
+}
+
+function setupScene5() {
+  S5.cards = Array.from(document.querySelectorAll('.trio .card3')).map((el, i) => buildStitchCard(el, i));
+}
+
+function updateScene5(p, forced) {
+  for (const c of S5.cards) {
+    const st = forced ? 1 : seg(p, c.start, c.start + 0.12);
+    const m = forced ? 1 : seg(p, c.start + 0.05, c.start + 0.25);
+    const n = Math.round(st * c.stitches.length);
+    for (let k = 0; k < c.stitches.length; k++) c.stitches[k].style.opacity = k < n ? '1' : '0';
+    c.update(m);
+  }
+}
+
+// Scene 6: nine quilt patches, each drawn in JS from a small pattern.
+function makeQuiltArt(kind, svg) {
+  const out = [];
+  const mk = (tag, attrs, cls) => {
+    const e = document.createElementNS(NS, tag);
+    Object.keys(attrs).forEach((key) => e.setAttribute(key, String(attrs[key])));
+    e.setAttribute('pathLength', '1');
+    e.setAttribute('class', cls ? 'draw ' + cls : 'draw');
+    svg.appendChild(e);
+    out.push(e);
+    return e;
+  };
+  if (kind === 'curls') {
+    let d = '';
+    for (let j = 0; j < 3; j++) {
+      for (let i = 0; i < 3; i++) {
+        const cx = 20 + i * 40;
+        const cy = 20 + j * 40;
+        for (let s = 0; s <= 36; s++) {
+          const th = (s / 36) * 3 * Math.PI;
+          const r = 2 + th * 1.5;
+          d += (s ? 'L' : 'M') + (cx + r * Math.cos(th)).toFixed(1) + ' ' + (cy + r * Math.sin(th)).toFixed(1);
+        }
+      }
+    }
+    mk('path', { d });
+  } else if (kind === 'bows') {
+    let d = '';
+    const pts = [[30, 30], [90, 30], [30, 90], [90, 90]];
+    for (const [x, y] of pts) {
+      d += 'M' + x + ' ' + y + 'L' + (x - 16) + ' ' + (y - 10) + 'L' + (x - 16) + ' ' + (y + 10) + 'Z';
+      d += 'M' + x + ' ' + y + 'L' + (x + 16) + ' ' + (y - 10) + 'L' + (x + 16) + ' ' + (y + 10) + 'Z';
+    }
+    mk('path', { d }, 'v');
+    for (const [x, y] of pts) mk('circle', { cx: x, cy: y, r: 4 }, 'v');
+  } else if (kind === 'diamonds') {
+    let d = '';
+    for (let j = 0; j < 3; j++) {
+      for (let i = 0; i < 3; i++) {
+        const cx = 20 + i * 40;
+        const cy = 20 + j * 40;
+        d += 'M' + cx + ' ' + (cy - 14) + 'L' + (cx + 12) + ' ' + cy + 'L' + cx + ' ' + (cy + 14) + 'L' + (cx - 12) + ' ' + cy + 'Z';
+        d += 'M' + (cx - 12) + ' ' + cy + 'H' + (cx + 12) + 'M' + cx + ' ' + (cy - 14) + 'L' + (cx - 5) + ' ' + cy;
+        d += 'M' + cx + ' ' + (cy - 14) + 'L' + (cx + 5) + ' ' + cy;
+      }
+    }
+    mk('path', { d });
+  } else if (kind === 'petals') {
+    for (const [cx, cy] of [[40, 40], [80, 80]]) {
+      for (let k = 0; k < 6; k++) {
+        mk('ellipse', { cx, cy: cy - 14, rx: 7, ry: 13, transform: 'rotate(' + (k * 60) + ' ' + cx + ' ' + cy + ')' });
+      }
+      mk('circle', { cx, cy, r: 3 });
+    }
+  } else if (kind === 'tiles') {
+    let d = '';
+    for (let j = 0; j < 4; j++) {
+      for (let i = 0; i < 4; i++) {
+        const x = 10 + i * 25;
+        const y = 10 + j * 25;
+        d += 'M' + x + ' ' + y + 'h25v25h-25Z';
+        d += ((i + j) % 2) ? 'M' + x + ' ' + y + 'L' + (x + 25) + ' ' + (y + 25) : 'M' + (x + 25) + ' ' + y + 'L' + x + ' ' + (y + 25);
+      }
+    }
+    mk('path', { d });
+  } else if (kind === 'chevrons') {
+    let d = '';
+    for (let r = 0; r < 6; r++) {
+      const y = 12 + r * 18;
+      d += 'M8 ' + y;
+      for (let k = 1; k <= 7; k++) d += 'L' + (8 + k * 14) + ' ' + (y + (k % 2 ? 10 : 0));
+    }
+    mk('path', { d });
+  } else if (kind === 'weave') {
+    let d = '';
+    for (let k = 0; k <= 8; k++) {
+      const v = 10 + k * 13;
+      d += 'M10 ' + v + 'H110M' + v + ' 10V110';
+    }
+    mk('path', { d });
+  } else if (kind === 'grid') {
+    let d = '';
+    for (let k = 0; k <= 6; k++) {
+      const v = 14 + k * 15;
+      d += 'M14 ' + v + 'H104M' + v + ' 14V104';
+    }
+    mk('path', { d });
+    mk('rect', { x: 44, y: 44, width: 30, height: 30 }, 'v');
+  } else if (kind === 'waves') {
+    let d = '';
+    for (let r = 0; r < 6; r++) {
+      const y = 12 + r * 17;
+      for (let x = 0; x <= 120; x += 4) {
+        const yy = y + Math.sin((x / 120) * Math.PI * 4 + r * 0.7) * 5;
+        d += (x ? 'L' : 'M') + x + ' ' + yy.toFixed(1);
+      }
+    }
+    mk('path', { d });
+  }
+  return out;
+}
+
+function setupScene6() {
+  S6.patches = Array.from(document.querySelectorAll('.quilt .patch')).map((el, k) => {
+    const svg = el.querySelector('svg');
+    return { el, draws: makeQuiltArt(el.dataset.pattern, svg), dx: k % 3 === 1 ? 0 : (k % 2 ? 16 : -16) };
+  });
+}
+
+function updateScene6(p, forced) {
+  S6.patches.forEach((pt, k) => {
+    // Patches 0 to 2 (the top row) are on the table from the start; the rest stitch in with progress.
+    const early = k < 3;
+    const start = early ? 0 : 0.06 + (k - 3) * 0.09;
+    const e = forced || early ? 1 : seg(p, start, start + 0.10);
+    const st = forced || early ? 1 : seg(p, start + 0.06, start + 0.16);
+    const d = forced || early ? 1 : seg(p, start, start + 0.14);
+    pt.el.style.setProperty('--qo', e.toFixed(3));
+    pt.el.style.setProperty('--qx', ((1 - e) * pt.dx).toFixed(1) + 'px');
+    pt.el.style.setProperty('--qy', ((1 - e) * 14).toFixed(1) + 'px');
+    pt.el.style.setProperty('--st', st.toFixed(3));
+    for (const el of pt.draws) el.style.strokeDashoffset = String(1 - d);
+  });
+}
+
+// Scene 7: the thread ties a small bow.
+function setupScene7() {
+  S7.draws = Array.from(document.querySelectorAll('.bow-wrap .draw'));
+}
+
+function updateScene7(p, forced) {
+  S7.draws.forEach((el, k) => {
+    const t = forced ? 1 : seg(p, 0.50 + k * 0.05, 0.62 + k * 0.05);
+    el.style.strokeDashoffset = String(1 - t);
+  });
+}
+
+function setupScenes() {
+  setupScene1();
+  setupScene2();
+  setupScene3();
+  setupScene4();
+  setupScene5();
+  setupScene6();
+  setupScene7();
+}
+
+function layoutArt() {
+  layoutScene2();
+  layoutScene3();
+  layoutScene4();
+  heroResize();
+}
+
+ART[1] = updateScene1;
+ART[2] = updateScene2;
+ART[3] = updateScene3;
+ART[4] = updateScene4;
+ART[5] = updateScene5;
+ART[6] = updateScene6;
+ART[7] = updateScene7;
+
+boot();
+})();
+</script>
+</body>
+</html>
