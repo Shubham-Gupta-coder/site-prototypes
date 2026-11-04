@@ -1,0 +1,1143 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shubham Gupta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+:root {
+  --ink: #070708;
+  --bone: #EEE7DA;
+  --oxide: #C2401F;
+  --oxide-hi: #D2532F;
+  --steel: #2a2b2f;
+  --pad-x: 3.2vw;
+  --step-label: 15px;
+  --step-line: clamp(18px, 1.5vw, 24px);
+  --step-large: clamp(48px, 6.6vw, 96px);
+  --ease-out: cubic-bezier(.2, .7, .1, 1);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: "Manrope", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+body { overflow-x: clip; }
+a { color: inherit; }
+a:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--bone);
+  outline-offset: 4px;
+}
+.no-webgl #scene-canvas { display: none; }
+.no-webgl .scene-bg { background: var(--ink); }
+
+/* fixed 3D world, one canvas */
+#scene-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+/* top bar */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px var(--pad-x);
+  background: linear-gradient(var(--ink) 40%, rgba(7, 7, 8, 0));
+  font-size: 16px;
+  letter-spacing: .01em;
+}
+.topbar a { text-decoration: none; }
+.topbar .book-link {
+  border-bottom: 1px solid var(--oxide);
+  padding-bottom: 2px;
+}
+
+/* sections are scroll distance; each owns one sticky stage */
+.scene {
+  position: relative;
+  height: 220vh;
+}
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 2;
+  overflow: hidden;
+  padding: 0 var(--pad-x);
+}
+.stage > * { position: absolute; }
+
+/* words: solid bone at full opacity once revealed */
+.line {
+  font-size: var(--step-line);
+  line-height: 1.6;
+  max-width: 62ch;
+  margin: 0;
+  opacity: 0;
+}
+.large {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--step-large);
+  line-height: 1.0;
+  letter-spacing: -.01em;
+  margin: 0;
+  opacity: 0;
+}
+.label {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  pointer-events: none;
+  font-size: var(--step-label);
+  line-height: 1.2;
+  white-space: nowrap;
+  padding: 4px 8px;
+  background: rgba(7, 7, 8, .72);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.label::before {
+  content: "";
+  display: inline-block;
+  width: 26px;
+  height: 1px;
+  background: var(--bone);
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+/* video in letters */
+.letters {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  opacity: 0;
+}
+.letters canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* scene 0 */
+.s0-name { top: 17vh; }
+.s0-line { bottom: 15vh; left: var(--pad-x); }
+.s0-city { bottom: 15vh; right: var(--pad-x); font-size: var(--step-line); margin: 0; opacity: 0; }
+
+/* scene 7 call to action and footer */
+.btn {
+  display: inline-block;
+  background: var(--oxide);
+  color: var(--bone);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  padding: 24px 48px;
+  text-decoration: none;
+  transition: background .2s var(--ease-out);
+}
+.btn:hover { background: var(--oxide-hi); }
+.footer-block {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: 4vh;
+  max-width: 62ch;
+  background: var(--ink);
+  padding: 20px 24px;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0;
+}
+.footer-block p { margin: 0 0 8px; }
+
+/* no webgl fallback: words over dark ground */
+.no-webgl .scene { height: auto; }
+.no-webgl .stage { position: relative; height: auto; min-height: 100vh; }
+
+/* scene 5 captions: three columns under the droplets, one column on mobile */
+.captions {
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: 12vh;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 4vw;
+}
+.captions .cap { position: relative; max-width: none; }
+.cta { opacity: 0; }
+@media (max-width: 600px) {
+  .captions { grid-template-columns: 1fr; row-gap: 14px; bottom: 9vh; }
+  .s0-line { bottom: 15vh; }
+  .s0-city { left: var(--pad-x); right: auto; bottom: 8vh; }
+}
+
+/* breakpoints */
+@media (max-width: 1023px) {
+  :root { --pad-x: 4.4vw; }
+}
+@media (max-width: 600px) {
+  :root { --pad-x: 20px; --step-large: clamp(30px, 9vw, 42px); }
+  .scene { height: 170vh; }
+  .label { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<canvas id="scene-canvas" aria-hidden="true"></canvas>
+
+<header class="topbar">
+  <span>Shubham Gupta</span>
+  <a class="book-link" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+</header>
+
+<main>
+  <!-- SCENE 0 -->
+  <section class="scene" data-scene="0" aria-label="Shubham Gupta">
+    <div class="stage">
+      <div class="letters s0-name" data-s="0" data-a="-1" data-b="0" data-o="0.85" data-e="0.97" data-letters="hero" role="img" aria-label="SHUBHAM GUPTA"></div>
+      <p class="line s0-line" data-s="0" data-a="-1" data-b="0" data-o="0.85" data-e="0.97">I build the AI that runs businesses.</p>
+      <p class="line s0-city" data-s="0" data-a="-1" data-b="0" data-o="0.85" data-e="0.97">Delhi.</p>
+    </div>
+  </section>
+
+  <!-- SCENE 1 -->
+  <section class="scene" data-scene="1" aria-label="Where it started">
+    <div class="stage">
+      <p class="line" data-s="1" data-a="0.08" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:12vh;">I learned how a company sells before I built the machine that runs one.</p>
+    </div>
+  </section>
+
+  <!-- SCENE 2 -->
+  <section class="scene" data-scene="2" aria-label="The glue">
+    <div class="stage">
+      <p class="line" data-s="2" data-a="0.3" data-b="0.45" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;">None of them remembered the others.</p>
+      <div class="letters" data-s="2" data-a="0.3" data-b="0.45" data-o="0.85" data-e="0.97" data-letters="orch" role="img" aria-label="Orchestration is the bottleneck." style="bottom:12vh;"></div>
+    </div>
+  </section>
+
+  <!-- SCENE 3 -->
+  <section class="scene" data-scene="3" aria-label="The layer">
+    <div class="stage">
+      <p class="large" data-s="3" data-a="0.08" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;max-width:14ch;">So I build the layer that removes the glue.</p>
+      <p class="line" data-s="3" data-a="0.3" data-b="0.45" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:12vh;">A person approves anything that moves money, mail or a calendar.</p>
+    </div>
+  </section>
+
+  <!-- SCENE 4 -->
+  <section class="scene" data-scene="4" aria-label="Verslay">
+    <div class="stage">
+      <p class="large" data-s="4" data-a="0.08" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;max-width:12ch;">Verslay is where I proved it.</p>
+      <p class="line" data-s="4" data-a="0.3" data-b="0.45" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:20vh;">Verslay's only technical founder. My co-founder runs sales.</p>
+      <p class="line" data-s="4" data-a="0.5" data-b="0.65" data-o="0.85" data-e="0.97" style="left:var(--pad-x);bottom:12vh;font-size:16px;">40+ Indian businesses booked a Verslay demo.</p>
+    </div>
+  </section>
+
+  <!-- SCENE 5 -->
+  <section class="scene" data-scene="5" aria-label="The approach">
+    <div class="stage">
+      <div class="captions" data-s="5">
+        <p class="line cap" data-s="5" data-a="0.12" data-b="0.3" data-o="0.85" data-e="0.97">Store dues by hand. Now a payment engine.</p>
+        <p class="line cap" data-s="5" data-a="0.2" data-b="0.38" data-o="0.85" data-e="0.97">Orders one message at a time. Now an agent that sells.</p>
+        <p class="line cap" data-s="5" data-a="0.28" data-b="0.46" data-o="0.85" data-e="0.97">A voice note. Now tasks and a calendar.</p>
+      </div>
+      <p class="large" data-s="5" data-a="0.45" data-b="0.62" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;max-width:14ch;">Name the constraint. Then build the system around it.</p>
+    </div>
+  </section>
+
+  <!-- SCENE 6 -->
+  <section class="scene" data-scene="6" aria-label="Who I build for">
+    <div class="stage">
+      <p class="line" data-s="6" data-a="0.08" data-b="0.25" data-o="0.85" data-e="0.97" style="left:var(--pad-x);top:12vh;">The operator should run the business. The system should carry the work.</p>
+    </div>
+  </section>
+
+  <!-- SCENE 7 -->
+  <section class="scene" data-scene="7" aria-label="Close">
+    <div class="stage">
+      <p class="large" data-s="7" data-a="0.1" data-b="0.3" data-o="2" data-e="3" style="left:var(--pad-x);top:14vh;">Bring the operation.</p>
+      <div class="cta" data-s="7" data-a="0.3" data-b="0.5" data-o="2" data-e="3" style="left:var(--pad-x);top:44vh;">
+        <a class="btn" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+        <p class="line" style="margin-top:18px;font-size:16px;">The appointment sits on LinkedIn.</p>
+      </div>
+      <div class="footer-block" data-s="7" data-a="0.55" data-b="0.7" data-o="2" data-e="3">
+        <p>Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+        <p>Shubham Gupta. Delhi.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { Reflector } from 'three/addons/objects/Reflector.js';
+
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canvas = document.getElementById('scene-canvas');
+const sections = Array.from(document.querySelectorAll('.scene'));
+const SCENE_COUNT = sections.length;
+
+const clamp01 = (x) => Math.min(1, Math.max(0, x));
+const ss = (a, b, x) => {
+  if (b <= a) return x >= b ? 1 : 0;
+  const u = clamp01((x - a) / (b - a));
+  return u * u * (3 - 2 * u);
+};
+const kf = (t, keys) => {
+  if (t <= keys[0][0]) return keys[0][1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    const a = keys[i], b = keys[i + 1];
+    if (t <= b[0]) return a[1] + (b[1] - a[1]) * ss(a[0], b[0], t);
+  }
+  return keys[keys.length - 1][1];
+};
+
+// ---------- renderer, one scene, one camera ----------
+let renderer = null;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
+} catch (e) {
+  renderer = null;
+}
+if (!renderer) {
+  document.documentElement.classList.add('no-webgl');
+}
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x070708);
+scene.fog = new THREE.FogExp2(0x070708, 0.045);
+const camera = new THREE.PerspectiveCamera(32, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(0, 1.8, 8.2);
+
+let composer = null;
+let bloom = null;
+let filmPass = null;
+const pixelRatio = () => Math.min(window.devicePixelRatio || 1, window.innerWidth < 600 ? 1.25 : 1.75);
+
+// ---------- shared time, GLSL noise, mercury material ----------
+const UT = { value: 0 };
+const SNOISE = `
+vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
+vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
+vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
+vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
+float snoise(vec3 v){
+  const vec2 C=vec2(1.0/6.0,1.0/3.0);
+  const vec4 D=vec4(0.0,0.5,1.0,2.0);
+  vec3 i=floor(v+dot(v,C.yyy));
+  vec3 x0=v-i+dot(i,C.xxx);
+  vec3 g=step(x0.yzx,x0.xyz);
+  vec3 l=1.0-g;
+  vec3 i1=min(g.xyz,l.zxy);
+  vec3 i2=max(g.xyz,l.zxy);
+  vec3 x1=x0-i1+C.xxx;
+  vec3 x2=x0-i2+C.yyy;
+  vec3 x3=x0-D.yyy;
+  i=mod289(i);
+  vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));
+  float n_=0.142857142857;
+  vec3 ns=n_*D.wyz-D.xzx;
+  vec4 j=p-49.0*floor(p*ns.z*ns.z);
+  vec4 x_=floor(j*ns.z);
+  vec4 y_=floor(j-7.0*x_);
+  vec4 x=x_*ns.x+ns.yyyy;
+  vec4 y=y_*ns.x+ns.yyyy;
+  vec4 h=1.0-abs(x)-abs(y);
+  vec4 b0=vec4(x.xy,y.xy);
+  vec4 b1=vec4(x.zw,y.zw);
+  vec4 s0=floor(b0)*2.0+1.0;
+  vec4 s1=floor(b1)*2.0+1.0;
+  vec4 sh=-step(h,vec4(0.0));
+  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;
+  vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+  vec3 p0=vec3(a0.xy,h.x);
+  vec3 p1=vec3(a0.zw,h.y);
+  vec3 p2=vec3(a1.xy,h.z);
+  vec3 p3=vec3(a1.zw,h.w);
+  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+  p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;
+  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0);
+  m=m*m;
+  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+}
+`;
+const MERCURY_GLSL = `
+uniform float uTime;
+uniform float uAmp;
+uniform float uFreq;
+uniform float uTower;
+uniform float uStretch;
+uniform float uRad;
+uniform float uSpike;
+uniform float uRipple;
+vec3 towerShape(vec3 d){
+  float m=max(abs(d.x),max(abs(d.y),abs(d.z)));
+  vec3 c=d/m;
+  float lv=6.0;
+  float idx=min(floor((c.y*0.5+0.5)*lv),lv-1.0);
+  float yq=mix((idx+0.5)/lv*2.0-1.0,c.y,0.06);
+  float taper=1.0-0.26*(yq*0.5+0.5);
+  return vec3(c.x*taper,yq,c.z*taper);
+}
+vec3 mercuryPos(vec3 p){
+  vec3 d=normalize(p);
+  float k=1.0-uTower;
+  float n=snoise(d*uFreq+vec3(0.0,uTime*0.14,0.0));
+  float n2=snoise(d*uFreq*2.2-vec3(uTime*0.23));
+  float sp=pow(clamp(1.0-abs(snoise(d*uFreq*1.7+vec3(uTime*0.31))),0.0,1.0),8.0);
+  float disp=(n*0.8+n2*0.28)*uAmp*k+sp*uSpike*0.22*k;
+  float rip=sin(d.y*16.0-uTime*3.2)*uRipple*k;
+  vec3 blob=d*(uRad*(1.0+disp+rip));
+  blob.y*=uStretch;
+  vec3 tw=towerShape(d)*uRad*vec3(0.92,1.9,0.92);
+  return mix(blob,tw,uTower);
+}
+`;
+const NORMAL_GLSL = `
+vec3 mp0=mercuryPos(position);
+vec3 nd=normalize(position);
+vec3 tg=normalize(cross(nd,abs(nd.y)<0.99?vec3(0.0,1.0,0.0):vec3(1.0,0.0,0.0)));
+vec3 bt=cross(nd,tg);
+vec3 mp1=mercuryPos(normalize(nd+tg*0.015));
+vec3 mp2=mercuryPos(normalize(nd+bt*0.015));
+vec3 nr=cross(mp1-mp0,mp2-mp0);
+vec3 objectNormal=dot(nr,nr)>1e-14?normalize(nr):nd;
+`;
+// one mercury material: displacement + normals are computed on the GPU from its uniforms
+function mercury(o = {}) {
+  const U = {
+    uTime: UT,
+    uAmp: { value: o.amp ?? 0.04 },
+    uFreq: { value: o.freq ?? 1.1 },
+    uTower: { value: 0 },
+    uStretch: { value: 1 },
+    uRad: { value: 1 },
+    uSpike: { value: 0 },
+    uRipple: { value: o.ripple ?? 0.01 }
+  };
+  const mat = new THREE.MeshPhysicalMaterial({
+    color: 0xe6e6e8, metalness: 1, roughness: 0.05,
+    clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 1.15
+  });
+  mat.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, U);
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', '#include <common>\n' + SNOISE + MERCURY_GLSL)
+      .replace('#include <beginnormal_vertex>', NORMAL_GLSL)
+      .replace('#include <begin_vertex>', 'vec3 transformed = mercuryPos(position);');
+  };
+  mat.customProgramCacheKey = () => 'mercury-v1';
+  mat.userData.U = U;
+  return mat;
+}
+
+// ---------- lights and environment ----------
+if (renderer) {
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  pmrem.dispose();
+}
+const keyLight = new THREE.DirectionalLight(0xffffff, 1.3);
+keyLight.position.set(2.5, 6, 4);
+scene.add(keyLight);
+const rimLight = new THREE.DirectionalLight(0xC2401F, 0);
+rimLight.position.set(4, 3, -4);
+scene.add(rimLight);
+
+// ---------- the hero body: one drop of mercury ----------
+const BODY_DETAIL = window.innerWidth < 600 ? 24 : 48;
+const body = new THREE.Mesh(new THREE.IcosahedronGeometry(1, BODY_DETAIL), mercury({ amp: 0.035, freq: 1.1 }));
+body.frustumCulled = false;
+scene.add(body);
+
+// ---------- budding and shattered droplets, all from one shared geometry ----------
+const DROP_GEO = new THREE.IcosahedronGeometry(1, 12);
+const NECK_GEO = new THREE.CylinderGeometry(1, 1, 1, 14, 1, true);
+const NECK_MAT = new THREE.MeshPhysicalMaterial({ color: 0xe6e6e8, metalness: 1, roughness: 0.05, clearcoat: 1 });
+function makeDrop(amp = 0.03, freq = 1.4) {
+  const m = new THREE.Mesh(DROP_GEO, mercury({ amp, freq }));
+  m.frustumCulled = false;
+  m.visible = false;
+  scene.add(m);
+  return m;
+}
+const drops = {
+  bud: Array.from({ length: 4 }, () => makeDrop(0.04, 1.6)),
+  shard: Array.from({ length: 5 }, () => makeDrop(0.12, 2.0)),
+  row: Array.from({ length: 3 }, () => makeDrop(0.3, 6.0)),
+  fall: Array.from({ length: 9 }, () => makeDrop(0.02, 1.2))
+};
+const necks = Array.from({ length: 5 }, () => {
+  const m = new THREE.Mesh(NECK_GEO, NECK_MAT);
+  m.frustumCulled = false;
+  m.visible = false;
+  scene.add(m);
+  return m;
+});
+// ---------- floor: a black mercury pool, mirrored, with shader ripples ----------
+const RIP = Array.from({ length: 9 }, () => new THREE.Vector4(0, 0, -99, 0));
+const POOL_SHADER = {
+  name: 'PoolShader',
+  uniforms: {
+    color: { value: null },
+    tDiffuse: { value: null },
+    textureMatrix: { value: null },
+    uT: { value: 0 },
+    uStill: { value: 0 },
+    uRip: { value: RIP }
+  },
+  vertexShader: `
+    uniform mat4 textureMatrix;
+    varying vec4 vUv;
+    varying vec3 vWorld;
+    void main() {
+      vUv = textureMatrix * vec4(position, 1.0);
+      vWorld = (modelMatrix * vec4(position, 1.0)).xyz;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }`,
+  fragmentShader: `
+    uniform vec3 color;
+    uniform sampler2D tDiffuse;
+    uniform float uT;
+    uniform float uStill;
+    uniform vec4 uRip[9];
+    varying vec4 vUv;
+    varying vec3 vWorld;
+    void main() {
+      vec2 g = vec2(0.0);
+      for (int i = 0; i < 9; i++) {
+        vec4 r = uRip[i];
+        float age = uT - r.z;
+        if (age > 0.0 && age < 4.0) {
+          vec2 d = vWorld.xz - r.xy;
+          float dist = length(d);
+          vec2 dir = d / max(dist, 0.001);
+          float x = dist - age * 1.5;
+          float env = exp(-x * x * 9.0) * exp(-age * 0.9) * r.w;
+          g += dir * cos(x * 26.0) * env;
+        }
+      }
+      vec4 pr = vUv;
+      pr.xy += g * 0.06 * uStill * pr.w;
+      vec3 refl = texture2DProj(tDiffuse, pr).rgb;
+      gl_FragColor = vec4(refl * 0.92 + color, 1.0);
+    }`
+};
+const floor = new Reflector(new THREE.PlaneGeometry(70, 70), {
+  shader: POOL_SHADER,
+  color: 0x0d0d0f,
+  textureWidth: Math.round(window.innerWidth * pixelRatio()),
+  textureHeight: Math.round(window.innerHeight * pixelRatio()),
+  clipBias: 0.003,
+  multisample: 0
+});
+floor.rotateX(-Math.PI / 2);
+floor.material.uniforms.uRip.value = RIP;
+scene.add(floor);
+
+// ---------- full-bleed footage: one fragment shader, three moods ----------
+const BG_MAT = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime: { value: 0 },
+    uHaze: { value: 0 },
+    uCaus: { value: 0 },
+    uDawn: { value: 0 }
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }`,
+  fragmentShader: `
+    uniform float uTime;
+    uniform float uHaze;
+    uniform float uCaus;
+    uniform float uDawn;
+    varying vec2 vUv;
+    float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+    float vnoise(vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      f = f * f * (3.0 - 2.0 * f);
+      float a = h21(i);
+      float b = h21(i + vec2(1.0, 0.0));
+      float c = h21(i + vec2(0.0, 1.0));
+      float d = h21(i + vec2(1.0, 1.0));
+      return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+    }
+    float fbm(vec2 p) {
+      float s = 0.0;
+      float a = 0.5;
+      for (int i = 0; i < 4; i++) { s += a * vnoise(p); p *= 2.03; a *= 0.5; }
+      return s;
+    }
+    float caustic(vec2 uv, float t) {
+      vec2 p = mod(uv * 6.2831, 6.2831) - 250.0;
+      vec2 i = p;
+      float c = 1.0;
+      float inten = 0.005;
+      for (int n = 0; n < 4; n++) {
+        float tt = t * (1.0 - (3.5 / float(n + 1)));
+        i = p + vec2(cos(tt - i.x) + sin(tt + i.y), sin(tt - i.y) + cos(tt + i.x));
+        c += 1.0 / length(vec2(p.x / (sin(i.x + tt) / inten), p.y / (cos(i.y + tt) / inten)));
+      }
+      c /= 4.0;
+      c = 1.17 - pow(c, 1.4);
+      return pow(abs(c), 8.0);
+    }
+    void main() {
+      vec2 uv = vUv;
+      float hz = fbm(uv * vec2(2.2, 1.4) + vec2(uTime * 0.03, -uTime * 0.02));
+      float vig = 1.0 - length(uv - 0.5) * 0.9;
+      vec3 haze = vec3(0.09, 0.085, 0.08) * smoothstep(0.25, 0.9, hz) * vig * uHaze;
+      float cs = clamp(caustic(uv * 0.9 + vec2(0.0, 0.2), uTime * 0.35), 0.0, 1.0);
+      vec3 caus = vec3(0.40, 0.48, 0.54) * cs * uCaus;
+      float rise = 0.05 + 0.6 * uDawn;
+      float gy = (uv.y - rise) * 3.0;
+      float gx = (uv.x - 0.5) * 1.8;
+      float glow = exp(-gy * gy) * exp(-gx * gx);
+      vec3 dawn = vec3(0.56, 0.17, 0.08) * glow * uDawn * (0.85 + 0.15 * hz);
+      gl_FragColor = vec4(haze + caus + dawn, 1.0);
+    }`,
+  depthWrite: false,
+  depthTest: false
+});
+const footage = new THREE.Mesh(new THREE.PlaneGeometry(90, 52), BG_MAT);
+footage.position.set(0, 8, -34);
+footage.renderOrder = -10;
+scene.add(footage);
+
+// ---------- far layer: drifting dust motes in fog ----------
+const DUST_N = window.innerWidth < 600 ? 900 : 1800;
+const dustPos = new Float32Array(DUST_N * 3);
+for (let i = 0; i < DUST_N; i++) {
+  dustPos[i * 3] = (Math.random() - 0.5) * 26;
+  dustPos[i * 3 + 1] = Math.random() * 12 - 1;
+  dustPos[i * 3 + 2] = -Math.random() * 22 + 4;
+}
+const dustGeo = new THREE.BufferGeometry();
+dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+const dustCanvas = document.createElement('canvas');
+dustCanvas.width = dustCanvas.height = 64;
+const dustCtx = dustCanvas.getContext('2d');
+const dustGrad = dustCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
+dustGrad.addColorStop(0, 'rgba(255,255,255,1)');
+dustGrad.addColorStop(1, 'rgba(255,255,255,0)');
+dustCtx.fillStyle = dustGrad;
+dustCtx.fillRect(0, 0, 64, 64);
+const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({
+  color: 0xEEE7DA, size: 0.07, map: new THREE.CanvasTexture(dustCanvas),
+  transparent: true, opacity: 0.55, depthWrite: false, sizeAttenuation: true
+}));
+scene.add(dust);
+
+// ---------- foreground layer: four out-of-focus chrome beads ----------
+const beads = Array.from({ length: 4 }, (_, i) => {
+  const m = new THREE.Mesh(
+    new THREE.SphereGeometry(0.3 + i * 0.07, 32, 24),
+    new THREE.MeshPhysicalMaterial({
+      color: 0xe6e6e8, metalness: 1, roughness: 0.12,
+      transparent: true, opacity: 0.2, depthWrite: false
+    })
+  );
+  m.userData.base = new THREE.Vector3((i - 1.5) * 2.8, 0.6 + (i % 2) * 1.8, 1.6 + (i % 3) * 0.7);
+  m.userData.ph = i * 1.7;
+  scene.add(m);
+  return m;
+});
+
+// ---------- the single warm oxide ring of scene 3 ----------
+const ringMat = new THREE.MeshBasicMaterial({ color: 0xC2401F, transparent: true, opacity: 0, depthWrite: false });
+const ringGroup = new THREE.Group();
+ringGroup.add(new THREE.Mesh(new THREE.TorusGeometry(2.1, 0.012, 8, 160), ringMat));
+const ringAnchor = new THREE.Object3D();
+ringAnchor.position.set(2.1, 0, 0);
+ringGroup.add(ringAnchor);
+ringGroup.rotation.set(1.25, 0, 0.3);
+ringGroup.visible = false;
+scene.add(ringGroup);
+// <!--INSERT:world-->
+// ---------- the story rig: every pose is a pure function of T (and idle time) ----------
+const MOB = window.innerWidth < 600;
+const CS = MOB ? 1.3 : 1;
+const SHARD_POS = [[-3.4, 2.7, -0.6], [-1.7, 3.5, 0.5], [0, 2.3, -0.4], [1.7, 3.4, 0.6], [3.4, 2.8, -0.5]];
+const SHARD_Y_M = [2.9, 1.9, 3.3, 2.0, 2.8];
+const BUD_DIR = [[-0.8, 0.6, 0.25], [0.75, 0.7, 0.2], [0.8, -0.45, 0.3], [-0.8, -0.5, 0.3]]
+  .map((v) => new THREE.Vector3(v[0], v[1], v[2]).normalize());
+const ROW_X = MOB ? [-0.8, 0, 0.8] : [-2.6, 0, 2.6];
+const FALL_X = MOB ? [-0.7, 0, 0.7, -0.7, 0, 0.7, -0.7, 0, 0.7] : [-2.2, 0, 2.2, -2.2, 0, 2.2, -2.2, 0, 2.2];
+const FALL_Z = MOB ? [-4, -4, -4, -2.2, -2.2, -2.2, -0.4, -0.4, -0.4] : [-6, -6, -6, -3.4, -3.4, -3.4, -0.8, -0.8, -0.8];
+const FALL_T = FALL_X.map((_, k) => 6.0 + 0.085 * k);
+FALL_X.forEach((x, k) => RIP[k].set(x, FALL_Z[k], FALL_T[k], 1.0));
+const ctr = new THREE.Vector3(), vA = new THREE.Vector3(), vB = new THREE.Vector3();
+const SP = drops.shard.map(() => new THREE.Vector3());
+const UP = new THREE.Vector3(0, 1, 0);
+
+function rigBodies(T, TIME) {
+  // hero body: radius, height, morph and noise are all keyed on T
+  const R = kf(T, [[0, 1.0], [1.95, 1.0], [2.25, 0.0001], [3.25, 0.0001], [3.85, 1.35], [4.95, 1.35], [5.3, 0.0001], [6.85, 0.0001], [7.5, 1.0], [8, 1.0]]);
+  const Y = kf(T, [[0, 1.4], [3.9, 1.4], [4.7, 2.14], [6.8, 2.14], [7.2, 1.45], [8, 1.45]]);
+  ctr.set(0, Y, 0);
+  body.position.copy(ctr);
+  body.scale.setScalar(Math.max(R, 0.0001) * (1 + 0.012 * Math.sin(TIME * 1.2)));
+  body.visible = R > 0.01;
+  body.rotation.y = TIME * 0.05 + T * 0.25;
+  const U = body.material.userData.U;
+  U.uTower.value = kf(T, [[0, 0], [3.9, 0], [4.7, 1], [6.8, 1], [6.9, 0], [8, 0]]);
+  U.uStretch.value = kf(T, [[0, 1], [0.9, 1], [1.9, 1.36], [2.1, 1], [8, 1]]);
+  U.uAmp.value = kf(T, [[0, 0.03], [1, 0.05], [1.9, 0.13], [2.25, 0.3], [3.9, 0.3], [4.3, 0.04], [8, 0.04]]);
+  U.uFreq.value = 1.1 + 0.6 * ss(1.9, 2.25, T);
+
+  // scene 1: four droplets bud out of the surface in turn
+  drops.bud.forEach((m, k) => {
+    const tb = 1.05 + 0.2 * k;
+    const go = ss(tb, tb + 0.22, T);
+    const s = 0.3 * ss(tb, tb + 0.14, T) * (1 - ss(1.95, 2.1, T));
+    m.visible = s > 0.002;
+    m.scale.setScalar(Math.max(s, 0.0001));
+    m.position.copy(ctr).addScaledVector(BUD_DIR[k], 1.0 + 1.15 * go);
+  });
+
+  // scene 2: the body shatters into five droplets; scene 3: they roll back and fuse
+  const out = ss(2.05, 2.75, T);
+  const back = ss(3.0, 3.7, T);
+  const neckR = 0.16 * Math.sin(Math.PI * clamp01(back)) * (1 - ss(3.6, 3.9, T));
+  drops.shard.forEach((m, k) => {
+    const sx = MOB ? SHARD_POS[k][0] * 0.4 : SHARD_POS[k][0];
+    const sy = MOB ? SHARD_Y_M[k] : SHARD_POS[k][1];
+    vA.set(sx, sy, SHARD_POS[k][2]);
+    vB.copy(ctr).lerp(vA, out);
+    vB.lerp(ctr, back * 0.9);
+    vB.y += Math.sin(TIME * 2.1 + k * 1.3) * 0.06 * out * (1 - back);
+    SP[k].copy(vB);
+    const s = (MOB ? 0.34 : 0.42) * ss(2.0, 2.2, T) * (1 - ss(3.5, 3.85, T));
+    m.visible = s > 0.002;
+    m.scale.setScalar(Math.max(s, 0.0001));
+    m.position.copy(vB);
+    m.material.userData.U.uAmp.value = 0.12 + 0.1 * out;
+    m.material.userData.U.uFreq.value = 2.0;
+  });
+  necks.forEach((n, k) => {
+    vA.copy(SP[k]).sub(ctr);
+    const len = vA.length();
+    const show = neckR > 0.004 && len > 0.2 && drops.shard[k].visible;
+    n.visible = show;
+    if (show) {
+      n.position.copy(ctr).addScaledVector(vA, 0.5);
+      n.quaternion.setFromUnitVectors(UP, vA.normalize());
+      n.scale.set(neckR, len, neckR);
+    }
+  });
+
+  // scene 3: the oxide ring circles the fused body; scene 4 lets it go
+  const ro = ss(3.3, 3.7, T) * (1 - ss(4.1, 4.5, T));
+  ringGroup.visible = ro > 0.002;
+  ringGroup.position.copy(ctr);
+  ringMat.opacity = 0.9 * ro;
+  ringGroup.rotation.z = 0.3 + T * 0.6;
+
+  // scene 5: three droplets start jagged and calm into perfect spheres
+  drops.row.forEach((m, k) => {
+    const grow = ss(4.95 + 0.1 * k, 5.2 + 0.1 * k, T) * (1 - ss(5.95, 6.2, T));
+    const calm = ss(5.05 + 0.2 * k, 5.75 + 0.2 * k, T);
+    const U2 = m.material.userData.U;
+    U2.uAmp.value = 0.26 * (1 - calm);
+    U2.uSpike.value = 1 - calm;
+    U2.uRipple.value = 0.012 * (1 - calm);
+    U2.uFreq.value = 3.2;
+    m.position.set(ROW_X[k], 1.5, 0);
+    m.scale.setScalar(Math.max(0.5 * grow, 0.0001));
+    m.visible = grow > 0.002;
+  });
+
+  // scene 6: nine drops fall onto a still pool; each impact seeds a ripple in the floor shader
+  drops.fall.forEach((m, k) => {
+    const tf = FALL_T[k];
+    const f = clamp01((T - (tf - 0.5)) / 0.5);
+    const sink = ss(tf + 0.1, tf + 0.5, T);
+    const sq = T >= tf && T < tf + 0.3 ? Math.sin((Math.PI * (T - tf)) / 0.3) : 0;
+    m.visible = T > tf - 0.5 && T < tf + 0.55;
+    m.position.set(FALL_X[k], 5.0 + (0.26 - 5.0) * f * f - sink * 0.3, FALL_Z[k]);
+    m.scale.set(0.3 * (1 + 0.25 * sq), 0.3 * (1 - 0.35 * sq), 0.3 * (1 + 0.25 * sq));
+    m.material.userData.U.uAmp.value = 0.02 + 0.06 * sq;
+  });
+}
+// camera keys at T = 0..8, one per scene edge; Catmull-Rom keeps the dolly continuous
+const CP = [[0, 1.8, 8.2], [1.4, 2.2, 7.8], [-1.2, 1.5, 8.6], [0, 1.6, 7.4], [0.2, 2.6, 8.8], [0, 1.3, 8.0], [0, 0.34, 5.4], [0.2, 1.6, 6.9], [0, 1.6, 6.9]];
+const CL = [[0, 1.3, 0], [0.2, 1.6, 0], [0, 2.8, 0], [-1.6, 1.9, 0], [-1.0, 2.1, 0], [0, 1.4, 0], [0, 0.25, -2], [-1.6, 1.4, 0], [-1.6, 1.4, 0]];
+const _cp = [0, 0, 0], _cl = [0, 0, 0];
+function sampleCR(keys, t, out) {
+  const n = keys.length - 1;
+  const x = Math.min(Math.max(t, 0), n - 1e-4);
+  const i = Math.floor(x);
+  const f = x - i;
+  const p0 = keys[Math.max(i - 1, 0)], p1 = keys[i], p2 = keys[i + 1], p3 = keys[Math.min(i + 2, n)];
+  for (let k = 0; k < 3; k++) {
+    const a = p0[k], b = p1[k], c = p2[k], d = p3[k];
+    out[k] = 0.5 * (2 * b + (-a + c) * f + (2 * a - 5 * b + 4 * c - d) * f * f + (-a + 3 * b - 3 * c + d) * f * f * f);
+  }
+  return out;
+}
+function rigCamera(T, TIME) {
+  sampleCR(CP, T, _cp);
+  sampleCR(CL, T, _cl);
+  camera.position.set(
+    _cl[0] + (_cp[0] - _cl[0]) * CS + Math.sin(TIME * 0.31) * 0.04,
+    _cl[1] + (_cp[1] - _cl[1]) * CS + Math.sin(TIME * 0.23) * 0.03,
+    _cl[2] + (_cp[2] - _cl[2]) * CS
+  );
+  camera.lookAt(_cl[0], _cl[1], _cl[2]);
+}
+
+// every other layer: footage weights, floor, light, dust and beads
+function rigWorld(T, TIME) {
+  BG_MAT.uniforms.uTime.value = TIME;
+  BG_MAT.uniforms.uHaze.value = kf(T, [[0, 0.9], [0.9, 0.9], [1.2, 0], [5.6, 0], [6.3, 0.5], [6.9, 0.5], [7.3, 0], [8, 0]]);
+  BG_MAT.uniforms.uCaus.value = kf(T, [[0, 0], [1.8, 0], [2.25, 1], [3.1, 1], [3.5, 0], [8, 0]]);
+  BG_MAT.uniforms.uDawn.value = ss(6.6, 7.9, T);
+  const fu = floor.material.uniforms;
+  fu.uT.value = T;
+  fu.uStill.value = 0.35 + 0.65 * ss(5.6, 6.2, T);
+  rimLight.intensity = 6.0 * ss(6.6, 7.9, T);
+  rimLight.position.set(0, kf(T, [[6.6, -2], [7.9, 5.5], [8, 5.5]]), -6);
+  dust.rotation.y = T * 0.04 + TIME * 0.01;
+  beads.forEach((m) => {
+    const b = m.userData.base, ph = m.userData.ph;
+    m.position.set(
+      b.x + Math.sin(TIME * 0.35 + ph) * 0.35 - camera.position.x * 0.3,
+      b.y + Math.cos(TIME * 0.28 + ph) * 0.25,
+      b.z
+    );
+  });
+}
+
+// DOM words: reveal is a function of local progress p inside each scene
+let REV = [...document.querySelectorAll('[data-s][data-a]')].map((el) => ({
+  el, s: +el.dataset.s, a: +el.dataset.a, b: +el.dataset.b, o: +el.dataset.o, e: +el.dataset.e
+}));
+if (!renderer) {
+  REV.forEach((r) => { r.el.style.opacity = '1'; r.el.style.transform = 'none'; });
+}
+function reveal(T) {
+  for (const r of REV) {
+    const p = T - r.s;
+    const enter = ss(r.a, r.b, p);
+    const exit = ss(r.o, r.e, p);
+    r.el.style.opacity = String(enter * (1 - exit));
+    r.el.style.transform = `translate3d(0, ${((1 - enter) * 26 - exit * 14).toFixed(2)}px, 0)`;
+  }
+}
+
+function step(time) {
+  const TIME = REDUCED ? 0 : time;
+  let T = sumP();
+  if (REDUCED) T = Math.min(Math.floor(T), SCENE_COUNT - 1) + 0.8;
+  UT.value = TIME;
+  rigBodies(T, TIME);
+  rigCamera(T, TIME);
+  rigWorld(T, TIME);
+  if (renderer) {
+    reveal(T);
+    updateLabels(T);
+    if (filmPass) filmPass.uniforms.uTime.value = TIME;
+  }
+  LW.forEach((w) => updateLetters(w, TIME));
+}
+// <!--INSERT:scenes-->
+// ---------- pinned labels: each frame, the 3D anchor is projected to screen space ----------
+const LABELS = [];
+const tmpP = new THREE.Vector3();
+function addLabel(text, pos, vis) {
+  const el = document.createElement('div');
+  el.className = 'label';
+  el.textContent = text;
+  document.body.appendChild(el);
+  LABELS.push({ el, pos, vis });
+}
+function updateLabels(T) {
+  const W = window.innerWidth, H = window.innerHeight;
+  for (const L of LABELS) {
+    const op = L.vis(T);
+    if (op < 0.01) { L.el.style.opacity = '0'; continue; }
+    const p = L.pos(tmpP).project(camera);
+    const x = (p.x * 0.5 + 0.5) * W + 16;
+    const y = (-p.y * 0.5 + 0.5) * H - 12;
+    L.el.style.opacity = String(op);
+    L.el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+  }
+}
+['marketing', 'funnels', 'growth', 'clients'].forEach((txt, k) => {
+  const tb = 1.05 + 0.2 * k;
+  addLabel(txt, (v) => v.copy(drops.bud[k].position), (T) => ss(tb + 0.14, tb + 0.3, T) * (1 - ss(1.9, 2.0, T)));
+});
+['store', 'ledger', 'inbox', 'sheet', 'calendar'].forEach((txt, k) => {
+  addLabel(txt, (v) => v.copy(drops.shard[k].position), (T) => ss(2.45, 2.8, T) * (1 - ss(3.1, 3.3, T)));
+});
+addLabel('one memory', (v) => ringAnchor.getWorldPosition(v), (T) => ss(3.5, 3.8, T) * (1 - ss(4.1, 4.3, T)));
+['D2C fashion', 'gifting', 'jewellery', 'beauty', 'home decor', 'fitness', 'Textiles and B2B', 'agencies', 'creators'].forEach((txt, k) => {
+  const tf = 6.0 + 0.085 * k;
+  addLabel(txt, (v) => v.set(FALL_X[k], 0.02, FALL_Z[k]), (T) => ss(tf + 0.12, tf + 0.3, T) * (1 - ss(7.0, 7.2, T)));
+});
+// <!--INSERT:labels-->
+// ---------- video in letters: a procedural loop, visible only through the glyphs ----------
+const MOLTEN = [[0, [7, 7, 8]], [0.35, [44, 45, 50]], [0.62, [150, 146, 138]], [0.85, [238, 231, 218]], [1, [255, 250, 240]]];
+const CAUSTIC = [[0, [7, 8, 9]], [0.4, [30, 36, 42]], [0.75, [118, 132, 140]], [1, [238, 231, 218]]];
+function lutFrom(stops) {
+  const out = new Uint8ClampedArray(256 * 3);
+  for (let i = 0; i < 256; i++) {
+    const v = i / 255;
+    let k = 0;
+    while (k < stops.length - 2 && v > stops[k + 1][0]) k++;
+    const p0 = stops[k][0], c0 = stops[k][1], p1 = stops[k + 1][0], c1 = stops[k + 1][1];
+    const f = clamp01((v - p0) / (p1 - p0));
+    for (let c = 0; c < 3; c++) out[i * 3 + c] = c0[c] + (c1[c] - c0[c]) * f;
+  }
+  return out;
+}
+// molten liquid metal: layered sines with domain warp, returns 0..1
+function fieldMolten(x, y, t) {
+  const a = Math.sin(x * 5.2 + t * 0.7) + Math.sin(y * 7.1 - t * 0.5);
+  const b = Math.sin((x + y) * 3.7 + t * 0.4 + a * 0.9);
+  const c = Math.sin(Math.hypot(x - 0.4, y - 0.6) * 11.0 - t * 1.1);
+  return (a + b + c) / 6 + 0.5;
+}
+// cold rippling caustics: bright filaments where the warped sum crosses zero
+function fieldCaustic(x, y, t) {
+  const a = Math.sin(x * 9.0 + Math.sin(y * 6.0 + t * 1.3) * 2.0 + t * 0.8);
+  const b = Math.sin(y * 11.0 + Math.sin(x * 7.0 - t * 1.1) * 2.0 - t * 0.6);
+  const c = Math.sin((x + y) * 8.0 + t);
+  const v = 1 - Math.abs(a + b + c) / 3;
+  return Math.pow(Math.max(v, 0), 4.0);
+}
+const LW = [];
+function makeLetters(sel, lines, cfg) {
+  const host = document.querySelector(sel);
+  const canvas = document.createElement('canvas');
+  canvas.setAttribute('aria-hidden', 'true');
+  host.appendChild(canvas);
+  const mask = document.createElement('canvas');
+  const noise = document.createElement('canvas');
+  const w = {
+    host, lines, cfg, canvas, mask, noise,
+    ctx: canvas.getContext('2d'), mctx: mask.getContext('2d'), nctx: noise.getContext('2d'),
+    lut: lutFrom(cfg.stops), field: cfg.field,
+    img: null, nw: 0, nh: 0, W: 0, H: 0, ax: 1, drawn: false
+  };
+  LW.push(w);
+  return w;
+}
+function layoutLetters(w) {
+  const maxW = w.host.clientWidth;
+  if (!maxW) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  const ital = w.cfg.italic ? 'italic ' : '';
+  w.mctx.font = `${ital}400 100px "Instrument Serif", Georgia, serif`;
+  let widest = 0;
+  for (const ln of w.lines) widest = Math.max(widest, w.mctx.measureText(ln).width);
+  const fs = Math.min(w.cfg.size(), (maxW / widest) * 100 * 0.99);
+  const lh = fs * w.cfg.lead;
+  const cssH = lh * w.lines.length + fs * 0.18;
+  w.host.style.height = cssH.toFixed(1) + 'px';
+  w.W = Math.round(maxW * dpr);
+  w.H = Math.round(cssH * dpr);
+  w.canvas.width = w.W;
+  w.canvas.height = w.H;
+  w.mask.width = w.W;
+  w.mask.height = w.H;
+  const m = w.mctx;
+  m.clearRect(0, 0, w.W, w.H);
+  m.fillStyle = '#fff';
+  m.font = `${ital}400 ${(fs * dpr).toFixed(2)}px "Instrument Serif", Georgia, serif`;
+  m.textBaseline = 'alphabetic';
+  w.lines.forEach((ln, i) => m.fillText(ln, 0, (fs * 0.92 + i * lh) * dpr));
+  const S = 6;
+  w.nw = Math.max(16, Math.ceil(maxW / S));
+  w.nh = Math.max(8, Math.ceil(cssH / S));
+  w.noise.width = w.nw;
+  w.noise.height = w.nh;
+  w.img = w.nctx.createImageData(w.nw, w.nh);
+  w.ax = maxW / cssH;
+  w.drawn = false;
+}
+function drawLetters(w, t) {
+  const d = w.img.data, nw = w.nw, nh = w.nh, ax = w.ax, lut = w.lut, field = w.field;
+  let i = 0;
+  for (let y = 0; y < nh; y++) {
+    const fy = (y + 0.5) / nh;
+    for (let x = 0; x < nw; x++) {
+      const v = clamp01(field(((x + 0.5) / nw) * ax, fy, t));
+      const k = ((v * 255) | 0) * 3;
+      d[i++] = lut[k];
+      d[i++] = lut[k + 1];
+      d[i++] = lut[k + 2];
+      d[i++] = 255;
+    }
+  }
+  w.nctx.putImageData(w.img, 0, 0);
+  const c = w.ctx;
+  c.globalCompositeOperation = 'source-over';
+  c.clearRect(0, 0, w.W, w.H);
+  c.imageSmoothingEnabled = true;
+  c.imageSmoothingQuality = 'high';
+  c.drawImage(w.noise, 0, 0, w.W, w.H);
+  c.globalCompositeOperation = 'destination-in';
+  c.drawImage(w.mask, 0, 0);
+  c.globalCompositeOperation = 'source-over';
+}
+function updateLetters(w, TIME) {
+  if (!w.img || (parseFloat(w.host.style.opacity) || 0) < 0.01) return;
+  if (REDUCED && w.drawn) return;
+  drawLetters(w, TIME);
+  w.drawn = true;
+}
+const layoutAll = () => LW.forEach(layoutLetters);
+makeLetters('[data-letters="hero"]', ['SHUBHAM', 'GUPTA'], {
+  italic: false, lead: 0.9, stops: MOLTEN, field: fieldMolten,
+  size: () => window.innerWidth * (window.innerWidth < 600 ? 0.19 : 0.16)
+});
+makeLetters('[data-letters="orch"]', ['Orchestration is', 'the bottleneck.'], {
+  italic: true, lead: 1.0, stops: CAUSTIC, field: fieldCaustic,
+  size: () => (window.innerWidth < 600 ? 42 : 96)
+});
+layoutAll();
+window.addEventListener('resize', layoutAll);
+if (document.fonts) document.fonts.ready.then(layoutAll);
+// <!--INSERT:letters-->
+// ---------- scroll: one scrubbed ScrollTrigger per section, its progress kept as p ----------
+gsap.registerPlugin(ScrollTrigger);
+const scrollP = sections.map(() => ({ p: 0 }));
+sections.forEach((sec, i) => {
+  gsap.fromTo(scrollP[i], { p: 0 }, {
+    p: 1,
+    ease: 'none',
+    scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: 0.8 }
+  });
+});
+// the global story value: finished sections contribute 1, the active one its fraction
+const sumP = () => scrollP.reduce((a, o) => a + o.p, 0);
+if (!REDUCED && window.Lenis) {
+  const lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+}
+// <!--INSERT:scroll-->
+
+function setSize() {
+  const w = window.innerWidth, h = window.innerHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  if (renderer) {
+    renderer.setPixelRatio(pixelRatio());
+    renderer.setSize(w, h, false);
+    if (composer) composer.setSize(w, h);
+    if (floor && floor.getRenderTarget) floor.getRenderTarget().setSize(Math.round(w * renderer.getPixelRatio()), Math.round(h * renderer.getPixelRatio()));
+  }
+}
+
+function frame(time) {
+  step(time);
+  // <!--INSERT:frame-->
+  if (renderer && composer) composer.render();
+}
+
+if (renderer) {
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.setClearColor(0x070708, 1);
+  setSize();
+    // one composer: scene pass, bloom on the oxide highlights, output (ACES + sRGB), then film grain
+  const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: 4 });
+  composer = new EffectComposer(renderer, rt);
+  composer.addPass(new RenderPass(scene, camera));
+  bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.32, 0.5, 0.92);
+  composer.addPass(bloom);
+  composer.addPass(new OutputPass());
+  filmPass = new ShaderPass({
+    uniforms: {
+      tDiffuse: { value: null },
+      uTime: { value: 0 },
+      uGrain: { value: 0.04 },
+      uCA: { value: 0.0035 },
+      uRes: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }`,
+    fragmentShader: `
+      uniform sampler2D tDiffuse;
+      uniform float uTime;
+      uniform float uGrain;
+      uniform float uCA;
+      uniform vec2 uRes;
+      varying vec2 vUv;
+      float rnd(vec2 co) { return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453); }
+      void main() {
+        vec2 d = vUv - 0.5;
+        float r2 = dot(d, d);
+        vec2 off = d * uCA * (r2 * 4.0);
+        float r = texture2D(tDiffuse, vUv + off).r;
+        float g = texture2D(tDiffuse, vUv).g;
+        float b = texture2D(tDiffuse, vUv - off).b;
+        vec3 col = vec3(r, g, b);
+        float vig = 1.0 - 0.6 * pow(length(d) * 1.4142, 2.2);
+        col *= clamp(vig, 0.0, 1.0);
+        float n = rnd(vUv * uRes + fract(uTime) * 97.31) - 0.5;
+        col += n * uGrain;
+        gl_FragColor = vec4(max(col, 0.0), 1.0);
+      }`
+  });
+  composer.addPass(filmPass);
+  composer.setSize(window.innerWidth, window.innerHeight);
+  // <!--INSERT:post-->
+  window.addEventListener('resize', setSize);
+}
+// the ticker runs with or without WebGL, so the words still reveal in the fallback
+gsap.ticker.lagSmoothing(0);
+gsap.ticker.add(frame);
+</script>
+</body>
+</html>
