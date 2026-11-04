@@ -1,10 +1,12 @@
 <!doctype html>
 <html lang="en">
-<head><meta name="robots" content="noindex,nofollow">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Shubham Gupta</title>
 <meta name="description" content="Shubham Gupta. I build the AI that runs businesses.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Manrope:wght@400..700&display=swap">
@@ -25,9 +27,9 @@ a{color:inherit}
 .scene{position:relative;z-index:2;height:220vh}
 .stage{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:14vh var(--pad) 9vh;overflow:clip}
 .stage>*{position:relative}
-.display{font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:300;font-style:italic;font-size:clamp(48px,6.2vw,96px);line-height:1.08;letter-spacing:-.02em;max-width:17ch;text-shadow:0 0 24px rgba(8,9,11,.85)}
+.display{font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:300;font-style:italic;font-size:clamp(48px,6.2vw,96px);line-height:1.08;letter-spacing:-.02em;max-width:17ch;color:var(--bone);text-shadow:0 0 24px rgba(8,9,11,.85)}
 .lede{font-size:clamp(18px,1.5vw,22px);line-height:1.6;max-width:36ch;background:rgba(8,9,11,.72);padding:8px 12px}
-.pin{position:fixed;left:0;top:0;z-index:4;pointer-events:none;white-space:nowrap;font:600 15px/1 Manrope,sans-serif;letter-spacing:.02em;padding:7px 10px 7px 12px;background:rgba(8,9,11,.76);border-left:2px solid var(--amber)}
+.pin{position:fixed;left:0;top:0;z-index:4;pointer-events:none;white-space:nowrap;font:600 15px/1.2 Manrope,sans-serif;letter-spacing:.02em;color:var(--bone);padding:4px 10px;border-radius:999px;background:rgba(10,10,12,0.78)}
 .pin.flow{position:static;display:inline-block;margin:6px 12px 0 0}
 .btn{display:inline-block;background:var(--oxide);color:var(--bone);font:700 20px/1 Manrope,sans-serif;padding:20px 44px;text-decoration:none}
 .btn:hover{background:#D4502C}
@@ -36,8 +38,8 @@ a{color:inherit}
 .foot p+p{margin-top:8px}
 .name-cv,.line-cv{display:block;width:100%;height:auto}
 @media (max-width:600px){.scene{height:170vh}.display{font-size:clamp(30px,9vw,42px);max-width:none}.lede{font-size:18px;max-width:none}.foot{font-size:16px}}
-.tiny{font-size:18px;background:rgba(8,9,11,.72);padding:6px 10px;display:inline-block}
-.s0-name{margin:auto 0}
+.tiny{font-size:18px;line-height:1.5;color:var(--bone);background:rgba(10,10,12,0.78);padding:6px 10px;display:inline-block}
+.s0-name{margin:auto 0 22px}
 .s0-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
 .big-wrap{width:100%}
 .s1 .lede,.s3 .lede{margin-top:auto}
@@ -47,7 +49,7 @@ a{color:inherit}
 .s7-mid{display:flex;flex-direction:column;align-items:center;gap:18px;margin:auto 0;text-align:center}
 .s7-mid .lede{max-width:none}
 .foot{margin-top:0}
-@media (max-width:600px){.caps{grid-template-columns:1fr;gap:14px}.s0-foot{flex-direction:column;align-items:flex-start}.btn{padding:18px 34px;font-size:18px}}
+@media (max-width:600px){.caps{grid-template-columns:1fr;gap:14px}.s0-foot{flex-direction:column;align-items:flex-start}.btn{padding:18px 34px;font-size:18px;background:var(--bone);color:var(--basalt)}.btn:hover{background:var(--bone)}.s7{padding-top:11vh}.s7-mid{gap:14px}.foot{padding:14px 16px 16px;line-height:1.5}}
 </style>
 </head>
 <body>
@@ -134,7 +136,7 @@ function updateText() {
   for (const el of REVEALS) {
     const p = P[el._s], r = el._r;
     const inK = r[0] <= 0 ? 1 : ss(r[0], r[1], p);
-    const k = reduced ? 1 : inK * (el._x ? 1 : 1 - ss(0.86, 0.98, p));
+    const k = reduced ? 1 : inK * (el._x ? 1 : 1 - ss(0.85, 0.98, p));
     el.style.opacity = k.toFixed(3);
     if (!el._pin) el.style.transform = `translate3d(0,${((1 - k) * 18).toFixed(1)}px,0)`;
   }
@@ -236,7 +238,7 @@ function fbm3(x, y, z) {
 }
 // One half of the rough geode shell: displaced icosahedron, split by height, flat shaded
 function shellHalf(top) {
-  const p = new THREE.IcosahedronGeometry(1, 4).toNonIndexed().attributes.position.array;
+  const p = new THREE.IcosahedronGeometry(1, 4).attributes.position.array;
   for (let i = 0; i < p.length; i += 3) {
     const x = p[i], y = p[i + 1], z = p[i + 2];
     const s = 1 + (fbm3(x * 1.6 + 3.1, y * 1.6, z * 1.6) - 0.5) * 0.46;
@@ -317,8 +319,8 @@ function setBeam(m, a, b, w) {
   m.scale.set(w, len, w);
 }
 /* ---------- world: camera path, post chain, lights, depth layers, footage ---------- */
-const CAM_P = [[0, 0.3, 7.2], [0, 0.7, 4.9], [-0.5, 1.4, 6.4], [0, 2.6, 7.4], [0, 0.4, 4.4], [0, 1.1, 7.6], [0, 5.8, 15.5], [0, 0.9, 5.2], [0, 0.9, 5.2]];
-const CAM_L = [[0, 0, 0], [0, 0.2, 0], [0, 0.2, 0], [0, 0.6, 0], [0, 3.0, 0], [0, 1.0, 0], [0, -0.8, 0], [0, 0.3, 0.7], [0, 0.3, 0.7]];
+const CAM_P = [[0, 0.5, 9.6], [0, 0.6, 9.0], [-0.5, 1.4, 6.4], [0, 2.6, 7.4], [0, 0.4, 4.4], [0, 1.1, 7.6], [0, 5.8, 15.5], [0, 0.9, 5.2], [0, 0.9, 5.2]];
+const CAM_L = [[0, -1.2, 0], [0, -1.15, 0], [0, 0.2, 0], [0, 0.6, 0], [0, 3.0, 0], [0, 1.0, 0], [0, -0.8, 0], [0, 0.3, 0.7], [0, 0.3, 0.7]];
 const GRAIN_SHADER = {
   uniforms: { tDiffuse: { value: null }, uTime: { value: 0 } },
   vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
@@ -590,20 +592,36 @@ function onResize(w, h) {
   });
 }
 
-// Labels follow their 3D anchor; they hide when the anchor is hidden or behind the lens
+// Labels follow their 3D anchor and sit on a dark pill; a label that would overlap an earlier one moves below it
 function updatePins() {
-  const W = innerWidth, H = innerHeight;
+  const W = innerWidth, H = innerHeight, GAP = 6;
+  const list = [];
   for (const p of PINS) {
     const el = p.el;
-    if (!p.obj.visible) { el.style.visibility = 'hidden'; continue; }
+    el.style.visibility = 'hidden';
+    if (!p.obj.visible || parseFloat(el.style.opacity) < 0.02) continue;
     V.copy(p.off);
     p.obj.localToWorld(V);
     V.project(camera);
-    if (V.z > 1) { el.style.visibility = 'hidden'; continue; }
-    el.style.visibility = 'visible';
-    const x = Math.min(W - 24, Math.max(24, (V.x * 0.5 + 0.5) * W));
-    const y = Math.min(H - 24, Math.max(48, (-V.y * 0.5 + 0.5) * H));
-    el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) translate(-50%,-100%)`;
+    if (V.z > 1) continue;
+    if (!p.w) { p.w = el.offsetWidth; p.h = el.offsetHeight; }
+    list.push({ el, w: p.w, h: p.h, x: (V.x * 0.5 + 0.5) * W, y: (-V.y * 0.5 + 0.5) * H });
+  }
+  for (let pass = 0; pass < 3; pass++) {
+    for (let i = 1; i < list.length; i++) {
+      for (let j = 0; j < i; j++) {
+        const a = list[i], b = list[j];
+        const overX = Math.abs(a.x - b.x) < (a.w + b.w) / 2 + GAP;
+        const overY = a.y - a.h < b.y + GAP && a.y + GAP > b.y - b.h;
+        if (overX && overY) a.y = b.y + GAP + a.h;
+      }
+    }
+  }
+  for (const a of list) {
+    const x = Math.min(W - a.w / 2 - 8, Math.max(a.w / 2 + 8, a.x));
+    const y = Math.min(H - 12, Math.max(a.h + 8, a.y));
+    a.el.style.visibility = 'visible';
+    a.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) translate(-50%,-100%)`;
   }
 }
 /* ---------- the story value t drives every transform, light and colour ---------- */
@@ -739,7 +757,7 @@ const SERIF_IT = s => `italic 300 ${s}px Fraunces, Georgia, "Times New Roman", s
 function setupTexts() {
   const name = document.querySelector('.name-cv');
   if (name) TEXTS.push({ cv: name, ctx: name.getContext('2d'), mode: 'caustic', font: SERIF_UP, align: 'center',
-    maxSize: () => Math.min(innerWidth * 0.2, 240), getLines: () => ['SHUBHAM', 'GUPTA'] });
+    maxSize: () => (isNarrow() ? innerWidth * 0.19 : Math.min(innerWidth * 0.12, innerHeight * 0.165, 200)), getLines: () => ['SHUBHAM', 'GUPTA'] });
   const line = document.querySelector('.line-cv');
   if (line) TEXTS.push({ cv: line, ctx: line.getContext('2d'), mode: 'cracks', font: SERIF_IT, align: 'left',
     maxSize: () => (isNarrow() ? 42 : 96),
@@ -761,74 +779,49 @@ function layoutTexts() {
     t.cv.style.height = H + 'px';
   }
 }
-// The light is painted into a quarter-size buffer and scaled up once per frame
-function paintCaustic(t, c, W, H, time) {
-  const ow = Math.max(24, Math.round(W / 4)), oh = Math.max(12, Math.round(H / 4));
+// Light painted inside the letters. Every colour sits between bone and near white
+// (lightness 0.84 or higher), so the letters never fall below bone.
+const LIGHT_LO = [240, 233, 220], LIGHT_MID = [247, 221, 181], LIGHT_HI = [255, 252, 245];
+// Computed on a quarter-size buffer, then scaled up once per frame
+function paintLight(t, c, W, H, time) {
+  const ow = Math.max(32, Math.round(W / 4)), oh = Math.max(16, Math.round(H / 4));
   if (!t.off) t.off = document.createElement('canvas');
-  if (t.off.width !== ow || t.off.height !== oh) { t.off.width = ow; t.off.height = oh; }
+  if (t.off.width !== ow || t.off.height !== oh) { t.off.width = ow; t.off.height = oh; t.img = null; }
   const o = t.off.getContext('2d');
-  o.fillStyle = '#1C140E';
-  o.fillRect(0, 0, ow, oh);
-  o.globalCompositeOperation = 'lighter';
-  const R = Math.max(ow, oh);
-  for (let i = 0; i < 12; i++) {
-    const a = time * 0.23 + i * 1.91;
-    const x = ow * (0.5 + 0.44 * Math.sin(a * 0.9 + i));
-    const y = oh * (0.5 + 0.42 * Math.cos(a * 0.7 - i * 0.6));
-    const r = R * (0.12 + 0.07 * Math.sin(a + i));
-    const g = o.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, 'rgba(224,160,74,0.75)');
-    g.addColorStop(0.45, 'rgba(150,92,38,0.22)');
-    g.addColorStop(1, 'rgba(0,0,0,0)');
-    o.fillStyle = g;
-    o.fillRect(0, 0, ow, oh);
-  }
-  o.globalCompositeOperation = 'source-over';
-  c.drawImage(t.off, 0, 0, W, H);
-}
-function makePaths(t) {
-  const r = rng(77);
-  t.paths = [];
-  for (let k = 0; k < 26; k++) {
-    const pts = [];
-    let x = r(), y = r();
-    const ang = r() * Math.PI * 2;
-    for (let j = 0; j < 9; j++) {
-      pts.push([x, y]);
-      x += Math.cos(ang + (r() - 0.5) * 1.6) * 0.14;
-      y += Math.sin(ang + (r() - 0.5) * 1.6) * 0.22;
+  if (!t.img) t.img = o.createImageData(ow, oh);
+  const d = t.img.data, cracks = t.mode === 'cracks';
+  let p = 0;
+  for (let y = 0; y < oh; y++) {
+    const fy = (y / oh) * 4;
+    for (let x = 0; x < ow; x++, p += 4) {
+      const fx = (x / oh) * 4;
+      const v = Math.sin(fx * 1.3 + time * 0.35 + Math.sin(fy * 1.1 - time * 0.22) * 1.6)
+        + Math.sin(fy * 1.7 - time * 0.27 + Math.sin(fx * 0.9 + time * 0.18) * 1.3)
+        + Math.sin((fx + fy) * 0.8 + time * 0.2);
+      const edge = Math.abs(Math.sin(v * (cracks ? 3.2 : 1.9)));
+      const line = Math.pow(1 - edge, cracks ? 22 : 9);
+      const glow = 0.5 + 0.5 * Math.sin(fx * 0.4 - time * 0.12) * Math.cos(fy * 0.35 + time * 0.1);
+      const k = clamp01(0.55 * line + 0.45 * glow);
+      const A = k < 0.5 ? LIGHT_LO : LIGHT_MID, B = k < 0.5 ? LIGHT_MID : LIGHT_HI;
+      const m = k < 0.5 ? k * 2 : (k - 0.5) * 2;
+      d[p] = A[0] + (B[0] - A[0]) * m;
+      d[p + 1] = A[1] + (B[1] - A[1]) * m;
+      d[p + 2] = A[2] + (B[2] - A[2]) * m;
+      d[p + 3] = 255;
     }
-    t.paths.push(pts);
   }
-}
-function paintCracks(t, c, time) {
-  if (!t.paths) makePaths(t);
-  c.fillStyle = '#0B0C0F';
-  c.fillRect(0, 0, t.W, t.H);
-  c.globalCompositeOperation = 'lighter';
-  c.lineCap = 'round';
-  c.lineJoin = 'round';
-  t.paths.forEach((pts, k) => {
-    c.beginPath();
-    pts.forEach((p, j) => {
-      const x = p[0] * t.W, y = p[1] * t.H + Math.sin(time * 0.7 + k * 1.3 + j * 2.1) * t.H * 0.07;
-      if (j === 0) c.moveTo(x, y); else c.lineTo(x, y);
-    });
-    c.strokeStyle = k % 3 === 0 ? 'rgba(120,150,190,0.55)' : 'rgba(224,160,74,0.8)';
-    c.lineWidth = 1.4 + (k % 4) * 0.5;
-    c.stroke();
-  });
-  c.globalCompositeOperation = 'source-over';
+  o.putImageData(t.img, 0, 0);
+  c.drawImage(t.off, 0, 0, W, H);
 }
 // Paint the moving light, then keep only the pixels inside the letters
 function updateTexts(time) {
   for (const t of TEXTS) {
-    if (!t.lines) continue;
+    if (!t.lines || parseFloat(t.cv.style.opacity) < 0.02) continue;
     const c = t.ctx;
     c.setTransform(t.dpr, 0, 0, t.dpr, 0, 0);
     c.globalCompositeOperation = 'source-over';
     c.clearRect(0, 0, t.W, t.H);
-    if (t.mode === 'caustic') paintCaustic(t, c, t.W, t.H, time); else paintCracks(t, c, time);
+    paintLight(t, c, t.W, t.H, time);
     c.globalCompositeOperation = 'destination-in';
     c.fillStyle = '#000';
     c.font = t.font(t.size);
