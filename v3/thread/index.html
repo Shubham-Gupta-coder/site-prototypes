@@ -180,9 +180,9 @@ main,.foot{position:relative;z-index:1}
 
 /* Scene 5: three stitched vignettes */
 .trio{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:12% 6%;align-content:center}
-.card3{display:flex;flex-direction:column;gap:12px;padding:14px}
+.card3{display:flex;flex-direction:column;gap:12px;padding:14px;background:#f6f1e7}
 .card3 > svg{width:100%;height:auto}
-.card3 figcaption{font-size:16px;line-height:1.5;color:var(--ink)}
+.card3 figcaption{font-size:16px;line-height:1.5;color:#1d1a16;background:#f6f1e7}
 @media (min-width:1024px){.card3 figcaption{font-size:18px}}
 
 /* Scene 6: nine-patch quilt */
@@ -239,7 +239,7 @@ main,.foot{position:relative;z-index:1}
 /* Scenes 5 to 7 in WebGL: the 3D draws the paper cards, swatches, patches, seams and bow. Words stay HTML above the canvas; the SVG art is the fallback. */
 .s5-gl:not(.is-nogl) .card3{background:none;box-shadow:none}
 .s5-gl:not(.is-nogl) .card3 > svg{visibility:hidden}
-.s5-gl:not(.is-nogl) .swatch-cap{opacity:var(--cap,1)}
+.s5-gl:not(.is-nogl) .swatch-cap{opacity:1}
 .s6-gl:not(.is-nogl) .patch{background:none;box-shadow:none}
 .s6-gl:not(.is-nogl) .patch > svg{visibility:hidden}
 .s6-gl:not(.is-nogl) .patch::after{display:none}
@@ -690,7 +690,9 @@ function makePaper() {
 
 // Copy reveal: each element gets --t (0 to 1) from its own timeline.
 function revealAlpha(p, a, b) {
-  const inA = smooth(ramp(p, a, FADE_IN));
+  // .rv copy is fully opaque by section progress 0.05: a short ease (half of FADE_IN) that ends there.
+  const ease = FADE_IN * 0.5;
+  const inA = smooth(ramp(p, Math.min(a, 0.05 - ease), ease));
   if (b === Infinity) return inA;
   return inA * (1 - smooth(ramp(p, b, FADE_OUT)));
 }
@@ -2569,7 +2571,7 @@ function build5(group) {
   const E = new THREE.Euler();
   const lastCap = [-1, -1, -1];
   const cards = figs.map((f, i) => {
-    const card = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 16, 10), paperMat);
+    const card = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 16, 10), new THREE.MeshStandardMaterial({ color: 0xf6f1e7, roughness: 0.9, metalness: 0 }));
     card.frustumCulled = false;
     group.add(card);
     const mat = new THREE.ShaderMaterial({
