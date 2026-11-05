@@ -150,5 +150,10 @@ When to use which: OpenDesign is fine for quick, varied first drafts. For a cohe
 - The "why I started" line must come from him.
 - Known weaknesses: cloudy morph midpoints (~66, 81, 88), shelf reads as dot grid, cables zigzag, scene 8 dark, cramped mobile scene 7.
 
+## 11b. v6 (gen6 script, 2026-11-05)
+- `v6/shutter/` is a new preview built from SCRIPT-v3 (`/workspace/shubham-site-notes/gen6/`). Live: https://shubham-gupta-coder.github.io/site-prototypes/v6/shutter/ . Cache `?v=v6a`.
+- v5/shutter is unchanged and remains the previous reference; benchmarks untouched.
+- Copy gate for v6 is `gen6/copycheck.py` (founder line without "only"). Status log: `gen6/STATUS.md`. What changed: top of `v6/shutter/README.md`.
+
 ## 12. Security
 Never print or echo `ANTHROPIC_API_KEY` or any token. This repo is public: no secrets, no credentials in commits.
