@@ -1,11 +1,12 @@
 import * as THREE from 'three';
 import {setScale,STATS} from './lib.js';
-import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS} from './shapes.js';
+import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js';
+const Y0=-2.71;
 
 const MOBILE=Math.min(innerWidth,innerHeight)<768&&innerWidth<900;
 const N=MOBILE?32768:131072, TW=1024, ROWS=N/TW, NS=STATES.length;
 setScale(N/131072);if(MOBILE)mobileLayout();
-const FILM_END=47; // stage A covers film T 0..47 (percent of full film)
+const FILM_END=100; // film T 0..100 (percent of the film)
 const UNIT_VH=MOBILE?19:21; // viewport heights of scroll per film unit
 
 /* ---------- renderer ---------- */
@@ -144,9 +145,15 @@ function spline(keys,T,out){ // cubic Hermite, Catmull-Rom tangents (never stops
  tanInto(keys,i-1,_m0).multiplyScalar(h);tanInto(keys,i,_m1).multiplyScalar(h);const s2=s*s,s3=s2*s;
  out.copy(p0).multiplyScalar(2*s3-3*s2+1).addScaledVector(_m0,s3-2*s2+s).addScaledVector(p1,-2*s3+3*s2).addScaledVector(_m1,s3-s2);return out}
 const CAM=[[0,V(0,1.4,24)],[3.4,V(0,1.0,20.5)],[5.6,V(0,0.4,17.5)],[8,V(0,0.1,11.5)],[10.5,V(0,-0.1,7.4)],[13.5,V(0.35,-0.55,4.6)],[16.5,V(0.25,-0.95,1.4)],
- [20,V(0,-1.05,3.4)],[23.8,V(0.1,-1.0,2.95)],[26.4,V(0,-0.6,5.4)],[30,V(0.35,-0.5,5.8)],[33.5,V(-0.2,-0.35,5.6)],[36.4,V(0,-0.2,1.3)],[39.5,V(0.2,-0.1,1.0)],[41.2,V(0.1,-0.35,0.2)],[42.4,V(0,0.9,-0.4)],[46.4,V(0,4.6,-2.3)],[47,V(0,4.9,-2.5)]];
+ [20,V(0,-1.05,3.4)],[23.8,V(0.1,-1.0,2.95)],[26.4,V(0,-0.6,5.4)],[30,V(0.35,-0.5,5.8)],[33.5,V(-0.2,-0.35,5.6)],[36.4,V(0,-0.2,1.3)],[39.5,V(0.2,-0.1,1.0)],[41.2,V(0.1,-0.35,0.2)],[42.4,V(0,0.9,-0.4)],[46.4,V(0,4.6,-2.3)],[47,V(0,4.9,-2.5)],
+ [49.5,V(0.25,5.6,-3.0)],[52.5,V(0.55,5.5,-3.2)],[54.6,V(0.25,1.4,-0.6)],[56.5,V(0,Y0+1.3,-0.9)],[60.5,V(0.04,Y0+1.25,-2.0)],[64.5,V(0,Y0+1.2,-3.1)],
+ [66.4,V(-0.4,PY+0.85,-4.9)],[68,V(-0.1,PY+0.72,-5.2)],[70.6,V(0.55,PY+0.68,-5.2)],[72.6,V(4.6,PY+0.72,-5.2)],[75.2,V(5.3,PY+0.68,-5.2)],[76.6,V(9.4,PY+0.72,-5.2)],[79.4,V(10.1,PY+0.68,-5.2)],
+ [81,V(5,0.4,-0.6)],[82.8,V(0.3,-0.75,1.9)],[86.2,V(0.15,-0.85,1.3)],[88.4,V(0,-0.3,6.5)],[90.4,V(0,1.0,15.2)],[92.6,V(0,1.3,16.2)],[96,V(0,2.1,17.6)],[100,V(0,2.4,18.2)]];
 const LOOK=[[0,V(0,1.2,0)],[3.4,V(0,1.0,0)],[5.6,V(0,0.2,0)],[8,V(0,-0.9,-3)],[10.5,V(0,-1.5,-6)],[13.5,V(0,-2.1,-5.6)],[16.5,V(0.1,-2.45,-5)],
- [20,V(0,-1.2,-1.6)],[23.8,V(0,-1.2,-1.6)],[26.4,V(0,-0.6,-2.6)],[30,V(0,-0.55,-2.7)],[33.5,V(0,-0.8,-3)],[36.4,V(0,-1.6,-5.8)],[39.5,V(0,-1.7,-5.9)],[41.2,V(0,-1.3,-6.6)],[42.4,V(0,-2.3,-5.4)],[46.4,V(0,-2.7,-5.25)],[47,V(0,-2.7,-5.26)]];
+ [20,V(0,-1.2,-1.6)],[23.8,V(0,-1.2,-1.6)],[26.4,V(0,-0.6,-2.6)],[30,V(0,-0.55,-2.7)],[33.5,V(0,-0.8,-3)],[36.4,V(0,-1.6,-5.8)],[39.5,V(0,-1.7,-5.9)],[41.2,V(0,-1.3,-6.6)],[42.4,V(0,-2.3,-5.4)],[46.4,V(0,-2.7,-5.25)],[47,V(0,-2.7,-5.26)],
+ [49.5,V(0.05,Y0,-5.15)],[52.5,V(0.1,Y0,-5.2)],[54.6,V(0,Y0+0.7,-6.2)],[56.5,V(0,Y0+1.05,-8.3)],[60.5,V(0,Y0+1.1,-8.3)],[64.5,V(0,Y0+1.15,-8.3)],
+ [66.4,V(-0.2,PY+0.55,-9.9)],[68,V(-0.1,PY+0.5,-10.1)],[70.6,V(0.55,PY+0.45,-10.1)],[72.6,V(4.6,PY+0.5,-10.1)],[75.2,V(5.3,PY+0.45,-10.1)],[76.6,V(9.4,PY+0.5,-10.1)],[79.4,V(10.1,PY+0.45,-10.1)],
+ [81,V(2.6,-1.6,-6)],[82.8,V(0.05,-2.4,-5.0)],[86.2,V(0,-2.45,-5.0)],[88.4,V(0,-1.6,-2)],[90.4,V(0,0.5,0)],[92.6,V(0,1.0,0)],[96,V(0,2.25,0)],[100,V(0,2.4,0)]];
 // morph segments. sweep: lin = dot(p-o,dir), rad = |p-o|*dir.x. spread: how sharp the travelling front is.
 // arc: lift along the path at mid flight. snap: per-axis lattice the dots slide along in flight. axes: staged per-axis moves.
 const S=(A,B,t0,t1,mode,o,dir,spread,noise,x={})=>({A,B,t0,t1,mode,o,dir,spread,noise,arc:x.arc||V(),snap:x.snap||V(),axes:x.axes||0,useB:x.useB?1:0});
@@ -156,24 +163,41 @@ const SEG=[
  S(2,3,16.5,20,1,V(0.25,-2.7,-4.75),V(1/9,0,0),3.0,0.06,{arc:V(0,0.7,0.5)}), // phone lifts off the counter, nearest first
  S(3,4,23.8,26.4,1,V(0,-1.2,-1.6),V(1/5.5,0,0),3.2,0.05,{axes:-1,snap:V(0,0,0.18)}), // windows peel out of the phone: sideways, then up, on depth rails
  S(4,5,33.5,36.4,0,V(0,2.4,0),V(0,-1/5,0),3.0,0.05,{arc:V(0,0.35,0),axes:1}),   // windows fall onto the desk, top rows first
- S(5,6,42.4,46.4,0,V(-2.4,0,0),V(1/4.8,0,0),3.0,0.04,{snap:V(0.2,0,0.2),axes:1})]; // pile slides into ruled lines
-const SIZE=[[0,0.034],[5.6,0.032],[10.5,0.026],[16.5,0.019],[20,0.0135],[23.8,0.014],[26.4,0.025],[33.5,0.025],[36.4,0.021],[42.4,0.021],[46.4,0.022],[47,0.022]];
-const BULB1=[[0,0],[0.8,0.12],[1.2,0.02],[1.7,0.55],[2.0,0.2],[2.6,0.95],[3.0,0.6],[3.5,1],[9,1],[13,0.25],[16,0]];
-const BULB2=[[7,0],[10.5,1],[17,1],[20,0.55],[33,0.5],[36.4,0.95],[37.6,0.6],[38.2,0.95],[40.2,0.5],[40.7,0.9],[42.4,0.35],[44,0.12],[47,0.08]];
-const AMB=[[0,V(.12,.14,.21)],[5,V(.12,.14,.2)],[10.5,V(.17,.15,.13)],[16.5,V(.17,.15,.13)],[20,V(.16,.17,.22)],[33.5,V(.16,.17,.22)],[36.4,V(.14,.12,.11)],[42.4,V(.12,.11,.1)],[46.4,V(.16,.2,.3)]];
-const TOP=[[0,V(.035,.06,.11)],[6,V(.03,.05,.09)],[10.5,V(.06,.045,.03)],[20,V(.035,.04,.055)],[33.5,V(.035,.04,.055)],[36.4,V(.045,.03,.025)],[42.4,V(.03,.025,.025)],[46.4,V(.03,.06,.11)]];
-const BOT=[[0,V(.01,.012,.02)],[10.5,V(.02,.014,.01)],[20,V(.01,.012,.018)],[36.4,V(.015,.01,.008)],[46.4,V(.01,.02,.04)]];
-const MK=[[0,1.5],[5.6,1.4],[10.5,1.35],[16.5,1.2],[20,1.0],[23.8,1.0],[26.4,1.0],[33.5,1.0],[36.4,1.8],[42.4,1.8],[46.4,1.6]];
-const HOOKS=[]; // per-scene uniform drivers (offsets, flows), each a pure function of T
+ S(5,6,42.4,46.4,0,V(-2.4,0,0),V(1/4.8,0,0),3.0,0.04,{snap:V(0.2,0,0.2),axes:1}), // pile slides into ruled lines
+ S(6,7,47,50.5,0,V(-3.7,0,0),V(1/7.4,0,0),2.5,0.03,{snap:V(0.15,0,0.15)}),        // ruled lines become the bus; tools slide to their places on the drawing
+ S(7,8,52.5,56.5,0,V(0,0,-2.6),V(0,0,-1/6),2.5,0.03,{axes:-1,useB:1}),            // the drawing extrudes into the room, nearest first, height last
+ S(8,9,64.5,68,1,V(0,Y0+1.2,-8.3),V(1/9,0,0),2.6,0.05,{arc:V(0,0.3,0)}),          // packets swell into agents, cables straighten into pipes
+ S(9,10,79.5,82.8,1,V(5,PY,-10),V(1/14,0,0),2.4,0.05,{arc:V(0,0.6,0.8)}),          // pipelines retract; the counter reassembles around what they carry
+ S(10,11,86.4,90,0,V(0,2.9,0),V(0,-1/7.4,0),3.0,0.05,{useB:1}),                  // the shutter comes down, slat by slat
+ S(11,12,92.6,96,0,V(-6.2,0,0),V(1/12.4,0,0),3.2,0.02,{snap:V(0.12,0,0)})];       // the board repaints, letter by letter
+const SIZE=[[0,0.034],[5.6,0.032],[10.5,0.026],[16.5,0.019],[20,0.0135],[23.8,0.014],[26.4,0.025],[33.5,0.025],[36.4,0.021],[42.4,0.021],[46.4,0.022],[47,0.022],[52.5,0.02],[56.5,0.0115],[64.5,0.011],[68,0.012],[79.4,0.013],[82.8,0.019],[86.2,0.019],[90.4,0.03],[100,0.032]];
+const BULB1=[[0,0],[0.8,0.12],[1.2,0.02],[1.7,0.55],[2.0,0.2],[2.6,0.95],[3.0,0.6],[3.5,1],[9,1],[13,0.25],[16,0],[86.4,0],[88.6,0.7],[90,1],[100,1]];
+const BULB2=[[7,0],[10.5,1],[17,1],[20,0.55],[33,0.5],[36.4,0.95],[37.6,0.6],[38.2,0.95],[40.2,0.5],[40.7,0.9],[42.4,0.35],[44,0.12],[47,0.08],[50,0],[54.5,0],[56.5,0.9],[64.5,0.9],[66.5,0.3],[79.5,0.3],[82.8,1],[87,1],[89.5,0.2],[91,0]];
+const AMB=[[0,V(.12,.14,.21)],[5,V(.12,.14,.2)],[10.5,V(.17,.15,.13)],[16.5,V(.17,.15,.13)],[20,V(.16,.17,.22)],[33.5,V(.16,.17,.22)],[36.4,V(.14,.12,.11)],[42.4,V(.12,.11,.1)],[46.4,V(.16,.2,.3)],[52.5,V(.16,.2,.3)],[56.5,V(.13,.15,.2)],[64.5,V(.13,.15,.2)],[68,V(.15,.17,.23)],[79.5,V(.15,.17,.23)],[82.8,V(.17,.15,.13)],[86.4,V(.17,.15,.13)],[90,V(.12,.14,.2)],[100,V(.12,.14,.21)]];
+const TOP=[[0,V(.035,.06,.11)],[6,V(.03,.05,.09)],[10.5,V(.06,.045,.03)],[20,V(.035,.04,.055)],[33.5,V(.035,.04,.055)],[36.4,V(.045,.03,.025)],[42.4,V(.03,.025,.025)],[46.4,V(.03,.06,.11)],[52.5,V(.03,.06,.11)],[56.5,V(.02,.03,.045)],[79.5,V(.02,.03,.05)],[82.8,V(.06,.045,.03)],[86.4,V(.06,.045,.03)],[90,V(.035,.06,.11)]];
+const BOT=[[0,V(.01,.012,.02)],[10.5,V(.02,.014,.01)],[20,V(.01,.012,.018)],[36.4,V(.015,.01,.008)],[46.4,V(.01,.02,.04)],[52.5,V(.01,.02,.04)],[56.5,V(.006,.008,.012)],[79.5,V(.006,.008,.012)],[82.8,V(.02,.014,.01)],[86.4,V(.02,.014,.01)],[90,V(.01,.012,.02)]];
+const MK=[[0,1.5],[5.6,1.4],[10.5,1.35],[16.5,1.2],[20,1.0],[23.8,1.0],[26.4,1.0],[33.5,1.0],[36.4,1.8],[42.4,1.8],[46.4,1.6],[47,1.6],[49.5,1.95],[52.5,1.95],[56.5,1.0],[64.5,1.0],[68,1.4],[79.4,1.4],[82.8,1.25],[86.2,1.25],[89.5,1.6],[90.4,2.3],[96,2.4],[100,2.4]];
+const _b2a=V(0,1.38,-5.1),_b2b=V(0,Y0+2.5,ER.db+0.35);
+const OFFA=[[64.5,-2.4],[68.2,0]],OFFB=[[64.5,4],[71.4,4],[72.6,0]],OFFC=[[64.5,4],[75.4,4],[76.6,0]];
+const HOOKS=[ // per-scene uniform drivers (offsets, flows), each a pure function of T
+ (T,U)=>{U.uBulb2.value.copy(T>=50&&T<80?_b2b:_b2a);U.uWin.value[3]=T>26.5?0.5:9},
+ (T,U)=>{const o=U.uOff.value;o[0].set(lin(OFFA,T),0,0);o[1].set(0,0,0.42*ramp(70,70.7,T));o[2].set(lin(OFFB,T),0,0);o[3].set(lin(OFFC,T),0,0);
+  // the booking block rides on the voice agent, then slides into its slot
+  const cx=CAP.c[0]+o[3].x,k=ramp(77.6,78.3,T),e=k*k*(3-2*k);o[4].set((cx-CALSLOT[0])*(1-e),(CAP.c[1]-CALSLOT[1])*(1-e),(CAP.c[2]+0.14-CALSLOT[2])*(1-e))},
+ (T,U)=>{const f=U.uFlow.value,K=U.uFlowK.value;K[0]=5;K[1]=8;K[2]=1;K[3]=1;
+  f[0]=T>56.5&&T<66?0.01+(T-56.5)*1.6:0;f[1]=T>66&&T<80?0.01+(T-66)*1.3:0;
+  f[2]=T>69.6&&T<70.3?0.01+(T-69.6)/0.7*0.84:0;f[3]=T>74.3&&T<74.8?0.01+(T-74.3)/0.5*0.84:0}];
 const MLY=[[0,0],[23.8,0],[26.4,0.75],[33.5,0.75],[36.4,0]]; // mobile: lift view to the window column
-const REV={2:[[10.5,0],[16,1]],3:[[19.3,0],[23.3,1]],5:[[35.4,0],[41.8,1]]};
+const REV={2:[[10.5,0],[16,1],[27,1],[27.01,0],[74.5,0],[75.3,1]],3:[[19.3,0],[23.3,1],[26.5,1],[26.51,0.5],[76.6,0.5],[77.5,1]],5:[[35.4,0],[41.8,1],[47,1],[47.01,0],[78.3,0],[78.8,1]],
+ 13:[[47,0],[50.5,1],[57,1],[57.01,0],[82.8,0],[86,1]],14:[[56.5,0.12],[64,1]],15:[[73.9,0],[74.5,1]]};
 
 /* ---------- DOM type anchored to the 3D scene ---------- */
 const TXT=[...document.querySelectorAll('[data-t]')].map(el=>{const[a,b]=el.dataset.t.split(',').map(Number);const src=(MOBILE&&el.dataset.manchor)||el.dataset.anchor;const an=src?V(...src.split(',').map(Number)):null;
- return{el,a,b,an,dx:+(el.dataset.dx||0),dy:+(el.dataset.dy||0),w:0,h:0,on:-1}});
+ return{el,a,b,an,dx:+(el.dataset.dx||0),dy:+(el.dataset.dy||0),w:0,h:0,on:-1,span:+(el.dataset.span||0),w100:0,fs:0}});
 const RAMP=0.55;
 function txtOp(t,T){if(T<t.a||T>t.b)return 0;return Math.min(1,(T-t.a)/RAMP,(t.b-T)/RAMP)}
-function measure(){for(const t of TXT){t.w=t.el.offsetWidth;t.h=t.el.offsetHeight}}
+function measure(){for(const t of TXT){if(t.span){const v=t.el.style.visibility;t.el.style.fontSize='100px';t.w100=t.el.offsetWidth;t.fs=100}t.w=t.el.offsetWidth;t.h=t.el.offsetHeight}}
+const _fa=V(),_fb=V();
 // settle: if the reader stops inside a fade, ease to the nearest fully-visible edge
 export function settleT(T){for(const t of TXT){if(T>t.a&&T<t.a+RAMP)return (T-t.a<RAMP*0.5)?t.a-0.01:t.a+RAMP+0.01;if(T<t.b&&T>t.b-RAMP)return (t.b-T<RAMP*0.5)?t.b+0.01:t.b-RAMP-0.01}return T}
 
@@ -201,7 +225,7 @@ function frame(T,cK,time){
  U.uArc.value.copy(seg.arc);U.uSnap.value.copy(seg.snap);U.uAxes.value=seg.axes;U.uUseB.value=seg.useB;
  for(const f of HOOKS)f(T,U,time);
  for(const g in REV)U.uRev.value[g]=lin(REV[g],T);
- U.uAngM.value=Math.max(0,T-33)*0.85;U.uAngH.value=1.2+U.uAngM.value/12;
+ U.uAngM.value=0.85*Math.min(Math.max(0,T-33),14)+0.25*Math.max(0,T-47);U.uAngH.value=1.2+U.uAngM.value/12;
  U.uPage.value=T<36.4?0:Math.PI*Math.min(1,((T-36.4)/1.5)%1*1.15);
  const b1=lin(BULB1,T),b2=lin(BULB2,T);U.uBulbI.value=b1;U.uBulb2I.value=b2;
  linV(AMB,T,U.uAmb.value);U.uSize.value=lin(SIZE,T)*(MOBILE?1.35:1);
@@ -218,6 +242,8 @@ function frame(T,cK,time){
   if(o<=0.001){if(t.on!==0){t.el.style.visibility='hidden';t.el.style.opacity=0;t.on=0;t.os=''}continue}
   if(t.on!==1){t.el.style.visibility='visible';t.on=1}
   const os=o.toFixed(3);if(os!==t.os){t.el.style.opacity=os;t.os=os}
+  if(t.span&&t.an){_fa.copy(t.an).x-=t.span/2;_fb.copy(t.an).x+=t.span/2;_fa.project(camera);_fb.project(camera);const pw=Math.abs(_fb.x-_fa.x)*0.5*VW;
+   const fs=Math.max(15,Math.min(160,100*pw/Math.max(1,t.w100)));if(Math.abs(fs-t.fs)>0.4){t.el.style.fontSize=fs.toFixed(1)+'px';t.fs=fs;t.w=t.el.offsetWidth;t.h=t.el.offsetHeight}}
   if(t.an){proj.copy(t.an).project(camera);let x=(proj.x*0.5+0.5)*VW+t.dx*(MOBILE?0.5:1),y=(-proj.y*0.5+0.5)*VH+t.dy;
    const m=14;x=Math.max(t.w/2+m,Math.min(VW-t.w/2-m,x));y=Math.max(t.h/2+m,Math.min(VH-t.h/2-m,y));
    const lift=(1-o)*10;const tr=`translate3d(${(x-t.w/2).toFixed(1)}px,${(y-t.h/2+lift).toFixed(1)}px,0)`;if(tr!==t.tr){t.el.style.transform=tr;t.tr=tr}}}

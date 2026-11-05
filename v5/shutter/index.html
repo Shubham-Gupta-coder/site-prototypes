@@ -29,11 +29,29 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 .slip{background:#efe3c4;color:#4a140b;font-style:italic;font-weight:700;font-size:clamp(22px,2.2vw,32px);padding:12px 24px;transform-origin:center;box-shadow:0 10px 30px rgba(0,0,0,.6);
  background-image:repeating-linear-gradient(180deg,transparent 0 27px,rgba(120,60,40,.18) 27px 28px)}
 .face{background:#efe6d2;color:#1b1410;font-weight:700;font-style:italic;font-size:clamp(22px,2.2vw,32px);padding:8px 22px;border-radius:40px;box-shadow:0 8px 30px rgba(0,0,0,.6)}
-#close{left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,620px);background:#efe6d2;color:#1b1410;padding:34px 38px;text-align:left;pointer-events:auto;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-#close h2{margin:0 0 6px;font-size:clamp(26px,3vw,40px);font-weight:800}
-#close p{margin:0 0 14px;font-size:18px;line-height:1.5}
-#close a{display:inline-block;background:#7e2a18;color:#fbf3e4;text-decoration:none;font-weight:700;font-size:20px;padding:12px 26px;margin:6px 0 16px}
-#close .fine{font-size:16px;color:#2c2420;border-top:1px solid rgba(40,30,25,.35);padding-top:12px;margin:0}
+.ink{font-style:italic;font-weight:700;font-size:clamp(26px,3.2vw,48px);color:#e6f0fa;max-width:min(88vw,900px);text-shadow:0 0 18px rgba(80,140,220,.35)}
+.tblock{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:clamp(15px,1.1vw,16px);color:#dce8f5;border:1.5px solid rgba(220,232,245,.8);padding:7px 12px;background:rgba(8,20,40,.55)}
+.metal{font-weight:800;font-size:clamp(22px,2.6vw,40px);padding:12px 30px;border-radius:6px;max-width:min(88vw,900px);
+ background:repeating-linear-gradient(180deg,#b9c0c7 0 2px,#a3abb3 2px 3px,#c4cad0 3px 5px);box-shadow:0 0 0 2px #59616a,0 10px 30px rgba(0,0,0,.6),0 0 30px rgba(70,240,130,.12)}
+.metal span{background:linear-gradient(180deg,#2a3036,#11151a);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 1px 0 rgba(255,255,255,.35)}
+.glass{font-weight:700;font-style:italic;font-size:clamp(20px,2.1vw,32px);line-height:1.25;max-width:min(86vw,760px)}
+.glass span{background-image:repeating-linear-gradient(180deg,#d8ecff 0 9px,#9cc8f0 9px 11px,#eef7ff 11px 18px,#7fb3e6 18px 20px);background-size:100% 200%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.label{background:#f0ece2;color:#1d1d1d;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(15px,1.35vw,20px);padding:10px 16px 26px;border:1px solid #c9c2b0;box-shadow:0 8px 26px rgba(0,0,0,.55);
+ background-image:repeating-linear-gradient(90deg,#1d1d1d 0 2px,transparent 2px 4px,#1d1d1d 4px 5px,transparent 5px 8px);background-size:70% 12px;background-repeat:no-repeat;background-position:50% calc(100% - 8px)}
+.tick{color:#f3e2d4;font-weight:700;font-size:clamp(18px,1.7vw,24px);padding:8px 16px;border-left:4px solid #e0603a;background:rgba(10,12,16,.72)}
+.ledger{font-weight:800;font-style:italic;font-size:clamp(24px,2.6vw,40px);padding:10px 24px;border:3px double rgba(232,194,122,.9);transform:rotate(-3deg);
+ background-image:linear-gradient(100deg,#f1d494,#d7a64f 50%,#f6e1a8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.slat{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:clamp(15px,1.4vw,20px);color:#efe6d2;background:rgba(10,10,12,.6);padding:8px 18px;border-top:1px solid rgba(239,230,210,.25);border-bottom:1px solid rgba(239,230,210,.25)}
+.glow{font-weight:800;font-style:italic;white-space:nowrap;line-height:1.1;padding:0 .1em;
+ background-image:linear-gradient(180deg,#fff3d6 0%,#ffd38a 45%,#f0a24e 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px rgba(255,190,110,.55))}
+#close{left:50%;top:auto;bottom:3vh;transform:translateX(-50%) rotate(-.6deg);width:min(90vw,660px);color:#1b1410;padding:22px 30px 18px;text-align:left;pointer-events:auto;box-shadow:0 18px 50px rgba(0,0,0,.65);
+ background:#efe6d2 repeating-linear-gradient(0deg,rgba(120,90,60,.05) 0 2px,transparent 2px 6px);border-top:6px solid rgba(126,42,24,.8)}
+#close h2{margin:0 0 6px;font-size:clamp(24px,2.6vw,34px);font-weight:800}
+#close p{margin:0 0 10px;font-size:17px;line-height:1.45}
+#close .sig{font-style:italic;font-weight:700;margin:10px 0 0}
+#close a{display:inline-block;background:#7e2a18;color:#fbf3e4;text-decoration:none;font-weight:700;font-size:20px;padding:11px 26px;margin:4px 0 10px;border-bottom:3px solid #4a140b}
+#close a:hover,#close a:focus-visible{background:#943420}
+#close .fine{font-size:14.5px;color:#2c2420;border-top:1px solid rgba(40,30,25,.35);padding-top:12px;margin:0}
 body.nogl .t{position:static;opacity:1;visibility:visible;transform:none;margin:24px auto}body.nogl #close{position:static;transform:none;margin:40px auto}body.nogl #gl,body.nogl #spacer{display:none}
 #hint{position:fixed;left:50%;bottom:26px;width:2px;height:54px;margin-left:-1px;background:linear-gradient(rgba(239,230,210,0),rgba(239,230,210,.55));opacity:0;transition:opacity 1.2s;pointer-events:none}
 #hint i{position:absolute;left:50%;top:0;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:#efe6d2;box-shadow:0 0 10px rgba(255,214,150,.8);animation:cue 2.2s cubic-bezier(.5,0,.3,1) infinite}
@@ -54,15 +72,26 @@ body.ready #hint{opacity:.9}body.moved #hint{opacity:0;visibility:hidden;transit
 <p class="t plate big" data-t="32.1,34.6">None of them talk to each other.</p>
 <p class="t slip" data-t="37,39.8" data-anchor="0.05,-2.66,-4.95" data-dy="-95">So someone copies it all by hand.</p>
 <p class="t face" data-t="40.2,42.6" data-anchor="0,-0.62,-7.45">Every night.</p>
+<p class="t ink" data-t="48.4,53" data-anchor="0,-2.71,-7.2" data-dy="-6">I build one system under all of it.</p>
+<p class="t tblock" data-t="49.6,53" data-anchor="2.26,-2.71,-3.37">Drawn by Shubham Gupta</p>
+<p class="t metal" data-t="57.4,61.8" data-anchor="0,-0.5,-3.9"><span>One system. Every tool plugged in.</span></p>
+<p class="t plate glass" data-t="62.2,66.4" data-anchor="0,-1.45,-8.25"><span>Verslay's only technical founder. I built the entire platform. My co-founder runs sales.</span></p>
+<p class="t bubble" data-t="69.3,71.3" data-anchor="-0.55,-1.4,-10.1">Agents take the order.</p>
+<p class="t label" data-t="71.5,74.1" data-anchor="1.45,-1.75,-9.7" data-dy="-20">They check the stock and send the link.</p>
+<p class="t card" data-t="76.5,78.3" data-anchor="9.55,-0.38,-10.15" data-dy="-26">A voice note moves the calendar.</p>
+<p class="t tick" data-t="78.5,80.2" data-anchor="11.3,-1.45,-9.6">A person approves what matters.</p>
+<p class="t ledger" data-t="83.1,86.4" data-anchor="-1.25,-2.55,-5.05" data-dy="-60">The month closes itself.</p>
+<p class="t slat" data-t="89.6,92.6" data-anchor="0,-1.6,0.15">Apparel. D2C. Gifting. Textiles and B2B.</p>
+<p class="t glow" data-t="95,101" data-anchor="0,3.55,0.2" data-span="8.6">Bring the operation.</p>
 <div id="close" class="t" data-t="999,999">
  <h2>Shubham Gupta</h2>
- <p>Verslay's only technical founder. The rest of this film, from the night shift to the system that runs itself, is still being drawn.</p>
+ <p>Verslay's only technical founder. I built the entire platform. My co-founder runs sales.</p>
  <a href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
  <p>The appointment sits on LinkedIn.</p>
  <p class="fine">Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+ <p class="sig">Shubham Gupta. Delhi.</p>
 </div>
 <div id="hint" aria-hidden="true"><i></i></div>
 <script type="module" src="./film.js"></script>
-<script>addEventListener('scroll',()=>document.body.classList.add('moved'),{once:true})</script>
 </body>
 </html>
