@@ -198,7 +198,7 @@ function clockCanvas(){return getCanvas('clock',400,400,(ctx,W,H)=>{const c=W/2;
 /* ================= SCENE BUILDERS ================= */
 const C=(h)=>hex(h);
 function facade(parts,dim=1,nScale=1,two=false){
- const fw=new Part(Math.round(18000*SCALE*nScale)+10,nScale<1);plane(fw,getCanvas('facade',1080,630,drawFacade),16000*nScale,{c:[0,0.75,-0.02],w:18,h:10.5,edge:0.6,zj:0.04,dim});parts.push(fw);
+ const fw=new Part(Math.round(18000*SCALE*nScale)+10,nScale<1);plane(fw,getCanvas('facade',1080,630,drawFacade,false),16000*nScale,{c:[0,0.75,-0.02],w:18,h:10.5,edge:0.6,zj:0.04,dim});parts.push(fw);
  // signboard
  const sg=new Part(Math.round(30000*SCALE*nScale)+10);const sc=getCanvas(two?'sign2':'sign',2000,400,(c,W,H)=>drawSign(c,W,H,false,two));const sb=getCanvas(two?'sign2B':'signB',2000,400,(c,W,H)=>drawSign(c,W,H,true,two));
  plane(sg,sc,24000*nScale,{c:[0,4.1,0.12],w:12.2,h:2.44,edge:1.4,boost:{cv:sb,k:2.2},zj:0.02,dim});
@@ -227,7 +227,7 @@ function padlock(parts,dim=1){const p=new Part(Math.round(2400*SCALE)+10);
  box(p,1200,{c:[0,-4.34,0.26],s:[0.3,0.32,0.12],color:(f,u,v)=>{const b=C('#b38b3c');return v>0.8&&f==='pz'?mix(b,[240,210,140],0.5):J(b,0.05)},dim});
  const pts=[];for(let i=0;i<=20;i++){const a=Math.PI*i/20;pts.push([Math.cos(a)*0.09,-4.18+Math.sin(a)*0.14,0.26])}tube(p,500,{pts,rad:0.018,color:C('#c6ccd0'),dim});
  parts.push(p)}
-function lane(parts,dim=1){const g=new Part(Math.round(9000*SCALE)+10,dim<1);const cv=getCanvas('lane',440,160,drawLane);
+function lane(parts,dim=1){const g=new Part(Math.round(9000*SCALE)+10,dim<1);const cv=getCanvas('lane',440,160,drawLane,false);
  plane(g,cv,8000,{c:[0,-4.52,4],R:[1,0,0],U:[0,0,-1],w:22,h:8,edge:0.3,dim});parts.push(g)}
 
 // ---- warehouse ----
@@ -252,8 +252,8 @@ function racks(parts,{dim=1,nScale=1,seed=7}={}){const p=new Part(Math.round(620
   }}
  parts.push(p);return p}
 function shell(parts,{dim=1,nScale=1}={}){const p=new Part(Math.round(22000*SCALE*nScale)+20,dim<0.9);
- plane(p,getCanvas('floor',600,700,drawFloor),9000*nScale,{c:[0,-4.5,-7.2],R:[1,0,0],U:[0,0,-1],w:13,h:14.4,edge:0.4,dim});
- plane(p,getCanvas('corr',700,360,drawCorrugated),6000*nScale,{c:[0,0.4,-14.3],w:13,h:9.8,edge:0.3,dim});
+ plane(p,getCanvas('floor',600,700,drawFloor,false),9000*nScale,{c:[0,-4.5,-7.2],R:[1,0,0],U:[0,0,-1],w:13,h:14.4,edge:0.4,dim});
+ plane(p,getCanvas('corr',700,360,drawCorrugated,false),6000*nScale,{c:[0,0.4,-14.3],w:13,h:9.8,edge:0.3,dim});
  // structural column behind table + interior bulb wire
  box(p,1400*nScale,{c:[0,-0.2,-7.7],s:[0.36,8.6,0.36],dim,color:(f,u,v)=>v<0.12?C('#c9a227'):J(C('#6c7276'),0.05)});
  parts.push(p);return p}
@@ -324,7 +324,7 @@ STATES.push(()=>{const parts=[];const wp=new Part(Math.round(42000*SCALE)+50);
  wp.at=0;parts.push(wp);
  const ph=new Part(Math.round(14000*SCALE)+20);const pc=PHONE4.c,k=PHONE4.s;box(ph,2500,{c:[pc[0],pc[1],pc[2]-0.03],s:[0.66*k,1.36*k,0.05],color:(f)=>f==='pz'?C('#121315'):C('#2a2c30')});
  plane(ph,getCanvas('chat',430,890,drawChat),7000,{c:[pc[0],pc[1],pc[2]+0.001],w:0.62*k,h:1.3*k,em:0.85});
- CHAT_BUBBLES.forEach((b,i)=>plane(ph,getCanvas('bub'+i,430,890,()=>{}),900*(b.h/0.08),{c:[pc[0],pc[1],pc[2]+0.006],w:0.62*k,h:1.3*k,em:0.9}));ph.at=80000;parts.push(ph);
+ CHAT_BUBBLES.forEach((b,i)=>plane(ph,getCanvas('bub'+i,430,890,(ctx,W,H)=>drawBubble(ctx,W,H,b)),900*(b.h/0.08),{c:[pc[0],pc[1],pc[2]+0.006],w:0.62*k,h:1.3*k,em:0.9}));ph.at=80000;parts.push(ph);
  racks(parts,{dim:0.22,nScale:0.55});shell(parts,{dim:0.2,nScale:0.5});table(parts,{dim:0.28,nScale:0.6});bulbIn(parts,{dim:0.6});
  return{parts,fill:fillDust([-6,-4,-8],[6,3,1],[90,100,120])}});
 // K5: night shift; windows fallen flat on the packing table, ledger open, red copy strokes, clock, chair, tea
@@ -508,7 +508,7 @@ STATES.push(()=>{const parts=[];const p=new Part(Math.round(100000*SCALE)+100);
 // ---- scene 7: agents on pipelines, three jobs ----
 export const PY=Y0+0.85,Z9=-9.6,ZS=-10.15;
 export const CAP={a:[0,PY,Z9],b:[4.25,PY,Z9],c:[9.0,PY,Z9]};
-export const CALSLOT=[9.55+0.3*1.35*0.5,PY+0.98-0.12,ZS+0.02];
+export const CALSLOT=[9.55-0.675+5.5*1.35/7,PY+0.98+0.475-0.16-1.5*(0.95-0.16)/4,ZS+0.02];
 function capIcon(k){return getCanvas('cap-'+k,300,200,(ctx,W,H)=>{ctx.strokeStyle='#a83a1c';ctx.fillStyle='#a83a1c';ctx.lineWidth=12;ctx.lineJoin=ctx.lineCap='round';const cx=W/2,cy=H/2;ctx.beginPath();
  if(k==='chat'){rr(ctx,cx-60,cy-45,120,72,20);ctx.moveTo(cx-30,cy+27);ctx.lineTo(cx-45,cy+55);ctx.lineTo(cx-5,cy+27)}
  if(k==='pay'){rr(ctx,cx-70,cy-45,140,90,12);ctx.moveTo(cx-70,cy-18);ctx.lineTo(cx+70,cy-18);ctx.moveTo(cx-48,cy+20);ctx.lineTo(cx-10,cy+20)}
@@ -582,7 +582,7 @@ STATES.push(()=>{const parts=[];const p=new Part(Math.round(100000*SCALE)+100);
   // the slot (outlined in green) at column 5, row 1
   {const x=l+5*cw,y=t-0.16-1*ch;const m=Math.round(260*SCALE);for(let i=0;i<m;i++){const e=Math.random()*4|0,s=Math.random();const px=e<2?x+s*cw:x+(e===2?0:cw),py=e<2?y-(e?ch:0):y-s*ch;pushC(px,py,[90,230,140],1)}}}
  // the booking block itself (sits in the slot; carried there by the hook)
- {const cw=1.35/7,ch=(0.95-0.16)/4,l=9.55-0.675,t=PY+0.98+0.475;const x=l+5*cw+cw/2,y=t-0.16-1.5*ch;CALSLOT[0]=x;CALSLOT[1]=y;box(Cc,900,{c:[x,y,ZS+0.03],s:[cw*0.86,ch*0.8,0.03],group:20,em:0.9,color:()=>J(C('#d0502e'),0.05)})}
+ {const cw=1.35/7,ch=(0.95-0.16)/4,l=9.55-0.675,t=PY+0.98+0.475;const x=CALSLOT[0],y=CALSLOT[1];box(Cc,900,{c:[x,y,ZS+0.03],s:[cw*0.86,ch*0.8,0.03],group:20,em:0.9,color:()=>J(C('#d0502e'),0.05)})}
  // approval valve on the main pipe, with a tick that lights (group 5)
  {const vx=10.95;for(const s of[-1,1]){const n=Math.round(500*SCALE);for(let i=0;i<n;i++){const t=Math.random(),q=(Math.random()-0.5)*2*0.12*t;Cc.push(vx+s*t*0.14,PY+q,Z9+0.05,170,180,190,0,0,0.4)}}
   tube(Cc,300,{pts:[[vx,PY,Z9+0.05],[vx,PY+0.22,Z9+0.05]],rad:0.01,color:C('#8d969e'),em:0.3});cyl(Cc,400,{c:[vx,PY+0.24,Z9+0.05],r:0.09,len:0.01,axis:'z',caps:false,color:()=>C('#b0b8c0'),em:0.4});

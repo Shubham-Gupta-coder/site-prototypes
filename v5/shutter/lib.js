@@ -15,21 +15,30 @@ export class Part{
   this.p[i+3]=group+Math.min(0.999,Math.max(0,reveal));this.c[i]=r<0?0:r>255?255:r;this.c[i+1]=g<0?0:g>255?255:g;this.c[i+2]=b<0?0:b>255?255:b;this.c[i+3]=Math.round(em*255);}
 }
 export let SCALE=1; export function setScale(s){SCALE=s}
-const cvs=document.createElement('canvas');
+// RES: extra canvas resolution for hi-detail art at the higher dot tiers (logical W,H stay the same)
+export let RES=1; export function setRes(r){RES=r}
+const HAS_DOC=typeof document!=='undefined';
+function mkCanvas(W,H){if(HAS_DOC){const c=document.createElement('canvas');c.width=W;c.height=H;return c}return new OffscreenCanvas(W,H)}
 const canvasCache=new Map();
-export function getCanvas(key,W,H,draw){
+export function getCanvas(key,W,H,draw,hi=true){
  if(canvasCache.has(key))return canvasCache.get(key);
- const c=document.createElement('canvas');c.width=W;c.height=H;const ctx=c.getContext('2d',{willReadFrequently:true});draw(ctx,W,H);
- const d=ctx.getImageData(0,0,W,H).data;const o={c,W,H,d};canvasCache.set(key,o);return o;
+ const k=hi?Math.max(1,Math.min(RES,4096/Math.max(W,H),Math.sqrt(6e6/(W*H)))):1;
+ const c=mkCanvas(Math.round(W*k),Math.round(H*k));const ctx=c.getContext('2d',{willReadFrequently:true});if(k!==1)ctx.scale(c.width/W,c.height/H);draw(ctx,W,H);
+ const d=ctx.getImageData(0,0,c.width,c.height).data;const o={c,W:c.width,H:c.height,d};canvasCache.set(key,o);return o;
 }
 // weighted pixel sampling: returns arrays of u,v,r,g,b
+const cumCache=new WeakMap();
 export function sampleCanvas(cv,n,opt={}){
- const {W,H,d}=cv;const edge=opt.edge??1;const boost=opt.boost;const N=W*H;const cum=new Float64Array(N);let tot=0;
+ const {W,H,d}=cv;const edge=opt.edge??1;const boost=opt.boost;const N=W*H;
+ const ck=edge+'|'+(boost?boost.k:'')+'|'+(opt.lumW?1:0);let cm=cumCache.get(cv);if(!cm){cm=new Map();cumCache.set(cv,cm)}
+ let cum=cm.get(ck),tot=0;
+ if(cum){tot=cum[N-1]}else{cum=new Float64Array(N);
  for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=y*W+x,k=i*4;const a=d[k+3]/255;let w=0;
   if(a>0.04){const L=(d[k]*0.3+d[k+1]*0.59+d[k+2]*0.11);const xr=x<W-1?k+4:k,yd=y<H-1?k+W*4:k;
    const g=Math.abs(L-(d[xr]*0.3+d[xr+1]*0.59+d[xr+2]*0.11))+Math.abs(L-(d[yd]*0.3+d[yd+1]*0.59+d[yd+2]*0.11));
    w=a*(1+edge*Math.min(g,80)/20);if(boost)w*=1+boost.k*boost.cv.d[k+3]/255;if(opt.lumW)w*=0.25+L/255;}
   tot+=w;cum[i]=tot;}
+ if(N<=2.5e6)cm.set(ck,cum)}
  const r=opt.rand||Math.random;const out=[];
  for(let s=0;s<n;s++){const t=r()*tot;let lo=0,hi=N-1;while(lo<hi){const m=(lo+hi)>>1;if(cum[m]<t)lo=m+1;else hi=m}
   const x=lo%W,y=(lo/W)|0,k=lo*4;out.push([(x+r())/W,(y+r())/H,d[k],d[k+1],d[k+2]]);}
@@ -84,6 +93,10 @@ export function dust(part,n,{min,max,color=[150,135,115],group=1}){n=Math.round(
 // assemble parts into one state of exactly N points. pinned parts keep fixed ID ranges.
 const spread=(v)=>{v&=1023;v=(v|(v<<16))&0x030000FF;v=(v|(v<<8))&0x0300F00F;v=(v|(v<<4))&0x030C30C3;v=(v|(v<<2))&0x09249249;return v};
 export const STATS=[];
+// stable LSD radix sort of 30-bit keys -> index order (fast at a million points)
+function radixOrder(key){const n=key.length;let a=new Uint32Array(n),b=new Uint32Array(n);for(let i=0;i<n;i++)a[i]=i;const cnt=new Uint32Array(1024);
+ for(let sh=0;sh<30;sh+=10){cnt.fill(0);for(let i=0;i<n;i++)cnt[(key[a[i]]>>>sh)&1023]++;let s=0;for(let k=0;k<1024;k++){const c=cnt[k];cnt[k]=s;s+=c}
+  for(let i=0;i<n;i++){const v=a[i];b[cnt[(key[v]>>>sh)&1023]++]=v}const t=a;a=b;b=t}return a}
 export function assemble(N,parts,fill){
  const P=new Float32Array(N*4),C=new Uint8Array(N*4),used=new Uint8Array(N);
  for(const pt of parts){if(pt.at==null)continue;const at=Math.round(pt.at*SCALE);const m=Math.min(pt.n,N-at);P.set(pt.p.subarray(0,m*4),at*4);C.set(pt.c.subarray(0,m*4),at*4);used.fill(1,at,at+m)}
@@ -102,7 +115,7 @@ export function assemble(N,parts,fill){
  const idx=new Uint32Array(free);for(let i=0;i<free;i++)idx[i]=i;
  let mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];for(const i of idx)for(let a=0;a<3;a++){const v=RP[i*4+a];if(v<mn[a])mn[a]=v;if(v>mx[a])mx[a]=v}
  const key=new Uint32Array(idx.length);for(let k=0;k<idx.length;k++){const i=idx[k];const q=a=>Math.floor(1023*(RP[i*4+a]-mn[a])/((mx[a]-mn[a])||1));key[k]=(spread(q(0))<<2)|(spread(q(1))<<1)|spread(q(2)>>1)}
- const ord=Array.from(idx.keys()).sort((a,b)=>key[a]-key[b]);
+ const ord=radixOrder(key);
  let k=0;for(let i=0;i<N;i++){if(used[i])continue;const s=idx[ord[k++]];P.set(RP.subarray(s*4,s*4+4),i*4);C.set(RC.subarray(s*4,s*4+4),i*4)}
  return{P,C};
 }

@@ -1,18 +1,56 @@
 import * as THREE from 'three';
-import {setScale,STATS} from './lib.js';
+import {setScale,setRes,STATS} from './lib.js';
 import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js';
 const Y0=-2.71;
 
 const MOBILE=Math.min(innerWidth,innerHeight)<768&&innerWidth<900;
-const N=MOBILE?32768:131072, TW=1024, ROWS=N/TW, NS=STATES.length;
-setScale(N/131072);if(MOBILE)mobileLayout();
 const FILM_END=100; // film T 0..100 (percent of the film)
 const UNIT_VH=MOBILE?19:21; // viewport heights of scroll per film unit
+const NS=STATES.length, TW=2048;
 
 /* ---------- renderer ---------- */
 const canvas=document.getElementById('gl');
 const gl2=canvas.getContext('webgl2',{antialias:false,powerPreference:'high-performance'});
 if(!gl2||matchMedia('(prefers-reduced-motion: reduce)').matches){document.body.classList.add('nogl');throw new Error('static mode')}
+
+/* ---------- dot tier: GPU probe picks how many dots this device draws (?dots=N forces a count) ---------- */
+const TIERS=MOBILE?[131072,65536,32768]:[1310720,655360,262144,131072];
+function gpuProbe(gl,n){ // ms for one draw of n points that fetch 3 float texels each, like the film shader
+ const sh=(t,src)=>{const o=gl.createShader(t);gl.shaderSource(o,src);gl.compileShader(o);return o};
+ const pr=gl.createProgram();
+ const vs=sh(gl.VERTEX_SHADER,`#version 300 es
+precision highp float;precision highp int;uniform highp sampler2D t;void main(){int id=gl_VertexID;vec4 a=texelFetch(t,ivec2(id%1024,(id/1024)%256),0);vec4 b=texelFetch(t,ivec2((id*7)%1024,(id/512)%256),0);vec4 c=texelFetch(t,ivec2((id*3)%1024,(id/256)%256),0);
+vec2 p=fract(a.xy+b.zw*0.5+c.xy*0.25+vec2(float(id)*0.000123,float(id)*0.000731))*1.8-0.9;gl_Position=vec4(p,0.5+0.1*sin(a.z+b.x),1.);gl_PointSize=2.5;}`);
+ const fs=sh(gl.FRAGMENT_SHADER,`#version 300 es
+precision mediump float;out vec4 o;void main(){vec2 q=gl_PointCoord-0.5;if(dot(q,q)>0.25)discard;o=vec4(1.);}`);
+ gl.attachShader(pr,vs);gl.attachShader(pr,fs);gl.linkProgram(pr);if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return 1e9;
+ const tx=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tx);const d=new Float32Array(1024*256*4);for(let i=0;i<d.length;i++)d[i]=Math.random();
+ gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA32F,1024,256,0,gl.RGBA,gl.FLOAT,d);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);
+ canvas.width=Math.round(innerWidth*Math.min(devicePixelRatio||1,1.5));canvas.height=Math.round(innerHeight*Math.min(devicePixelRatio||1,1.5));gl.viewport(0,0,canvas.width,canvas.height);
+ gl.useProgram(pr);gl.enable(gl.DEPTH_TEST);const run=k=>{gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.drawArrays(gl.POINTS,0,k);gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4))};
+ run(Math.min(n,16384));const ts=[];for(let r=0;r<3;r++){const t0=performance.now();run(n);ts.push(performance.now()-t0)}
+ gl.useProgram(null);gl.bindTexture(gl.TEXTURE_2D,null);gl.deleteTexture(tx);gl.deleteProgram(pr);gl.deleteShader(vs);gl.deleteShader(fs);gl.disable(gl.DEPTH_TEST);
+ ts.sort((a,b)=>a-b);return ts[1]}
+function pickTier(gl){
+ const ext=gl.getExtension('WEBGL_debug_renderer_info');const ren=String(ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
+ const soft=/swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic/i.test(ren);
+ const maxTex=gl.getParameter(gl.MAX_TEXTURE_SIZE),mem=navigator.deviceMemory||0,cores=navigator.hardwareConcurrency||0;
+ let cap=TIERS[0];const why=[];
+ if(soft){cap=TIERS[TIERS.length-1];why.push('software renderer')}
+ if(maxTex<8192){cap=Math.min(cap,MOBILE?65536:262144);why.push('maxTex '+maxTex)}
+ if(mem&&mem<4){cap=Math.min(cap,MOBILE?32768:262144);why.push('deviceMemory '+mem)}
+ if(mem&&mem<=2){cap=Math.min(cap,MOBILE?32768:131072)}
+ if(cores&&cores<=4){cap=Math.min(cap,MOBILE?65536:655360);why.push('cores '+cores)}
+ const n=soft?32768:(MOBILE?65536:262144);let ms=0;try{ms=gpuProbe(gl,n)}catch(e){ms=1e9}
+ // the film shader does ~3x the probe's work per dot; keep the swarm under ~7 ms (desktop) / 6 ms (phone) of GPU time
+ const per=ms/n*3,budget=MOBILE?6:7;let N=TIERS[TIERS.length-1];
+ for(const t of TIERS)if(t<=cap&&per*t<budget){N=t;break}
+ const q=+new URLSearchParams(location.search).get('dots');let forced=false;
+ if(q>0){N=Math.min(4194304,Math.max(8192,Math.round(q/TW)*TW));forced=true}
+ return {N,ren,soft,maxTex,mem,cores,probeMs:+ms.toFixed(2),probeN:n,cap,why,forced}}
+const TIER=pickTier(gl2);const N=TIER.N,ROWS=N/TW,SCALE=N/131072,RES=SCALE>2?Math.min(2,Math.sqrt(SCALE/2)):1;
+setScale(SCALE);setRes(RES);if(MOBILE)mobileLayout();
+console.info('dots',N,'tier',JSON.stringify(TIER));
 const renderer=new THREE.WebGLRenderer({canvas,context:gl2,antialias:false});
 renderer.outputColorSpace=THREE.LinearSRGBColorSpace;renderer.autoClear=true;
 let DPR=Math.min(devicePixelRatio||1,1.5);if(MOBILE)DPR=Math.min(DPR,1.25);
@@ -20,28 +58,49 @@ renderer.setPixelRatio(DPR);
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(MOBILE?50:35,innerWidth/innerHeight,0.05,200);
 
-/* ---------- state textures ---------- */
-const posData=new Float32Array(N*4*NS),colData=new Uint8Array(N*4*NS);
-const posTex=new THREE.DataTexture(posData,TW,ROWS*NS,THREE.RGBAFormat,THREE.FloatType);
-const colTex=new THREE.DataTexture(colData,TW,ROWS*NS,THREE.RGBAFormat,THREE.UnsignedByteType);
-for(const t of[posTex,colTex]){t.minFilter=t.magFilter=THREE.NearestFilter;t.generateMipmaps=false;t.flipY=false}
-let built=0;
-function buildNext(){const {P,C}=buildState(built,N);posData.set(P,built*N*4);colData.set(C,built*N*4);posTex.needsUpdate=colTex.needsUpdate=true;built++}
+/* ---------- state textures: a ring of NSLOT layers; every state when it fits, else the ones near the reader ---------- */
+const NSLOT=Math.min(NS,Math.max(4,Math.floor(56e6/(N*20))));
+const posTex=new THREE.DataArrayTexture(new Float32Array(N*4*NSLOT),TW,ROWS,NSLOT);posTex.format=THREE.RGBAFormat;posTex.type=THREE.FloatType;
+const colTex=new THREE.DataArrayTexture(new Uint8Array(N*4*NSLOT),TW,ROWS,NSLOT);colTex.format=THREE.RGBAFormat;colTex.type=THREE.UnsignedByteType;
+for(const t of[posTex,colTex]){t.minFilter=t.magFilter=THREE.NearestFilter;t.generateMipmaps=false;t.flipY=false;t.unpackAlignment=4}
+const slotOf=new Int16Array(NS).fill(-1),slotSt=new Int16Array(NSLOT).fill(-1),slotUse=new Float64Array(NSLOT);
+const BUILD_MS=new Array(NS).fill(0),everBuilt=new Set();let built=0,ready=false,busy=-1,builder=null;const pending=new Map(),pinned=new Set();
+let pT=0,vT=0,frozen=false,closeK=0;
+function segAt(T){let s=0;for(let i=0;i<SEG.length;i++)if(T>=SEG[i].t0)s=i;return s}
+function wantAt(T){const s=segAt(T),L=[SEG[s].A,SEG[s].B];if(s+1<SEG.length)L.push(SEG[s+1].B);if(s>0)L.push(SEG[s-1].A);return L}
+function install(i,P,C,ms){const need=new Set([...pinned,...wantAt(pT)]);let s=slotSt.indexOf(-1);
+ if(s<0){let bu=Infinity;for(let k=0;k<NSLOT;k++)if(!need.has(slotSt[k])&&slotUse[k]<bu){bu=slotUse[k];s=k}
+  if(s<0){for(let k=0;k<NSLOT;k++)if(slotUse[k]<bu){bu=slotUse[k];s=k}}slotOf[slotSt[s]]=-1}
+ posTex.image.data.set(P,s*N*4);colTex.image.data.set(C,s*N*4);posTex.addLayerUpdate(s);colTex.addLayerUpdate(s);posTex.needsUpdate=colTex.needsUpdate=true;
+ slotSt[s]=i;slotOf[i]=s;slotUse[s]=performance.now();BUILD_MS[i]=ms;if(!everBuilt.has(i)){everBuilt.add(i);built=everBuilt.size}
+ const w=pending.get(i);if(w){pending.delete(i);w.forEach(f=>f())}}
+function pump(){if(busy>=0||!builder)return;const L=[...pinned,...wantAt(pT)];let nx=L.find(i=>slotOf[i]<0);
+ if(nx===undefined&&NSLOT>=NS)for(let i=0;i<NS;i++)if(slotOf[i]<0){nx=i;break}
+ if(nx===undefined){if(NSLOT>=NS&&built>=NS)document.body.classList.add('built');return}
+ busy=nx;builder(nx)}
+function done(i,P,C,ms){busy=-1;install(i,P,C,ms);pump()}
+function ensure(list){return Promise.all(list.map(i=>slotOf[i]>=0?null:new Promise(r=>{if(!pending.has(i))pending.set(i,[]);pending.get(i).push(r)}))).then(()=>{})}
+function mainBuilder(i){setTimeout(()=>{const t0=performance.now();const {P,C}=buildState(i,N);done(i,P,C,Math.round(performance.now()-t0))},0)}
+function startBuilder(){return new Promise(res=>{let w=null,ok=false;const fall=()=>{if(ok)return;ok=true;try{w&&w.terminate()}catch(e){}builder=mainBuilder;console.info('builder: main thread');res()};
+ try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js',import.meta.url),{type:'module'});
+  w.onerror=fall;w.onmessage=e=>{const m=e.data;if(m.ready){if(ok)return;ok=true;builder=i=>w.postMessage({i});console.info('builder: worker');res();return}
+   if(m.stat)STATS[m.i]=m.stat;done(m.i,m.P,m.C,m.ms)};
+  w.postMessage({init:1,N,scale:SCALE,res:RES,mobile:MOBILE,css:document.querySelector('link[href*="fonts.googleapis.com/css2"]').href});setTimeout(fall,15000)}catch(e){fall()}})}
 
 const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(N*3),3));
 geo.boundingSphere=new THREE.Sphere(new THREE.Vector3(),1e4);
-const U={uPos:{value:posTex},uCol:{value:colTex},uA:{value:0},uB:{value:1},uW:{value:0},uRows:{value:ROWS},
+const U={uPos:{value:posTex},uCol:{value:colTex},uA:{value:0},uB:{value:0},uW:{value:0},
  uSwO:{value:new THREE.Vector3()},uSwD:{value:new THREE.Vector3(1,0,0)},uSwM:{value:0},uSpread:{value:1},uNoise:{value:0},
  uRev:{value:new Array(16).fill(1)},uWin:{value:new Array(16).fill(9)},uAngH:{value:0},uAngM:{value:0},uPage:{value:0},
  uClock:{value:new THREE.Vector3(...CLOCK5.c)},uSpine:{value:new THREE.Vector3(LEDGER5.c[0],LEDGER5.c[1],LEDGER5.c[2])},
- uTime:{value:0},uSize:{value:0.02},uPx:{value:1000},uDrop:{value:0},
+ uTime:{value:0},uSize:{value:0.02},uPx:{value:1000},uDrop:{value:0},uSzK:{value:Math.pow(131072/N,0.42)},uMinPx:{value:N>262144?1.0:1.2},
  uBulb:{value:new THREE.Vector3(0,5.66,1.1)},uBulbI:{value:0},uBulb2:{value:new THREE.Vector3(0,1.38,-5.1)},uBulb2I:{value:0},
  uAmb:{value:new THREE.Vector3(.1,.12,.18)},uEmK:{value:1},uProc:{value:new THREE.Vector3(.8,.88,1)},
  uArc:{value:new THREE.Vector3()},uSnap:{value:new THREE.Vector3()},uAxes:{value:0},uUseB:{value:0},
  uOff:{value:Array.from({length:8},()=>new THREE.Vector3())},uFlow:{value:new Array(4).fill(0)},uFlowK:{value:new Array(4).fill(6)}};
 const VS=`precision highp float;precision highp int;
-uniform highp sampler2D uPos;uniform sampler2D uCol;uniform int uA,uB,uRows;uniform float uW,uSpread,uNoise,uSwM,uAxes,uUseB;uniform vec3 uSwO,uSwD,uArc,uSnap;
-uniform float uRev[16];uniform float uWin[16];uniform float uAngH,uAngM,uPage,uTime,uSize,uPx,uDrop,uBulbI,uBulb2I,uEmK;
+uniform highp sampler2DArray uPos;uniform highp sampler2DArray uCol;uniform int uA,uB;uniform float uW,uSpread,uNoise,uSwM,uAxes,uUseB;uniform vec3 uSwO,uSwD,uArc,uSnap;
+uniform float uRev[16];uniform float uWin[16];uniform float uAngH,uAngM,uPage,uTime,uSize,uPx,uDrop,uBulbI,uBulb2I,uEmK,uSzK,uMinPx;
 uniform vec3 uClock,uSpine,uBulb,uBulb2,uAmb,uProc;uniform vec3 uOff[8];uniform float uFlow[4];uniform float uFlowK[4];
 out vec3 vC;out float vA;
 float h1(float n){return fract(sin(n*12.9898)*43758.5453);}
@@ -56,11 +115,13 @@ float vis(int g,float r){
  if(g>=24&&g<28){int k=g-24;return step(fract(r*uFlowK[k]-uFlow[k]),0.16)*step(0.001,uFlow[k]);}
  if(g<2||g>15)return 1.0;float R=uRev[g];return (r<=R&&r>=R-uWin[g])?1.0:0.0;}
 void main(){
- int id=gl_VertexID;ivec2 ia=ivec2(id%1024,id/1024+uA*uRows),ib=ivec2(id%1024,id/1024+uB*uRows);
+ int id=gl_VertexID;float h3=h1(float(id)*2.11+7.);
+ if(h3<uDrop){gl_Position=vec4(2.,2.,2.,1.);gl_PointSize=0.;vC=vec3(0.);vA=0.;return;} // adaptive quality thins the swarm before any texture work
+ ivec3 ia=ivec3(id%${TW},id/${TW},uA),ib=ivec3(id%${TW},id/${TW},uB);
  vec4 A=texelFetch(uPos,ia,0),B=texelFetch(uPos,ib,0);vec4 cA=texelFetch(uCol,ia,0),cB=texelFetch(uCol,ib,0);
  int gA=int(floor(A.w)),gB=int(floor(B.w));float rA=fract(A.w),rB=fract(B.w);
  vec3 pA=xf(A.xyz,gA),pB=xf(B.xyz,gB);
- float hh=h1(float(id)*0.618+0.1),h2=h1(float(id)*1.37+3.),h3=h1(float(id)*2.11+7.);
+ float hh=h1(float(id)*0.618+0.1),h2=h1(float(id)*1.37+3.);
  // ordered sweep: the front passes through the object along a direction (or radius); small per-dot jitter keeps the edge soft
  vec3 S=uUseB>0.5?B.xyz:A.xyz;
  float d=uSwM<0.5?dot(S-uSwO,uSwD):length(S-uSwO)*uSwD.x;d=clamp(d,0.,1.)*0.9+hh*0.1;
@@ -78,7 +139,7 @@ void main(){
  p+=n*mid*uNoise*(0.4+hh);
  if(gA==1||gB==1)p+=vec3(sin(uTime*.21+hh*40.),sin(uTime*.17+h2*40.),cos(uTime*.19+h3*40.))*0.035;
  float va=vis(gA,rA)*(gA==1?0.38:1.),vb=vis(gB,rB)*(gB==1?0.38:1.);
- float a=mix(va,vb,ts);if(h3<uDrop)a=0.;
+ float a=mix(va,vb,ts);
  vec3 alb=mix(cA.rgb,cB.rgb,ts);float em=mix(cA.a,cB.a,ts);
  alb=mix(alb,uProc,mid*0.3);
  float d1=distance(p,uBulb),d2=distance(p,uBulb2);
@@ -92,7 +153,7 @@ void main(){
  vC=col;vA=a;
  vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;
  float sz=uSize*(0.75+0.5*h2)*(g==1?0.7:1.)*(1.+em*0.2)*(g==12?1.6:1.);
- gl_PointSize=clamp(sz*uPx/-mv.z,1.2,9.);
+ gl_PointSize=clamp(sz*uSzK*uPx/-mv.z,uMinPx,9.);
  if(a<0.01)gl_Position=vec4(2.,2.,2.,1.);
 }`;
 const FS=`precision highp float;in vec3 vC;in float vA;out vec4 o;
@@ -206,7 +267,6 @@ const spacer=document.getElementById('spacer');let VH=innerHeight,VW=innerWidth;
 function layout(){VH=document.documentElement.clientHeight;spacer.style.height=(FILM_END*UNIT_VH+120)+'vh';}
 layout();
 let lenis=null;try{lenis=new window.Lenis({lerp:0.1,smoothWheel:true,syncTouch:false});}catch(e){}
-let pT=0,vT=0,frozen=false,closeK=0;
 const filmPx=()=>FILM_END*UNIT_VH/100*VH;
 function targetT(){const y=lenis?lenis.animatedScroll:scrollY;return Math.min(FILM_END,Math.max(0,y/filmPx()*FILM_END))}
 function closeTarget(){const y=lenis?lenis.animatedScroll:scrollY;return Math.min(1,Math.max(0,(y-filmPx())/(0.75*VH)))}
@@ -219,9 +279,13 @@ function frame(T,cK,time){
  // morph segment
  let A=0,B=1,W=0,seg=SEG[0];
  for(const g of SEG){if(T>=g.t0){A=g.A;B=g.B;W=Math.min(1,(T-g.t0)/(g.t1-g.t0));seg=g}}
- const maxS=built-1;if(B>maxS){B=Math.max(0,maxS);A=Math.min(A,B);W=A===B?0:W}
  if(W>=1){A=B;W=0}
- U.uA.value=A;U.uB.value=B;U.uW.value=W;U.uSwM.value=seg.mode;U.uSwO.value.copy(seg.o);U.uSwD.value.copy(seg.dir);U.uSpread.value=seg.spread;U.uNoise.value=seg.noise;
+ // residency: a state that is not built yet holds the morph on the nearest one that is
+ let sA=slotOf[A],sB=slotOf[B];
+ if(sA>=0&&sB<0){sB=sA;W=0}else if(sA<0&&sB>=0){sA=sB;W=0}
+ else if(sA<0){let bd=99;for(let i=0;i<NS;i++)if(slotOf[i]>=0&&Math.abs(i-A)<bd){bd=Math.abs(i-A);sA=sB=slotOf[i]}W=0}
+ points.visible=sA>=0;if(sA>=0){const now=performance.now();slotUse[sA]=now;slotUse[sB]=now}
+ U.uA.value=Math.max(0,sA);U.uB.value=Math.max(0,sB);U.uW.value=W;U.uSwM.value=seg.mode;U.uSwO.value.copy(seg.o);U.uSwD.value.copy(seg.dir);U.uSpread.value=seg.spread;U.uNoise.value=seg.noise;
  U.uArc.value.copy(seg.arc);U.uSnap.value.copy(seg.snap);U.uAxes.value=seg.axes;U.uUseB.value=seg.useB;
  for(const f of HOOKS)f(T,U,time);
  for(const g in REV)U.uRev.value[g]=lin(REV[g],T);
@@ -257,23 +321,27 @@ function resize(){VW=innerWidth;const h=document.documentElement.clientHeight;if
 addEventListener('resize',()=>{resize();layout()});resize();
 
 /* ---------- loop + adaptive quality ---------- */
-let last=performance.now(),ema=16,slow=0,level=0;const ft=[],js=[];window.__ft=ft;window.__js=js;
+let last=performance.now(),ema=16,slow=0,level=0;
+// runtime downgrade: DPR 1 first, then thin the swarm, never below ~78k dots (desktop) / ~20k (phone)
+const FLOOR=MOBILE?19000:78000,DROPS=[0.4,0.6,0.8,0.9].filter(d=>N*(1-d)>=FLOOR*0.99);const LEVELS=1+DROPS.length;const ft=[],js=[];window.__ft=ft;window.__js=js;
 function loop(now){requestAnimationFrame(loop);const dt=Math.min(0.1,(now-last)/1000);last=now;
  ft.push(dt*1000);if(ft.length>600)ft.shift();
  if(lenis)lenis.raf(now);
- if(!frozen){const tgt=targetT();const w=9;const a=-w*w*(pT-tgt)-2*w*vT;vT+=a*dt;pT+=vT*dt;if(Math.abs(pT-tgt)<1e-4&&Math.abs(vT)<1e-3){pT=tgt;vT=0}
+ if(!frozen){const tgt=targetT();const w=9;const n=Math.ceil(dt/0.008),h=dt/n;for(let k=0;k<n;k++){const a=-w*w*(pT-tgt)-2*w*vT;vT+=a*h;pT+=vT*h}pT=Math.min(FILM_END,Math.max(0,pT));if(Math.abs(pT-tgt)<1e-4&&Math.abs(vT)<1e-3){pT=tgt;vT=0}
   closeK+= (closeTarget()-closeK)*(1-Math.exp(-dt*8));
   const y=lenis?lenis.animatedScroll:scrollY;if(Math.abs(y-lastY)<0.5)still+=dt;else still=0;lastY=y;
   if(still>0.35&&still<0.4&&lenis&&pT<FILM_END){const s=settleT(pT);if(Math.abs(s-pT)>0.002)lenis.scrollTo(s/FILM_END*filmPx(),{duration:0.6})}}
  ema=ema*0.95+dt*1000*0.05;if(ema>21)slow++;else slow=Math.max(0,slow-2);
- if(slow>90&&level<2){level++;slow=0;if(level===1){renderer.setPixelRatio(1);resize()}else U.uDrop.value=0.4}
+ if(slow>90&&level<LEVELS){level++;slow=0;if(level===1&&DPR>1){renderer.setPixelRatio(1);resize()}else{const dr=DROPS[Math.min(DROPS.length-1,level-1)];U.uDrop.value=dr;U.uSzK.value=Math.pow(131072/N,0.42)/Math.sqrt(1-dr)}}
+ if(!frozen)pump();
  const j0=performance.now();frame(pT,closeK,now/1000);js.push(performance.now()-j0);if(js.length>600)js.shift();
 }
 // test hook: render a given film position directly
-window.__film={set(T,c=0){frozen=true;pT=T;closeK=c;frame(T,c,performance.now()/1000)},release(){frozen=false},get T(){return pT},get built(){return built},N,settleT,level:()=>level,FILM_END,UNIT_VH,NS,get stats(){return STATS}};
+window.__film={async set(T,c=0){frozen=true;pT=T;closeK=c;const s=segAt(T);const L=[SEG[s].A,SEG[s].B];pinned.clear();L.forEach(i=>pinned.add(i));pump();await ensure(L);pinned.clear();frame(T,c,performance.now()/1000)},
+ release(){frozen=false},get T(){return pT},get built(){return built},get ready(){return ready},N,TIER,NSLOT,BUILD_MS,slots:()=>Array.from(slotSt),settleT,level:()=>level,FILM_END,UNIT_VH,NS,get stats(){return STATS}};
 
 /* ---------- boot: dust first, then build states while the reader starts ---------- */
-async function boot(){try{await document.fonts.load('700 100px "Playfair Display"');}catch(e){}
- buildNext();buildNext();requestAnimationFrame(loop);document.body.classList.add('ready');
- const step=()=>{if(built<NS){buildNext();setTimeout(step,30)}else document.body.classList.add('built')};setTimeout(step,60)}
+async function boot(){const t0=performance.now();try{await document.fonts.load('700 100px "Playfair Display"');}catch(e){}
+ await startBuilder();pump();await ensure([0,1]);ready=true;window.__film.bootMs=Math.round(performance.now()-t0);
+ requestAnimationFrame(loop);document.body.classList.add('ready')}
 boot();
