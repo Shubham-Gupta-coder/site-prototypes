@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {setScale,setRes,STATS} from './lib.js?v=s3';
-import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js?v=s3';
+import {setScale,setRes,STATS} from './lib.js?v=s4';
+import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js?v=s4';
 const Y0=-2.71;
 
 const MOBILE=Math.min(innerWidth,innerHeight)<768&&innerWidth<900;
@@ -34,7 +34,10 @@ precision mediump float;out vec4 o;void main(){vec2 q=gl_PointCoord-0.5;if(dot(q
 function pickTier(gl){
  const ext=gl.getExtension('WEBGL_debug_renderer_info');const ren=String(ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
  const soft=/swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic/i.test(ren);
- const maxTex=gl.getParameter(gl.MAX_TEXTURE_SIZE),mem=navigator.deviceMemory||0,cores=navigator.hardwareConcurrency||0;
+ // Brave and some privacy modes hide the GPU name and fake memory/core counts, so ignore those numbers there
+ const masked=!!navigator.brave||!/apple|nvidia|geforce|radeon|intel|adreno|mali|powervr|rtx|\barc\b|amd/i.test(ren);
+ const mac=/Macintosh|Mac OS X/.test(navigator.userAgent)&&!('ontouchend' in document&&navigator.maxTouchPoints>1);
+ const maxTex=gl.getParameter(gl.MAX_TEXTURE_SIZE),mem=masked?0:(navigator.deviceMemory||0),cores=masked?0:(navigator.hardwareConcurrency||0);
  let cap=TIERS[0];const why=[];
  if(soft){cap=TIERS[TIERS.length-1];why.push('software renderer')}
  if(maxTex<8192){cap=Math.min(cap,MOBILE?65536:262144);why.push('maxTex '+maxTex)}
@@ -45,10 +48,10 @@ function pickTier(gl){
  // the film shader does ~3x the probe's work per dot; keep the swarm under ~7 ms (desktop) / 6 ms (phone) of GPU time
  const per=ms/n*3,budget=MOBILE?6:7;let N=TIERS[TIERS.length-1];
  for(const t of TIERS)if(t<=cap&&per*t<budget){N=t;break}
- const strong=!MOBILE&&!soft&&/apple|nvidia|geforce|radeon|rtx|\barc\b/i.test(ren);if(strong&&N<655360&&cap>=655360){N=655360;why.push('strong gpu floor')}
+ const strong=!MOBILE&&!soft&&(mac||/apple|nvidia|geforce|radeon|rtx|\barc\b/i.test(ren));if(strong&&N<655360&&cap>=655360){N=655360;why.push('strong gpu floor')}
  const q=+new URLSearchParams(location.search).get('dots');let forced=false;
  if(q>0){N=Math.min(4194304,Math.max(8192,Math.round(q/TW)*TW));forced=true}
- return {N,ren,soft,maxTex,mem,cores,probeMs:+ms.toFixed(2),probeN:n,cap,why,forced}}
+ return {N,ren,soft,masked,mac,maxTex,mem,cores,probeMs:+ms.toFixed(2),probeN:n,cap,why,forced}}
 const TIER=pickTier(gl2);const N=TIER.N,ROWS=N/TW,SCALE=N/131072,RES=SCALE>2?Math.min(2,Math.sqrt(SCALE/2)):1;
 setScale(SCALE);setRes(RES);if(MOBILE)mobileLayout();
 console.info('dots',N,'tier',JSON.stringify(TIER));
@@ -83,7 +86,7 @@ function done(i,P,C,ms){busy=-1;install(i,P,C,ms);pump()}
 function ensure(list){return Promise.all(list.map(i=>slotOf[i]>=0?null:new Promise(r=>{if(!pending.has(i))pending.set(i,[]);pending.get(i).push(r)}))).then(()=>{})}
 function mainBuilder(i){setTimeout(()=>{const t0=performance.now();const {P,C}=buildState(i,N);done(i,P,C,Math.round(performance.now()-t0))},0)}
 function startBuilder(){return new Promise(res=>{let w=null,ok=false;const fall=()=>{if(ok)return;ok=true;try{w&&w.terminate()}catch(e){}builder=mainBuilder;console.info('builder: main thread');res()};
- try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js?v=s3',import.meta.url),{type:'module'});
+ try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js?v=s4',import.meta.url),{type:'module'});
   w.onerror=fall;w.onmessage=e=>{const m=e.data;if(m.ready){if(ok)return;ok=true;builder=i=>w.postMessage({i});console.info('builder: worker');res();return}
    if(m.stat)STATS[m.i]=m.stat;done(m.i,m.P,m.C,m.ms)};
   w.postMessage({init:1,N,scale:SCALE,res:RES,mobile:MOBILE,css:document.querySelector('link[href*="fonts.googleapis.com/css2"]').href});setTimeout(fall,15000)}catch(e){fall()}})}
@@ -351,4 +354,4 @@ boot();
 
 /* ---------- ?hud shows the dot count, quality level and frame rate (for checking a device) ---------- */
 if(new URLSearchParams(location.search).has('hud')){const d=document.createElement('div');d.style.cssText='position:fixed;left:8px;bottom:8px;z-index:99;font:12px/1.4 monospace;color:#fff;background:rgba(0,0,0,.7);padding:6px 8px;border-radius:4px;pointer-events:none';document.body.appendChild(d);
- setInterval(()=>{const f=window.__ft||[];const a=f.slice(-120);const m=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;const lv=window.__film?window.__film.level():0;d.textContent=`dots ${N} | level ${lv} | ${m?Math.round(1000/m):0} fps | dpr ${renderer.getPixelRatio()} | ${TIER.ren.slice(0,60)}`},1000)}
+ setInterval(()=>{const f=window.__ft||[];const a=f.slice(-120);const m=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;const lv=window.__film?window.__film.level():0;d.textContent=`dots ${N} | level ${lv} | ${m?Math.round(1000/m):0} fps | dpr ${renderer.getPixelRatio()} | probe ${TIER.probeMs}ms | ${TIER.why.join(', ')||'ok'} | ${TIER.ren.slice(0,40)}`},1000)}
