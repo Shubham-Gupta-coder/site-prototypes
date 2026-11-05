@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {setScale,setRes,STATS} from './lib.js';
-import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js';
+import {setScale,setRes,STATS} from './lib.js?v=s2';
+import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js?v=s2';
 const Y0=-2.71;
 
 const MOBILE=Math.min(innerWidth,innerHeight)<768&&innerWidth<900;
@@ -82,7 +82,7 @@ function done(i,P,C,ms){busy=-1;install(i,P,C,ms);pump()}
 function ensure(list){return Promise.all(list.map(i=>slotOf[i]>=0?null:new Promise(r=>{if(!pending.has(i))pending.set(i,[]);pending.get(i).push(r)}))).then(()=>{})}
 function mainBuilder(i){setTimeout(()=>{const t0=performance.now();const {P,C}=buildState(i,N);done(i,P,C,Math.round(performance.now()-t0))},0)}
 function startBuilder(){return new Promise(res=>{let w=null,ok=false;const fall=()=>{if(ok)return;ok=true;try{w&&w.terminate()}catch(e){}builder=mainBuilder;console.info('builder: main thread');res()};
- try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js',import.meta.url),{type:'module'});
+ try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js?v=s2',import.meta.url),{type:'module'});
   w.onerror=fall;w.onmessage=e=>{const m=e.data;if(m.ready){if(ok)return;ok=true;builder=i=>w.postMessage({i});console.info('builder: worker');res();return}
    if(m.stat)STATS[m.i]=m.stat;done(m.i,m.P,m.C,m.ms)};
   w.postMessage({init:1,N,scale:SCALE,res:RES,mobile:MOBILE,css:document.querySelector('link[href*="fonts.googleapis.com/css2"]').href});setTimeout(fall,15000)}catch(e){fall()}})}

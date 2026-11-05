@@ -41,3 +41,6 @@ Exact morph windows are the `SEG` list in `film.js` (`S(A,B,t0,t1,...)`, one lin
 
 ## Verify before publishing
 `/home/box/.venvs/bulbul-dash/bin/python /workspace/shubham-site-notes/gen5/build/test.py - all 0.02` (2% frames at 1440 and 390, text audit, console errors, fps), then a filmstrip with `montage.py`. See HANDOFF.md section 6.
+
+## Cache busting
+All relative module URLs (index.html scripts, imports in film.js, shapes.js, worker.js, and the Worker URL) carry `?v=<version>`. GitHub Pages caches files for 10 minutes and browsers can mix old and new modules, so bump the version everywhere on every publish: `sed -i -E "s#\?v=[a-z0-9]+#?v=NEW#g" index.html film.js shapes.js worker.js`.
