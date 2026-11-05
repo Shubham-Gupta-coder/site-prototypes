@@ -141,7 +141,7 @@ void main(){
  float va=vis(gA,rA)*(gA==1?0.38:1.),vb=vis(gB,rB)*(gB==1?0.38:1.);
  float a=mix(va,vb,ts);
  vec3 alb=mix(cA.rgb,cB.rgb,ts);float em=mix(cA.a,cB.a,ts);
- alb=mix(alb,uProc,mid*0.3);
+ alb=mix(alb,uProc,mid*0.14);
  float d1=distance(p,uBulb),d2=distance(p,uBulb2);
  vec3 warm=vec3(1.,.78,.52);
  vec3 lit=uAmb+warm*(uBulbI*1.7/(1.+d1*d1*0.03)+uBulb2I*1.7/(1.+d2*d2*0.035));
@@ -221,15 +221,15 @@ const S=(A,B,t0,t1,mode,o,dir,spread,noise,x={})=>({A,B,t0,t1,mode,o,dir,spread,
 const SEG=[
  S(0,1,0,3.4,0,V(-8,0,0),V(1/16,0,0),2.2,0.35,{snap:V(0,0.11,0)}),            // dust settles onto slat lines, left to right
  S(1,2,5.6,10.5,0,V(0,2.9,0),V(0,-1/7.4,0),3.0,0.06,{arc:V(0,0,0.25)}),       // shutter rolls up, top first
- S(2,3,16.5,20,1,V(0.25,-2.7,-4.75),V(1/9,0,0),3.0,0.06,{arc:V(0,0.7,0.5)}), // phone lifts off the counter, nearest first
+ S(2,3,16.5,20,1,V(0.25,-2.7,-4.75),V(1/9,0,0),5.5,0.02,{arc:V(0,0.5,0.3),snap:V(0.12,0,0.12)}), // phone lifts off the counter, nearest first
  S(3,4,23.8,26.4,1,V(0,-1.2,-1.6),V(1/5.5,0,0),3.2,0.05,{axes:-1,snap:V(0,0,0.18)}), // windows peel out of the phone: sideways, then up, on depth rails
  S(4,5,33.5,36.4,0,V(0,2.4,0),V(0,-1/5,0),3.0,0.05,{arc:V(0,0.35,0),axes:1}),   // windows fall onto the desk, top rows first
  S(5,6,42.4,46.4,0,V(-2.4,0,0),V(1/4.8,0,0),3.0,0.04,{snap:V(0.2,0,0.2),axes:1}), // pile slides into ruled lines
  S(6,7,47,50.5,0,V(-3.7,0,0),V(1/7.4,0,0),2.5,0.03,{snap:V(0.15,0,0.15)}),        // ruled lines become the bus; tools slide to their places on the drawing
  S(7,8,52.5,56.5,0,V(0,0,-2.6),V(0,0,-1/6),2.5,0.03,{axes:-1,useB:1}),            // the drawing extrudes into the room, nearest first, height last
- S(8,9,64.5,68,1,V(0,Y0+1.2,-8.3),V(1/9,0,0),2.6,0.05,{arc:V(0,0.3,0)}),          // packets swell into agents, cables straighten into pipes
- S(9,10,79.5,82.8,1,V(5,PY,-10),V(1/14,0,0),2.4,0.05,{arc:V(0,0.6,0.8)}),          // pipelines retract; the counter reassembles around what they carry
- S(10,11,86.4,90,0,V(0,2.9,0),V(0,-1/7.4,0),3.0,0.05,{useB:1}),                  // the shutter comes down, slat by slat
+ S(8,9,64.5,68,1,V(0,Y0+1.2,-8.3),V(1/9,0,0),5.5,0.015,{arc:V(0,0.15,0),snap:V(0,0.14,0.2),axes:-1}),          // packets swell into agents, cables straighten into pipes
+ S(9,10,79.5,82.8,1,V(5,PY,-10),V(1/14,0,0),5.0,0.02,{arc:V(0,0.4,0.5),snap:V(0.16,0.16,0),axes:1}),          // pipelines retract; the counter reassembles around what they carry
+ S(10,11,86.4,90,0,V(0,2.9,0),V(0,-1/7.4,0),6.0,0.02,{useB:1,snap:V(0,0.11,0),axes:-1}),                  // the shutter comes down, slat by slat
  S(11,12,92.6,96,0,V(-6.2,0,0),V(1/12.4,0,0),3.2,0.02,{snap:V(0.12,0,0)})];       // the board repaints, letter by letter
 const SIZE=[[0,0.034],[5.6,0.032],[10.5,0.026],[16.5,0.019],[20,0.0135],[23.8,0.014],[26.4,0.025],[33.5,0.025],[36.4,0.021],[42.4,0.021],[46.4,0.022],[47,0.022],[52.5,0.02],[56.5,0.0115],[64.5,0.011],[68,0.012],[79.4,0.013],[82.8,0.019],[86.2,0.019],[90.4,0.03],[100,0.032]];
 const BULB1=[[0,0],[0.8,0.12],[1.2,0.02],[1.7,0.55],[2.0,0.2],[2.6,0.95],[3.0,0.6],[3.5,1],[9,1],[13,0.25],[16,0],[86.4,0],[88.6,0.7],[90,1],[100,1]];
@@ -237,7 +237,7 @@ const BULB2=[[7,0],[10.5,1],[17,1],[20,0.55],[33,0.5],[36.4,0.95],[37.6,0.6],[38
 const AMB=[[0,V(.12,.14,.21)],[5,V(.12,.14,.2)],[10.5,V(.17,.15,.13)],[16.5,V(.17,.15,.13)],[20,V(.16,.17,.22)],[33.5,V(.16,.17,.22)],[36.4,V(.14,.12,.11)],[42.4,V(.12,.11,.1)],[46.4,V(.16,.2,.3)],[52.5,V(.16,.2,.3)],[56.5,V(.13,.15,.2)],[64.5,V(.13,.15,.2)],[68,V(.15,.17,.23)],[79.5,V(.15,.17,.23)],[82.8,V(.17,.15,.13)],[86.4,V(.17,.15,.13)],[90,V(.12,.14,.2)],[100,V(.12,.14,.21)]];
 const TOP=[[0,V(.035,.06,.11)],[6,V(.03,.05,.09)],[10.5,V(.06,.045,.03)],[20,V(.035,.04,.055)],[33.5,V(.035,.04,.055)],[36.4,V(.045,.03,.025)],[42.4,V(.03,.025,.025)],[46.4,V(.03,.06,.11)],[52.5,V(.03,.06,.11)],[56.5,V(.02,.03,.045)],[79.5,V(.02,.03,.05)],[82.8,V(.06,.045,.03)],[86.4,V(.06,.045,.03)],[90,V(.035,.06,.11)]];
 const BOT=[[0,V(.01,.012,.02)],[10.5,V(.02,.014,.01)],[20,V(.01,.012,.018)],[36.4,V(.015,.01,.008)],[46.4,V(.01,.02,.04)],[52.5,V(.01,.02,.04)],[56.5,V(.006,.008,.012)],[79.5,V(.006,.008,.012)],[82.8,V(.02,.014,.01)],[86.4,V(.02,.014,.01)],[90,V(.01,.012,.02)]];
-const MK=[[0,1.5],[5.6,1.4],[10.5,1.35],[16.5,1.2],[20,1.0],[23.8,1.0],[26.4,1.0],[33.5,1.0],[36.4,1.8],[42.4,1.8],[46.4,1.6],[47,1.6],[49.5,1.95],[52.5,1.95],[56.5,1.0],[64.5,1.0],[68,1.4],[79.4,1.4],[82.8,1.25],[86.2,1.25],[89.5,1.6],[90.4,2.3],[96,2.4],[100,2.4]];
+const MK=[[0,1.5],[5.6,1.8],[8,2.0],[10.5,1.5],[16.5,1.2],[20,1.0],[23.8,1.0],[26.4,1.0],[33.5,1.0],[36.4,1.7],[42.4,1.7],[46.4,1.6],[47,1.6],[49.5,1.95],[52.5,1.95],[56.5,1.0],[64.5,1.0],[68,1.05],[79.4,1.05],[82.8,1.06],[86.2,1.06],[89.5,1.6],[90.4,2.3],[96,2.4],[100,2.4]];
 const _b2a=V(0,1.38,-5.1),_b2b=V(0,Y0+2.5,ER.db+0.35);
 const OFFA=[[64.5,-2.4],[68.2,0]],OFFB=[[64.5,4],[71.4,4],[72.6,0]],OFFC=[[64.5,4],[75.4,4],[76.6,0]];
 const HOOKS=[ // per-scene uniform drivers (offsets, flows), each a pure function of T
@@ -248,7 +248,8 @@ const HOOKS=[ // per-scene uniform drivers (offsets, flows), each a pure functio
  (T,U)=>{const f=U.uFlow.value,K=U.uFlowK.value;K[0]=5;K[1]=8;K[2]=1;K[3]=1;
   f[0]=T>56.5&&T<66?0.01+(T-56.5)*1.6:0;f[1]=T>66&&T<80?0.01+(T-66)*1.3:0;
   f[2]=T>69.6&&T<70.3?0.01+(T-69.6)/0.7*0.84:0;f[3]=T>74.3&&T<74.8?0.01+(T-74.3)/0.5*0.84:0}];
-const MLY=[[0,0],[23.8,0],[26.4,0.75],[33.5,0.75],[36.4,0]]; // mobile: lift view to the window column
+const MLY=[[0,0],[23.8,0],[26.4,0.75],[33.5,0.75],[36.4,-0.3],[42.4,-0.3],[46.4,0],[64.5,0],[68,0.2],[79.4,0.2],[82.8,-0.3],[86.2,-0.3],[89.5,0]]; // mobile: vertical framing shift per scene
+const MLX=[[0,0],[64.5,0],[68,-0.45],[70.6,-0.3],[72.6,0]]; // mobile: horizontal framing shift (scene 7 first job sits left of the pan)
 const REV={2:[[10.5,0],[16,1],[27,1],[27.01,0],[74.5,0],[75.3,1]],3:[[19.3,0],[23.3,1],[26.5,1],[26.51,0.5],[76.6,0.5],[77.5,1]],5:[[35.4,0],[41.8,1],[47,1],[47.01,0],[78.3,0],[78.8,1]],
  13:[[47,0],[50.5,1],[57,1],[57.01,0],[82.8,0],[86,1]],14:[[56.5,0.12],[64,1]],15:[[73.9,0],[74.5,1]]};
 
@@ -296,7 +297,7 @@ function frame(T,cK,time){
  linV(TOP,T,BG.uTop.value);linV(BOT,T,BG.uBot.value);
  // camera
  spline(CAM,T,tmpV);spline(LOOK,T,tmpL);
- if(MOBILE){tmpV.sub(tmpL).multiplyScalar(lin(MK,T)).add(tmpL);const ly=lin(MLY,T);tmpV.y+=ly;tmpL.y+=ly}
+ if(MOBILE){tmpV.sub(tmpL).multiplyScalar(lin(MK,T)).add(tmpL);const ly=lin(MLY,T),lx=lin(MLX,T);tmpV.y+=ly;tmpL.y+=ly;tmpV.x+=lx;tmpL.x+=lx}
  camera.position.copy(tmpV);camera.lookAt(tmpL);camera.updateMatrixWorld();
  // bulb glow on screen
  const useIn=b2>b1*0.6;proj.copy(useIn?U.uBulb2.value:U.uBulb.value).project(camera);

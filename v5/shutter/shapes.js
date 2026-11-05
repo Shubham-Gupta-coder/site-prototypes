@@ -1,3 +1,4 @@
+import {COPY} from './copy.js';
 import {Part,getCanvas,plane,box,cyl,tube,sphere,dust,assemble,hex,vnoise,fbm,rotY,rotX,SCALE} from './lib.js';
 // GROUPS: 0 solid,1 dust,2 receipt print,3 chat bubbles,4 unread blink,5 copy strokes,6 hour hand,7 minute hand,8 ledger page,9 bulb out,10 bulb in,11 ruled lines,12 windows reveal
 const BONE='#efe6d2',OX='#7E2A18';
@@ -27,7 +28,7 @@ function drawSign(ctx,W,H,boost,two){const fs=two?0.32:0.5,ty=two?0.31:0.53;
  ctx.globalCompositeOperation='source-over';
 }
 function signText(ctx,W,H,fs=0.5,ty=0.53){ctx.font=`700 ${Math.round(H*fs)}px "Playfair Display", Georgia, serif`;ctx.textAlign='center';ctx.textBaseline='middle';
- const t='SHUBHAM GUPTA';const sp=H*0.035;let tw=0;for(const ch of t)tw+=ctx.measureText(ch).width+sp;tw-=sp;let x=W/2-tw/2;
+ const t=COPY.sign;const sp=H*0.035;let tw=0;for(const ch of t)tw+=ctx.measureText(ch).width+sp;tw-=sp;let x=W/2-tw/2;
  for(const ch of t){const w=ctx.measureText(ch).width;ctx.fillText(ch,x+w/2,H*ty);x+=w+sp}}
 
 function drawFacade(ctx,W,H){ // 18 x 10.5 world; opening x -5.2..5.2 (y -4.5..2.9) ; sign region x -6.1..6.1 y 2.85..5.35
@@ -101,12 +102,13 @@ function shopBag(ctx,x,y,s){ctx.fillStyle='#95bf47';ctx.beginPath();ctx.moveTo(x
  ctx.fillStyle='#5e8e3e';ctx.beginPath();ctx.moveTo(x+s*0.1,y-s*0.27);ctx.lineTo(x+s*0.42,y-s*0.3);ctx.lineTo(x+s*0.5,y+s*0.5);ctx.lineTo(x+s*0.2,y+s*0.5);ctx.fill();
  ctx.strokeStyle='#95bf47';ctx.lineWidth=s*0.09;ctx.beginPath();ctx.arc(x-s*0.02,y-s*0.27,s*0.2,Math.PI*1.05,-0.05);ctx.stroke();
  ctx.fillStyle='#fff';ctx.font=`700 ${s*0.62}px ${FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('S',x-s*0.05,y+s*0.13);ctx.textAlign='left'}
+function fitFont(ctx,t,wt,px,maxW){ctx.font=`${wt} ${px}px ${FONT}`;const w=ctx.measureText(t).width;if(w>maxW){px*=maxW/w;ctx.font=`${wt} ${px}px ${FONT}`}return px}
 function rzpMark(ctx,x,y,s){ctx.fillStyle='#3395ff';ctx.beginPath();ctx.moveTo(x+s*0.05,y+s*0.5);ctx.lineTo(x+s*0.3,y-s*0.15);ctx.lineTo(x+s*0.05,y-s*0.05);ctx.closePath();ctx.fill();
  ctx.fillStyle='#ffffff';ctx.beginPath();ctx.moveTo(x-s*0.25,y+s*0.5);ctx.lineTo(x+s*0.02,y-s*0.42);ctx.lineTo(x+s*0.55,y-s*0.6);ctx.lineTo(x+s*0.3,y-s*0.15);ctx.lineTo(x+s*0.15,y-s*0.25);ctx.lineTo(x-s*0.02,y+s*0.5);ctx.closePath();ctx.fill()}
 const WINDOWS={
  chat(ctx,W,H){winFrame(ctx,W,H,'#f0f2f5',1);
   ctx.fillStyle='#008069';ctx.fillRect(0,H*0.062,W,H*0.12);waLogo(ctx,W*0.05,H*0.122,H*0.04);
-  ctx.fillStyle='#fff';ctx.font=`700 ${H*0.064}px ${FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText('WhatsApp',W*0.085,H*0.124);
+  ctx.fillStyle='#fff';fitFont(ctx,COPY.chatApp,700,H*0.064,W*0.3);ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText(COPY.chatApp,W*0.085,H*0.124);
   ctx.fillStyle='#ffffff';ctx.fillRect(0,H*0.182,W*0.33,H);ctx.strokeStyle='#e9edef';ctx.lineWidth=2;
   const av=['#c26a4a','#4a7ac2','#7ab05a','#b0a05a','#8a5ab0','#5ab0a8'];
   for(let i=0;i<6;i++){const y=H*(0.24+i*0.125);ctx.fillStyle=av[i];ctx.beginPath();ctx.arc(W*0.05,y+H*0.03,H*0.038,0,7);ctx.fill();
@@ -124,7 +126,7 @@ const WINDOWS={
   ctx.fillStyle='#f0f2f5';ctx.fillRect(W*0.33,H*0.9,W,H*0.1);bars(ctx,W*0.37,H*0.918,W*0.5,H*0.055,'#ffffff');ctx.fillStyle='#008069';ctx.beginPath();ctx.arc(W*0.93,H*0.945,H*0.033,0,7);ctx.fill();
   endFrame(ctx)},
  pay(ctx,W,H){winFrame(ctx,W,H,'#08142f');ctx.fillStyle='#0b1b3f';ctx.fillRect(0,H*0.062,W*0.26,H);
-  rzpMark(ctx,W*0.045,H*0.15,H*0.07);ctx.fillStyle='#fff';ctx.font=`700 ${H*0.062}px ${FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText('Razorpay',W*0.075,H*0.152);
+  rzpMark(ctx,W*0.045,H*0.15,H*0.07);ctx.fillStyle='#fff';fitFont(ctx,COPY.payBrand,700,H*0.062,W*0.17);ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText(COPY.payBrand,W*0.075,H*0.152);
   for(let i=0;i<6;i++){if(i===1){ctx.fillStyle='rgba(51,149,255,.22)';ctx.fillRect(W*0.015,H*(0.255+i*0.085),W*0.23,H*0.07)}ctx.fillStyle=i===1?'#3395ff':'#4c6390';rr(ctx,W*0.035,H*(0.272+i*0.085),H*0.036,H*0.036,5);ctx.fill();bars(ctx,W*0.075,H*(0.278+i*0.085),W*(0.09+((i*3)%4)*0.02),H*0.024,i===1?'#e6f0ff':'#7f90b3')}
   ctx.fillStyle='#eef2f9';ctx.fillRect(W*0.26,H*0.062,W,H);bars(ctx,W*0.3,H*0.11,W*0.22,H*0.04,'#0b1b3f');bars(ctx,W*0.82,H*0.1,W*0.14,H*0.06,'#3395ff',8);
   // payment card
@@ -165,7 +167,7 @@ const WINDOWS={
    if(i===1||i===5){ctx.fillStyle='#fce8b2';rr(ctx,W*0.46,y+H*0.058,W*0.08,H*0.02,6);ctx.fill()}bars(ctx,W*0.9,y+H*0.032,W*0.055,H*0.02,un?'#1f1f1f':'#80868b')}
   endFrame(ctx)},
  store(ctx,W,H){winFrame(ctx,W,H,'#1a1a1a');ctx.fillStyle='#1a1a1a';ctx.fillRect(0,H*0.062,W,H*0.11);shopBag(ctx,W*0.045,H*0.115,H*0.07);
-  ctx.fillStyle='#ffffff';ctx.font=`700 ${H*0.062}px ${FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText('shopify',W*0.08,H*0.118);bars(ctx,W*0.38,H*0.09,W*0.32,H*0.05,'#303030',10);
+  ctx.fillStyle='#ffffff';ctx.font=`700 ${H*0.062}px ${FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText(COPY.shopBrand,W*0.08,H*0.118);bars(ctx,W*0.38,H*0.09,W*0.32,H*0.05,'#303030',10);
   ctx.fillStyle='#ebebeb';ctx.fillRect(0,H*0.172,W*0.2,H);for(let i=0;i<8;i++){if(i===2){ctx.fillStyle='#ffffff';rr(ctx,W*0.01,H*(0.2+i*0.07),W*0.18,H*0.055,8);ctx.fill()}ctx.fillStyle='#4a4a4a';rr(ctx,W*0.025,H*(0.213+i*0.07),H*0.028,H*0.028,4);ctx.fill();bars(ctx,W*0.06,H*(0.216+i*0.07),W*(0.07+((i*5)%3)*0.02),H*0.022,i===2?'#1a1a1a':'#616161')}
   ctx.fillStyle='#f1f1f1';ctx.fillRect(W*0.2,H*0.172,W,H);bars(ctx,W*0.23,H*0.21,W*0.18,H*0.04,'#1a1a1a');ctx.fillStyle='#1a1a1a';rr(ctx,W*0.82,H*0.2,W*0.15,H*0.06,10);ctx.fill();bars(ctx,W*0.845,H*0.219,W*0.1,H*0.022,'#ffffff');
   const items=[[drawTee,'#b33a3a'],[drawKurta,'#2f5d8a'],[drawScarf,'#c9932b'],[drawTote,'#3c7a4e'],[drawKurta,'#7a1f2b'],[drawTee,'#e8dcc4'],[drawScarf,'#6b4a8c'],[drawTee,'#2f6b5a']];
@@ -231,11 +233,21 @@ function lane(parts,dim=1){const g=new Part(Math.round(9000*SCALE)+10,dim<1);con
  plane(g,cv,8000,{c:[0,-4.52,4],R:[1,0,0],U:[0,0,-1],w:22,h:8,edge:0.3,dim});parts.push(g)}
 
 // ---- warehouse ----
-function carton(p,n,c,s,dim){const kraft=mix(C('#b48a5a'),C('#9a7146'),Math.random());box(p,n,{c,s,dim,color:(f,u,v)=>{let k=J(kraft,0.04);
- if(f==='py'&&Math.abs(u-0.5)<0.07)k=mix(k,[205,170,115],0.7);
- if((f==='px'||f==='nx'||f==='pz')&&Math.abs(u-0.5)<0.06&&v>0.8)k=mix(k,[205,170,115],0.7);
- if((f==='px'||f==='nx'||f==='pz')&&u>0.2&&u<0.55&&v>0.25&&v<0.55){k=[232,228,218];if(v<0.4&&Math.sin(u*180)>0.1)k=[30,30,30]}
- return k}})}
+function carton(p,n,c,s,dim){const kraft=mix(C('#cf9f68'),C('#ad8050'),Math.random()),af=c[0]<0?'px':'nx',lab=Math.random(),stn=Math.floor(Math.random()*3);
+ box(p,n*1.25,{c,s,dim,faces:[af,'pz','py'],color:(f,u,v)=>{let k=J(kraft,0.035);const sh=f===af?1:f==='pz'?0.78:0.66;
+  const e=Math.min(u,1-u,v,1-v);if(e<0.035)k=mix(k,[60,40,22],0.6);           // carton edges
+  if(f==='py'&&Math.abs(u-0.5)<0.06)k=mix(k,[214,182,128],0.75);              // tape on top
+  if(f!=='py'&&Math.abs(u-0.5)<0.05&&v>0.82)k=mix(k,[214,182,128],0.75);      // tape over the lip
+  if(f===af||f==='pz'){// shipping label: white sticker, black header bar, barcode
+   const LW=f===af?0.46:0.3,LH=0.42,lx=0.08+lab*0.08,ly=0.18;if(u>lx&&u<lx+LW&&v>ly&&v<ly+LH){k=[242,238,228];const lu=(u-lx)/LW,lv=(v-ly)/LH;
+    if(lv>0.72&&lv<0.9&&lu>0.08&&lu<0.92)k=[34,32,30];
+    else if(lv>0.12&&lv<0.42&&lu>0.08&&lu<0.92&&Math.sin(lu*140+lab*9)>0.15)k=[28,28,28];
+    else if(lv>0.5&&lv<0.62&&lu>0.08&&lu<0.6)k=[90,88,84]}
+   // stencil marks on the right: up arrows or a fragile glass
+   if(u>0.66&&u<0.88&&v>0.55&&v<0.85){const mu=(u-0.66)/0.22,mv=(v-0.55)/0.3;
+    if(stn===0&&((Math.abs(mu-0.3)<0.06&&mv<0.7)||(Math.abs(mu-0.75)<0.06&&mv<0.7)||(mv>0.62&&Math.abs(mu-0.3)<(1-mv)*0.5+0.02&&mv<0.95)||(mv>0.62&&Math.abs(mu-0.75)<(1-mv)*0.5+0.02&&mv<0.95)))k=[40,28,18];
+    if(stn===1&&((mv>0.45&&Math.hypot((mu-0.5)*1.4,(mv-0.72)*1.6)<0.28)||(Math.abs(mu-0.5)<0.05&&mv>0.12&&mv<0.5)||(mv<0.14&&Math.abs(mu-0.5)<0.22)))k=[40,28,18]}}
+  return[k[0]*sh,k[1]*sh,k[2]*sh]}})}
 function bolt(p,n,c,len,r,col,dim){cyl(p,n,{c,r,len,axis:'x',dim,color:(f,u,v)=>{const b=hex(col);if(f!=='side'){const ring=Math.sin(u*60)*0.12+0.9;return[b[0]*ring,b[1]*ring,b[2]*ring]}return J(b,0.05)}})}
 function sack(p,n,c,dim){sphere(p,n,{c,r:0.42,squash:[0.75,0.55,0.62],dim,color:()=>J(C('#b9a074'),0.1)})}
 const TEX=['#2b3a6b','#7a1f2b','#c9932b','#e8dcc4','#2f6b5a','#8a4f8c','#b24a2a'];
@@ -453,9 +465,9 @@ function plateCanvas(k){return getCanvas('plate-'+k,560,200,(ctx,W,H)=>{const g=
  for(const[x,y]of[[18,18],[W-18,18],[18,H-18],[W-18,H-18]]){ctx.fillStyle='#5d656c';ctx.beginPath();ctx.arc(x,y,7,0,7);ctx.fill()}
  ctx.fillStyle='#1d2329';rr(ctx,36,36,128,128,18);ctx.fill();const cx=100,cy=100;
  ctx.font=`700 62px ${FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillStyle='#1b1f23';
- if(k==='wa'){waLogo(ctx,cx,cy,44);ctx.fillText('WhatsApp',186,104)}
- else if(k==='shop'){shopBag(ctx,cx,cy+4,80);ctx.fillStyle='#1b1f23';ctx.font=`700 66px ${FONT}`;ctx.fillText('shopify',186,100)}
- else if(k==='rzp'){ctx.fillStyle='#0b1b3f';rr(ctx,36,36,128,128,18);ctx.fill();rzpMark(ctx,cx-6,cy+4,80);ctx.fillStyle='#1b1f23';ctx.fillText('Razorpay',186,104)}
+ if(k==='wa'){waLogo(ctx,cx,cy,44);fitFont(ctx,COPY.chatApp,700,62,350);ctx.fillText(COPY.chatApp,186,104)}
+ else if(k==='shop'){shopBag(ctx,cx,cy+4,80);ctx.fillStyle='#1b1f23';fitFont(ctx,COPY.shopBrand,700,66,350);ctx.fillText(COPY.shopBrand,186,100)}
+ else if(k==='rzp'){ctx.fillStyle='#0b1b3f';rr(ctx,36,36,128,128,18);ctx.fill();rzpMark(ctx,cx-6,cy+4,80);ctx.fillStyle='#1b1f23';fitFont(ctx,COPY.payBrand,700,62,350);ctx.fillText(COPY.payBrand,186,104)}
  else{ctx.strokeStyle='#e6eef7';ctx.lineWidth=7;ctx.lineJoin='round';ctx.beginPath();
   if(k==='sheet'){ctx.rect(cx-44,cy-34,88,68);ctx.moveTo(cx-14,cy-34);ctx.lineTo(cx-14,cy+34);ctx.moveTo(cx+16,cy-34);ctx.lineTo(cx+16,cy+34);ctx.moveTo(cx-44,cy-11);ctx.lineTo(cx+44,cy-11);ctx.moveTo(cx-44,cy+12);ctx.lineTo(cx+44,cy+12)}
   if(k==='mail'){ctx.rect(cx-46,cy-30,92,60);ctx.moveTo(cx-46,cy-30);ctx.lineTo(cx,cy+6);ctx.lineTo(cx+46,cy-30)}
@@ -467,9 +479,19 @@ function rackAt(p,side,z,v,nS=1){const xr=side*ER.xr,fx=xr-side*ER.dx/2,nx=-side
  // status LEDs (group 12 blink)
  for(let k=0;k<26;k++){const y=Y0+0.12+k*0.075+(v*0.013)%0.03,zz=z+(side<0?-1:1)*(0.2+((k*7+v)%3)*0.025);const amber=((k*5+v*3)%7)===0,blue=((k*3+v)%11)===0;const col=amber?[255,176,60]:blue?[90,170,255]:[70,240,130];
   for(let i=0;i<Math.round(9*SCALE)+1;i++)p.push(fx+nx*0.012+(Math.random()-0.5)*0.008,y+(Math.random()-0.5)*0.014,zz+(Math.random()-0.5)*0.014,col[0],col[1],col[2],12,0,1)}
- // patch cables in loops
- const cc=[C('#3d7fd6'),C('#e2b94b'),C('#d0502e'),C('#3d7fd6')];
- for(let k=0;k<4;k++){const y1=Y0+0.5+k*0.36,y2=y1+0.22+0.1*(k%2);const z1=z-0.18+k*0.08;tube(p,170*nS,{pts:[[fx+nx*0.01,y1,z1],[fx+nx*0.035,y1-0.04,z1+0.03],[fx+nx*0.045,(y1+y2)/2,z1+0.06],[fx+nx*0.035,y2+0.04,z1+0.09],[fx+nx*0.01,y2,z1+0.12]],rad:0.004,color:cc[k].map(v=>v*0.8),em:0.15})}}
+ // patch cables: plugged into a port, drooping in a soft catenary to the cable manager at the rack edge
+ const cc=[C('#3d7fd6'),C('#e2b94b'),C('#3d7fd6'),C('#8a939c'),C('#d0502e'),C('#3d7fd6'),C('#e2b94b'),C('#8a939c')];
+ const nC=SCALE>3?8:SCALE>1.5?6:4,sz=side<0?-1:1,zEdge=z+sz*0.255;
+ for(let k=0;k<nC;k++){const y1=Y0+0.42+k*(1.5/nC),z1=z-sz*(0.17-((k*5)%nC)*(0.22/nC)),y2=y1-0.05-0.03*(k%3),sag=0.07+0.03*(k%2);
+  const pts=[];for(let q=0;q<=18;q++){const t=q/18,bow=Math.sin(Math.PI*t);
+   pts.push([fx+nx*(0.012+0.035*Math.sin(Math.PI*Math.min(1,t*1.6))),y1+(y2-y1)*t-sag*bow*bow*0.9-sag*0.4*t*t,z1+(zEdge-z1)*(1-Math.pow(1-t,1.6))])}
+  // run down inside the manager
+  pts.push([fx+nx*0.03,Y0+0.18,zEdge]);
+  tube(p,Math.round(150*nS*(4/nC)*2.4),{pts,rad:0.0032,color:cc[k],em:0.35});
+  // plug boot at the port
+  box(p,Math.round(24*nS),{c:[fx+nx*0.014,y1,z1],s:[0.026,0.016,0.014],color:()=>J([200,205,210],0.05)})}
+ // vertical cable manager strip
+ box(p,Math.round(160*nS),{c:[fx+nx*0.03,Y0+h/2,zEdge],s:[0.02,h-0.1,0.03],faces:['px','nx'],color:()=>J(C('#1a1e22'),0.05)})}
 STATES.push(()=>{const parts=[];const p=new Part(Math.round(100000*SCALE)+100);
  ER.zs.forEach((z,i)=>{rackAt(p,-1,z,i);rackAt(p,1,z,i+3)});parts.push(p);
  // faceplates: dot copy under the crisp cards
@@ -523,15 +545,15 @@ function lbox(p,n,c,s,{group=0,em=0}={}){const kraft=mix(C('#b48a5a'),C('#9a7146
  return k}})}
 function drawBubIn(ctx,W,H){ctx.fillStyle='#ffffff';rr(ctx,24,8,W-32,H-28,26);ctx.fill();ctx.beginPath();ctx.moveTo(24,H-60);ctx.lineTo(4,H-14);ctx.lineTo(70,H-22);ctx.fill();
  ctx.fillStyle='#ece6da';rr(ctx,46,30,190,H-80,16);ctx.fill();drawKurta(ctx,141,(H-50)/2+8,H*0.55,'#9c2f3a');
- ctx.fillStyle='#111b21';ctx.font=`600 64px ${FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText('Is this in medium?',262,H*0.42);
+ ctx.fillStyle='#111b21';ctx.font=`600 64px ${FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText(COPY.chatAsk,262,H*0.42);
  bars(ctx,W-150,H-70,90,16,'#8696a0');}
 function drawPayLink(ctx,W,H){ctx.fillStyle='#ffffff';rr(ctx,6,6,W-12,H-12,26);ctx.fill();ctx.save();rr(ctx,6,6,W-12,H-12,26);ctx.clip();ctx.fillStyle='#0b1b3f';ctx.fillRect(0,0,W,120);ctx.restore();
  ctx.strokeStyle='#ffffff';ctx.lineWidth=9;ctx.lineCap='round';for(const d of[0,1]){ctx.save();ctx.translate(70+d*26,64);ctx.rotate(-0.78);rr(ctx,-26,-14,52,28,14);ctx.stroke();ctx.restore()}
- ctx.fillStyle='#fff';ctx.font=`700 46px ${FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText('Payment link',138,64);
+ ctx.fillStyle='#fff';ctx.font=`700 46px ${FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText(COPY.payTitle,138,64);
  ctx.fillStyle='#f4f1ea';rr(ctx,40,150,180,180,16);ctx.fill();drawKurta(ctx,130,240,140,'#9c2f3a');
  bars(ctx,250,170,300,30,'#1b2433');bars(ctx,250,222,200,24,'#7d8796');bars(ctx,250,272,240,24,'#7d8796');
  ctx.strokeStyle='#e3e7ee';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(40,370);ctx.lineTo(W-40,370);ctx.stroke();bars(ctx,40,400,220,26,'#7d8796');bars(ctx,W-200,396,160,34,'#1b2433');
- ctx.fillStyle='#3395ff';rr(ctx,40,470,W-80,96,48);ctx.fill();ctx.fillStyle='#fff';ctx.font=`700 52px ${FONT}`;ctx.textAlign='center';ctx.fillText('Pay',W/2,519);ctx.textAlign='left'}
+ ctx.fillStyle='#3395ff';rr(ctx,40,470,W-80,96,48);ctx.fill();ctx.fillStyle='#fff';ctx.font=`700 52px ${FONT}`;ctx.textAlign='center';ctx.fillText(COPY.payButton,W/2,519);ctx.textAlign='left'}
 function stampCanvas(col,word){return getCanvas('stamp-'+col+word,400,400,(ctx,W,H)=>{ctx.strokeStyle=ctx.fillStyle=col;const c=W/2;ctx.lineWidth=16;ctx.beginPath();ctx.arc(c,c,c-14,0,7);ctx.stroke();ctx.lineWidth=6;ctx.beginPath();ctx.arc(c,c,c-40,0,7);ctx.stroke();
  tick(ctx,c,word?c-30:c,word?150:190,col,30);if(word){ctx.font=`800 70px ${FONT}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(word,c,c+95)}
  // worn ink
@@ -563,7 +585,7 @@ STATES.push(()=>{const parts=[];const p=new Part(Math.round(100000*SCALE)+100);
  parts.push(A);
  // B. payment: link card, stamp (group 15), a new row in the books (group 2)
  const B=new Part(Math.round(16000*SCALE)+50);plane(B,getCanvas('paylink',630,630,drawPayLink),5000,{c:[4.45,PY+0.92,ZS],w:1.05,h:1.05,em:0.85});
- {const a=-0.25,R=[Math.cos(a),Math.sin(a),0],U=[-Math.sin(a),Math.cos(a),0];plane(B,stampCanvas('#1f9d55','PAID'),3000,{c:[4.82,PY+0.6,ZS+0.06],R,U,w:0.62,h:0.62,em:0.95,group:15,reveal:(u,v)=>Math.min(0.999,Math.atan2(v-0.5,u-0.5)/(2*Math.PI)+0.5)})}
+ {const a=-0.25,R=[Math.cos(a),Math.sin(a),0],U=[-Math.sin(a),Math.cos(a),0];plane(B,stampCanvas('#1f9d55',COPY.paid),3000,{c:[4.82,PY+0.6,ZS+0.06],R,U,w:0.62,h:0.62,em:0.95,group:15,reveal:(u,v)=>Math.min(0.999,Math.atan2(v-0.5,u-0.5)/(2*Math.PI)+0.5)})}
  {const x0=5.35,x1=6.6,top=PY+1.0;const n=Math.round(700*SCALE);for(let i=0;i<n;i++)B.push(x0+Math.random()*(x1-x0),top+(Math.random()-0.5)*0.06,ZS-0.05,120,170,215,0,0,0.9);
   for(let r=0;r<8;r++){const y=top-0.13-r*0.11,nw=r===7;for(const[a,b]of[[0,0.3],[0.36,0.64],[0.7,0.95]]){const w=(b-a)*(0.6+0.35*((r*5+a*10|0)%4)/3);const m=Math.round(140*SCALE);
    for(let i=0;i<m;i++){const u=Math.random();const x=x0+(a+u*w)*(x1-x0);B.push(x,y+(Math.random()-0.5)*0.035,ZS-0.05,nw?110:150,nw?235:185,nw?150:215,nw?2:0,nw?Math.min(0.999,(a+u*w)):0,0.95)}}
