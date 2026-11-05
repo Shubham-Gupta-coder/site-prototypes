@@ -8,8 +8,10 @@ export function vnoise(x,y){const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y
 export function fbm(x,y){return 0.5*vnoise(x,y)+0.25*vnoise(x*2.03,y*2.03)+0.125*vnoise(x*4.1,y*4.1)+0.0625*vnoise(x*8.3,y*8.3)}
 
 export class Part{
- constructor(n){this.cap=n;this.n=0;this.drop=0;this.p=new Float32Array(n*4);this.c=new Uint8Array(n*4);this.at=null;}
- push(x,y,z,r,g,b,group=0,reveal=0,em=0){let i;if(this.n>=this.cap){this.drop++;const j=Math.floor(Math.random()*(this.n+this.drop));if(j>=this.cap)return;i=j*4}else i=this.n++*4;this.p[i]=x;this.p[i+1]=y;this.p[i+2]=z;
+ // growable point list. bg=true marks backdrop parts that are trimmed first when a state is over budget
+ constructor(n=1024,bg=false){this.cap=Math.max(16,n|0);this.n=0;this.drop=0;this.bg=bg;this.p=new Float32Array(this.cap*4);this.c=new Uint8Array(this.cap*4);this.at=null;}
+ grow(){this.cap*=2;const p=new Float32Array(this.cap*4);p.set(this.p);this.p=p;const c=new Uint8Array(this.cap*4);c.set(this.c);this.c=c}
+ push(x,y,z,r,g,b,group=0,reveal=0,em=0){if(this.n>=this.cap)this.grow();const i=this.n++*4;this.p[i]=x;this.p[i+1]=y;this.p[i+2]=z;
   this.p[i+3]=group+Math.min(0.999,Math.max(0,reveal));this.c[i]=r<0?0:r>255?255:r;this.c[i+1]=g<0?0:g>255?255:g;this.c[i+2]=b<0?0:b>255?255:b;this.c[i+3]=Math.round(em*255);}
 }
 export let SCALE=1; export function setScale(s){SCALE=s}
@@ -81,17 +83,23 @@ export function dust(part,n,{min,max,color=[150,135,115],group=1}){n=Math.round(
 
 // assemble parts into one state of exactly N points. pinned parts keep fixed ID ranges.
 const spread=(v)=>{v&=1023;v=(v|(v<<16))&0x030000FF;v=(v|(v<<8))&0x0300F00F;v=(v|(v<<4))&0x030C30C3;v=(v|(v<<2))&0x09249249;return v};
+export const STATS=[];
 export function assemble(N,parts,fill){
  const P=new Float32Array(N*4),C=new Uint8Array(N*4),used=new Uint8Array(N);
  for(const pt of parts){if(pt.at==null)continue;const at=Math.round(pt.at*SCALE);const m=Math.min(pt.n,N-at);P.set(pt.p.subarray(0,m*4),at*4);C.set(pt.c.subarray(0,m*4),at*4);used.fill(1,at,at+m)}
  let free=0;for(let i=0;i<N;i++)if(!used[i])free++;
  let rest=parts.filter(p=>p.at==null);let tot=rest.reduce((a,p)=>a+p.n,0);
- if(tot<free){const f=new Part(free-tot);fill(f,free-tot);rest=rest.concat([f]);tot+=f.n}
- // gather
- const RP=new Float32Array(tot*4),RC=new Uint8Array(tot*4);let o=0;for(const p of rest){RP.set(p.p.subarray(0,p.n*4),o*4);RC.set(p.c.subarray(0,p.n*4),o*4);o+=p.n}
- // choose free indices worth of points (random subsample if too many)
- let idx=new Uint32Array(tot);for(let i=0;i<tot;i++)idx[i]=i;
- if(tot>free){for(let i=tot-1;i>0;i--){const j=(Math.random()*(i+1))|0;const t=idx[i];idx[i]=idx[j];idx[j]=t}idx=idx.slice(0,free)}
+ if(tot<free){const f=new Part(free-tot,true);fill(f,free-tot);rest=rest.concat([f]);tot+=f.n}
+ // budget: keep hero parts whole, trim backdrop parts evenly (every k-th point) when over budget
+ let hero=rest.filter(p=>!p.bg),bgp=rest.filter(p=>p.bg);const nh=hero.reduce((a,p)=>a+p.n,0),nb=tot-nh;
+ let keepH=1,keepB=1;if(tot>free){if(nh<=free){keepB=(free-nh)/Math.max(1,nb)}else{keepB=0;keepH=free/nh;console.warn('heroes over budget',nh,free)}}
+ const RP=new Float32Array(free*4),RC=new Uint8Array(free*4);let o=0;
+ const take=(p,k)=>{let acc=0;for(let i=0;i<p.n&&o<free;i++){acc+=k;if(acc>=1){acc-=1;RP.set(p.p.subarray(i*4,i*4+4),o*4);RC.set(p.c.subarray(i*4,i*4+4),o*4);o++}}};
+ for(const p of hero)take(p,keepH);for(const p of bgp)take(p,keepB);
+ // pad if rounding left a gap: duplicate earlier points (invisible difference)
+ for(let i=o;i<free;i++){const s=(i*7919)%Math.max(1,o);RP.set(RP.subarray(s*4,s*4+4),i*4);RC.set(RC.subarray(s*4,s*4+4),i*4)}
+ STATS.push({tot,free,nh,nb,keepB:+keepB.toFixed(3),keepH});
+ const idx=new Uint32Array(free);for(let i=0;i<free;i++)idx[i]=i;
  let mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];for(const i of idx)for(let a=0;a<3;a++){const v=RP[i*4+a];if(v<mn[a])mn[a]=v;if(v>mx[a])mx[a]=v}
  const key=new Uint32Array(idx.length);for(let k=0;k<idx.length;k++){const i=idx[k];const q=a=>Math.floor(1023*(RP[i*4+a]-mn[a])/((mx[a]-mn[a])||1));key[k]=(spread(q(0))<<2)|(spread(q(1))<<1)|spread(q(2)>>1)}
  const ord=Array.from(idx.keys()).sort((a,b)=>key[a]-key[b]);

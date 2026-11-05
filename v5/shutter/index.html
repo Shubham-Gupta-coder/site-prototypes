@@ -35,8 +35,11 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 #close a{display:inline-block;background:#7e2a18;color:#fbf3e4;text-decoration:none;font-weight:700;font-size:20px;padding:12px 26px;margin:6px 0 16px}
 #close .fine{font-size:16px;color:#2c2420;border-top:1px solid rgba(40,30,25,.35);padding-top:12px;margin:0}
 body.nogl .t{position:static;opacity:1;visibility:visible;transform:none;margin:24px auto}body.nogl #close{position:static;transform:none;margin:40px auto}body.nogl #gl,body.nogl #spacer{display:none}
-#hint{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:#efe6d2;opacity:.0;transition:opacity 1.2s}
-body.ready #hint{opacity:.95}body.moved #hint{opacity:0;visibility:hidden;transition:none}
+#hint{position:fixed;left:50%;bottom:26px;width:2px;height:54px;margin-left:-1px;background:linear-gradient(rgba(239,230,210,0),rgba(239,230,210,.55));opacity:0;transition:opacity 1.2s;pointer-events:none}
+#hint i{position:absolute;left:50%;top:0;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:#efe6d2;box-shadow:0 0 10px rgba(255,214,150,.8);animation:cue 2.2s cubic-bezier(.5,0,.3,1) infinite}
+@keyframes cue{0%{transform:translateY(-4px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(50px);opacity:0}}
+body.ready #hint{opacity:.9}body.moved #hint{opacity:0;visibility:hidden;transition:none}
+@media (prefers-reduced-motion: reduce){#hint i{animation:none;top:24px}}
 </style>
 </head>
 <body>
@@ -46,8 +49,8 @@ body.ready #hint{opacity:.95}body.moved #hint{opacity:0;visibility:hidden;transi
 <p class="t plate stencil" data-t="1.2,5.6" data-anchor="0,-3.85,0.3">I build the AI that runs businesses.</p>
 <p class="t plate wood" data-t="11.2,16.2" data-anchor="0,-2.95,-4.25" data-dy="70">Every business starts with stock on a shelf.</p>
 <p class="t bubble" data-t="20.6,23.5" data-anchor="0.05,-2.05,-1.5">Orders on chat.</p>
-<p class="t card" data-t="27,29.4" data-anchor="2.75,-0.25,-3.1" data-manchor="1.43,0.0,-3.1">Payments in another app.</p>
-<p class="t cell" data-t="29.8,31.8" data-anchor="-2.45,-0.95,-2.3" data-manchor="-1.27,-1.75,-2.3">Stock in a sheet.</p>
+<p class="t card" data-t="27,29.4" data-anchor="2.75,1.55,-3.1" data-manchor="0.3,1.5,-2.95">Payments in another app.</p>
+<p class="t cell" data-t="29.8,31.8" data-anchor="-2.45,-0.88,-2.3" data-manchor="-0.3,0.02,-2.65">Stock in a sheet.</p>
 <p class="t plate big" data-t="32.1,34.6">None of them talk to each other.</p>
 <p class="t slip" data-t="37,39.8" data-anchor="0.05,-2.66,-4.95" data-dy="-95">So someone copies it all by hand.</p>
 <p class="t face" data-t="40.2,42.6" data-anchor="0,-0.62,-7.45">Every night.</p>
@@ -58,7 +61,7 @@ body.ready #hint{opacity:.95}body.moved #hint{opacity:0;visibility:hidden;transi
  <p>The appointment sits on LinkedIn.</p>
  <p class="fine">Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
 </div>
-<div id="hint" aria-hidden="true">Move down</div>
+<div id="hint" aria-hidden="true"><i></i></div>
 <script type="module" src="./film.js"></script>
 <script>addEventListener('scroll',()=>document.body.classList.add('moved'),{once:true})</script>
 </body>
