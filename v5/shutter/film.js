@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {setScale,setRes,STATS} from './lib.js?v=s5';
-import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js?v=s5';
+import {setScale,setRes,STATS} from './lib.js?v=s6';
+import {buildState,STATES,K,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js?v=s6';
 const Y0=-2.71;
 
 const MOBILE=Math.min(innerWidth,innerHeight)<768&&innerWidth<900;
@@ -15,6 +15,7 @@ if(!gl2||matchMedia('(prefers-reduced-motion: reduce)').matches){document.body.c
 
 /* ---------- dot tier: GPU probe picks how many dots this device draws (?dots=N forces a count) ---------- */
 const TIERS=MOBILE?[131072,65536,32768]:[1310720,655360,262144,131072];
+TIERS.forEach(t=>{if(t%TW)console.error("TIERS: "+t+" is not a multiple of "+TW)}); // every tier must fill whole texture rows
 function gpuProbe(gl,n){ // ms for one draw of n points that fetch 3 float texels each, like the film shader
  const sh=(t,src)=>{const o=gl.createShader(t);gl.shaderSource(o,src);gl.compileShader(o);return o};
  const pr=gl.createProgram();
@@ -86,7 +87,7 @@ function done(i,P,C,ms){busy=-1;install(i,P,C,ms);pump()}
 function ensure(list){return Promise.all(list.map(i=>slotOf[i]>=0?null:new Promise(r=>{if(!pending.has(i))pending.set(i,[]);pending.get(i).push(r)}))).then(()=>{})}
 function mainBuilder(i){setTimeout(()=>{const t0=performance.now();const {P,C}=buildState(i,N);done(i,P,C,Math.round(performance.now()-t0))},0)}
 function startBuilder(){return new Promise(res=>{let w=null,ok=false;const fall=()=>{if(ok)return;ok=true;try{w&&w.terminate()}catch(e){}builder=mainBuilder;console.info('builder: main thread');res()};
- try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js?v=s5',import.meta.url),{type:'module'});
+ try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js?v=s6',import.meta.url),{type:'module'});
   w.onerror=fall;w.onmessage=e=>{const m=e.data;if(m.ready){if(ok)return;ok=true;builder=i=>w.postMessage({i});console.info('builder: worker');res();return}
    if(m.stat)STATS[m.i]=m.stat;done(m.i,m.P,m.C,m.ms)};
   w.postMessage({init:1,N,scale:SCALE,res:RES,mobile:MOBILE,css:document.querySelector('link[href*="fonts.googleapis.com/css2"]').href});setTimeout(fall,15000)}catch(e){fall()}})}
@@ -223,18 +224,22 @@ const LOOK=[[0,V(0,1.2,0)],[3.4,V(0,1.0,0)],[5.6,V(0,0.2,0)],[8,V(0,-0.9,-3)],[1
 // arc: lift along the path at mid flight. snap: per-axis lattice the dots slide along in flight. axes: staged per-axis moves.
 const S=(A,B,t0,t1,mode,o,dir,spread,noise,x={})=>({A,B,t0,t1,mode,o,dir,spread,noise,arc:x.arc||V(),snap:x.snap||V(),axes:x.axes||0,useB:x.useB?1:0});
 const SEG=[
- S(0,1,0,3.4,0,V(-8,0,0),V(1/16,0,0),2.2,0.35,{snap:V(0,0.11,0)}),            // dust settles onto slat lines, left to right
- S(1,2,5.6,10.5,0,V(0,2.9,0),V(0,-1/7.4,0),3.0,0.06,{arc:V(0,0,0.25)}),       // shutter rolls up, top first
- S(2,3,16.5,20,1,V(0.25,-2.7,-4.75),V(1/9,0,0),5.5,0.02,{arc:V(0,0.5,0.3),snap:V(0.12,0,0.12)}), // phone lifts off the counter, nearest first
- S(3,4,23.8,26.4,1,V(0,-1.2,-1.6),V(1/5.5,0,0),3.2,0.05,{axes:-1,snap:V(0,0,0.18)}), // windows peel out of the phone: sideways, then up, on depth rails
- S(4,5,33.5,36.4,0,V(0,2.4,0),V(0,-1/5,0),3.0,0.05,{arc:V(0,0.35,0),axes:1}),   // windows fall onto the desk, top rows first
- S(5,6,42.4,46.4,0,V(-2.4,0,0),V(1/4.8,0,0),3.0,0.04,{snap:V(0.2,0,0.2),axes:1}), // pile slides into ruled lines
- S(6,7,47,50.5,0,V(-3.7,0,0),V(1/7.4,0,0),2.5,0.03,{snap:V(0.15,0,0.15)}),        // ruled lines become the bus; tools slide to their places on the drawing
- S(7,8,52.5,56.5,0,V(0,0,-2.6),V(0,0,-1/6),2.5,0.03,{axes:-1,useB:1}),            // the drawing extrudes into the room, nearest first, height last
- S(8,9,64.5,68,1,V(0,Y0+1.2,-8.3),V(1/9,0,0),5.5,0.015,{arc:V(0,0.15,0),snap:V(0,0.14,0.2),axes:-1}),          // packets swell into agents, cables straighten into pipes
- S(9,10,79.5,82.8,1,V(5,PY,-10),V(1/14,0,0),5.0,0.02,{arc:V(0,0.4,0.5),snap:V(0.16,0.16,0),axes:1}),          // pipelines retract; the counter reassembles around what they carry
- S(10,11,86.4,90,0,V(0,2.9,0),V(0,-1/7.4,0),6.0,0.02,{useB:1,snap:V(0,0.11,0),axes:-1}),                  // the shutter comes down, slat by slat
- S(11,12,92.6,96,0,V(-6.2,0,0),V(1/12.4,0,0),3.2,0.02,{snap:V(0.12,0,0)})];       // the board repaints, letter by letter
+ S(K.dust,K.front,0,3.4,0,V(-8,0,0),V(1/16,0,0),2.2,0.35,{snap:V(0,0.11,0)}),            // dust settles onto slat lines, left to right
+ S(K.front,K.warehouse,5.6,10.5,0,V(0,2.9,0),V(0,-1/7.4,0),3.0,0.06,{arc:V(0,0,0.25)}),       // shutter rolls up, top first
+ S(K.warehouse,K.phone,16.5,20,1,V(0.25,-2.7,-4.75),V(1/9,0,0),5.5,0.02,{arc:V(0,0.5,0.3),snap:V(0.12,0,0.12)}), // phone lifts off the counter, nearest first
+ S(K.phone,K.windows,23.8,26.4,1,V(0,-1.2,-1.6),V(1/5.5,0,0),3.2,0.05,{axes:-1,snap:V(0,0,0.18)}), // windows peel out of the phone: sideways, then up, on depth rails
+ S(K.windows,K.night,33.5,36.4,0,V(0,2.4,0),V(0,-1/5,0),3.0,0.05,{arc:V(0,0.35,0),axes:1}),   // windows fall onto the desk, top rows first
+ S(K.night,K.lines,42.4,46.4,0,V(-2.4,0,0),V(1/4.8,0,0),3.0,0.04,{snap:V(0.2,0,0.2),axes:1}), // pile slides into ruled lines
+ S(K.lines,K.blueprint,47,50.5,0,V(-3.7,0,0),V(1/7.4,0,0),2.5,0.03,{snap:V(0.15,0,0.15)}),        // ruled lines become the bus; tools slide to their places on the drawing
+ S(K.blueprint,K.engine,52.5,56.5,0,V(0,0,-2.6),V(0,0,-1/6),2.5,0.03,{axes:-1,useB:1}),            // the drawing extrudes into the room, nearest first, height last
+ S(K.engine,K.agents,64.5,68,1,V(0,Y0+1.2,-8.3),V(1/9,0,0),5.5,0.015,{arc:V(0,0.15,0),snap:V(0,0.14,0.2),axes:-1}),          // packets swell into agents, cables straighten into pipes
+ S(K.agents,K.calm,79.5,82.8,1,V(5,PY,-10),V(1/14,0,0),5.0,0.02,{arc:V(0,0.4,0.5),snap:V(0.16,0.16,0),axes:1}),          // pipelines retract; the counter reassembles around what they carry
+ S(K.calm,K.shutterDown,86.4,90,0,V(0,2.9,0),V(0,-1/7.4,0),6.0,0.02,{useB:1,snap:V(0,0.11,0),axes:-1}),                  // the shutter comes down, slat by slat
+ S(K.shutterDown,K.sign2,92.6,96,0,V(-6.2,0,0),V(1/12.4,0,0),3.2,0.02,{snap:V(0.12,0,0)})];       // the board repaints, letter by letter
+// sanity check (dev aid, no effect on the picture): SEG must chain A->B->B... in time order, and every state should be used
+SEG.forEach((g,i)=>{if(g.A==null||g.B==null||g.A<0||g.B>=NS)console.warn('SEG',i,'unknown state',g.A,g.B);if(!(g.t1>g.t0))console.warn('SEG',i,'t1 must be > t0');
+ if(i&&g.A!==SEG[i-1].B)console.warn('SEG',i,'starts from',g.A,'but the previous segment ends on',SEG[i-1].B);if(i&&g.t0<SEG[i-1].t1)console.warn('SEG',i,'overlaps the previous segment')});
+{const used=new Set(SEG.flatMap(g=>[g.A,g.B]));const un=Object.keys(K).filter(n=>!used.has(K[n]));if(un.length)console.warn('states built but not in SEG:',un.join(', '))}
 const SIZE=[[0,0.034],[5.6,0.032],[10.5,0.026],[16.5,0.019],[20,0.0135],[23.8,0.014],[26.4,0.025],[33.5,0.025],[36.4,0.021],[42.4,0.021],[46.4,0.022],[47,0.022],[52.5,0.02],[56.5,0.0115],[64.5,0.011],[68,0.012],[79.4,0.013],[82.8,0.019],[86.2,0.019],[90.4,0.03],[100,0.032]];
 const BULB1=[[0,0],[0.8,0.12],[1.2,0.02],[1.7,0.55],[2.0,0.2],[2.6,0.95],[3.0,0.6],[3.5,1],[9,1],[13,0.25],[16,0],[86.4,0],[88.6,0.7],[90,1],[100,1]];
 const BULB2=[[7,0],[10.5,1],[17,1],[20,0.55],[33,0.5],[36.4,0.95],[37.6,0.6],[38.2,0.95],[40.2,0.5],[40.7,0.9],[42.4,0.35],[44,0.12],[47,0.08],[50,0],[54.5,0],[56.5,0.9],[64.5,0.9],[66.5,0.3],[79.5,0.3],[82.8,1],[87,1],[89.5,0.2],[91,0]];
@@ -249,7 +254,7 @@ const HOOKS=[ // per-scene uniform drivers (offsets, flows), each a pure functio
  (T,U)=>{const o=U.uOff.value;o[0].set(lin(OFFA,T),0,0);o[1].set(0,0,0.42*ramp(70,70.7,T));o[2].set(lin(OFFB,T),0,0);o[3].set(lin(OFFC,T),0,0);
   // the booking block rides on the voice agent, then slides into its slot
   const cx=CAP.c[0]+o[3].x,k=ramp(77.6,78.3,T),e=k*k*(3-2*k);o[4].set((cx-CALSLOT[0])*(1-e),(CAP.c[1]-CALSLOT[1])*(1-e),(CAP.c[2]+0.14-CALSLOT[2])*(1-e))},
- (T,U)=>{const f=U.uFlow.value,K=U.uFlowK.value;K[0]=5;K[1]=8;K[2]=1;K[3]=1;
+ (T,U)=>{const f=U.uFlow.value,FK=U.uFlowK.value;FK[0]=5;FK[1]=8;FK[2]=1;FK[3]=1;
   f[0]=T>56.5&&T<66?0.01+(T-56.5)*1.6:0;f[1]=T>66&&T<80?0.01+(T-66)*1.3:0;
   f[2]=T>69.6&&T<70.3?0.01+(T-69.6)/0.7*0.84:0;f[3]=T>74.3&&T<74.8?0.01+(T-74.3)/0.5*0.84:0}];
 const MLY=[[0,0],[23.8,0],[26.4,0.75],[33.5,0.75],[36.4,-0.3],[42.4,-0.3],[46.4,0],[64.5,0],[68,0.2],[79.4,0.2],[82.8,-0.05],[86.2,-0.05],[89.5,0]]; // mobile: vertical framing shift per scene
@@ -348,7 +353,7 @@ window.__film={async set(T,c=0){frozen=true;pT=T;closeK=c;const s=segAt(T);const
 
 /* ---------- boot: dust first, then build states while the reader starts ---------- */
 async function boot(){const t0=performance.now();try{await document.fonts.load('700 100px "Playfair Display"');}catch(e){}
- await startBuilder();pump();await ensure([0,1]);ready=true;window.__film.bootMs=Math.round(performance.now()-t0);
+ await startBuilder();pump();await ensure([SEG[0].A,SEG[0].B]);ready=true;window.__film.bootMs=Math.round(performance.now()-t0);
  requestAnimationFrame(loop);document.body.classList.add('ready')}
 boot();
 

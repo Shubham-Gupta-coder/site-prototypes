@@ -1,6 +1,6 @@
 // State builder: samples every scene into the dot pool off the main thread.
-import {setScale,setRes,STATS} from './lib.js?v=s5';
-import {buildState,mobileLayout} from './shapes.js?v=s5';
+import {setScale,setRes,STATS} from './lib.js?v=s6';
+import {buildState,mobileLayout} from './shapes.js?v=s6';
 let N=0;
 async function loadFonts(css){try{const t=await (await fetch(css)).text();const re=/@font-face\s*{([^}]*)}/g;let m;const out=[];
  while((m=re.exec(t))){const b=m[1];const fam=/font-family:\s*'([^']+)'/.exec(b),st=/font-style:\s*(\w+)/.exec(b),wt=/font-weight:\s*(\d+)/.exec(b),src=/url\(([^)]+)\)/.exec(b),ur=/unicode-range:\s*([^;]+)/.exec(b);

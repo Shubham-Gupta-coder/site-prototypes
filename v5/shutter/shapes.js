@@ -1,5 +1,5 @@
-import {COPY} from './copy.js?v=s5';
-import {Part,getCanvas,plane,box,cyl,tube,sphere,dust,assemble,hex,vnoise,fbm,rotY,rotX,SCALE} from './lib.js?v=s5';
+import {COPY} from './copy.js?v=s6';
+import {Part,getCanvas,plane,box,cyl,tube,sphere,dust,assemble,hex,vnoise,fbm,rotY,rotX,SCALE} from './lib.js?v=s6';
 // GROUPS: 0 solid,1 dust,2 receipt print,3 chat bubbles,4 unread blink,5 copy strokes,6 hour hand,7 minute hand,8 ledger page,9 bulb out,10 bulb in,11 ruled lines,12 windows reveal
 const BONE='#efe6d2',OX='#7E2A18';
 const J=(c,j=0.08)=>{const k=1+(Math.random()-0.5)*2*j;return[c[0]*k,c[1]*k,c[2]*k]};
@@ -297,24 +297,28 @@ function phoneFlat(parts,{dim=1,at=60000}={}){const p=new Part(Math.round(2600*S
 
 /* ================= STATES ================= */
 export const STATES=[];
+// K: state index by name. film.js refers to states only as K.name, so a state can be inserted, removed or reordered here without renumbering anything.
+// The array order only sets the build fallback ("nearest built state") while loading; keep it in film order.
+export const K={};
+function defState(name,build){if(name in K)throw new Error('duplicate state '+name);K[name]=STATES.length;STATES.push(build)}
 function fillDust(min,max,col){return(f,n)=>dust(f,n/SCALE,{min,max,color:col})}
 
 // K0: dust in the lane under the (unlit) bulb
-STATES.push(()=>{const parts=[];const d=new Part(Math.round(131072*SCALE)+10);
+defState('dust',()=>{const parts=[];const d=new Part(Math.round(131072*SCALE)+10);
  const n=Math.round(131072*SCALE);for(let i=0;i<n;i++){const t=Math.random();let x,y,z;if(t<0.55){const h=Math.random();y=5.6-h*10;const r=Math.sqrt(Math.random())*(0.3+h*4.2);const a=Math.random()*7;x=Math.cos(a)*r;z=1.1+Math.sin(a)*r*0.6}else{x=(Math.random()-0.5)*24;y=-4.5+Math.random()*11;z=-1+Math.random()*7}
   const j=0.6+Math.random()*0.5;d.push(x,y,z,170*j,150*j,120*j,1,Math.random(),0)}
  parts.push(d);return{parts,fill:fillDust([-12,-5,-1],[12,6,6],[160,140,110])}});
 // K1: godown front at night, shutter down, padlock, bulb
-STATES.push(()=>{const parts=[];const sh=shutter(parts);sh.at=0;facade(parts);bulbOut(parts);padlock(parts);lane(parts);
+defState('front',()=>{const parts=[];const sh=shutter(parts);sh.at=0;facade(parts);bulbOut(parts);padlock(parts);lane(parts);
  return{parts,fill:fillDust([-6,-4.5,0.3],[6,6,5],[170,150,118])}});
 // K2: warehouse inside; shutter rolled into its drum; front frame thinned
-STATES.push(()=>{const parts=[];const roll=new Part(Math.round(7000*SCALE)+10);cyl(roll,7000,{c:[0,3.05,0.25],r:0.42,len:10.6,axis:'x',color:(f,u)=>J(mix(C('#6f777c'),C('#3a3f42'),(Math.sin(u*200)*0.5+0.5)),0.08)});roll.at=0;parts.push(roll);
+defState('warehouse',()=>{const parts=[];const roll=new Part(Math.round(7000*SCALE)+10);cyl(roll,7000,{c:[0,3.05,0.25],r:0.42,len:10.6,axis:'x',color:(f,u)=>J(mix(C('#6f777c'),C('#3a3f42'),(Math.sin(u*200)*0.5+0.5)),0.08)});roll.at=0;parts.push(roll);
  facade(parts,1,0.45);bulbOut(parts);lane(parts,0.7);racks(parts);shell(parts);bulbIn(parts);table(parts);tableItems(parts);phoneFlat(parts);
  const pad=new Part(Math.round(900*SCALE)+10);box(pad,900,{c:[0.6,-4.45,0.6],s:[0.3,0.1,0.3],ry:0.6,color:()=>C('#b38b3c')});parts.push(pad);
  return{parts,fill:fillDust([-4,-4.4,-12],[4,4,0],[150,130,100])}});
 // K3: phone lifted and lit, chat stacking in; warehouse dimmed behind
 export const PHONE3={c:[0,-1.2,-1.6],w:0.86,h:1.78};
-STATES.push(()=>{const parts=[];const ph=new Part(Math.round(52000*SCALE)+20);const {c,w,h}=PHONE3;
+defState('phone',()=>{const parts=[];const ph=new Part(Math.round(52000*SCALE)+20);const {c,w,h}=PHONE3;
  box(ph,6000,{c:[c[0],c[1],c[2]-0.035],s:[w+0.06,h+0.06,0.06],color:(f,u,v)=>f==='pz'?C('#121315'):C('#2a2c30')});
  const scr=getCanvas('chat',430,890,drawChat);plane(ph,scr,22000,{c:[c[0],c[1],c[2]+0.001],w,h,edge:0.8,em:0.85});
  CHAT_BUBBLES.forEach((b,i)=>{const bc=getCanvas('bub'+i,430,890,(ctx,W,H)=>drawBubble(ctx,W,H,b));plane(ph,bc,3300*(b.h/0.08),{c:[c[0],c[1],c[2]+0.006],w,h,edge:1.2,em:0.9,group:3,reveal:()=>(i+0.5)/CHAT_BUBBLES.length})});
@@ -329,7 +333,7 @@ export const PHONE4={c:[0,-0.85,-1.6],s:1};
 export function mobileLayout(){const M={store:[[-0.28,2.12,-3.25],0.14,0.03],pay:[[0.3,0.74,-2.95],-0.14,0.02],sheet:[[-0.3,-0.62,-2.65],0.12,-0.03],inbox:[[0.28,-1.98,-2.95],-0.12,-0.05]};
  for(const W of WINPOS){const m=M[W.k];if(!m){W.hide=1;continue}W.c=m[0];W.ry=m[1];W.rx=m[2]}PHONE4.c=[0.66,-2.78,-1.3];PHONE4.s=0.6}
 const winBasis=W=>[rotY(rotX([1,0,0],W.rx),W.ry),rotY(rotX([0,1,0],W.rx),W.ry)];
-STATES.push(()=>{const parts=[];const wp=new Part(Math.round(42000*SCALE)+50);
+defState('windows',()=>{const parts=[];const wp=new Part(Math.round(42000*SCALE)+50);
  for(const W of WINPOS){if(W.hide)continue;const[R,U]=winBasis(W);plane(wp,winCanvas(W.k),7000,{c:W.c,R,U,w:WIN_WH[0],h:WIN_WH[1],edge:1.8,em:0.8});
   // unread badge
   const bc=[W.c[0]+R[0]*0.98+U[0]*0.64,W.c[1]+R[1]*0.98+U[1]*0.64,W.c[2]+R[2]*0.98+U[2]*0.64+0.03];sphere(wp,500,{c:bc,r:0.07,color:()=>C(W.k==='sheet'?'#e0533a':'#f2523f'),em:1,group:4})}
@@ -355,7 +359,7 @@ function strokePaths(){const P=[];let s=5;const R=()=>{s=(s*16807)%2147483647;re
   // landing scribble: smudged row written into the destination
   for(let i=0;i<14;i++){const t=i/13;pts.push([pb[0]+t*0.35,pb[1]-0.04+Math.sin(t*20)*0.015,pb[2]])}P.push(pts)}return P}
 export const STROKES=strokePaths();
-STATES.push(()=>{const parts=[];
+defState('night',()=>{const parts=[];
  const pile=new Part(Math.round(46000*SCALE)+50);PILE.forEach((q,i)=>{const R=rotY([1,0,0],q.ry),U=rotY([0,0,-1],q.ry);plane(pile,winCanvas(q.k),3600,{c:[q.x,q.y,q.z],R,U,w:1.25,h:0.82,edge:0.7,em:0.35,dim:0.85})});pile.at=0;parts.push(pile);
  // open ledger: two pages + flipping page (group 8 rotates about spine)
  const L=new Part(Math.round(16000*SCALE)+20);const lc=LEDGER5.c;
@@ -396,7 +400,7 @@ STATES.push(()=>{const parts=[];
  return{parts,fill:fillDust([-4,-4.4,-9],[4,2,-1],[120,100,90])}});
 // K6: strokes straightened into ruled lines; windows flattened into labelled boxes; first blueprint grid
 export const BOXES6=[{k:'chat',x:-1.75,z:-4.6},{k:'store',x:-0.6,z:-4.6},{k:'pay',x:0.55,z:-4.6},{k:'sheet',x:1.7,z:-4.6},{k:'mail',x:-1.15,z:-5.85},{k:'books',x:1.1,z:-5.85}];
-STATES.push(()=>{const parts=[];const T=TABLE.top+0.02;
+defState('lines',()=>{const parts=[];const T=TABLE.top+0.02;
  const bx=new Part(Math.round(50000*SCALE)+50);BOXES6.forEach(b=>plane(bx,iconCanvas(b.k),7600,{c:[b.x,T,b.z],R:[1,0,0],U:[0,0,-1],w:0.95,h:0.72,edge:1.4,em:0.75,tint:[0.85,0.95,1.05]}));bx.at=0;parts.push(bx);
  // ruled lines: manhattan routes between boxes, plus bus line through the middle
  const S=new Part(Math.round(17000*SCALE)+20);const zBus=-5.22;const routes=[];
@@ -443,7 +447,7 @@ function drawBlueprint(ctx,W,H){const X=x=>(x-BP.x0)/(BP.x1-BP.x0)*W,Z=z=>(z-BP.
  // north arrow
  {const cx=X(-3.2),cz=Z(-3.38),r=0.16*S;ctx.lineWidth=3;ctx.beginPath();ctx.arc(cx,cz,r,0,7);ctx.stroke();ctx.beginPath();ctx.moveTo(cx,cz-r*1.3);ctx.lineTo(cx-r*0.35,cz+r*0.3);ctx.lineTo(cx+r*0.35,cz+r*0.3);ctx.closePath();ctx.fill()}
 }
-STATES.push(()=>{const parts=[];const T=Y0+0.02;
+defState('blueprint',()=>{const parts=[];const T=Y0+0.02;
  const bx=new Part(Math.round(50000*SCALE)+50);BOXES7.forEach(b=>plane(bx,iconCanvas(b.k),7600,{c:[b.x,T,b.z],R:[1,0,0],U:[0,0,-1],w:0.95,h:0.72,edge:1.4,em:0.75,tint:[0.85,0.95,1.05]}));bx.at=0;parts.push(bx);
  // the bus: three oxide strands (same ids as the ruled lines before)
  const S=new Part(Math.round(17000*SCALE)+20);for(let i=0;i<12;i++){const st=i%3,pc=Math.floor(i/3);const x0=-3.04+pc*1.585,z=ZB+(st-1)*0.035;tube(S,1350,{pts:[[x0,T+0.004,z],[x0+1.585,T+0.004,z]],rad:0.01,color:C('#d0502e'),em:0.95})}S.at=80000;parts.push(S);
@@ -492,7 +496,7 @@ function rackAt(p,side,z,v,nS=1){const xr=side*ER.xr,fx=xr-side*ER.dx/2,nx=-side
   box(p,Math.round(24*nS),{c:[fx+nx*0.014,y1,z1],s:[0.026,0.016,0.014],color:()=>J([200,205,210],0.05)})}
  // vertical cable manager strip
  box(p,Math.round(160*nS),{c:[fx+nx*0.03,Y0+h/2,zEdge],s:[0.02,h-0.1,0.03],faces:['px','nx'],color:()=>J(C('#1a1e22'),0.05)})}
-STATES.push(()=>{const parts=[];const p=new Part(Math.round(100000*SCALE)+100);
+defState('engine',()=>{const parts=[];const p=new Part(Math.round(100000*SCALE)+100);
  ER.zs.forEach((z,i)=>{rackAt(p,-1,z,i);rackAt(p,1,z,i+3)});parts.push(p);
  // faceplates: dot copy under the crisp cards
  const fp=new Part(Math.round(5000*SCALE)+20);for(const[k,side,i]of FPLATES){const z=ER.zs[i],fx=side*ER.xr-side*ER.dx/2;plane(fp,plateCanvas(k),700,{c:[fx-side*0.02,Y0+ER.h-0.17,z],R:side<0?[0,0,-1]:[0,0,1],U:[0,1,0],w:0.54,h:0.19,em:0.6})}parts.push(fp);
@@ -565,7 +569,7 @@ function drawDash(ctx,W,H,green){ctx.fillStyle='#0f151b';rr(ctx,0,0,W,H,24);ctx.
   else{ctx.strokeStyle='#2c353f';ctx.lineWidth=3;for(let k=1;k<4;k++){ctx.beginPath();ctx.moveTo(x+16,16+k*(H-32)/4);ctx.lineTo(x+w-16,16+k*(H-32)/4);ctx.stroke()}
    if(green){ctx.beginPath();for(let s=0;s<=40;s++){const xx=x+20+s*(w-40)/40,yy=H*0.75-(s/40)*H*0.38-Math.sin(s*0.7+i)*H*0.06;s?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy)}ctx.strokeStyle='#7fd3a0';ctx.lineWidth=7;ctx.stroke();
     ctx.lineTo(x+w-20,H-24);ctx.lineTo(x+20,H-24);ctx.closePath();ctx.fillStyle='rgba(127,211,160,.15)';ctx.fill()}}}}
-STATES.push(()=>{const parts=[];const p=new Part(Math.round(100000*SCALE)+100);
+defState('agents',()=>{const parts=[];const p=new Part(Math.round(100000*SCALE)+100);
  // pipelines out of the room, along the camera's ride
  for(const[dy,rad]of[[0,0.03],[-0.3,0.022],[-0.42,0.022]])tube(p,3600,{pts:[[-2.6,PY+dy,Z9],[13,PY+dy,Z9]],rad,color:C('#7b8792'),em:0.25});
  for(let x=-2;x<13;x+=1.6)tube(p,120,{pts:[[x,PY+0.06,Z9-0.02],[x,PY-0.48,Z9-0.02]],rad:0.01,color:C('#5b6670'),em:0.1});
@@ -619,7 +623,7 @@ STATES.push(()=>{const parts=[];const p=new Part(Math.round(100000*SCALE)+100);
 function drawPhoneDone(ctx,W,H){drawChat(ctx,W,H);[{y:0.15,h:0.07,w:0.6,out:0},{y:0.235,h:0.07,w:0.5,out:1},{y:0.32,h:0.15,w:0.55,out:0,thumb:'#9c2f3a'},{y:0.49,h:0.07,w:0.55,out:1},{y:0.575,h:0.06,w:0.5,out:0},{y:0.65,h:0.07,w:0.6,out:1},{y:0.74,h:0.06,w:0.45,out:0},{y:0.815,h:0.07,w:0.56,out:1}].forEach(b=>drawBubble(ctx,W,H,b))}
 function drawRegDash(ctx,W,H){ctx.fillStyle='#0f151b';ctx.fillRect(0,0,W,H);for(let k=0;k<6;k++){const x=14+(k%3)*(W-28)/3,y=14+Math.floor(k/3)*(H-28)/2,w=(W-28)/3-12,h=(H-28)/2-12;ctx.fillStyle='#1f9d55';rr(ctx,x,y,w,h,10);ctx.fill();tick(ctx,x+w/2,y+h/2,h*0.45,'#e9fff1',8)}}
 export const DESK8={mon:{c:[0.9,TABLE.top+0.5,-5.72],w:0.86,h:0.5},phone:{c:[0.25,TABLE.top+0.04,-4.75],ry:-0.15,w:0.38,h:0.8}};
-STATES.push(()=>{const parts=[];const roll=new Part(Math.round(7000*SCALE)+10);cyl(roll,7000,{c:[0,3.05,0.25],r:0.42,len:10.6,axis:'x',color:(f,u)=>J(mix(C('#6f777c'),C('#3a3f42'),(Math.sin(u*200)*0.5+0.5)),0.08)});roll.at=0;parts.push(roll);
+defState('calm',()=>{const parts=[];const roll=new Part(Math.round(7000*SCALE)+10);cyl(roll,7000,{c:[0,3.05,0.25],r:0.42,len:10.6,axis:'x',color:(f,u)=>J(mix(C('#6f777c'),C('#3a3f42'),(Math.sin(u*200)*0.5+0.5)),0.08)});roll.at=0;parts.push(roll);
  facade(parts,1,0.3);bulbOut(parts);lane(parts,0.7);racks(parts,{dim:0.88,nScale:0.7});shell(parts,{nScale:0.75});bulbIn(parts);table(parts,{nScale:0.85});
  const T=TABLE.top,p=new Part(Math.round(30000*SCALE)+50);
  // receipt printer printing a label by itself (group 13)
@@ -659,10 +663,10 @@ function glints(parts){const p=new Part(Math.round(5000*SCALE)+20);let s=3;const
  // warm strip of light under the shutter, spilling onto the lane
  {const n=Math.round(2400*SCALE);for(let i=0;i<n;i++){const x=(Math.random()-0.5)*10.2,sp=Math.pow(Math.random(),2.5);const ground=Math.random()<0.6;p.push(x,ground?-4.515:-4.505+Math.random()*0.012,ground?0.18+sp*1.3:0.17,255,196,120,0,0,ground?0.7*(1-sp):1)}}
  parts.push(p)}
-STATES.push(()=>{const parts=[];const sh=shutter(parts);sh.at=0;facade(parts);bulbOut(parts);lane(parts);glints(parts);
+defState('shutterDown',()=>{const parts=[];const sh=shutter(parts);sh.at=0;facade(parts);bulbOut(parts);lane(parts);glints(parts);
  return{parts,fill:fillDust([-6,-4.5,0.3],[6,6,5],[170,150,118])}});
 // ---- scene 9: the board repaints with a second line ----
-STATES.push(()=>{const parts=[];const sh=shutter(parts);sh.at=0;facade(parts,1,1,true);bulbOut(parts);lane(parts);glints(parts);
+defState('sign2',()=>{const parts=[];const sh=shutter(parts);sh.at=0;facade(parts,1,1,true);bulbOut(parts);lane(parts);glints(parts);
  return{parts,fill:fillDust([-6,-4.5,0.3],[6,6,5],[170,150,118])}});
 
 export function CARDS2(){const out=[];
