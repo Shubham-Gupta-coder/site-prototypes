@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {setScale,setRes,STATS} from './lib.js?v=s4';
-import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js?v=s4';
+import {setScale,setRes,STATS} from './lib.js?v=s5';
+import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js?v=s5';
 const Y0=-2.71;
 
 const MOBILE=Math.min(innerWidth,innerHeight)<768&&innerWidth<900;
@@ -86,7 +86,7 @@ function done(i,P,C,ms){busy=-1;install(i,P,C,ms);pump()}
 function ensure(list){return Promise.all(list.map(i=>slotOf[i]>=0?null:new Promise(r=>{if(!pending.has(i))pending.set(i,[]);pending.get(i).push(r)}))).then(()=>{})}
 function mainBuilder(i){setTimeout(()=>{const t0=performance.now();const {P,C}=buildState(i,N);done(i,P,C,Math.round(performance.now()-t0))},0)}
 function startBuilder(){return new Promise(res=>{let w=null,ok=false;const fall=()=>{if(ok)return;ok=true;try{w&&w.terminate()}catch(e){}builder=mainBuilder;console.info('builder: main thread');res()};
- try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js?v=s4',import.meta.url),{type:'module'});
+ try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js?v=s5',import.meta.url),{type:'module'});
   w.onerror=fall;w.onmessage=e=>{const m=e.data;if(m.ready){if(ok)return;ok=true;builder=i=>w.postMessage({i});console.info('builder: worker');res();return}
    if(m.stat)STATS[m.i]=m.stat;done(m.i,m.P,m.C,m.ms)};
   w.postMessage({init:1,N,scale:SCALE,res:RES,mobile:MOBILE,css:document.querySelector('link[href*="fonts.googleapis.com/css2"]').href});setTimeout(fall,15000)}catch(e){fall()}})}
@@ -337,8 +337,8 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(0.1,(now-last)/
   closeK+= (closeTarget()-closeK)*(1-Math.exp(-dt*8));
   const y=lenis?lenis.animatedScroll:scrollY;if(Math.abs(y-lastY)<0.5)still+=dt;else still=0;lastY=y;
   if(still>0.35&&still<0.4&&lenis&&pT<FILM_END){const s=settleT(pT);if(Math.abs(s-pT)>0.002)lenis.scrollTo(s/FILM_END*filmPx(),{duration:0.6})}}
- const warm=now<WARM_MS||!allBuilt()||document.hidden||dt>=0.1;if(!warm){ema=ema*0.95+dt*1000*0.05;if(ema>24)slow++;else slow=Math.max(0,slow-2);}
- if(slow>90&&level<LEVELS){level++;slow=0;if(level===1&&DPR>1){renderer.setPixelRatio(1);resize()}else{const dr=DROPS[Math.min(DROPS.length-1,level-1)];U.uDrop.value=dr;U.uSzK.value=Math.pow(131072/N,0.42)/Math.sqrt(1-dr)}}
+ const warm=now<WARM_MS||!allBuilt()||document.hidden||dt>=0.1;if(!warm){ema=ema*0.95+dt*1000*0.05;if(ema>40)slow++;else slow=Math.max(0,slow-2);}
+ if(slow>90&&level<LEVELS){level++;slow=0;if(level===1&&DPR>1){renderer.setPixelRatio(1);resize()}else{const dr=DROPS[Math.min(DROPS.length-1,level-1)];U.uDrop.value=dr;U.uSzK.value=Math.pow(131072/N,0.42)/Math.pow(1-dr,0.3)}}
  if(!frozen)pump();
  const j0=performance.now();frame(pT,closeK,now/1000);js.push(performance.now()-j0);if(js.length>600)js.shift();
 }
