@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {setScale,setRes,STATS} from './lib.js?v=s2';
-import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js?v=s2';
+import {setScale,setRes,STATS} from './lib.js?v=s3';
+import {buildState,STATES,LEDGER5,CLOCK5,mobileLayout,CARDS as CARD_DEFS,CAP,CALSLOT,ER,PY} from './shapes.js?v=s3';
 const Y0=-2.71;
 
 const MOBILE=Math.min(innerWidth,innerHeight)<768&&innerWidth<900;
@@ -28,9 +28,9 @@ precision mediump float;out vec4 o;void main(){vec2 q=gl_PointCoord-0.5;if(dot(q
  gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA32F,1024,256,0,gl.RGBA,gl.FLOAT,d);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);
  canvas.width=Math.round(innerWidth*Math.min(devicePixelRatio||1,1.5));canvas.height=Math.round(innerHeight*Math.min(devicePixelRatio||1,1.5));gl.viewport(0,0,canvas.width,canvas.height);
  gl.useProgram(pr);gl.enable(gl.DEPTH_TEST);const run=k=>{gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.drawArrays(gl.POINTS,0,k);gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(4))};
- run(Math.min(n,16384));const ts=[];for(let r=0;r<3;r++){const t0=performance.now();run(n);ts.push(performance.now()-t0)}
+ run(Math.min(n,16384));run(n);const ts=[],t0s=[];for(let r=0;r<5;r++){let t0=performance.now();run(1024);t0s.push(performance.now()-t0);t0=performance.now();run(n);ts.push(performance.now()-t0)}
  gl.useProgram(null);gl.bindTexture(gl.TEXTURE_2D,null);gl.deleteTexture(tx);gl.deleteProgram(pr);gl.deleteShader(vs);gl.deleteShader(fs);gl.disable(gl.DEPTH_TEST);
- ts.sort((a,b)=>a-b);return ts[1]}
+ ts.sort((a,b)=>a-b);t0s.sort((a,b)=>a-b);return Math.max(0.05,ts[2]-t0s[2])}
 function pickTier(gl){
  const ext=gl.getExtension('WEBGL_debug_renderer_info');const ren=String(ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
  const soft=/swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic/i.test(ren);
@@ -45,6 +45,7 @@ function pickTier(gl){
  // the film shader does ~3x the probe's work per dot; keep the swarm under ~7 ms (desktop) / 6 ms (phone) of GPU time
  const per=ms/n*3,budget=MOBILE?6:7;let N=TIERS[TIERS.length-1];
  for(const t of TIERS)if(t<=cap&&per*t<budget){N=t;break}
+ const strong=!MOBILE&&!soft&&/apple|nvidia|geforce|radeon|rtx|\barc\b/i.test(ren);if(strong&&N<655360&&cap>=655360){N=655360;why.push('strong gpu floor')}
  const q=+new URLSearchParams(location.search).get('dots');let forced=false;
  if(q>0){N=Math.min(4194304,Math.max(8192,Math.round(q/TW)*TW));forced=true}
  return {N,ren,soft,maxTex,mem,cores,probeMs:+ms.toFixed(2),probeN:n,cap,why,forced}}
@@ -82,7 +83,7 @@ function done(i,P,C,ms){busy=-1;install(i,P,C,ms);pump()}
 function ensure(list){return Promise.all(list.map(i=>slotOf[i]>=0?null:new Promise(r=>{if(!pending.has(i))pending.set(i,[]);pending.get(i).push(r)}))).then(()=>{})}
 function mainBuilder(i){setTimeout(()=>{const t0=performance.now();const {P,C}=buildState(i,N);done(i,P,C,Math.round(performance.now()-t0))},0)}
 function startBuilder(){return new Promise(res=>{let w=null,ok=false;const fall=()=>{if(ok)return;ok=true;try{w&&w.terminate()}catch(e){}builder=mainBuilder;console.info('builder: main thread');res()};
- try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js?v=s2',import.meta.url),{type:'module'});
+ try{if(typeof OffscreenCanvas==='undefined')throw 0;w=new Worker(new URL('./worker.js?v=s3',import.meta.url),{type:'module'});
   w.onerror=fall;w.onmessage=e=>{const m=e.data;if(m.ready){if(ok)return;ok=true;builder=i=>w.postMessage({i});console.info('builder: worker');res();return}
    if(m.stat)STATS[m.i]=m.stat;done(m.i,m.P,m.C,m.ms)};
   w.postMessage({init:1,N,scale:SCALE,res:RES,mobile:MOBILE,css:document.querySelector('link[href*="fonts.googleapis.com/css2"]').href});setTimeout(fall,15000)}catch(e){fall()}})}
@@ -322,7 +323,8 @@ function resize(){VW=innerWidth;const h=document.documentElement.clientHeight;if
 addEventListener('resize',()=>{resize();layout()});resize();
 
 /* ---------- loop + adaptive quality ---------- */
-let last=performance.now(),ema=16,slow=0,level=0;
+let last=performance.now(),ema=16,slow=0,level=0;const WARM_MS=performance.now()+8000;
+function allBuilt(){return built>=NS||performance.now()>WARM_MS+30000}
 // runtime downgrade: DPR 1 first, then thin the swarm, never below ~78k dots (desktop) / ~20k (phone)
 const FLOOR=MOBILE?19000:78000,DROPS=[0.4,0.6,0.8,0.9].filter(d=>N*(1-d)>=FLOOR*0.99);const LEVELS=1+DROPS.length;const ft=[],js=[];window.__ft=ft;window.__js=js;
 function loop(now){requestAnimationFrame(loop);const dt=Math.min(0.1,(now-last)/1000);last=now;
@@ -332,7 +334,7 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(0.1,(now-last)/
   closeK+= (closeTarget()-closeK)*(1-Math.exp(-dt*8));
   const y=lenis?lenis.animatedScroll:scrollY;if(Math.abs(y-lastY)<0.5)still+=dt;else still=0;lastY=y;
   if(still>0.35&&still<0.4&&lenis&&pT<FILM_END){const s=settleT(pT);if(Math.abs(s-pT)>0.002)lenis.scrollTo(s/FILM_END*filmPx(),{duration:0.6})}}
- ema=ema*0.95+dt*1000*0.05;if(ema>21)slow++;else slow=Math.max(0,slow-2);
+ const warm=now<WARM_MS||!allBuilt()||document.hidden||dt>=0.1;if(!warm){ema=ema*0.95+dt*1000*0.05;if(ema>24)slow++;else slow=Math.max(0,slow-2);}
  if(slow>90&&level<LEVELS){level++;slow=0;if(level===1&&DPR>1){renderer.setPixelRatio(1);resize()}else{const dr=DROPS[Math.min(DROPS.length-1,level-1)];U.uDrop.value=dr;U.uSzK.value=Math.pow(131072/N,0.42)/Math.sqrt(1-dr)}}
  if(!frozen)pump();
  const j0=performance.now();frame(pT,closeK,now/1000);js.push(performance.now()-j0);if(js.length>600)js.shift();
@@ -346,3 +348,7 @@ async function boot(){const t0=performance.now();try{await document.fonts.load('
  await startBuilder();pump();await ensure([0,1]);ready=true;window.__film.bootMs=Math.round(performance.now()-t0);
  requestAnimationFrame(loop);document.body.classList.add('ready')}
 boot();
+
+/* ---------- ?hud shows the dot count, quality level and frame rate (for checking a device) ---------- */
+if(new URLSearchParams(location.search).has('hud')){const d=document.createElement('div');d.style.cssText='position:fixed;left:8px;bottom:8px;z-index:99;font:12px/1.4 monospace;color:#fff;background:rgba(0,0,0,.7);padding:6px 8px;border-radius:4px;pointer-events:none';document.body.appendChild(d);
+ setInterval(()=>{const f=window.__ft||[];const a=f.slice(-120);const m=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;const lv=window.__film?window.__film.level():0;d.textContent=`dots ${N} | level ${lv} | ${m?Math.round(1000/m):0} fps | dpr ${renderer.getPixelRatio()} | ${TIER.ren.slice(0,60)}`},1000)}
