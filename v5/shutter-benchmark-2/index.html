@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex, nofollow">
+<title>Shubham Gupta | The Shutter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,600;1,700&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<style>
+html,body{margin:0;background:#050608;color:#efe6d2;font-family:"Playfair Display",Georgia,serif}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
+#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block}
+#spacer{width:1px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.t{position:fixed;left:0;top:0;opacity:0;visibility:hidden;will-change:transform,opacity;pointer-events:none;margin:0;text-align:center}
+.plate{background:radial-gradient(closest-side,rgba(5,6,8,.78),rgba(5,6,8,.55) 70%,rgba(5,6,8,0));padding:18px 34px}
+.stencil{font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:clamp(17px,1.7vw,26px);color:#efe6d2;max-width:min(88vw,760px)}
+.wood{font-style:italic;font-weight:700;font-size:clamp(30px,4vw,60px);line-height:1.08;max-width:min(88vw,860px);
+ background-image:repeating-linear-gradient(101deg,#f6dfae 0 7px,#e9c48a 7px 11px,#fbe7bf 11px 19px,#e2b878 19px 22px);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bubble{background:#1f6f54;color:#f4fbf6;border-radius:14px 14px 3px 14px;padding:12px 18px;font-size:clamp(19px,1.7vw,24px);font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.card{background:#f5f1e6;color:#13213d;border-radius:8px;padding:12px 20px;font-weight:700;font-size:clamp(20px,1.9vw,28px);box-shadow:0 8px 30px rgba(0,0,0,.55)}
+.cell{background:#fbfdf9;color:#123d22;border:2px solid #1d7a43;padding:10px 18px;font-weight:700;font-size:clamp(20px,1.9vw,28px);box-shadow:0 8px 30px rgba(0,0,0,.55)}
+.big{left:50%;top:50%;transform:translate(-50%,-50%);font-weight:800;font-size:clamp(36px,6vw,96px);line-height:1.04;width:min(92vw,1100px);
+ background-image:linear-gradient(100deg,#a8f0bf 0%,#ffe1a6 30%,#b9d3ff 55%,#ffb7a8 80%,#c9f2e6 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.slip{background:#efe3c4;color:#4a140b;font-style:italic;font-weight:700;font-size:clamp(22px,2.2vw,32px);padding:12px 24px;transform-origin:center;box-shadow:0 10px 30px rgba(0,0,0,.6);
+ background-image:repeating-linear-gradient(180deg,transparent 0 27px,rgba(120,60,40,.18) 27px 28px)}
+.face{background:#efe6d2;color:#1b1410;font-weight:700;font-style:italic;font-size:clamp(22px,2.2vw,32px);padding:8px 22px;border-radius:40px;box-shadow:0 8px 30px rgba(0,0,0,.6)}
+/* sandy type: Playfair filled with dots and grain, the same look as the signboard and the shelf line */
+:root{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .2 0 0 0 0 .09 0 0 0 2.6 -1.02'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23n%29'/%3E%3C/svg%3E");--pin:radial-gradient(circle,rgba(34,18,6,.72) 0 .7px,transparent 1.15px);
+ --sand:linear-gradient(100deg,#f7e3b6 0%,#ecc993 32%,#fbe9c4 58%,#e6bf86 82%,#f6dfae 100%)}
+.sd>span{display:inline;font-family:"Playfair Display",Georgia,serif;background-image:var(--pin),var(--grain),var(--sand);background-size:3px 3px,180px 180px,100% 100%;
+ -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone;filter:drop-shadow(0 1px 1px rgba(0,0,0,.7))}
+.sd.small>span,.tblock>span,.slat>span,.tick>span,.label>span{background-image:var(--grain),var(--sand);background-size:180px 180px,100% 100%}
+.ink{font-style:italic;font-weight:700;font-size:clamp(26px,3.2vw,48px);max-width:min(88vw,900px)}
+.tblock{font-weight:700;letter-spacing:.08em;font-variant:small-caps;font-size:clamp(16px,1.2vw,18px);border:1.5px solid rgba(236,214,170,.75);padding:6px 14px 8px;background:rgba(8,14,26,.7)}
+.metal{font-weight:800;font-size:clamp(22px,2.6vw,40px);padding:12px 30px;border-radius:6px;max-width:min(88vw,900px);
+ background:linear-gradient(180deg,#22272d,#15191d);box-shadow:inset 0 0 0 1px rgba(236,214,170,.35),0 0 0 2px #0c0e10,0 10px 30px rgba(0,0,0,.6)}
+.glass{font-weight:700;font-style:italic;font-size:clamp(20px,2.1vw,32px);line-height:1.25;max-width:min(86vw,760px)}
+.chip{font-weight:700;font-style:italic;font-size:clamp(20px,1.8vw,26px);padding:11px 20px;border-radius:14px 14px 14px 3px;background:rgba(10,30,22,.86);border:1px solid rgba(236,214,170,.35);box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.label{font-weight:700;font-size:clamp(17px,1.45vw,22px);padding:10px 18px 28px;background-color:rgba(30,22,14,.9);border:1px solid rgba(236,214,170,.45);box-shadow:0 8px 26px rgba(0,0,0,.55);
+ background-image:repeating-linear-gradient(90deg,rgba(236,214,170,.8) 0 2px,transparent 2px 4px,rgba(236,214,170,.8) 4px 5px,transparent 5px 8px);background-size:70% 10px;background-repeat:no-repeat;background-position:50% calc(100% - 9px)}
+.note{font-weight:700;font-style:italic;font-size:clamp(20px,1.9vw,28px);padding:11px 22px;border-radius:8px;background:rgba(14,20,34,.88);border:1px solid rgba(236,214,170,.35);box-shadow:0 8px 30px rgba(0,0,0,.55)}
+.tick{font-weight:700;font-size:clamp(18px,1.7vw,24px);padding:8px 16px;border-left:4px solid #e0603a;background:rgba(10,12,16,.78)}
+.ledger{font-weight:800;font-style:italic;font-size:clamp(24px,2.6vw,40px);padding:10px 24px;border:3px double rgba(232,194,122,.9);transform:rotate(-3deg);background:rgba(20,14,8,.55)}
+.slat{font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:clamp(16px,1.45vw,21px);background:rgba(10,10,12,.62);padding:9px 20px;border-top:1px solid rgba(239,230,210,.25);border-bottom:1px solid rgba(239,230,210,.25)}
+.glow{font-weight:800;font-style:italic;white-space:nowrap;line-height:1.1;padding:0 .1em;filter:drop-shadow(0 0 14px rgba(255,190,110,.5))}
+.glow>span{--sand:linear-gradient(180deg,#fff3d6 0%,#ffd38a 45%,#f0a24e 100%);background-size:4px 4px,180px 180px,100% 100%}
+#close{left:50%;top:auto;bottom:3vh;transform:translateX(-50%) rotate(-.6deg);width:min(90vw,660px);color:#e9dfc9;padding:22px 30px 18px;text-align:left;pointer-events:auto;box-shadow:0 18px 50px rgba(0,0,0,.7);
+ background:#17120e repeating-linear-gradient(0deg,rgba(236,214,170,.035) 0 2px,transparent 2px 6px);border:1px solid rgba(236,214,170,.22);border-top:6px solid rgba(160,60,34,.9)}
+#close h2{margin:0 0 6px;font-size:clamp(28px,3vw,40px);font-weight:800}
+#close p{margin:0 0 10px;font-size:17px;line-height:1.45}
+#close .sig{font-style:italic;font-weight:700;font-size:19px;margin:10px 0 0}
+#close a{display:inline-block;background:#9a3a20;color:#fbf3e4;text-decoration:none;font-weight:700;font-size:20px;padding:11px 26px;margin:4px 0 10px;border-bottom:3px solid #4a140b}
+#close a:hover,#close a:focus-visible{background:#b0442a}
+#close .fine{font-size:14.5px;color:#cbbfa6;border-top:1px solid rgba(236,214,170,.25);padding-top:12px;margin:0}
+body.nogl .t{position:static;opacity:1;visibility:visible;transform:none;margin:24px auto}body.nogl #close{position:static;transform:none;margin:40px auto}body.nogl #gl,body.nogl #spacer{display:none}
+#hint{position:fixed;left:50%;bottom:26px;width:2px;height:54px;margin-left:-1px;background:linear-gradient(rgba(239,230,210,0),rgba(239,230,210,.55));opacity:0;transition:opacity 1.2s;pointer-events:none}
+#hint i{position:absolute;left:50%;top:0;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:#efe6d2;box-shadow:0 0 10px rgba(255,214,150,.8);animation:cue 2.2s cubic-bezier(.5,0,.3,1) infinite}
+@keyframes cue{0%{transform:translateY(-4px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(50px);opacity:0}}
+body.ready #hint{opacity:.9}body.moved #hint{opacity:0;visibility:hidden;transition:none}
+@media (prefers-reduced-motion: reduce){#hint i{animation:none;top:24px}}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<h1 class="sr" data-copy="srTitle">Shubham Gupta builds the AI that runs businesses. Verslay's only technical founder.</h1>
+<div id="spacer"></div>
+<p class="t plate stencil" data-t="1.2,5.6" data-anchor="0,-3.85,0.3" data-copy="hero">I build the AI that runs businesses.</p>
+<p class="t plate wood" data-t="11.2,16.2" data-anchor="0,-2.95,-4.25" data-dy="70" data-copy="shelf">Every business starts with stock on a shelf.</p>
+<p class="t bubble" data-t="20.6,23.5" data-anchor="0.05,-2.05,-1.5" data-copy="chat">Orders on chat.</p>
+<p class="t card" data-t="27,29.4" data-anchor="2.75,1.55,-3.1" data-manchor="0.3,1.5,-2.95" data-copy="pay">Payments in another app.</p>
+<p class="t cell" data-t="29.8,31.8" data-anchor="-2.45,-0.88,-2.3" data-manchor="-0.3,0.02,-2.65" data-copy="sheet">Stock in a sheet.</p>
+<p class="t plate big" data-t="32.1,34.6" data-copy="apart">None of them talk to each other.</p>
+<p class="t slip" data-t="37,39.8" data-anchor="0.05,-1.75,-4.95" data-dy="-95" data-copy="copies">So someone copies it all by hand.</p>
+<p class="t face" data-t="40.2,42.6" data-anchor="0,-0.62,-7.45" data-copy="night">Every night.</p>
+<p class="t plate sd ink" data-t="48.4,53" data-anchor="0,-2.71,-7.2" data-dy="-6"><span data-copy="under">I build one system under all of it.</span></p>
+<p class="t sd tblock" data-t="49.6,53" data-anchor="2.26,-2.71,-3.37"><span data-copy="drawn">Drawn by Shubham Gupta</span></p>
+<p class="t sd metal" data-t="57.4,61.8" data-anchor="0,-0.5,-3.9"><span data-copy="plugged">One system. Every tool plugged in.</span></p>
+<p class="t plate sd glass" data-t="62.2,66.4" data-anchor="0,-1.45,-8.25"><span data-copy="founder">Verslay's only technical founder. I built the entire platform. My co-founder runs sales.</span></p>
+<p class="t sd chip" data-t="69.3,71.3" data-anchor="-0.55,-1.4,-10.1"><span data-copy="agents">Agents take the order.</span></p>
+<p class="t sd label" data-t="71.5,74.1" data-anchor="1.45,-1.75,-9.7" data-dy="-20"><span data-copy="link">They check the stock and send the link.</span></p>
+<p class="t sd note" data-t="76.5,78.3" data-anchor="9.55,-0.38,-10.15" data-manchor="9.55,-0.05,-10.15" data-dy="-26"><span data-copy="voice">A voice note moves the calendar.</span></p>
+<p class="t sd tick" data-t="78.5,80.2" data-anchor="11.3,-1.45,-9.6"><span data-copy="approve">A person approves what matters.</span></p>
+<p class="t sd ledger" data-t="83.1,86.4" data-anchor="-1.25,-2.55,-5.05" data-manchor="-0.6,-3.3,-5.05" data-dy="-60"><span data-copy="month">The month closes itself.</span></p>
+<p class="t sd slat" data-t="89.6,92.6" data-anchor="0,-1.6,0.15"><span data-copy="industries">Apparel. D2C. Gifting. Textiles and B2B.</span></p>
+<p class="t sd glow" data-t="95,101" data-anchor="0,3.55,0.2" data-span="8.6"><span data-copy="bring">Bring the operation.</span></p>
+<div id="close" class="t" data-t="999,999">
+ <h2 class="sd"><span data-copy="closeName">Shubham Gupta</span></h2>
+ <p data-copy="closeLine">Verslay's only technical founder. I built the entire platform. My co-founder runs sales.</p>
+ <a data-copy="closeCta" data-copy-href="closeCtaHref" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+ <p data-copy="closeNote">The appointment sits on LinkedIn.</p>
+ <p class="fine" data-copy="closeFine">Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+ <p class="sig sd"><span data-copy="closeSig">Shubham Gupta. Delhi.</span></p>
+</div>
+<div id="hint" aria-hidden="true"><i></i></div>
+<script type="module" src="./copy.js?v=s2"></script>
+<script type="module" src="./film.js?v=s2"></script>
+</body>
+</html>
