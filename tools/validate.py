@@ -41,6 +41,7 @@ if re.search(r'\d', text): bad('visible digits: ' + ', '.join(sorted(set(re.find
 low = text.lower() + ' ' + copy.lower()
 for w in BANNED:
     if w in low: bad(f'banned word present: {w!r}')
+if '\u2014' in text: bad('em dash in visible copy')
 if re.search(r'\border(s|ed|ing)?\b', text.lower()): bad('commerce word "order" in visible copy')
 if text.count(FOUNDER) != 1: bad(f'founder line must appear exactly once (found {text.count(FOUNDER)})')
 if 'Verslay' in text.replace(FOUNDER, ''): bad('Verslay mentioned outside the founder line')

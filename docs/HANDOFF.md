@@ -1,15 +1,15 @@
 # Handoff: Shubham Gupta's personal site (read this first)
 
-Written 2026-11-05, updated 2026-11-06 15:45 IST. **Start with the repo root `README.md`** (how to run locally, file map, publishing rules), then **`docs/NEXT-DIRECTION.md` (v9 direction: problem-led story in an evolved v7 mechanical world)**, then `v7/shutter/README.md` (the engine and world v9 builds on). Private working notes live outside this repo and are not needed to continue.
+Written 2026-11-05, updated 2026-11-06 (v9 built and published). **Start with the repo root `README.md`** (how to run locally, file map, publishing rules), then **`docs/NEXT-DIRECTION.md` (v9 direction: problem-led story in an evolved v7 mechanical world)**, then **`v9/shutter/README.md`** (the current build: page structure, scenes, how to edit copy, scenes and fonts, tests, known weaknesses, next steps). `v7/shutter/README.md` covers the same engine as it was in v7. Private working notes live outside this repo and are not needed to continue.
 
 ## 1. Goal and his taste
-Shubham Gupta (GitHub `Shubham-Gupta-coder`, Asia/Calcutta) wants a personal site that establishes him as the person who joins AI tech and business: he builds the AI that runs businesses, and he is Verslay's technical founder (he built the entire platform; his co-founder runs sales). Since v6 the line is used **without "only"**: "Verslay's technical founder. I built the entire platform. My co-founder runs sales." Latest direction (2026-11-06): futuristic theme and font, non-blank opening with a scroll cue, work beyond Verslay, DOM services/contact ending; v8 approved and built locally as `v8/shutter/` (v8a, not published), see `v8/shutter/README.md`.
+Shubham Gupta (GitHub `Shubham-Gupta-coder`, Asia/Calcutta) wants a personal site that establishes him as the person who joins AI tech and business: he builds the AI that runs businesses, and he is Verslay's technical founder (he built the entire platform; his co-founder runs sales). Since v6 the line is used **without "only"**: "Verslay's technical founder. I built the entire platform. My co-founder runs sales." Latest direction (6 Nov, after v8): talk about the broad AI problems he solves and how he combines many technologies, not projects; keep the v7 mechanical world (he liked it up to about 85% of the film) but no futuristic theme. Built as v9, see section 11f.
 
 Standing preferences:
 - Award-level, cinematic, story-like, premium. It should feel like a film.
 - Real 3D that morphs with scroll like a video, every cm of scroll changes the picture.
 - Little text, all of it readable, integrated into the graphics (text as part of the art). Faint subtext is a failure.
-- Type history: Playfair (v5), Cinzel (v7). **6 Nov: he wants an artistic, futuristic face**; approved: Tourney + IBM Plex (v8).
+- Type history: Playfair (v5), Cinzel (v7), Tourney + IBM Plex (v8, rejected with the futuristic theme), Big Shoulders Display + Source Serif 4 (v9).
 - Story, vision and approach, not facts and numbers. Keep it **number-free**.
 - Original designs: inspired by references, never similar to them.
 - Copy must be warm and respectful (the tools are the problem, never the people), and say more about him.
@@ -24,7 +24,7 @@ Standing preferences:
 | `/workspace/open-design` | OpenDesign v0.25.1 | See section 9 |
 
 Live URLs (base `https://shubham-gupta-coder.github.io/site-prototypes/`, index lists them all):
-- `v9/shutter/` (in progress) problem-led film in an evolved v7 world, see NEXT-DIRECTION
+- `v9/shutter/` **current**: v9a "AI, put to work", problem-led film in an evolved v7 world plus a normal-flow problems and contact page, Big Shoulders Display + Source Serif 4
 - `v8/shutter/` The Switchyard v8a, Tourney + IBM Plex (published review link; **rejected 6 Nov: theme and content**)
 - `v7/shutter/` The Shutter v7a, mechanical world, Cinzel (live, commit `bc042b3`; **his preferred story and world so far**)
 - `v6/shutter/` v6 preview (SCRIPT-v3)
@@ -187,6 +187,14 @@ When to use which: OpenDesign is fine for quick, varied first drafts. For a cohe
 - Content changes from projects to **broad problems he solves, primarily around AI, and how he combines many technologies** (models, data, apps, cloud, interfaces, integrations). The problems are directions, not claims of finished large-scale impact. No project parade, no status labels, no commerce focus. Verslay appears at most once, as a restrained proof note with the exact founder line (no "only").
 - Promo video: on hold.
 - Details and scene plan: `docs/NEXT-DIRECTION.md`.
+
+## 11f. v9 built (2026-11-06)
+- Live at `v9/shutter/` (cache key `v9a`). Developer guide: `v9/shutter/README.md`.
+- Film T 0 to about 85 is the v7 world re-captioned around one idea: models, data, apps and cloud are each powerful, the work is joining them. New type (Big Shoulders Display for display, Source Serif 4 for reading), solid ivory and brass captions, brand-free painted windows (team chat, docs, weekly report).
+- New finale state `whole`: a halo of light over the hub threads down to every part while the camera rises to a wide aerial; caption "AI, put to work."
+- After the film, a normal page: "Problems worth solving." (five broad problems, each with the kinds of technology combined and a small CSS/SVG animation), how I work, one proof line (the founder line), "Bring me the problem." and one "Get in touch" link to LinkedIn.
+- Static intro on first paint; still sequence for reduced motion, no WebGL2 or a failed engine load; skip link to the problems.
+- Checks: `python3 tools/validate.py` (stdlib) and optional `python3 tools/smoke.py` (Playwright). Tested in headless Chrome with software WebGL only; not yet on real devices.
 
 ## 12. Security
 Never print or echo `ANTHROPIC_API_KEY` or any token. This repo is public: no secrets, no credentials in commits.

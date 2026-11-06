@@ -30,3 +30,6 @@ Updated 2026-11-06 15:45 IST. Status: **in build** as `v9/shutter/` (cache key `
 ## Accessibility and delivery
 - Real DOM text, reduced-motion and no-WebGL still version, keyboard skip link and focus, phone framing.
 - Self-contained repo handoff: root `README.md` explains how to run, test and publish locally.
+
+## Status (6 Nov)
+Built as v9a and published at `v9/shutter/`. Read `v9/shutter/README.md` for structure, editing and the next-step checklist. Open questions for him: does the ending copy sound like him, and does the film need a line in its two uncaptioned stretches?

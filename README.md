@@ -3,7 +3,7 @@
 Static prototypes for Shubham Gupta's personal site, published with GitHub Pages:
 https://shubham-gupta-coder.github.io/site-prototypes/ (index of every version).
 
-**Current work: `v9/shutter/`** (in progress). Direction and content rules: `docs/NEXT-DIRECTION.md`. History and taste: `docs/HANDOFF.md`.
+**Current work: `v9/shutter/`** (v9a, live at https://shubham-gupta-coder.github.io/site-prototypes/v9/shutter/). Start with `v9/shutter/README.md`. Direction and content rules: `docs/NEXT-DIRECTION.md`. History and taste: `docs/HANDOFF.md`.
 
 ## Run locally
 No build step. Every page is plain HTML + ES modules; three.js and Lenis load from jsDelivr.
@@ -17,10 +17,20 @@ python3 -m http.server 8765
 
 Use a real server (not file://): modules and workers need http.
 
+## Check before publishing
+```bash
+python3 tools/validate.py                 # no dependencies: copy rules, copy keys, assets, cache version
+node v9/shutter/bake.mjs                  # after editing v9/shutter/copy.js
+pip install playwright && python -m playwright install chromium   # once, optional
+python3 tools/smoke.py                    # with the server above running: desktop, phone, reduced motion
+```
+`tools/validate.py` checks v9 by default; it is written for v9's rules, so older versions fail it by design.
+
 ## Folder map
 | Path | What |
 |---|---|
 | `v9/shutter/` | Current build (see its README) |
+| `tools/` | `validate.py` (stdlib checks), `smoke.py` (optional Playwright smoke test) |
 | `v8/shutter/` | v8 "Switchyard" (rejected theme and content, kept for reference) |
 | `v7/shutter/` | v7 "The Shutter: the Apparatus" (the world v9 evolves) |
 | `v6/`, `v5/shutter/` | Earlier dot-film versions |

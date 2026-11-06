@@ -1,69 +1,64 @@
-# The Shutter v7: the Apparatus (developer guide)
+# v9: AI, put to work (developer guide)
 
-> **v7 (this folder)**: built from `../../v6/shutter/` for gen7 SCRIPT-v4 (`/workspace/shubham-site-notes/gen7/SCRIPT-v4.md`). Preview `http://127.0.0.1:8765/v7/shutter/index.html`, cache `?v=v7a`. The engine (tier probe, one Points draw, worker states, morph shader, Lenis spring, adaptive quality) is unchanged from v5/v6. Everything scene-specific is new:
-> - `shapes.js` rewritten: nine named states `ash, forge, world, citadel, runs, outer, etch, live, seal`.
-> - Type: **Cinzel** (Natanael Gama, SIL OFL 1.1) for every display line and the dot-sampled nameplate; **Source Serif 4** (Adobe, SIL OFL 1.1) for the close-card body. Latin subsets in `fonts/` with their `OFL-*.txt`. No Google Fonts request; the worker loads Cinzel from `fonts/Cinzel.woff` (see `startBuilder` in film.js, `loadFonts` in worker.js).
-> - Copy gate: `python3 /workspace/shubham-site-notes/gen7/copycheck.py index.html` (also fails on any digit and on "only technical founder").
-> - Tests: `/workspace/shubham-site-notes/gen7/test.py` (2% frames, audit, fps; shots in gen7/shots), `gen7/shot.py URL tag W H mobile T...`, `python3 gen7/montage.py out.png cols files...` (system python has PIL).
+A scroll film in dots, then a normal page. The film (an evolved version of the v7 machine world) tells one idea:
+AI is powerful, but it only does real work when models, data, apps and cloud are joined into one system.
+The page after the film lists the broad problems Shubham solves and ends with one contact route.
 
-## v7 scene table (film T 0..100)
-| # | T | States (SEG) | What the dots draw | Carried in |
-|---|---|---|---|---|
-| 1 Name | 0-7 | `ash -> forge` (0-4) | Dust settles into a brushed steel nameplate, SHUBHAM GUPTA in Cinzel. The world lies flat on the floor as dust | dust |
-| 2 Rise | 7-22 | `forge -> world` (7-12) | Plate sinks into the hub drum; rack mountains (Cloud), tower city with browser screens (Web apps), ring rail with capsule trains (Agents), gear trains and memory cylinders (Systems) rise from the floor dust. Bridges reach for the hub | name, plate -> hub, floor dust -> territories |
-| 3 Lock | 22-35 | `world -> citadel` (22-27) | Bridges close (REV 13), spine lights with packets (flow 24), memory core and rack ring rise out of the hub, WhatsApp/Shopify/Razorpay faceplates on the drum. Founder line | hub, spine, trains, valve |
-| 4 Runs | 35-52 | `citadel -> runs` (35-40) | Trains leave the ring for one viaduct with three stations: voice wave -> calendar (block seats, offset 18), chat -> shelf carton slides (16) -> payment link -> PAID, ledger -> envelope (17) held at the valve -> tick (15) -> sent | trains, valve, spine -> viaduct |
-| 5 Outer ring | 52-64 | `runs -> outer` (52.4-56.8) | Past the joined machine: five cold tool islands (chat, payments, sheets, inbox, calendar) with unread blinks; rails reach and stop short; chair, tea glass, cloth ledger | trains -> island frames, spine -> frayed rails |
-| 6 Drawing | 64-74 | `outer -> etch` (64-69) | Everything falls flat into a plan on dark steel; ruled joins draw from every island to the ring (REV 11); valve callout; title block | the whole world (projected), islands as boxes |
-| 7 Live | 74-86 | `etch -> live` (74-79) | The plan stands up running; islands dock on warm bridges; core, learned graph, lit valve | everything |
-| 8 Seal | 86-100 | `live -> seal` (86.6-91) | Hub rises as a circular iris door with the same name, green valve ring, warm light under it; distant world silhouette. Close card | name, hub -> door ring, valve -> ring, spine -> iris seams |
+Open locally: from the repo root run `python3 -m http.server 8765` and open http://127.0.0.1:8765/v9/shutter/.
+Live: https://shubham-gupta-coder.github.io/site-prototypes/v9/shutter/
 
-**Pins (131072 units, scaled by SCALE)**: NAME 0 (14000, same UV samples in every state, so letters travel as letters), HUB 15000 (10000), VALVE 26000 (3000), SPINE 30000 (10000), TRAIN 41000 (6000), WORLD 47000 (56000). WORLD is built from a fixed seed (`worldPart`, `Math.random` swapped for `rng(1234)` while building) so the territories keep every dot in place in every state; `mode:'floor'` (forge) and `mode:'flat'` (etch) only move y and recolour. Keep this when adding scenes: change `dim`/`lit`, never the world counts, or the territories will reshuffle.
+## Page structure (top to bottom)
+1. `#intro` (static HTML, visible on first paint): name, headline, one line, "Scroll to explore". It fades out over film T 0.3 to 2.2 (`frame()` in `film.js`).
+2. The film: a fixed `<canvas id="gl">` plus fixed captions (`p.t`), driven by scroll over `#spacer` (`FILM_END*UNIT_VH+130` viewport heights).
+3. `main.end#problems`: normal page flow that scrolls up over the canvas after the film (problems, how I work, proof, contact, footer). Its SVG micro-animations are CSS only, started by an IntersectionObserver that adds `.in` to each `.row`. Once the ending covers the screen the film stops drawing.
+4. `#still`: six images with captions, shown instead of the film when WebGL2 is missing, the reader prefers reduced motion, or the engine fails to load (the page adds `body.nogl`). The engine is then never downloaded.
 
-**Group ids in v7**: 1 dust, 4 unread blink, 6 big gear (turns around `uClock`=GEAR0 by `uAngH`=T*0.12), 11 etch joins (REV), 12 LED twinkle, 13 bridges (REV), 15 approval tick (REV), 16 carton, 17 envelope, 18 calendar block (offsets in HOOKS), 24 spine packets (flow).
+The skip link ("Skip to the problems I solve") is the first Tab stop and jumps to `#problems`. Each problem row is focusable.
 
-The v5 notes below still describe the engine; their scene tables and constants are v5 ones (run `node timeline.mjs` for v7 anchors).
+## Scene table (film T 0..100, scroll maps linearly to T)
+| T | Morph (`SEG`) | What you see | Captions (`copy.js` keys) |
+|---|---|---|---|
+| 0-12 | `ash`->`forge`->`world` | Dust becomes the nameplate, which sinks into the hub; territories rise | (intro, then the nameplate) |
+| 12-27 | `world`->`citadel` | Cloud racks, app towers, agent rail, memory systems; bridges lock to the hub | `cloud` `web` `agents` `systems` `needs` `platform` |
+| 35-52 | `citadel`->`runs` | Three runs on the viaduct: voice to meeting, question to record, a sensitive step waits at the valve | `voice` `order` `dues` `shipped` |
+| 52-64 | `runs`->`outer` | Separate islands: chat, docs, sheets, inbox, calendar | `meet` `lChat`..`lCal` `glue` |
+| 64-74 | `outer`->`etch` | Everything falls flat into one drawing | `method` `signed` `loop` |
+| 74-86 | `etch`->`live` | The drawing stands up and runs; islands dock | `build` `learns` |
+| 86-100 | `live`->`whole` | A halo of light over the hub threads down to every part; the camera rises to a wide aerial | `finale` |
 
-Hand-coded scroll film (three.js 0.170 + custom GLSL, Lenis). ~131k to 1.3M dots draw every scene and re-form into the next. Master guide: `../../docs/HANDOFF.md`. **This folder is the source of truth**: edit here, preview at `http://127.0.0.1:8765/v5/shutter/index.html` (the box server on 8765 serves the whole `proto-serve` repo). `/workspace/shubham-site-notes/gen5/build/` is an old dev snapshot; do not edit it. The frozen benchmarks are `../shutter-benchmark-1/` and `../shutter-benchmark-2/`; never edit them.
+T 0 to about 85 is the v7 world with new copy and type; the `whole` state, its camera and the whole page after it are new in v9.
 
 ## Files
 | File | Role |
 |---|---|
-| `index.html` | CSS, captions (`p.t` with `data-t`), close block (Book a call, clause, "Shubham Gupta. Delhi.") |
-| `film.js` | Engine: tier probe, swarm shader, `SEG` morphs, `CAM`/`LOOK` splines, lights, `HOOKS`, `REV`, captions, scroll spring, adaptive quality, `window.__film` |
-| `shapes.js` | Art: `STATES[K]` builders, canvases (sign, chat, app windows, ledger, clock), layout constants (`TABLE`, `WINPOS`, `ER`, `CAP`, `DESK8`...), `CARDS`/`CARDS2` crisp textures |
-| `lib.js` | `Part` point buffers, samplers (box, cyl, sphere, tube, dust), noise |
-| `worker.js` | Builds states off the main thread |
-| `copy.js` | Every word on screen (`COPY` map by key) |
-| `bake.mjs` | `node bake.mjs` writes `copy.js` into `index.html` |
-| `timeline.mjs` | Read only: `node timeline.mjs 42 57` lists every timing anchor in that T window, across all files |
+| `index.html` | All CSS, the intro, captions (`p.t` with `data-t`), the still sequence, the ending, the engine loader |
+| `copy.js` | Words used by the film (`COPY` map). The ending text is plain HTML in `index.html` |
+| `film.js` | Engine: tier probe, swarm shader, `SEG` morphs, `CAM`/`LOOK` splines, lights, `HOOKS`, `REV`, captions, scroll spring, adaptive quality, intro fade, `window.__film` |
+| `shapes.js` | Art: `defState` builders (`ash` ... `whole`), canvases painted into dots (nameplate, chat, docs, report card, island windows), `CARDS` crisp textures, `FONT` |
+| `lib.js` | `Part` point buffers, samplers, `assemble` (pins, budget, spatial sort) |
+| `worker.js` | Builds states off the main thread (loads the display font itself) |
+| `bake.mjs` | `node bake.mjs` writes `copy.js` text into `index.html` (fails on an unknown key) |
+| `timeline.mjs` | Read only: `node timeline.mjs 42 57` lists every timing anchor in that T window |
+| `fonts/` | Big Shoulders Display (variable, subset) for display, Source Serif 4 for reading; OFL licences beside them |
+| `stills/` | The six fallback images (1600x900 JPEG) |
 
-## Scene table (film T = 0..100, scroll maps linearly to T)
-| # | T range | State(s) | Objects | Carried from previous |
-|---|---|---|---|---|
-| 1 Signboard | 0-10.5 | `dust` -> `front` -> `warehouse` | Dust settles into SHUBHAM GUPTA on the tin sign, bulb, padlock; shutter rolls up | (opening) dust |
-| 2 Warehouse | 10.5-20 | `warehouse` | Racks, cartons, packing table, ledger, phone | the shutter drum and front frame |
-| 3 Everything rings | 16.5-36 | `phone`, `windows` | Phone lifts, WhatsApp-style chat; Shopify, Razorpay, sheet, inbox windows peel off | the phone on the table |
-| 4 Night shift | 36-46 | `night` | Windows fall on the table, red copy strokes, ledger, clock, chair, tea | the windows |
-| 5 Blueprint | 47-56 | `lines`, `blueprint` | Strokes straighten into ruled lines, tools become boxes on a system drawing | the strokes and the windows (as boxes) |
-| 6 Engine room | 56-68 | `engine` | Drawing extrudes into racks, cables, database wall; packets flow | the drawing |
-| 7 Agents | 64-80 | `agents` | Three agents on one pipeline: order -> box off shelf, payment link -> PAID, voice note -> calendar slot, approval tick | the packets |
-| 8 It runs | 80-89 | `calm` | Calm warehouse/counter, ledger closed, "The month closes itself." | what the pipelines carried |
-| 9 Invitation | 86-100 | `shutterDown`, `sign2` | Shutter comes down with industries slat; sign repaints "Bring the operation."; close | the sign from scene 1 |
+## Edit the copy
+- Film captions and words painted into the dots: edit `copy.js`, then `node v9/shutter/bake.mjs`. Keep captions short; they sit over moving art.
+- Intro: `introH`, `introP`, `introCue` in `copy.js` (baked into `#intro`).
+- Ending (problems, how I work, proof, contact) and the still captions: edit `index.html` directly.
+- Painted text (nameplate, chat, docs window, report card, drum plaques) is drawn in `shapes.js` from `COPY.sign`, `chatApp`, `chatAsk`, `payTitle`, `payButton`, `payBrand`, `plaques`, `paid`. After changing these, check the frames: long words can overflow a canvas.
+- Rules (checked by `tools/validate.py`): no digits in visible text, the founder line exactly once and word for word, one external link (LinkedIn), no commerce or payment words, no em dashes.
+- Caption placement: `data-t` (visible T range), `data-anchor` (3D point the caption follows), `data-manchor` (phone), `data-dy`, `data-span`. Classes: `carve` (territory label), `ttl` (title), `fin` (finale size), `low`/`top` (pinned), `note`, `tick`, `label`, `tblock`.
 
-States are named: `defState('name',()=>({parts,fill}))` in `shapes.js` registers `K.name`. Exact morph windows are the `SEG` list in `film.js` (`S(K.a,K.b,t0,t1,...)`, one line each with a comment).
+## Edit the fonts
+- Display face: `fonts/BigShouldersDisplay.woff` (variable weight 100-900). It is used in three places: CSS `--disp` and the `@font-face` in `index.html`, `FONT` in `shapes.js` (canvas art), and the worker font load in `film.js` (search `BigShouldersDisplay`). Change all three together, plus the preload link in the head.
+- The woff is a Latin subset. If you add characters outside it (for example another script), re-subset from the full font: `pyftsubset BigShouldersDisplay[wght].ttf --unicodes="U+0020-007E,U+00A0-00FF,U+2018-201F,U+2026,U+00B7,U+2192" --flavor=woff --output-file=BigShouldersDisplay.woff` (`pip install fonttools`).
+- Reading face: `fonts/SourceSerif4*.woff`, CSS `--read`.
 
-## Copy map
-- Words live only in `copy.js` (`COPY` map by key). After editing it run `node bake.mjs` so `index.html` carries the text without JS (the page also fills from `copy.js` at load).
-- Caption placement is in `index.html`: `<p class="t" data-copy="key" data-t="a,b">` (`data-t` visible T range, `data-anchor` 3D point, `data-manchor` mobile, `data-dy` pixel nudge, `data-span` width fit). Sign text is painted in `shapes.js` (`drawSign`/`signText`, from `COPY.sign`).
-- Rules: keep the founder line, the clause (word for word), "Book a call" link and Delhi line; no numbers; run `python3 /workspace/shubham-site-notes/gen4/copycheck.py index.html`.
-
-## How to tweak
-- Timing: shift a caption's `data-t`, a `SEG` t0/t1, and matching `CAM`/`LOOK` keys together.
-- Camera: edit `CAM`/`LOOK` keys (Catmull-Rom Hermite spline, never stops between keys).
-- Morph feel: `spread` (front sharpness), `noise` (keep low, high = cloudy), `arc`, `snap` (lattice), `axes` (staged moves).
-- Dots and scenes: see the two sections below.
-- Debug: `window.__film.set(T)`, `.N`, `.TIER`, `.NS`, `.NSLOT`, `.level()`. Add `?hud` to the URL for a live readout (dots, level, fps, dpr, probe ms, reasons, renderer).
+## Edit the finale and ending
+- `whole` state: `defState('whole',...)` in `shapes.js` (`HALO` radius and height, `TERR` thread targets). Halo rings are hero points; the threads are a backdrop part (`new Part(n,true)`) that is thinned first on small tiers.
+- Finale camera: last keys of `CAM` and `LOOK` (T 85.5 to 100), phone distance `MK` (`[90,1.3],[100,1.12]`), lights `BULB2`, dot size `SIZE`.
+- Film-to-page hand-off: spacer height in `layout()` (`+130` vh holds the last frame a little before the page rises); the ending's soft top edge is `.end:before`.
 
 ## Change the dot count
 The swarm is one draw call. Dot `i` is `gl_VertexID` and keeps its ID in every state, which is what makes things morph instead of cross-fade. All counts are in `film.js` unless noted.
@@ -95,19 +90,19 @@ A scene is one **state** (a dot layout) plus the **timeline** around it. The eng
 **Pieces**
 - State, in `shapes.js`: `defState('name',()=>({parts,fill}))`. `parts` is a list of `Part` point buffers (`lib.js` samplers: box, cyl, sphere, tube, dust, `sampleCanvas`); `fill(part,n)` pads the rest of the dots (usually dust). `assemble` places pinned parts (`part.at`), fills the rest, trims `bg` parts first when over budget, and sorts the rest spatially. `K.name` is the state's index.
 - Morph, in `film.js` `SEG`: `S(K.a,K.b,t0,t1,mode,o,dir,spread,noise,{arc,snap,axes,useB})` morphs state a into b from T `t0` to `t1`. Between morphs the film holds on `b`.
-- Timeline, all in absolute film T (0..`FILM_END`): camera `CAM`/`LOOK`, `SIZE`, lights `BULB1`/`BULB2`/`AMB`/`TOP`/`BOT`, mobile camera `MK`/`MLY`/`MLX`, offsets `OFFA`/`OFFB`/`OFFC`, reveals `REV`, inline T numbers in `HOOKS` and `frame()` (clock hands, ledger page, flows), crisp cards `t:[in0,in1,out0,out1]` in `CARDS`/`CARDS2` (`shapes.js`), and captions `data-t` (`index.html`).
+- Timeline, all in absolute film T (0..`FILM_END`): camera `CAM`/`LOOK`, `SIZE`, lights `BULB1`/`BULB2`/`AMB`/`TOP`/`BOT`, mobile camera `MK`/`MLY`/`MLX`, offsets `OFF*`, reveals `REV`, inline T numbers in `HOOKS` and `frame()` (flows, valve, packets), crisp cards `t:[in0,in1,out0,out1]` in `CARDS`/`CARDS2` (`shapes.js`), and captions `data-t` (`index.html`).
 - `node timeline.mjs A B` prints every one of those anchors between T=A and T=B with file and line. Run it before and after any retime.
 
 **Add a scene**
 1. In `shapes.js`, add `defState('myScene',()=>{const parts=[];...;return{parts,fill:fillDust(...)}})` where it belongs in film order (the order only matters for the loading fallback). Size parts for 131072 dots times `SCALE`.
-2. In `SEG`, split one morph into two: `S(K.calm,K.shutterDown,86.4,90,...)` becomes `S(K.calm,K.myScene,86.4,88,...)` and `S(K.myScene,K.shutterDown,88.4,90,...)`.
+2. In `SEG`, split one morph into two: `S(K.live,K.whole,86.4,92,...)` becomes `S(K.live,K.myScene,86.4,89,...)` and `S(K.myScene,K.whole,89.4,92,...)`.
 3. Point the camera at it: add `CAM`/`LOOK` keys (and `MK`/`MLY`/`MLX` for phones) in that window, then `SIZE` and light keys if the mood changes.
 4. Add its caption to `copy.js`, a `<p class="t" data-copy="key" data-t="a,b">` in `index.html`, run `node bake.mjs`.
 5. Keep one element that carries over from the scene before (pin it with `part.at`, see pitfalls).
 
 **Remove a scene**
-1. Join its two morphs in `SEG`: `S(K.night,K.lines,...)` + `S(K.lines,K.blueprint,...)` becomes `S(K.night,K.blueprint,42.4,50.5,...)`.
-2. Delete only its `defState('name',...)` statement. Leave the constants and helpers around it (`Y0`, `BP`, `BOXES6`...): other states use them. If you keep the state, the console warns "states built but not in SEG" and it still costs build time and memory.
+1. Join its two morphs in `SEG`: `S(K.outer,K.etch,...)` + `S(K.etch,K.live,...)` becomes `S(K.outer,K.live,64,79,...)`.
+2. Delete only its `defState('name',...)` statement. Leave the constants and helpers around it (`HUB`, `ISL`, `TRUNKS`...): other states use them. If you keep the state, the console warns "states built but not in SEG" and it still costs build time and memory.
 3. Remove or move its captions, cards, `REV` groups and inline hook times (`node timeline.mjs` over its old window lists them).
 
 **Reorder**: reorder the `SEG` lines so the chain still reads a->b, b->c in rising T, then retime. Optionally move the `defState` blocks into the new film order.
@@ -115,26 +110,55 @@ A scene is one **state** (a dot layout) plus the **timeline** around it. The eng
 **Retime**
 - One scene: move every anchor that `node timeline.mjs` lists in its window together.
 - Whole film slower or faster: change `UNIT_VH` (viewport heights of scroll per film unit) instead of touching T values.
-- Longer film: raise `FILM_END` and add keys past 100. The close block fades in on the extra scroll after the film ends (`closeTarget`), and the last caption (`95,101`) runs past the old end, so move it too.
+- Longer film: raise `FILM_END` and add keys past 100. The last caption (`finale`, `92.6,101`) runs past the end, so move it too. The ending (`main.end`) follows the spacer automatically.
 
 **Checklist**
 - [ ] `SEG` is one chain: each line starts on the previous line's `B`, `t1>t0`, and no overlap. The page logs a console warning when it is not.
 - [ ] Every state is used in `SEG` (no "built but not in SEG" warning).
 - [ ] `node timeline.mjs` over the changed window: camera, lights, captions, cards and hooks all moved.
-- [ ] `node bake.mjs` after copy edits; `python3 /workspace/shubham-site-notes/gen4/copycheck.py index.html`.
+- [ ] `node bake.mjs` after copy edits, then `python3 tools/validate.py` from the repo root.
 - [ ] Headless check: no console errors, frames at desktop and phone size (see Verify).
 - [ ] Bump `?v=` everywhere and publish.
 
 **Pitfalls**
-- Stable dot IDs: a dot morphs to whatever sits at the same index in the next state. Unpinned parts are spread by position, so an object that must visibly travel between scenes needs the same `part.at` start in both states. Current pins (in 131072 units, scaled by `SCALE`): 0 (shutter, roll, windows, pile, boxes), 60000 (phone), 80000 (chat bubbles, strokes). Pinned ranges must not overlap within a state.
+- Stable dot IDs: a dot morphs to whatever sits at the same index in the next state. Unpinned parts are spread by position, so an object that must visibly travel between scenes needs the same `part.at` start in both states. Current pins (in 131072 units, scaled by `SCALE`): 0 nameplate (14000), 15000 hub (10000), 26000 valve (3000), 30000 spine (10000), 41000 trains (6000), 47000 world (56000). Pinned ranges must not overlap within a state.
 - Group ids live in the integer part of the point's `.w`: 1 dust, 2-15 reveal windows (`REV`/`uWin`), 4 blink, 6-7 clock hands, 8 ledger page, 9-10 bulbs, 12 twinkle, 16-23 offsets (`uOff`), 24-27 flows (`uFlow`). Reuse a group only for the same behaviour, or pick a free one, or the new dots will blink, swing or slide.
 - Worker build order: the worker builds `SEG[0]`'s two states first, then the states near the reader, then the rest if they fit. Until a state is built the morph holds on the nearest built state by index, which is why `defState` order should follow the film.
 - `NS` is `STATES.length`. More states means more build time and more memory; at high dot counts only `NSLOT` are resident.
 - Copy: text edited in `index.html` is overwritten by `node bake.mjs`. Edit `copy.js`.
 - No em dashes in copy.
 
-## Verify before publishing
-`/home/box/.venvs/bulbul-dash/bin/python /workspace/shubham-site-notes/gen5/build/test.py http://127.0.0.1:8765/v5/shutter/index.html all 0.02` (pass the URL; the default points at an old path) (2% frames at 1440 and 390, text audit, console errors, fps), then a filmstrip with `montage.py`. See HANDOFF.md section 6.
+
+## Verify
+From the repo root:
+```bash
+python3 tools/validate.py              # stdlib only: copy rules, copy keys, assets, cache version, licences
+node v9/shutter/bake.mjs              # after editing copy.js (works from any folder)
+python3 -m http.server 8765 &          # then, optional, with Playwright installed:
+python3 tools/smoke.py                 # desktop, phone, reduced motion: errors, failed requests, skip link, screenshots in smoke-out/
+```
+`smoke.py` uses software WebGL in headless Chrome. It proves the page works; its frame times say nothing about real devices.
+For visual review: `window.__film.set(T)` in the console renders any moment (await it), `window.__film.release()` hands control back to scroll.
 
 ## Cache busting
-All relative module URLs (index.html scripts, imports in film.js, shapes.js, worker.js, and the Worker URL) carry `?v=<version>`. GitHub Pages caches files for 10 minutes and browsers can mix old and new modules, so bump the version everywhere on every publish: `sed -i -E "s#\?v=[a-z0-9]+#?v=NEW#g" index.html film.js shapes.js worker.js`, then `grep -o '?v=[a-z0-9]*' *.js index.html | sort | uniq -c` should show a single version. Current for v7: `v7a`.
+Every relative module and asset URL carries `?v=v9a` (index.html, film.js, shapes.js, lib.js, worker.js). GitHub Pages caches for about 10 minutes and browsers can mix old and new modules, so bump it on every publish:
+`cd v9/shutter && sed -i -E "s#\?v=v9[a-z]#?v=v9b#g" index.html film.js shapes.js lib.js worker.js`, then `python3 ../../tools/validate.py` (fails on mixed versions). On macOS write `sed -i "" -E ...`.
+
+## Performance
+The dot count is picked per device (`pickTier`): up to 1310720 dots on desktop, 131072 on phones, less when a GPU probe is slow, and adaptive quality thins the swarm further if frames stay slow. Numbers here come from code, not from device testing: the film has only been checked in headless Chrome with software WebGL (correct frames, slow). Test on a real phone and a mid-range laptop before calling it smooth.
+
+## Known weaknesses
+- Not tested on real phones or GPUs in this round; headless software rendering only.
+- Two stretches have no caption (T 34 to 39 trains leave for the viaduct, T 64 to 69 the world falls flat). They are visual beats; add a line if they feel empty.
+- The `whole` halo threads are thin at small tiers by design (they are the first points trimmed).
+- The still images are rendered at 1600x900 only (no phone crops); on phones they are letterboxed by width.
+- Three.js and Lenis load from jsDelivr. If the CDN is blocked, the page waits up to 12 seconds, then shows the stills.
+- `SEAL` in `shapes.js` is an unused constant left from v7.
+
+## Next steps
+- [ ] Check on a real phone and laptop (Chrome, Safari): scroll feel, dot tier (`?hud`), caption legibility.
+- [ ] Read the ending copy aloud; tighten any row that sounds generic.
+- [ ] Decide whether the two uncaptioned stretches need a line.
+- [ ] Optional: phone-cropped stills (`<picture>` with a 9:16 source).
+- [ ] Bump `?v=`, run `tools/validate.py`, publish.
+
