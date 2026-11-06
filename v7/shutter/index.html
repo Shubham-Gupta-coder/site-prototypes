@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex, nofollow">
+<title>Shubham Gupta | The Shutter</title>
+<link rel="preload" href="./fonts/Cinzel.woff" as="font" type="font/woff" crossorigin>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<style>
+/* Type: Cinzel (Natanael Gama, SIL OFL 1.1) for every display line; Source Serif 4 (Adobe, SIL OFL 1.1) for the close card body. Licences in ./fonts */
+@font-face{font-family:"Cinzel";src:url("./fonts/Cinzel.woff") format("woff");font-weight:400 900;font-display:swap}
+@font-face{font-family:"Source Serif 4";src:url("./fonts/SourceSerif4.woff") format("woff");font-weight:200 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Source Serif 4";src:url("./fonts/SourceSerif4-Italic.woff") format("woff");font-weight:200 900;font-style:italic;font-display:swap}
+html,body{margin:0;background:#050608;color:#efe6d2;font-family:"Cinzel",Georgia,serif}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
+#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block}
+#spacer{width:1px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.t{position:fixed;left:0;top:0;opacity:0;visibility:hidden;will-change:transform,opacity;pointer-events:none;margin:0;text-align:center}
+/* sandy type: Cinzel filled with dots and grain, like metal dust settling into carved letters */
+:root{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .2 0 0 0 0 .09 0 0 0 2.6 -1.02'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23n%29'/%3E%3C/svg%3E");--pin:radial-gradient(circle,rgba(34,18,6,.55) 0 .6px,transparent 1.1px);
+ --sand:linear-gradient(100deg,#fbeccb 0%,#f0d39e 32%,#fff3d9 58%,#ecca92 82%,#faeacb 100%)}
+.sd>span{display:inline;font-family:"Cinzel",Georgia,serif;background-image:var(--pin),var(--grain),var(--sand);background-size:3px 3px,180px 180px,100% 100%;
+ -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone;filter:drop-shadow(0 1px 1px rgba(0,0,0,.8))}
+.sd.fine>span{background-image:var(--grain),var(--sand);background-size:180px 180px,100% 100%}
+.plate{background:radial-gradient(closest-side,rgba(4,5,7,.82),rgba(4,5,7,.6) 70%,rgba(4,5,7,0));padding:18px 40px}
+.eng{font-weight:600;letter-spacing:.1em;font-size:clamp(15px,1.5vw,22px);max-width:min(90vw,820px)}
+.carve{font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:clamp(26px,3.1vw,48px);white-space:nowrap;padding:10px 26px}
+.ttl{font-weight:700;letter-spacing:.03em;font-size:clamp(23px,2.7vw,42px);line-height:1.18;width:min(90vw,980px)}
+.low{left:50%!important;top:auto!important;bottom:9vh;transform:translateX(-50%)}
+.top{left:50%!important;top:8vh!important;transform:translateX(-50%)}
+.metal{font-weight:600;font-size:clamp(18px,2vw,30px);line-height:1.3;padding:16px 34px;border-radius:4px;width:min(88vw,900px);
+ background:linear-gradient(180deg,#262b31,#14171b);box-shadow:inset 0 0 0 1px rgba(236,214,170,.4),0 0 0 3px #0b0d0f,0 0 0 4px rgba(184,145,79,.55),0 12px 40px rgba(0,0,0,.7)}
+.note{font-weight:600;letter-spacing:.03em;font-size:clamp(17px,1.65vw,25px);padding:11px 22px;border-radius:3px;background:rgba(8,10,14,.86);border:1px solid rgba(236,214,170,.35);box-shadow:0 8px 30px rgba(0,0,0,.6);max-width:min(84vw,560px)}
+.tick{font-weight:600;font-size:clamp(17px,1.6vw,24px);padding:9px 18px;border-left:4px solid #d0603a;background:rgba(8,10,14,.86);max-width:min(84vw,520px)}
+.label{font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:clamp(15px,1.3vw,20px);padding:8px 16px;background:rgba(8,10,14,.84);border-top:1px solid rgba(236,214,170,.45);border-bottom:1px solid rgba(236,214,170,.45)}
+.tblock{font-weight:700;letter-spacing:.12em;font-size:clamp(15px,1.2vw,19px);border:1.5px solid rgba(232,240,248,.75);padding:7px 16px;background:rgba(6,14,26,.86)}
+.slat{font-weight:600;letter-spacing:.2em;text-transform:uppercase;font-size:clamp(15px,1.2vw,18px);background:rgba(8,9,11,.7);padding:8px 20px;border-top:1px solid rgba(239,230,210,.3);border-bottom:1px solid rgba(239,230,210,.3)}
+.glow{font-weight:700;white-space:nowrap;line-height:1.1;padding:0 .1em;filter:drop-shadow(0 0 14px rgba(255,190,110,.45))}
+.glow>span{--sand:linear-gradient(180deg,#fff6df 0%,#ffd894 50%,#f3ac5a 100%);background-size:4px 4px,180px 180px,100% 100%}
+#close{left:50%;top:auto;bottom:3vh;transform:translateX(-50%);width:min(90vw,660px);color:#efe6d2;padding:24px 32px 20px;text-align:left;pointer-events:auto;box-shadow:0 18px 50px rgba(0,0,0,.75);
+ background:linear-gradient(180deg,#1b1f24,#111316);border:1px solid rgba(236,214,170,.28);border-top:5px solid #b8914f;font-family:"Source Serif 4",Georgia,serif}
+#close h2{margin:0 0 6px;font-family:"Cinzel",Georgia,serif;font-size:clamp(28px,3vw,40px);font-weight:900;letter-spacing:.06em}
+#close p{margin:0 0 10px;font-size:17px;line-height:1.5}
+#close .sub{font-size:16px;color:#e8dcc2;font-style:italic}#close .offer{font-size:18px}
+#close .learn{font-family:"Cinzel",Georgia,serif;font-weight:700;letter-spacing:.06em;color:#f3dba8}
+#close a{display:inline-block;background:#b8914f;color:#14110c;text-decoration:none;font-family:"Cinzel",Georgia,serif;font-weight:700;letter-spacing:.06em;font-size:19px;padding:11px 26px;margin:4px 0 10px;border-bottom:3px solid #6a4f22}
+#close a:hover,#close a:focus-visible{background:#d0a862}
+#close .fine{font-size:14.5px;color:#ddd3bf;border-top:1px solid rgba(236,214,170,.25);padding-top:12px;margin:0}
+#close .sig{font-family:"Cinzel",Georgia,serif;font-weight:700;font-size:18px;margin:10px 0 0}
+body.nogl .t{position:static;opacity:1;visibility:visible;transform:none;margin:24px auto}body.nogl #close{position:static;transform:none;margin:40px auto}body.nogl #gl,body.nogl #spacer{display:none}
+#hint{position:fixed;left:50%;bottom:26px;width:2px;height:54px;margin-left:-1px;background:linear-gradient(rgba(239,230,210,0),rgba(239,230,210,.55));opacity:0;transition:opacity 1.2s;pointer-events:none}
+#hint i{position:absolute;left:50%;top:0;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:#efe6d2;box-shadow:0 0 10px rgba(255,214,150,.8);animation:cue 2.2s cubic-bezier(.5,0,.3,1) infinite}
+@keyframes cue{0%{transform:translateY(-4px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(50px);opacity:0}}
+body.ready #hint{opacity:.9}body.moved #hint{opacity:0;visibility:hidden;transition:none}
+@media (prefers-reduced-motion: reduce){#hint i{animation:none;top:24px}}
+@media (max-width:700px){.carve{letter-spacing:.12em}.plate{padding:14px 22px}.low{bottom:7vh}.slat{letter-spacing:.1em;max-width:92vw;white-space:normal;text-align:center}.label{letter-spacing:.1em;padding:7px 12px}}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<h1 class="sr" data-copy="srTitle">Shubham Gupta builds AI systems that run businesses. Verslay's technical founder.</h1>
+<div id="spacer"></div>
+<p class="t plate sd eng" data-t="1.6,6.6" data-anchor="0,0.2,0.8"><span data-copy="hero">I build the AI that runs businesses.</span></p>
+<p class="t plate sd carve" data-t="13.0,16.2" data-anchor="-14.3,9.6,-8.4"><span data-copy="cloud">Cloud</span></p>
+<p class="t plate sd carve" data-t="16.6,19.4" data-anchor="12,9.8,-8"><span data-copy="web">Web apps</span></p>
+<p class="t plate sd carve" data-t="19.6,21.2" data-anchor="4.23,3.0,4.54"><span data-copy="agents">Agents</span></p>
+<p class="t plate sd carve" data-t="21.4,23.2" data-anchor="9.6,6.6,7"><span data-copy="systems">Systems</span></p>
+<p class="t sd note" data-t="23.6,26.2" data-anchor="0,1.5,2.8"><span data-copy="needs">Whatever the work needs.</span></p>
+<p class="t plate sd ttl top" data-t="26.6,30.4"><span data-copy="platform">One platform under the whole company.</span></p>
+<p class="t sd fine tblock" data-t="30.8,35.0" data-anchor="-4.6,2.6,0"><span data-copy="drawn">Drawn by Shubham Gupta</span></p>
+<p class="t sd metal top" data-t="30.8,35.2"><span data-copy="founder">Verslay's technical founder. I built the entire platform. My co-founder runs sales.</span></p>
+<p class="t sd note" data-t="39.4,42.8" data-anchor="-5.6,6.2,4.4"><span data-copy="voice">A voice note moves the calendar.</span></p>
+<p class="t sd note" data-t="43.4,47.6" data-anchor="0.3,1.5,6.1"><span data-copy="order">Chat becomes an order. Stock checked. Link sent.</span></p>
+<p class="t sd tick" data-t="48.0,51.4" data-anchor="7.1,4.4,5.55"><span data-copy="dues">Dues leave only after you approve.</span></p>
+<p class="t plate sd ttl low" data-t="49.8,52.4"><span data-copy="shipped">Work I have already shipped.</span></p>
+<p class="t plate sd ttl low" data-t="57.6,60.8"><span data-copy="meet">Most businesses run on tools that never meet.</span></p>
+<p class="t sd fine label" data-t="58.4,63.6" data-anchor="-10,6.9,16.5"><span data-copy="lChat">Chat.</span></p>
+<p class="t sd fine label" data-t="58.7,63.6" data-anchor="-5,8.9,20"><span data-copy="lPay">Payments.</span></p>
+<p class="t sd fine label" data-t="59.0,63.6" data-anchor="0,6.1,22.5"><span data-copy="lSheet">Sheets.</span></p>
+<p class="t sd fine label" data-t="59.3,63.6" data-anchor="5,8.7,20"><span data-copy="lInbox">Inbox.</span></p>
+<p class="t sd fine label" data-t="59.6,63.6" data-anchor="10,6.7,16.5"><span data-copy="lCal">Calendar.</span></p>
+<p class="t plate sd ttl low" data-t="61.2,64.4"><span data-copy="glue">So the people who run them become the glue.</span></p>
+<p class="t plate sd ttl top" data-t="69.0,73.6"><span data-copy="method">I listen first. Then I draw one system under the work.</span></p>
+<p class="t sd fine tblock" data-t="69.6,73.8" data-anchor="19.5,0,22.2"><span data-copy="signed">Shubham Gupta. Delhi.</span></p>
+<p class="t sd note" data-t="70.4,73.8" data-anchor="5.5,0,10.8"><span data-copy="loop">A person stays in the loop.</span></p>
+<p class="t plate sd ttl top" data-t="79.2,82.4"><span data-copy="build">I design it. I build it. I stay till it runs.</span></p>
+<p class="t sd note" data-t="82.0,85.0" data-anchor="0,8.2,-1.2"><span data-copy="learns">The system learns from its own runs.</span></p>
+<p class="t sd tick" data-t="84.2,87.0" data-anchor="0,3.5,6.2"><span data-copy="control">You approve what matters. The rest keeps moving.</span></p>
+<p class="t sd fine slat" data-t="93.4,101" data-anchor="0,0.55,1.6"><span data-copy="industries">Trade. Retail. Education. Creators. Wellness.</span></p>
+<p class="t plate sd glow" data-t="94.5,101" data-anchor="0,3.45,0.4" data-span="6.0"><span data-copy="bring">Bring the operation.</span></p>
+<div id="close" class="t" data-t="999,999">
+ <h2 class="sd"><span data-copy="closeName">Shubham Gupta</span></h2>
+ <p data-copy="closeLine">I build AI systems that run businesses.</p>
+ <p class="sub" data-copy="closeFounder">Verslay's technical founder. I built the entire platform. My co-founder runs sales.</p>
+ <p class="offer" data-copy="closeOffer">Bring the operation. I will tell you whether it should run on Verslay, or be built around the tools you already have.</p>
+ <p class="learn" data-copy="closeLearn">Always learning. Always building.</p>
+ <a data-copy="closeCta" data-copy-href="closeCtaHref" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Book a call</a>
+ <p data-copy="closeNote">The appointment sits on LinkedIn.</p>
+ <p class="fine" data-copy="closeFine">Some of the work on this site was built through Verslay, for Verslay's clients. Those businesses are Verslay's clients, not my personal clients, so they are described by industry rather than by name.</p>
+ <p class="sig sd"><span data-copy="closeSig">Shubham Gupta. Delhi.</span></p>
+</div>
+<div id="hint" aria-hidden="true"><i></i></div>
+<script type="module" src="./copy.js?v=v7a"></script>
+<script type="module" src="./film.js?v=v7a"></script>
+</body>
+</html>
