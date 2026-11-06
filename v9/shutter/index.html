@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex, nofollow">
+<title>Shubham Gupta · AI, put to work</title>
+<meta name="description" content="Shubham Gupta builds AI systems that join models, data, apps and cloud into one system that does real work.">
+<link rel="preload" href="./fonts/BigShouldersDisplay.woff?v=v9a" as="font" type="font/woff" crossorigin>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<style>
+/* Type: Big Shoulders Display (The Big Shoulders Project Authors, SIL OFL 1.1) for display, labels and the dot nameplate;
+   Source Serif 4 (Adobe, SIL OFL 1.1) for reading text. Licences in ./fonts */
+@font-face{font-family:"Big Shoulders Display";src:url("./fonts/BigShouldersDisplay.woff?v=v9a") format("woff");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Source Serif 4";src:url("./fonts/SourceSerif4.woff?v=v9a") format("woff");font-weight:200 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Source Serif 4";src:url("./fonts/SourceSerif4-Italic.woff?v=v9a") format("woff");font-weight:200 900;font-style:italic;font-display:swap}
+:root{--ivory:#f2ead8;--soft:#d9cfbb;--dim:#a99e89;--brass:#c9a25e;--brass2:#e2c48a;--line:rgba(201,162,94,.32);
+ --disp:"Big Shoulders Display","Arial Narrow",sans-serif;--read:"Source Serif 4",Georgia,serif}
+html,body{margin:0;background:#050608;color:var(--ivory);font-family:var(--disp)}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
+#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0}
+#spacer{width:1px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;z-index:20;background:var(--brass);color:#14110c;padding:10px 16px;font:700 16px var(--disp);letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+.skip:focus{top:12px}
+/* film captions: solid ivory type with an engraved shadow; brass for territory labels */
+.t{position:fixed;left:0;top:0;z-index:1;opacity:0;visibility:hidden;will-change:transform,opacity;pointer-events:none;margin:0;text-align:center}
+.sd>span{color:var(--ivory);text-shadow:0 1px 0 rgba(0,0,0,.9),0 2px 18px rgba(0,0,0,.85)}
+.plate{background:radial-gradient(closest-side,rgba(4,5,7,.84),rgba(4,5,7,.6) 70%,rgba(4,5,7,0));padding:18px 44px}
+.carve{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:clamp(30px,3.4vw,54px);white-space:nowrap;padding:10px 28px}
+.carve>span{color:var(--brass2)}
+.ttl{font-weight:700;letter-spacing:.01em;text-transform:uppercase;font-size:clamp(30px,3.5vw,58px);line-height:1.02;width:min(92vw,1080px)}
+.fin{font-size:clamp(44px,6.4vw,110px);font-weight:800}
+.fin>span{text-shadow:0 0 30px rgba(255,190,110,.35),0 2px 18px rgba(0,0,0,.9)}
+.low{left:50%!important;top:auto!important;bottom:9vh;transform:translateX(-50%)}
+.top{left:50%!important;top:8vh!important;transform:translateX(-50%)}
+.note{font-family:var(--read);font-weight:600;font-size:clamp(17px,1.5vw,23px);padding:11px 22px;border-radius:3px;background:rgba(8,10,14,.88);border:1px solid var(--line);box-shadow:0 8px 30px rgba(0,0,0,.6);max-width:min(84vw,560px)}
+.note>span,.tick>span{text-shadow:none}
+.tick{font-family:var(--read);font-weight:600;font-size:clamp(17px,1.5vw,22px);padding:9px 18px;border-left:4px solid var(--brass);background:rgba(8,10,14,.88);max-width:min(84vw,520px)}
+.label{font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:clamp(17px,1.5vw,23px);padding:7px 16px;background:rgba(8,10,14,.86);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tblock{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:clamp(17px,1.4vw,22px);border:1.5px solid rgba(232,240,248,.75);padding:7px 16px;background:rgba(6,14,26,.86)}
+/* opening: static HTML, visible on first paint, fades as the film starts */
+#intro{position:fixed;inset:0;z-index:4;display:grid;place-items:center;text-align:center;pointer-events:none;background:radial-gradient(70% 60% at 50% 55%,rgba(28,24,18,.55),rgba(5,6,8,0) 70%)}
+#intro .in{max-width:min(92vw,1100px);padding:0 4vw}
+#intro .eyebrow{font:700 clamp(14px,1.1vw,17px) var(--disp);letter-spacing:.32em;text-transform:uppercase;color:var(--brass2);margin:0 0 22px}
+#intro h1{margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(46px,7.2vw,120px);line-height:.94;letter-spacing:.005em;text-shadow:0 2px 30px rgba(0,0,0,.8)}
+#intro p{font:400 clamp(18px,1.6vw,24px)/1.5 var(--read);color:var(--soft);max-width:40ch;margin:24px auto 0}
+#intro .cue{position:fixed;left:50%;bottom:4.5vh;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;font:700 15px var(--disp);letter-spacing:.34em;text-transform:uppercase;color:var(--brass2)}
+#intro .cue i{display:block;width:1px;height:46px;background:linear-gradient(var(--brass2),rgba(226,196,138,0));position:relative;overflow:hidden}
+#intro .cue i:after{content:"";position:absolute;left:-2px;top:-8px;width:5px;height:8px;background:var(--ivory);border-radius:3px;animation:cue 2.2s cubic-bezier(.5,0,.3,1) infinite}
+@keyframes cue{0%{transform:translateY(0);opacity:0}25%{opacity:1}100%{transform:translateY(56px);opacity:0}}
+/* still sequence: only for reduced motion / no WebGL2 */
+#still{display:none}
+body.nogl #gl,body.nogl #spacer,body.nogl .t{display:none}
+body.nogl #intro{position:relative;min-height:100vh;min-height:100svh}
+body.nogl #intro .cue{position:absolute}
+body.nogl #still{display:block;position:relative;z-index:2;background:#050608;padding:2vh 0 8vh}
+.st{max-width:1100px;margin:0 auto;padding:6vh 5vw}
+.st img{display:block;width:100%;height:auto;border:1px solid var(--line)}
+.st h2{margin:22px 0 8px;font-weight:800;text-transform:uppercase;font-size:clamp(28px,3.4vw,50px);line-height:1}
+.st p{margin:0;font:400 clamp(17px,1.4vw,21px)/1.55 var(--read);color:var(--soft);max-width:60ch}
+/* ending: normal page flow, covers the fixed canvas */
+.end{position:relative;z-index:2;background:linear-gradient(180deg,#050608 0,#0b0d10 18vh,#0d1013 100%);color:var(--ivory);padding:16vh 6vw 8vh}
+.end:focus{outline:none}
+.end:before{content:"";position:absolute;left:0;right:0;top:-22vh;height:22vh;background:linear-gradient(rgba(5,6,8,0),#050608);pointer-events:none}
+.wrap{max-width:1240px;margin:0 auto}
+.end .kick{font:700 15px var(--disp);letter-spacing:.32em;text-transform:uppercase;color:var(--brass2);margin:0 0 18px}
+.end h2{margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(48px,7vw,116px);line-height:.92}
+.end .lede{font:400 clamp(18px,1.6vw,23px)/1.55 var(--read);color:var(--soft);max-width:46ch;margin:26px 0 8vh}
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.25fr) 190px;gap:4vw;align-items:center;padding:42px 18px;border-bottom:1px solid var(--line);outline:none;opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1),background .4s}
+.row.in{opacity:1;transform:none}
+.row:hover,.row:focus-visible{background:linear-gradient(90deg,rgba(201,162,94,.06),rgba(201,162,94,0))}
+.row:focus-visible{box-shadow:inset 3px 0 0 var(--brass)}
+.row h3{margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(28px,2.9vw,46px);line-height:.98}
+.row p{margin:0;font:400 clamp(17px,1.25vw,20px)/1.6 var(--read);color:var(--soft)}
+.row .with{display:block;margin-top:14px;font:700 14px var(--disp);letter-spacing:.2em;text-transform:uppercase;color:var(--brass2)}
+.row svg{width:190px;height:120px;overflow:visible}
+.row svg .s{fill:none;stroke:var(--brass);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.row svg .f{fill:#1b2026;stroke:rgba(226,196,138,.65);stroke-width:1.2}
+.row svg .d{stroke-dasharray:var(--L,300);stroke-dashoffset:var(--L,300);transition:stroke-dashoffset 1.6s cubic-bezier(.6,.1,.2,1) .25s}
+.row.in svg .d{stroke-dashoffset:0}
+.row svg .dot{fill:var(--ivory);opacity:0;transition:opacity .6s 1.4s}
+.row.in svg .dot{opacity:1}
+.row svg .mv{transition:transform 1.4s cubic-bezier(.6,.1,.2,1) .3s}
+.row.in svg .mv{transform:none!important}
+.row svg .ring{transform-origin:95px 60px;animation:turn 9s linear infinite;animation-play-state:paused}
+.row.in svg .ring{animation-play-state:running}
+@keyframes turn{to{transform:rotate(360deg)}}
+.row svg .travel{offset-rotate:0deg;animation:travel 3.2s cubic-bezier(.5,0,.4,1) infinite;animation-play-state:paused}
+.row.in:hover svg .travel,.row.in:focus-visible svg .travel,.row.in svg .travel.always{animation-play-state:running}
+@keyframes travel{from{offset-distance:0%}to{offset-distance:100%}}
+.how{margin:12vh 0 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:5vw;align-items:start}
+.how h3{margin:0;font-weight:800;text-transform:uppercase;font-size:clamp(30px,3.2vw,52px);line-height:.96}
+.how p{margin:0 0 22px;font:400 clamp(17px,1.35vw,21px)/1.6 var(--read);color:var(--soft)}
+.kit{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.kit li{font:700 16px var(--disp);letter-spacing:.18em;text-transform:uppercase;padding:9px 16px;border:1px solid var(--line);color:var(--ivory);background:rgba(20,24,29,.6);transition:border-color .3s,background .3s}
+.kit li:hover{border-color:var(--brass);background:rgba(201,162,94,.1)}
+.proof{margin:9vh 0 0;padding:26px 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:190px minmax(0,1fr);gap:4vw}
+.proof .k{font:700 14px var(--disp);letter-spacing:.3em;text-transform:uppercase;color:var(--brass2);padding-top:6px}
+.nb{white-space:nowrap}
+.proof p{margin:0;font:italic 400 clamp(19px,1.6vw,25px)/1.5 var(--read);color:var(--ivory);max-width:52ch}
+.contact{margin:16vh 0 0;padding:9vh 0 0;border-top:1px solid var(--line)}
+.contact h2{font-size:clamp(54px,8.4vw,140px)}
+.contact p{font:400 clamp(18px,1.6vw,23px)/1.55 var(--read);color:var(--soft);max-width:44ch;margin:24px 0 34px}
+.cta{display:inline-flex;align-items:center;gap:16px;background:var(--brass);color:#14110c;text-decoration:none;font:800 22px var(--disp);letter-spacing:.14em;text-transform:uppercase;padding:18px 30px;border-bottom:4px solid #6a4f22;transition:background .25s,transform .25s}
+.cta svg{width:28px;height:14px;transition:transform .35s cubic-bezier(.3,.7,.2,1)}
+.cta:hover,.cta:focus-visible{background:var(--brass2);transform:translateY(-2px)}.cta:hover svg,.cta:focus-visible svg{transform:translateX(6px)}
+.cta:focus-visible{outline:2px solid var(--ivory);outline-offset:4px}
+footer{margin:14vh 0 0;padding:26px 0 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font:700 15px var(--disp);letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+@media (max-width:900px){.row{grid-template-columns:1fr;gap:16px;padding:34px 14px}.row svg{width:170px;height:106px}.how,.proof{grid-template-columns:1fr;gap:18px}}
+@media (max-width:700px){.carve{letter-spacing:.1em}.plate{padding:14px 22px}.low{bottom:7vh}.label{letter-spacing:.1em;padding:7px 12px}.end{padding:12vh 7vw 7vh}#intro h1{font-size:clamp(42px,12.4vw,72px)}}
+@media (prefers-reduced-motion: reduce){#intro .cue i:after{animation:none;top:20px;opacity:1}.row{opacity:1;transform:none;transition:none}.row svg .d{stroke-dashoffset:0;transition:none}.row svg .dot{opacity:1;transition:none}.row svg .mv{transform:none!important;transition:none}.row svg .ring,.row svg .travel{animation:none}}
+
+</style>
+</head>
+<body>
+<p class="sr" data-copy="srTitle">Shubham Gupta builds AI systems that join models, data, apps and cloud into one system that does real work.</p>
+<a class="skip" href="#problems">Skip to the problems I solve</a>
+<canvas id="gl" aria-hidden="true"></canvas>
+<header id="intro">
+ <div class="in">
+  <p class="eyebrow">Shubham Gupta</p>
+  <h1 data-copy="introH">AI can think. Most of it never reaches the work.</h1>
+  <p data-copy="introP">I build the systems that connect it: models, data, apps and cloud, working as one.</p>
+ </div>
+ <div class="cue" aria-hidden="true"><span data-copy="introCue">Scroll to explore</span><i></i></div>
+</header>
+<div id="spacer" aria-hidden="true"></div>
+<p class="t plate sd carve" data-t="13.0,16.2" data-anchor="-14.3,9.6,-8.4"><span data-copy="cloud">Cloud</span></p>
+<p class="t plate sd carve" data-t="16.6,19.4" data-anchor="12,9.8,-8"><span data-copy="web">Apps</span></p>
+<p class="t plate sd carve" data-t="19.6,21.2" data-anchor="4.23,3.0,4.54"><span data-copy="agents">Agents and models</span></p>
+<p class="t plate sd carve" data-t="21.4,23.2" data-anchor="9.6,6.6,7"><span data-copy="systems">Data and memory</span></p>
+<p class="t sd note" data-t="23.6,26.2" data-anchor="0,1.5,2.8"><span data-copy="needs">Each one is powerful alone.</span></p>
+<p class="t plate sd ttl top" data-t="26.6,33.8"><span data-copy="platform">The work is making them one system.</span></p>
+<p class="t sd note" data-t="39.4,42.8" data-anchor="-5.6,6.2,4.4"><span data-copy="voice">Speech becomes a scheduled meeting.</span></p>
+<p class="t sd note" data-t="43.4,47.6" data-anchor="0.3,1.5,6.1"><span data-copy="order">A question finds the right record, and an answer.</span></p>
+<p class="t sd tick" data-t="48.0,51.4" data-anchor="7.1,4.4,5.55"><span data-copy="dues">Sensitive steps wait for a person.</span></p>
+<p class="t plate sd ttl low" data-t="49.8,52.4"><span data-copy="shipped">A demo works once. A system has to work every day.</span></p>
+<p class="t plate sd ttl low" data-t="57.6,60.8"><span data-copy="meet">What the work needs to know is scattered.</span></p>
+<p class="t sd fine label" data-t="58.4,63.6" data-anchor="-10,6.9,16.5"><span data-copy="lChat">Chat.</span></p>
+<p class="t sd fine label" data-t="58.7,63.6" data-anchor="-5,8.9,20"><span data-copy="lPay">Docs.</span></p>
+<p class="t sd fine label" data-t="59.0,63.6" data-anchor="0,6.1,22.5"><span data-copy="lSheet">Sheets.</span></p>
+<p class="t sd fine label" data-t="59.3,63.6" data-anchor="5,8.7,20"><span data-copy="lInbox">Inbox.</span></p>
+<p class="t sd fine label" data-t="59.6,63.6" data-anchor="10,6.7,16.5"><span data-copy="lCal">Calendar.</span></p>
+<p class="t plate sd ttl low" data-t="61.2,64.4"><span data-copy="glue">So the model can't see it, and people become the glue.</span></p>
+<p class="t plate sd ttl top" data-t="69.0,73.6"><span data-copy="method">I listen first. Then I draw one system under the work.</span></p>
+<p class="t sd fine tblock" data-t="69.6,73.8" data-anchor="19.5,0,22.2"><span data-copy="signed">One plan. Every piece.</span></p>
+<p class="t sd note" data-t="70.4,73.8" data-anchor="5.5,0,10.8"><span data-copy="loop">Context reaches every step.</span></p>
+<p class="t plate sd ttl top" data-t="79.2,82.4"><span data-copy="build">I design it. I build it. I stay till it runs.</span></p>
+<p class="t sd note" data-t="82.0,85.0" data-anchor="0,8.2,-1.2"><span data-copy="learns">It learns from its own runs.</span></p>
+<p class="t plate sd ttl fin low" data-t="92.6,101"><span data-copy="finale">AI, put to work.</span></p>
+<section id="still" aria-label="The film as stills">
+ <div class="st"><img src="./stills/rise.jpg?v=v9a" alt="A machine world rising from the dust: cloud racks, app towers, an agent rail and memory systems around one hub." width="1600" height="900" loading="lazy"><h2>Each one is powerful alone.</h2><p>Cloud, apps, agents and models, data and memory. Separately, none of them does the work.</p></div>
+ <div class="st"><img src="./stills/joined.jpg?v=v9a" alt="Bridges lock every territory to the hub; light runs along the spine." width="1600" height="900" loading="lazy"><h2>The work is making them one system.</h2><p>Models, data and apps joined at one hub, with context running between them.</p></div>
+ <div class="st"><img src="./stills/runs.jpg?v=v9a" alt="Three runs on one viaduct: a voice note becomes a calendar entry, a question finds a record, a sensitive step waits at a valve." width="1600" height="900" loading="lazy"><h2>A demo works once. A system has to work every day.</h2><p>Speech becomes a scheduled meeting. A question finds the right record, and an answer. Sensitive steps wait for a person.</p></div>
+ <div class="st"><img src="./stills/scattered.jpg?v=v9a" alt="Separate tool islands floating apart: chat, docs, sheets, inbox, calendar. Rails reach for them and stop short." width="1600" height="900" loading="lazy"><h2>What the work needs to know is scattered.</h2><p>So the model can’t see it, and people become the glue.</p></div>
+ <div class="st"><img src="./stills/plan.jpg?v=v9a" alt="The whole world laid flat as one technical drawing, with ruled joins from every island to the centre." width="1600" height="900" loading="lazy"><h2>I listen first. Then I draw one system under the work.</h2><p>One plan. Every piece. Context reaches every step.</p></div>
+ <div class="st"><img src="./stills/whole.jpg?v=v9a" alt="The machine running as one, a halo of warm light over the hub threading down to every part." width="1600" height="900" loading="lazy"><h2>AI, put to work.</h2><p>I design it. I build it. I stay till it runs. It learns from its own runs.</p></div>
+</section>
+<main class="end" id="problems" tabindex="-1" aria-labelledby="problems-h">
+ <div class="wrap">
+  <p class="kick">What I work on</p>
+  <h2 id="problems-h">Problems worth solving.</h2>
+  <p class="lede">Broad problems, mostly around AI. The answer is rarely one tool. It is how many of them are made to work together.</p>
+  <ul class="rows">
+   <li class="row" tabindex="0"><h3>AI that never reaches the work.</h3><p>Strong models sit in a separate window while the real work happens somewhere else. I wire them into the tools, data and steps where the work actually is.<span class="with">Models · APIs · the apps people already use</span></p>
+    <svg viewBox="0 0 190 120" aria-hidden="true"><circle class="f" cx="34" cy="60" r="20"/><circle class="s" cx="34" cy="60" r="9"/><rect class="f" x="138" y="34" width="36" height="16"/><rect class="f" x="138" y="54" width="36" height="16"/><rect class="f" x="138" y="74" width="36" height="16"/><path class="s d" style="--L:90" d="M56 60 H136"/><circle class="dot travel" r="3.4" style="offset-path:path('M56 60 H136')"/></svg></li>
+   <li class="row" tabindex="0"><h3>Many technologies, no single system.</h3><p>Cloud, data, apps, agents and interfaces each solve a piece. I design how they fit, and build them to run as one.<span class="with">Architecture · integrations · cloud</span></p>
+    <svg viewBox="0 0 190 120" aria-hidden="true"><circle class="f" cx="95" cy="60" r="15"/><g class="mv" style="transform:translate(-14px,-10px)"><rect class="f" x="18" y="14" width="34" height="22" rx="10"/></g><g class="mv" style="transform:translate(14px,-10px)"><rect class="f" x="138" y="14" width="34" height="22"/></g><g class="mv" style="transform:translate(-14px,10px)"><ellipse class="f" cx="35" cy="96" rx="17" ry="10"/></g><g class="mv" style="transform:translate(14px,10px)"><circle class="f" cx="155" cy="96" r="11"/></g><path class="s d" style="--L:260" d="M52 30 L82 52 M138 30 L108 52 M52 92 L82 68 M144 92 L108 68"/></svg></li>
+   <li class="row" tabindex="0"><h3>Prototypes that never become dependable.</h3><p>A demo works once. I build for every day: errors handled, edge cases covered, people in control of what matters.<span class="with">Testing · monitoring · clear hand-offs to people</span></p>
+    <svg viewBox="0 0 190 120" aria-hidden="true"><path class="s" style="opacity:.35;stroke-dasharray:3 6" d="M14 84 C40 40, 60 104, 88 58 S 140 30, 176 66"/><path class="s d" style="--L:190" d="M14 84 L176 36"/><path class="s d" style="--L:150" d="M30 98 H160 M30 98 V90 M160 98 V90"/><circle class="dot travel always" r="3.4" style="offset-path:path('M14 84 L176 36')"/></svg></li>
+   <li class="row" tabindex="0"><h3>Knowledge scattered across tools.</h3><p>What the work needs to know lives in inboxes, documents, sheets and chats. I bring it together as context a model can use, with sources it can point to.<span class="with">Retrieval · memory · data pipelines</span></p>
+    <svg viewBox="0 0 190 120" aria-hidden="true"><g class="mv" style="transform:translate(-58px,-34px) rotate(-14deg)"><rect class="f" x="112" y="40" width="44" height="12"/></g><g class="mv" style="transform:translate(-80px,20px) rotate(10deg)"><rect class="f" x="112" y="56" width="44" height="12"/></g><g class="mv" style="transform:translate(-36px,40px) rotate(-6deg)"><rect class="f" x="112" y="72" width="44" height="12"/></g><g class="mv" style="transform:translate(-92px,-6px) rotate(18deg)"><rect class="f" x="112" y="88" width="44" height="12"/></g><path class="s d" style="--L:70" d="M104 36 V104"/></svg></li>
+   <li class="row" tabindex="0"><h3>Systems that stand still.</h3><p>Work changes. I build systems that learn from their own runs and get better with use.<span class="with">Feedback · memory · measurement</span></p>
+    <svg viewBox="0 0 190 120" aria-hidden="true"><circle class="s d" style="--L:240" cx="95" cy="60" r="36"/><g class="ring"><circle class="dot" cx="95" cy="24" r="4"/><path class="s" d="M86 20 L95 24 L88 31"/></g><circle class="f" cx="95" cy="60" r="12"/></svg></li>
+  </ul>
+  <section class="how" aria-labelledby="how-h">
+   <h3 id="how-h">How I work</h3>
+   <div><p>I start from the problem, not the tool. Then I choose the pieces and build them to work as one: models where judgment is needed, data where facts are needed, apps and interfaces where people are, and cloud underneath so it runs.</p>
+   <ul class="kit" aria-label="What I combine"><li>Models</li><li>Agents</li><li>Data</li><li>Retrieval</li><li>Apps</li><li>Interfaces</li><li>Cloud</li><li>Integrations</li></ul></div>
+  </section>
+  <section class="proof" aria-label="Proof">
+   <span class="k">Proof</span>
+   <p>Verslay’s technical founder. I built the entire platform. My <span class="nb">co-founder</span> runs sales.</p>
+  </section>
+  <section class="contact" aria-labelledby="contact-h">
+   <h2 id="contact-h">Bring me the problem.</h2>
+   <p>If AI should be doing real work where you are and it isn’t yet, tell me what is in the way.</p>
+   <a class="cta" href="https://www.linkedin.com/in/expert-shubham-gupta/" target="_blank" rel="noopener">Get in touch <svg viewBox="0 0 28 14" aria-hidden="true"><path d="M0 7 H25 M19 1 L26 7 L19 13" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+  </section>
+  <footer><span>Shubham Gupta · Delhi</span><span>Always learning. Always building.</span></footer>
+ </div>
+</main>
+<script>
+// ending: reveal rows as they scroll in (plain DOM, not tied to the film)
+(()=>{const rows=document.querySelectorAll('.row');if(!('IntersectionObserver' in window)){rows.forEach(r=>r.classList.add('in'));return}
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.25});rows.forEach(r=>io.observe(r))})();
+</script>
+<script type="module" src="./copy.js?v=v9a"></script>
+<script type="module">
+// the film needs WebGL2 and motion; otherwise the page shows the still sequence and never loads the engine
+const g=document.createElement('canvas').getContext('webgl2');const ok=!!g&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+g?.getExtension('WEBGL_lose_context')?.loseContext();
+if(ok)import('./film.js?v=v9a').catch(()=>document.body.classList.add('nogl'));else document.body.classList.add('nogl');
+</script>
+<script>setTimeout(()=>{if(!window.__film&&!document.body.classList.contains('nogl'))document.body.classList.add('nogl')},12000)</script>
+<noscript><style>#intro{position:relative}.t,#gl{display:none}.row{opacity:1;transform:none}</style></noscript>
+</body>
+</html>
