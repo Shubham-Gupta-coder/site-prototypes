@@ -1,15 +1,15 @@
 # Handoff: Shubham Gupta's personal site (read this first)
 
-Written 2026-11-05 from the actual state of the box. If you are an agent picking this up: read this file, then `/workspace/shubham-site-notes/gen5/STATUS.md` (live state), then `v5/shutter/README.md` (code guide). To change the dot count or the scenes, go straight to the README sections **Change the dot count** and **Change scenes (add, remove, reorder, retime)**.
+Written 2026-11-05, reconciled 2026-11-06 06:25 IST. If you are an agent picking this up: read this file, then **`v8/shutter/README.md` (v8a "Switchyard", approved 6 Nov and built locally, not published)** and `docs/NEXT-DIRECTION.md`, then `/workspace/shubham-site-notes/gen8/STATUS.md`, then `/workspace/shubham-site-notes/gen7/STATUS.md` (latest state), then `v7/shutter/README.md` (current code guide; the v5 README explains the shared engine). To change the dot count or the scenes, go straight to the README sections **Change the dot count** and **Change scenes (add, remove, reorder, retime)**.
 
 ## 1. Goal and his taste
-Shubham Gupta (GitHub `Shubham-Gupta-coder`, Asia/Calcutta) wants a personal site that establishes him as the person who joins AI tech and business: he builds the AI that runs businesses, and he is **Verslay's only technical founder** (he owns product and engineering; his co-founder runs sales).
+Shubham Gupta (GitHub `Shubham-Gupta-coder`, Asia/Calcutta) wants a personal site that establishes him as the person who joins AI tech and business: he builds the AI that runs businesses, and he is Verslay's technical founder (he built the entire platform; his co-founder runs sales). Since v6 the line is used **without "only"**: "Verslay's technical founder. I built the entire platform. My co-founder runs sales." Latest direction (2026-11-06): futuristic theme and font, non-blank opening with a scroll cue, work beyond Verslay, DOM services/contact ending; v8 approved and built locally as `v8/shutter/` (v8a, not published), see `v8/shutter/README.md`.
 
 Standing preferences:
 - Award-level, cinematic, story-like, premium. It should feel like a film.
 - Real 3D that morphs with scroll like a video, every cm of scroll changes the picture.
 - Little text, all of it readable, integrated into the graphics (text as part of the art). Faint subtext is a failure.
-- Playfair Display. He loves the **sandy, dot-formed Playfair type** of The Shutter's opening scenes.
+- Type history: Playfair (v5), Cinzel (v7). **6 Nov: he wants an artistic, futuristic face**; approved: Tourney + IBM Plex (v8).
 - Story, vision and approach, not facts and numbers. Keep it **number-free**.
 - Original designs: inspired by references, never similar to them.
 - Copy must be warm and respectful (the tools are the problem, never the people), and say more about him.
@@ -24,15 +24,18 @@ Standing preferences:
 | `/workspace/open-design` | OpenDesign v0.25.1 | See section 9 |
 
 Live URLs (base `https://shubham-gupta-coder.github.io/site-prototypes/`, index lists them all):
-- `v5/shutter/` The Shutter (working copy, **current direction**)
+- `v8/shutter/` The Switchyard v8a, Tourney + IBM Plex (**built locally, not yet published**; preview `http://127.0.0.1:8765/v8/shutter/index.html`)
+- `v7/shutter/` The Shutter v7a, mechanical world, Cinzel (live, commit `bc042b3`)
+- `v6/shutter/` v6 preview (SCRIPT-v3)
+- `v5/shutter/` The Shutter v5 working copy (earlier reference)
 - `v5/shutter-benchmark-1/`, `v5/shutter-benchmark-2/` frozen benchmarks, never edit
 - `v4/quicksilver/`, `v4/keeper/`, `v4/geode/` round 4
 - `v3/thread/` The Thread (round 3)
 - `v2/option-1..3/` round 2; `option-1..3/` round 1
 
 ## 3. AGENTS.md hard rules (summary; source: `/workspace/shubham-site/AGENTS.md`, details in its `docs/`)
-- One action, one label everywhere: **Book a call** (LinkedIn link `https://www.linkedin.com/in/expert-shubham-gupta/`).
-- "Verslay's only technical founder. ... My co-founder runs sales." always, that way.
+- One action, one label everywhere: **Book a call** (LinkedIn link `https://www.linkedin.com/in/expert-shubham-gupta/`) in v5-v7. **v8: "Get in touch"** to the same public profile (no booking route exists).
+- Founder line (his override since v6): "Verslay's technical founder. I built the entire platform. My co-founder runs sales." (no "only"; older docs and gen4/gen5 copycheck still contain the old wording).
 - Only figures/names/results in `docs/PROOF.md`; strongest true sentence, never invented facts.
 - No age, school, student status, grades, start year. No "available for projects", no WhatsApp as CTA, no emoji, no CLASSIFIED stamps, no fake terminal/code blocks.
 - No "freelance", "parked", "pitched", "proposed". Clients by industry only. Never name the open-source base of his agent system. No SOC 2/ISO/bank-level/enterprise, no revenue or customer counts.
@@ -48,6 +51,9 @@ Live URLs (base `https://shubham-gupta-coder.github.io/site-prototypes/`, index 
 | 3 | gen3, `v3/thread/` | The Thread: one continuous red thread, Playfair, quilt with "Textiles and B2B" | "Too much text, subtext unreadable; text is good when part of the graphics." Wanted shaders, real 3D. Cost $7.37 |
 | 4 | gen4, `v4/` | Quicksilver, The Keeper, Geode (3D, Haiku) | Rejected: 3D elements random, fail the story; scroll only changes when the next page arrives; laggy; no consistent story. Cost $12.04 |
 | 5 | gen5, `v5/shutter/` | **The Shutter**, hand-coded dot film | "Beautiful and amazing... animation and storytelling is brilliant." Benchmarked. Needs polish, 10x dots, sandy fonts later, warmer copy. Cost $0 (hand code) |
+| 6 | gen6, `v6/shutter/` | SCRIPT-v3 rebuild | Story judged incoherent, morphs noisy; led to SCRIPT-v4 |
+| 7 | gen7, `v7/shutter/` | SCRIPT-v4 mechanical world (server-rack ranges, app towers, agent rail, gear systems, spine), Cinzel + Source Serif 4 | Likes the base. Wants futuristic palette, more vectors/solid structures, less name repetition, work beyond Verslay, non-scrubbed services/contact ending. Factual brief received 6 Nov; v8 script proposed (NEXT-DIRECTION.md) |
+| 8 | gen8, `v8/shutter/` | SCRIPT-v5 "Switchyard": solid graphite 3D + SVG precision, one signal through agent system, evidence press, command deck, Verslay platform, horizon; DOM capability cards + Get in touch; Tourney + IBM Plex | Script approved 6 Nov; v8a built locally, awaiting his review |
 
 Key critique to never regress on:
 1. Objects must be relevant to the story; random 3D fails.
@@ -154,6 +160,25 @@ When to use which: OpenDesign is fine for quick, varied first drafts. For a cohe
 - `v6/shutter/` is a new preview built from SCRIPT-v3 (`/workspace/shubham-site-notes/gen6/`). Live: https://shubham-gupta-coder.github.io/site-prototypes/v6/shutter/ . Cache `?v=v6a`.
 - v5/shutter is unchanged and remains the previous reference; benchmarks untouched.
 - Copy gate for v6 is `gen6/copycheck.py` (founder line without "only"). Status log: `gen6/STATUS.md`. What changed: top of `v6/shutter/README.md`.
+
+## 11c. v7 (gen7 SCRIPT-v4, 2026-11-06)
+- `v7/shutter/` built from SCRIPT-v4 (`/workspace/shubham-site-notes/gen7/SCRIPT-v4.md`). Commit `bc042b3`, `?v=v7a`, on origin. Code guide and scene table: top of `v7/shutter/README.md`. Status log: `gen7/STATUS.md`. Copy gate: `gen7/copycheck.py` (also fails on any digit and on "only technical founder"). Tests: `gen7/test.py`, `gen7/shot.py`; filmstrips `gen7/strips/v7b-*.png`.
+- Last full test (v7b, SwiftShader): 0 console errors desktop and phone; desktop 32.7 fps at 131k dots (software renderer, real GPU unmeasured), phone 60 fps at 32k; copycheck clean.
+- Known weaknesses: noisy mid-morphs near T24/54/88; core column reads as a block; phone detail coarse at 32k dots; fonts are woff (no brotli on box).
+- **Next:** superseded by v8 (section 11d). Public docs must only ever carry the sanitized summary of his records brief (no counts, clients, analytics, security findings, private repo links or base names).
+
+## 11d. v8 (gen8 SCRIPT-v5, 2026-11-06)
+- `v8/shutter/` built from the approved SCRIPT-v5 (`/workspace/shubham-site-notes/gen8/SCRIPT-v5.md`). `?v=v8a`. Local only, **not pushed**. Code guide, scene table and change recipes: `v8/shutter/README.md`. Status log: `gen8/STATUS.md`.
+- New engine (not the v5-v7 dot engine): solid instanced geometry, tubes, canvas UI on 3D surfaces, projected SVG labels, haze points for atmosphere only. Film is a pure function of T.
+- Approved choices: Mac dictation scene omitted; capability cards instead of service packages; one CTA "Get in touch" to the public LinkedIn; no client or commerce story.
+- Accessibility: static HTML/SVG opening before WebGL, still sequence for reduced motion / no WebGL2 / engine failure, skip link to the ending, real DOM text, focus rings, no numbers.
+- Gates: `gen8/copycheck.py`, `gen8/test8.py`, `gen8/shot.py`, `gen8/stills.py`. Filmstrips in `gen8/strips/`.
+- Last full test (v8a, SwiftShader software GL, 6 Nov 14:55 IST): 0 console errors and warnings desktop and phone, caption audit clean every 2 T, no digits, no failed resources; keyboard skip link, card focus and CTA reachable; reduced motion and no WebGL load the still page (engine not loaded, 4/4 cards shown). Adaptive quality reaches level 3 in software (desktop ~50 ms, phone ~17 ms per frame); a real GPU is unmeasured.
+- Polish pass (6 Nov ~15:20 IST): sky link from phone to platform with a signal-following camera (fills the T76 transit), VERSLAY plate hidden on phones once its caption shows, deck framed so the whole phone is visible on desktop, horizon caption scrim, press portal widened and camera keys moved so posts no longer cover the cards, desktop captions moved to a left column with a projection offset so panels no longer sit over the agent world.
+- Known weaknesses: the tower body is dark and close for a moment near T76-78; the research scene is still dark overall; all performance numbers come from software rendering, real devices unmeasured.
+- Publishing: v8 is published from a clean branch made from `origin/main` (one new commit with the v8 build and these docs). Local working history is never pushed.
+- Copy note: the MX status tag reads "Built prototype · parked" as approved in SCRIPT-v5; the older AGENTS.md list bans "parked", so confirm with him which rule wins before publishing.
+- Before publishing: the local docs history has two unpushed commits (`89f7af7`, `76db5a0`); `89f7af7` contains an internal name that must not go public. Decide how to publish without that history (his call) before any push.
 
 ## 12. Security
 Never print or echo `ANTHROPIC_API_KEY` or any token. This repo is public: no secrets, no credentials in commits.
