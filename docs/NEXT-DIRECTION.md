@@ -33,3 +33,8 @@ Updated 2026-11-06 15:45 IST. Status: **in build** as `v9/shutter/` (cache key `
 
 ## Status (6 Nov)
 Built as v9a and published at `v9/shutter/`. Read `v9/shutter/README.md` for structure, editing and the next-step checklist. Open questions for him: does the ending copy sound like him, and does the film need a line in its two uncaptioned stretches?
+
+
+## v9.1 vector rendering update
+
+The separate review version is `v9.1/shutter/`. It preserves v9 copy and story while replacing settled hardware and interface objects with original editable SVG artwork mounted on depth-tested structures. Dots remain for transitions and atmosphere. Start with `V9_1_HANDOFF.md` and `v9.1/shutter/README.md`; run `python3 v9.1/shutter/validate.py`. Existing versions are preserved. Real-device performance is untested, and video work remains paused.

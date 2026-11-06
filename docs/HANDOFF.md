@@ -198,3 +198,8 @@ When to use which: OpenDesign is fine for quick, varied first drafts. For a cohe
 
 ## 12. Security
 Never print or echo `ANTHROPIC_API_KEY` or any token. This repo is public: no secrets, no credentials in commits.
+
+
+## v9.1 vector rendering update
+
+The separate review version is `v9.1/shutter/`. It preserves v9 copy and story while replacing settled hardware and interface objects with original editable SVG artwork mounted on depth-tested structures. Dots remain for transitions and atmosphere. Start with `V9_1_HANDOFF.md` and `v9.1/shutter/README.md`; run `python3 v9.1/shutter/validate.py`. Existing versions are preserved. Real-device performance is untested, and video work remains paused.
