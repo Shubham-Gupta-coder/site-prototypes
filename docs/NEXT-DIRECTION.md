@@ -1,41 +1,32 @@
-# Next direction: v8 "The Switchyard" (approved, built locally as v8a)
+# Next direction: v9, problems first, in an evolved v7 world
 
-Updated 2026-11-06 ~14:45 IST. **Status: approved 6 Nov and implemented as `v8/shutter/` (v8a, local, not published).** See `v8/shutter/README.md`. The live build stays `v7/shutter/` (commit `bc042b3`) until he reviews v8a.
+Updated 2026-11-06 15:45 IST. Status: **in build** as `v9/shutter/` (cache key `?v=v9a`). v7 (`v7/shutter/`) and v8 (`v8/shutter/`) stay published and unchanged.
 
-His approval: work-led story with Tourney, capability cards and the normal contact ending. Decisions applied: Mac dictation scene omitted; capability cards, no service packages; contact is "Get in touch" to his public LinkedIn (no booking route); no client or commerce main story.
+## What he said (6 Nov)
+- He did not like v8: neither the futuristic theme nor the content.
+- Talk about **the problems I solve**: big ones, broad, primarily around AI, and especially **how I use multiple technologies together**. Not too specific.
+- The story of v7 was better than v8. He **liked the v7 mechanical world up to about 85% of the film**; it can be updated, but don't repeat it unchanged.
+- He will continue the work on his own machine after this round, so the repo must be self-contained.
 
-## His direction (6 Nov)
-- Keep the v7 base idea (a continuous scroll film through a dramatic machine world).
-- **Futuristic** palette and theme; more **vectors** (SVG precision) and **solid 3D structures**; particles only for atmosphere and transitions; mature, no fantasy motifs.
-- **Font must change** from Cinzel to an artistic, futuristic display face.
-- **Opening must not be blank:** a full-screen cinematic composition with a clear "scroll" invitation from the first paint.
-- Less repetition of his name. Work beyond Verslay; commerce flows must not dominate.
-- A matching **services/contact ending that is not scroll-scrubbed**, with subtle component animations.
+## Content rules for v9
+- Problems, not projects. These are the broad directions (no claims of completed large-scale impact):
+  1. AI capability sits apart from the real work.
+  2. Many technologies (models, data, apps, cloud, interfaces) don't add up to one system.
+  3. Prototypes fail to become dependable, everyday systems.
+  4. What the work needs to know is scattered across tools, so models lack context.
+  5. Systems should learn from use and improve.
+- Show the mechanism (how pieces are joined), in confident, humane, plain language. No buzzword hype, no invented metrics, clients or outcomes, no numbers on the page.
+- No commerce focus (orders, payments, approvals are not the story).
+- Verslay at most once, as a restrained proof note: "Verslay's technical founder. I built the entire platform. My co-founder runs sales." (never "only").
+- Few name mentions. One contact route: his public LinkedIn profile, "Get in touch". No invented calendar or booking route.
 
-## Sanitized facts used (from his own records brief; reported, not re-verified by us)
-Public-safe summary only. Counts, client identities, commercial and analytics figures, security findings, private repository links and the open-source base of his agent system are deliberately left out and must never be added to this public repo.
-- **Personal agent system**: his own system for running AI agents (model routing with failover, persistent memory, background services). In personal use.
-- **Research system**: collects from many source types, stores what it read, and only marks a claim verified when the quoted text exists in a stored snapshot; failures are downgraded, not dropped. Built; not public; no deployment or accuracy claims.
-- **MX**: a phone command deck for agents, with approval before any send, spend, post or delete, and undo. Built prototype, parked by his choice; not a live or store product.
-- **Native Mac dictation tool**: installed on his own machine. Branding and public use need his permission; describe the capability neutrally.
-- **Verslay**: AI workforce platform he co-founded; public site live. Founder line (his override, exact): "Verslay's technical founder. I built the entire platform. My co-founder runs sales."
-- Excluded for now: the old "Featured Work" labels on his current site, any package-registry claim, template projects, client builds, other projects pending his permission, outcome or customer claims, hourly/freelancer framing.
+## Visual direction
+- Keep the v7 dot-morph engine and the parts of the world he liked (the rise of the territories, the joining, the running machine, the scattered islands, the drawing, the live system). Retune labels and canvases so they speak about problems instead of shop flows.
+- Replace the last stretch (v7 "seal" iris door and close card) with a stronger finale, then a **normal-flow (not scroll-scrubbed) problems and contact ending** with small refined animations.
+- Opening must be visible on first paint: headline plus "Scroll to explore", before WebGL is ready.
+- New type, not Cinzel, not Tourney: an industrial display face that fits the mechanical world, with a readable text face. Self-hosted with licences.
+- Not the v8 look: no cyan neon city, no grid floor, no futuristic HUD.
 
-## Proposal summary (full script in the private notes: `shubham-site-notes/gen8/SCRIPT-v5.md`)
-- Opening headline: **"I build the machinery behind AI agents."** / "Routing, memory, evidence and control." / **SCROLL TO EXPLORE**, painted as static HTML+SVG before WebGL.
-- Film scenes (as built): Switchyard (agent system) → Evidence Press (research) → Command Deck (MX) → Platform (Verslay, labelled) → Horizon ("Always learning. Always building."). One signal object carries through every scene.
-- Ending (DOM, not scrubbed): "What I build" capability cards with small self-contained SVG loops; "Ways to work together" only if he confirms a grouping (no prices or promises); one CTA **Get in touch** → his public LinkedIn profile.
-- Type: **Tourney** (Tyler Finck / Etcetera Type Co., SIL OFL 1.1) hollow light weights for display, solid 700 for titles; **IBM Plex Sans** body and **IBM Plex Mono** labels (OFL). Palette: void, graphite, glacier ink, ion cyan for signal, amber for human decisions.
-- Accessibility: reduced-motion still sequence, skip link, real DOM text, focus rings, contrast targets.
-- No numbers on the page.
-
-## Answered
-1. Mac dictation tool: omitted.
-2. "Ways to work together": dropped; capability cards only.
-3. Tourney + IBM Plex: approved.
-
-## Open for his review
-- v8a look and pacing; MX status tag wording ("parked" vs older rule); publish path for the docs history.
-
-## Rules still in force
-Frozen `v5/shutter-benchmark-1/` and `-2/`; `/workspace/shubham-site` read-only; public repo, no secrets; no push without review.
+## Accessibility and delivery
+- Real DOM text, reduced-motion and no-WebGL still version, keyboard skip link and focus, phone framing.
+- Self-contained repo handoff: root `README.md` explains how to run, test and publish locally.

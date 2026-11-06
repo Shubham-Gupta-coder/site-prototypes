@@ -1,6 +1,6 @@
 # Handoff: Shubham Gupta's personal site (read this first)
 
-Written 2026-11-05, reconciled 2026-11-06 06:25 IST. If you are an agent picking this up: read this file, then **`v8/shutter/README.md` (v8a "Switchyard", approved 6 Nov and built locally, not published)** and `docs/NEXT-DIRECTION.md`, then `/workspace/shubham-site-notes/gen8/STATUS.md`, then `/workspace/shubham-site-notes/gen7/STATUS.md` (latest state), then `v7/shutter/README.md` (current code guide; the v5 README explains the shared engine). To change the dot count or the scenes, go straight to the README sections **Change the dot count** and **Change scenes (add, remove, reorder, retime)**.
+Written 2026-11-05, updated 2026-11-06 15:45 IST. **Start with the repo root `README.md`** (how to run locally, file map, publishing rules), then **`docs/NEXT-DIRECTION.md` (v9 direction: problem-led story in an evolved v7 mechanical world)**, then `v7/shutter/README.md` (the engine and world v9 builds on). Private working notes live outside this repo and are not needed to continue.
 
 ## 1. Goal and his taste
 Shubham Gupta (GitHub `Shubham-Gupta-coder`, Asia/Calcutta) wants a personal site that establishes him as the person who joins AI tech and business: he builds the AI that runs businesses, and he is Verslay's technical founder (he built the entire platform; his co-founder runs sales). Since v6 the line is used **without "only"**: "Verslay's technical founder. I built the entire platform. My co-founder runs sales." Latest direction (2026-11-06): futuristic theme and font, non-blank opening with a scroll cue, work beyond Verslay, DOM services/contact ending; v8 approved and built locally as `v8/shutter/` (v8a, not published), see `v8/shutter/README.md`.
@@ -24,8 +24,9 @@ Standing preferences:
 | `/workspace/open-design` | OpenDesign v0.25.1 | See section 9 |
 
 Live URLs (base `https://shubham-gupta-coder.github.io/site-prototypes/`, index lists them all):
-- `v8/shutter/` The Switchyard v8a, Tourney + IBM Plex (**built locally, not yet published**; preview `http://127.0.0.1:8765/v8/shutter/index.html`)
-- `v7/shutter/` The Shutter v7a, mechanical world, Cinzel (live, commit `bc042b3`)
+- `v9/shutter/` (in progress) problem-led film in an evolved v7 world, see NEXT-DIRECTION
+- `v8/shutter/` The Switchyard v8a, Tourney + IBM Plex (published review link; **rejected 6 Nov: theme and content**)
+- `v7/shutter/` The Shutter v7a, mechanical world, Cinzel (live, commit `bc042b3`; **his preferred story and world so far**)
 - `v6/shutter/` v6 preview (SCRIPT-v3)
 - `v5/shutter/` The Shutter v5 working copy (earlier reference)
 - `v5/shutter-benchmark-1/`, `v5/shutter-benchmark-2/` frozen benchmarks, never edit
@@ -179,6 +180,13 @@ When to use which: OpenDesign is fine for quick, varied first drafts. For a cohe
 - Publishing: v8 is published from a clean branch made from `origin/main` (one new commit with the v8 build and these docs). Local working history is never pushed.
 - Copy note: the MX status tag reads "Built prototype · parked" as approved in SCRIPT-v5; the older AGENTS.md list bans "parked", so confirm with him which rule wins before publishing.
 - Before publishing: the local docs history has two unpushed commits (`89f7af7`, `76db5a0`); `89f7af7` contains an internal name that must not go public. Decide how to publish without that history (his call) before any push.
+
+## 11e. Verdict on v8 and the v9 direction (2026-11-06)
+- v8 rejected: he disliked both the futuristic theme (cyan, neon city, Tourney) and the content (a parade of projects).
+- He prefers v7's story, and he **liked the v7 world up to about 85% of the film**. v9 evolves that mechanical world. The last stretch (the seal and the close card) is replaced, and v7 itself stays untouched.
+- Content changes from projects to **broad problems he solves, primarily around AI, and how he combines many technologies** (models, data, apps, cloud, interfaces, integrations). The problems are directions, not claims of finished large-scale impact. No project parade, no status labels, no commerce focus. Verslay appears at most once, as a restrained proof note with the exact founder line (no "only").
+- Promo video: on hold.
+- Details and scene plan: `docs/NEXT-DIRECTION.md`.
 
 ## 12. Security
 Never print or echo `ANTHROPIC_API_KEY` or any token. This repo is public: no secrets, no credentials in commits.
