@@ -1,0 +1,59 @@
+/* v9.2: the same world, treated as a precision instrument in a photographic studio. */
+:root{--ivory:#e5eceb;--soft:#a9bec7;--dim:#7793a1;--brass:#b7c8ce;--brass2:#d9e3e4;--line:rgba(158,185,199,.22)}
+html,body{background:#07131d;color:var(--ivory)}
+#intro{background:none;text-align:left;place-items:center start;box-sizing:border-box;padding:6vw 8vw}
+#intro .in{padding:0;max-width:1140px;width:100%}
+#intro .eyebrow{font-size:14px;font-weight:500;letter-spacing:.25em;color:#91aab7;margin:0 0 28px}
+#intro h1{font-weight:600;font-size:clamp(60px,8.3vw,138px);line-height:.96;letter-spacing:-.025em;text-transform:none;max-width:13ch;text-shadow:0 3px 60px rgba(1,7,13,.6)}
+#intro p{font-size:clamp(18px,1.5vw,23px);font-weight:400;line-height:1.6;max-width:39ch;margin:32px 0 0;color:#a9c0ca}
+#intro .cue{left:8vw;transform:none;bottom:6vh;align-items:flex-start;color:#b3c8ce;font-size:12px;font-weight:500;letter-spacing:.22em;gap:16px}
+#intro .cue i{width:64px;height:1px;background:#577482;overflow:visible}
+#intro .cue i:after{animation:none;width:6px;height:6px;left:auto;right:0;top:-3px;background:none;border-right:1px solid #c4d4d7;border-bottom:1px solid #c4d4d7;border-radius:0;transform:rotate(-45deg);opacity:1}
+.t{font-weight:500}
+.sd>span{text-shadow:0 2px 12px rgba(2,9,15,.8)}
+.plate{background:linear-gradient(90deg,rgba(5,15,23,.4),rgba(5,15,23,.85) 20%,rgba(5,15,23,.85) 80%,rgba(5,15,23,.4));background-color:rgba(5,15,23,.20);border-radius:0;padding:17px 36px}
+.carve{font-size:clamp(24px,2.8vw,43px);line-height:1.08;font-weight:500;text-transform:none;letter-spacing:.025em;white-space:normal;max-width:89vw;padding:12px 25px}
+.carve>span{color:#d8e5e6}
+.ttl{font-size:clamp(31px,3.55vw,58px);font-weight:500;text-transform:none;line-height:1.08;letter-spacing:.005em;width:min(91vw,1060px)}
+.fin{font-size:clamp(49px,6.3vw,104px);font-weight:600;letter-spacing:-.015em}
+.fin>span{text-shadow:0 2px 18px rgba(2,8,14,.85)}
+.note,.tick{background:rgba(5,17,26,.92);color:#d5e2e5;border-color:rgba(150,178,191,.24);box-shadow:none;font-size:clamp(17px,1.45vw,22px);font-weight:400;line-height:1.35;max-width:min(84vw,530px);border-radius:0;padding:12px 20px}
+.tick{border-left:2px solid #d4b586}
+.label,.tblock{font-size:clamp(14px,1.22vw,19px);font-weight:500;letter-spacing:.11em;background:#0b1c28;border:0;color:#c0d3d9;padding:9px 15px}
+.tblock{border-left:1px solid #a3bbc4}
+#still{background:#07131d!important}.st{padding:7vh 6vw}.st img{border:0}.st h2{text-transform:none;font-weight:500}.st p{color:#adc4ce}
+/* A porcelain work sheet follows the dark studio; it is a normal site, not another film. */
+.end{background:#dde4e2;color:#172e3a;padding:17vh 7vw 7vh}
+.end:before{background:linear-gradient(rgba(221,228,226,0),#dde4e2);height:18vh;top:-18vh}
+.end .wrap{max-width:1230px}
+.end .kick{color:#4b6572;font-size:13px;font-weight:600;letter-spacing:.2em;margin-bottom:24px}
+.end h2{font-size:clamp(53px,7.3vw,116px);font-weight:600;text-transform:none;letter-spacing:-.025em;line-height:.96}
+.end .lede{color:#4b6572;font-size:clamp(19px,1.6vw,23px);max-width:46ch;line-height:1.65;margin:34px 0 10vh}
+.rows{border-color:#b3c3c6}
+.row{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) 190px;padding:45px 0;gap:4vw;border-color:#b3c3c6;transform:translateY(15px);transition:opacity .7s ease,transform .7s ease,background .35s}
+.row h3{font-size:clamp(30px,2.8vw,46px);font-weight:600;text-transform:none;letter-spacing:-.012em;line-height:1.05;max-width:13ch}
+.row p{font-size:clamp(17px,1.25vw,20px);color:#4a6471;line-height:1.7}
+.row .with{color:#4b6572;font-size:12px;font-weight:500;letter-spacing:.1em;line-height:1.7;margin-top:18px}
+.row:hover,.row:focus-visible{background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent)}
+.row:focus-visible{box-shadow:inset 2px 0 #466773;outline:none;padding-left:18px;margin-left:-18px}
+.specimen{margin:0;width:190px;height:154px;background:#0b1d2b;border-radius:2px;overflow:hidden;position:relative;box-shadow:0 12px 25px rgba(15,42,54,.13)}
+.specimen img{width:100%;height:100%;object-fit:cover;opacity:.86;transform:scale(1.015);transition:transform .65s cubic-bezier(.2,.7,.2,1),opacity .6s}
+.specimen i{position:absolute;left:0;bottom:0;width:100%;height:2px;background:#c9aa78;transform:scaleX(.08);transform-origin:left;transition:transform .7s ease}
+.row:hover .specimen img,.row:focus-visible .specimen img{opacity:1;transform:scale(1.07) translateY(-2px)}
+.row:hover .specimen i,.row:focus-visible .specimen i{transform:scaleX(1)}
+.how{margin-top:13vh;gap:6vw}.how h3{font-size:clamp(36px,3.7vw,60px);font-weight:500;text-transform:none;letter-spacing:-.015em}.how p{color:#4b6572;font-size:clamp(18px,1.4vw,22px);line-height:1.7}
+.kit{gap:10px 20px}.kit li{background:none;border:0;border-bottom:1px solid #b2c3c7;color:#4b6572;padding:8px 0;font-size:14px;font-weight:500;letter-spacing:.11em}.kit li:hover{background:none;border-color:#3e606e;color:#203d4c}
+.proof{background:#102432;margin-top:11vh;padding:32px 36px;grid-template-columns:150px 1fr;border:0;color:#dce7e7}.proof .k{color:#7e9ba9;font-size:12px;font-weight:500;letter-spacing:.2em}.proof p{color:#c1d4da;font-size:clamp(18px,1.5vw,24px);font-weight:400;font-style:normal;line-height:1.6}
+.contact{margin-top:17vh;padding-top:9vh;border-color:#b1c2c6}.contact h2{font-size:clamp(65px,8.7vw,145px)}.contact p{color:#4b6572;font-size:clamp(19px,1.6vw,23px);line-height:1.65;max-width:42ch;margin-top:30px}
+.cta{background:#163444;border:0;color:#e2ebeb;padding:19px 26px;font-size:20px;font-weight:500;letter-spacing:.015em;text-transform:none;box-shadow:0 7px 0 rgba(13,35,48,.08);transition:background .3s,transform .3s}
+.cta:hover,.cta:focus-visible{background:#264c5c;color:#fff;transform:translateY(-2px)}.cta:focus-visible{outline:2px solid #456f7e;outline-offset:5px}
+footer{border-color:#b1c2c6;color:#4b6572;font-size:12px;font-weight:500;letter-spacing:.12em;margin-top:13vh}
+.skip{background:#dce7e8;color:#112e3e;font-weight:500;letter-spacing:.06em}
+@media(max-width:900px){.row{grid-template-columns:minmax(0,1fr) 140px;gap:22px}.row h3{grid-column:1 / -1;max-width:19ch}.specimen{width:140px;height:150px}.how,.proof{grid-template-columns:1fr;gap:22px}}
+@media(max-width:600px){#intro{padding:9vw 7vw}#intro h1{font-size:clamp(61px,16.8vw,95px);max-width:12ch}#intro .eyebrow{font-size:12px;letter-spacing:.22em}#intro p{font-size:18px;line-height:1.6;max-width:30ch;margin-top:27px}#intro .cue{left:7vw;bottom:5vh;font-size:11px;letter-spacing:.16em}.ttl{font-size:31px;width:91vw;padding:15px 19px}.fin{font-size:51px}.carve{font-size:28px;letter-spacing:.015em;max-width:87vw;padding:12px 20px}.low{bottom:6vh}.top{top:6vh!important}.note,.tick{font-size:17px;max-width:85vw;padding:11px 16px}.label{font-size:12px;padding:7px 10px;letter-spacing:.04em}.end{padding:13vh 7vw 7vh}.end h2{font-size:57px}.end .lede{font-size:19px;margin-bottom:7vh}.row{grid-template-columns:1fr;gap:24px;padding:34px 0}.row h3{font-size:36px;max-width:15ch}.row p{font-size:18px}.specimen{width:100%;height:130px}.specimen img{object-fit:cover;object-position:50% 30%}.row .with{font-size:12px}.how{margin-top:9vh}.proof{padding:28px 24px}.contact h2{font-size:68px}.contact p{font-size:19px}.cta{font-size:19px;padding:18px 22px;gap:15px}footer{font-size:11px;letter-spacing:.08em}.st{padding:6vh 6vw}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.row{transform:none;opacity:1}.specimen img{transform:none!important}}
+
+/* Compact UI copy needs a normal-width face, not condensed display lettering. */
+#intro .eyebrow,#intro .cue,.end .kick,.row .with,.kit li,.proof .k,.cta,footer,.skip{font-family:Arial,system-ui,sans-serif}
+.cta{font-size:16px;letter-spacing:.005em}footer{font-size:12px;letter-spacing:.055em}.end .kick,.proof .k{letter-spacing:.13em}
+@media(max-width:600px){.cta{font-size:16px}footer{font-size:12px}}
