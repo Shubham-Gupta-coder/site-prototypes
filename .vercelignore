@@ -1,0 +1,23 @@
+# Only deployment inputs; build copies the final website into dist.
+.git
+node_modules
+dist
+video
+docs
+option-*
+v2
+v3
+v4
+v5
+v6
+v7
+v8
+v9
+v9.1
+v9.2
+v9.3
+v9.4
+v9.5
+smoke-out
+__pycache__
+*.mp4

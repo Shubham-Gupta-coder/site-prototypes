@@ -1,3 +1,8 @@
 smoke-out/
 .DS_Store
 __pycache__/
+
+# Local build/install output
+/dist/
+/node_modules/
+/.vercel/

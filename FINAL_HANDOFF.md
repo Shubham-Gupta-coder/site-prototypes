@@ -28,3 +28,10 @@ No production domain was selected and the site remains `noindex`. Publishing
 later requires an intentional new hosting setup and indexing/domain decision.
 Nothing has been posted to X. Old hosting links in preserved source, project
 chrome and historical documentation are historical references, not live promises.
+
+## Vercel build readiness
+
+Root `package.json`, dependency-free `scripts/build.mjs` and `vercel.json` now
+package only the final site into `dist/` for Vercel at `/`. See
+`VERCEL_DEPLOYMENT.md` for settings and checks. No Vercel service-side settings,
+production domain, indexing or GitHub Pages configuration were changed.

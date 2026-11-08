@@ -8,6 +8,12 @@ preview links in older handoffs and in the video are no longer live. Pushing to
 `main` must not be treated as a hosting instruction. No production domain was
 selected; the final website retains its existing `noindex` setting.
 
+## Vercel production build
+
+See [`VERCEL_DEPLOYMENT.md`](VERCEL_DEPLOYMENT.md). Import from the repository
+root; `npm run build` emits only the final personal site to `dist/`, served at `/`.
+The archive index and video sources are not public deployment output.
+
 ## Run locally
 
 ```sh
