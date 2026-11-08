@@ -1,0 +1,9 @@
+{
+  "name": "shubham-v96-browser-tour",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npx --yes hyperframes@0.9.21 check",
+    "render": "npx --yes hyperframes@0.9.21 render --workers 1 --fps 30 --quality looks -o shubham-gupta-site-tour.mp4"
+  }
+}

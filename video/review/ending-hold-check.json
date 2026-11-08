@@ -1,0 +1,8 @@
+{
+  "holdStartSeconds": 63,
+  "holdEndSeconds": 64,
+  "ending": "Actual mobile Review composition, no desktop return",
+  "meanLumaDifferenceAcrossHold": 0.0006534529320987655,
+  "threshold": 0.5,
+  "passed": true
+}

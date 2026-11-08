@@ -1,0 +1,51 @@
+{
+  "file": "shubham-gupta-site-tour.mp4",
+  "sha256": "bb4c1a7be27bef7f50ec6fd785c379d340f1649182c621f40670d8cbd36fddd0",
+  "bytes": 82684856,
+  "durationSeconds": 64.0,
+  "width": 1920,
+  "height": 1080,
+  "fps": "30/1",
+  "frames": 1920,
+  "codec": "h264",
+  "profile": "High",
+  "pixelFormat": "yuv420p",
+  "bitrate": 10335607,
+  "audioStreams": 0,
+  "faststart": true,
+  "allFramesDecoded": true,
+  "solidOrBlankFrames": 0,
+  "preservedSiteFiles": 62,
+  "capture": "Faithful offline browser-style rendering of exact v9.6; authored neutral chrome/cursor/edit; not hardware real-time speed",
+  "hyperframesVersion": "0.9.21",
+  "postedToX": false,
+  "atoms": [
+    {
+      "type": "ftyp",
+      "offset": 0,
+      "bytes": 32
+    },
+    {
+      "type": "moov",
+      "offset": 32,
+      "bytes": 10130
+    },
+    {
+      "type": "free",
+      "offset": 10162,
+      "bytes": 8
+    },
+    {
+      "type": "mdat",
+      "offset": 10170,
+      "bytes": 82674686
+    }
+  ],
+  "endingCorrection": {
+    "first63SecondsEditPreserved": true,
+    "lastSecond": "Hold actual final mobile frame; no desktop return",
+    "preservedEditSSIM": 0.995938,
+    "reviewClip": "review/ending-review-57s.mp4",
+    "reviewClipDurationSeconds": 7
+  }
+}

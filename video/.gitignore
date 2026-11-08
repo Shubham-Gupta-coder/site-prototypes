@@ -1,0 +1,7 @@
+*.mp4
+.hyperframes/
+node_modules/
+frames/
+review/final-*.png
+review/offline-*.png
+review/*.log

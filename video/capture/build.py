@@ -1,0 +1,3 @@
+from pathlib import Path
+import re
+B=Path(__file__).resolve().parent.parent;h=(B/'capture/browser-template.html').read_text();s=(B/'tour.js').read_text();s=s[:s.index("if(!window.__hyperframes?.registerFrameSource)")]+"const ready=initialize();window.__offlineReady=ready;window.__offlineDraw=async t=>{await ready;await draw(t);return {t,T:filmAt(t),ready:state.ready,errors:state.errors}};\n})();\n";h=re.sub(r'<script>[\s\S]*?</script>',lambda m:'<script>'+s+'</script>',h);(B/'capture/offline.html').write_text(h.replace('<head>','<head><base href="../">',1));print('Built offline capture wrapper; original site bytes untouched')
